@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-09T10:44:15.438Z</updated>
+    <updated>2020-09-09T11:52:33.163Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -25,7 +25,11 @@
         <link href="https://giriawsh.github.io/post/test3/">
         </link>
         <updated>2020-09-09T10:19:46.000Z</updated>
-        <content type="html"><![CDATA[<p>test3</p>
+        <summary type="html"><![CDATA[<p>aaaa</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>aaaa</p>
+<!-- more -->
+<p>test3</p>
 ]]></content>
     </entry>
     <entry>
