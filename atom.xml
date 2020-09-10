@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-10T06:56:13.639Z</updated>
+    <updated>2020-09-10T07:03:41.836Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -10,6 +10,441 @@
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[element源码学习-Alert组件]]></title>
+        <id>https://giriawsh.github.io/post/element-yuan-ma-xue-xi-alert-zu-jian/</id>
+        <link href="https://giriawsh.github.io/post/element-yuan-ma-xue-xi-alert-zu-jian/">
+        </link>
+        <updated>2020-09-10T07:02:09.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="前言">前言</h1>
+<p>一直受到element组件库的照顾，觉得其中有很多值得分析的点和前端设计思想，遂开始整理这个系列。可能会有点乱，资料和分析参考我会附链接，后期可以再做一次整理。也算是对自己前端的一次提升能力学习。</p>
+<h1 id="结构分析">结构分析</h1>
+<figure data-type="image" tabindex="1"><img src="https://user-gold-cdn.xitu.io/2020/7/11/1733e545aec77110?w=213&amp;h=249&amp;f=png&amp;s=7799" alt="element结构" loading="lazy"></figure>
+<ul>
+<li>.github：github生成文件</li>
+<li>.idea：编译器文件</li>
+<li>build：建构相关</li>
+<li>examples：官网例子相关</li>
+<li>node_modules: node相关包</li>
+<li>packages：组件相关源码</li>
+<li>src：公共工具函数</li>
+</ul>
+<h1 id="alert组件分析">Alert组件分析</h1>
+<h2 id="alert目录结构">Alert目录结构</h2>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/11/1733e638fb890179?w=168&amp;h=86&amp;f=png&amp;s=2226" alt="Alert目录结构" loading="lazy"><br>
+可以注意到每个package里面的组件文件夹中都有一个 index.js</p>
+<h2 id="indexjs">index.js</h2>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/11/1733e645c101004a?w=354&amp;h=231&amp;f=png&amp;s=10990" alt="index.js" loading="lazy"><br>
+添加install方法来方便作为插件使用，如果单独引用这个组件，就注册这个单独的组件</p>
+<p>/* istanbul ignore next */，这个是一个npm代码覆盖率的工具istanbul，在写测试的时候，有些不必要的文件，在计算覆盖率时会被计算到，所以加上这句注释就可以忽略下面的代码。</p>
+<h2 id="mainvue">main.vue</h2>
+<pre><code class="language-html">&lt;template&gt;
+  &lt;transition name=&quot;el-alert-fade&quot;&gt;
+    &lt;div
+      class=&quot;el-alert&quot;
+      :class=&quot;[typeClass, center ? 'is-center' : '', 'is-' + effect]&quot;
+      v-show=&quot;visible&quot;
+      role=&quot;alert&quot;
+    &gt;
+      &lt;i class=&quot;el-alert__icon&quot; :class=&quot;[ iconClass, isBigIcon ]&quot; v-if=&quot;showIcon&quot;&gt;&lt;/i&gt;
+      &lt;div class=&quot;el-alert__content&quot;&gt;
+        &lt;span class=&quot;el-alert__title&quot; :class=&quot;[ isBoldTitle ]&quot; v-if=&quot;title || $slots.title&quot;&gt;
+          &lt;slot name=&quot;title&quot;&gt;{{ title }}&lt;/slot&gt;
+        &lt;/span&gt;
+        &lt;p class=&quot;el-alert__description&quot; v-if=&quot;$slots.default &amp;&amp; !description&quot;&gt;&lt;slot&gt;&lt;/slot&gt;&lt;/p&gt;
+        &lt;p class=&quot;el-alert__description&quot; v-if=&quot;description &amp;&amp; !$slots.default&quot;&gt;{{ description }}&lt;/p&gt;
+        &lt;i class=&quot;el-alert__closebtn&quot; :class=&quot;{ 'is-customed': closeText !== '', 'el-icon-close': closeText === '' }&quot; v-show=&quot;closable&quot; @click=&quot;close()&quot;&gt;{{closeText}}&lt;/i&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/transition&gt;
+&lt;/template&gt;
+</code></pre>
+<p>这里就是alert函数的主体部分</p>
+<h3 id="transition组件">transition组件</h3>
+<p>常规的template模块里面包裹的是vue提供的transition组件：<a href="https://cn.vuejs.org/v2/guide/transitions.html">官方transition文档</a></p>
+<figure data-type="image" tabindex="2"><img src="https://user-gold-cdn.xitu.io/2020/7/11/1733e940ead5ac72?w=728&amp;h=158&amp;f=png&amp;s=14070" alt="transition功能展示" loading="lazy"></figure>
+<p>Vue在元素显示与隐藏的过渡中，提供了 6 个 class 来切换：</p>
+<ul>
+<li>
+<p>v-enter：定义进入过渡的开始状态。在元素被插入之前生效，在元素被插入之后的下一帧移除。</p>
+</li>
+<li>
+<p>v-enter-active：定义进入过渡生效时的状态。在整个进入过渡的阶段中应用，在元素被插入之前生效，在过渡/动画完成之后移除。这个类可以被用来定义进入过渡的过程时间，延迟和曲线函数。</p>
+</li>
+<li>
+<p>v-enter-to: 2.1.8版及以上 定义进入过渡的结束状态。在元素被插入之后下一帧生效 (与此同时 v-enter 被移除)，在过渡/动画完成之后移除。</p>
+</li>
+<li>
+<p>v-leave: 定义离开过渡的开始状态。在离开过渡被触发时立刻生效，下一帧被移除。</p>
+</li>
+<li>
+<p>v-leave-active：定义离开过渡生效时的状态。在整个离开过渡的阶段中应用，在离开过渡被触发时立刻生效，在过渡/动画完成之后移除。这个类可以被用来定义离开过渡的过程时间，延迟和曲线函数。</p>
+</li>
+<li>
+<p>v-leave-to: 2.1.8版及以上 定义离开过渡的结束状态。在离开过渡被触发之后下一帧生效 (与此同时 v-leave 被删除)，在过渡/动画完成之后移除。</p>
+</li>
+</ul>
+<pre><code> &lt;transition name=&quot;el-alert-fade&quot;&gt;
+ ...
+ &lt;/transition&gt;
+</code></pre>
+<p>定位它的过渡动画，位于packages/theme-chalk/src/alert.scss</p>
+<pre><code class="language-css">.el-alert-fade-enter,
+.el-alert-fade-leave-active {
+  opacity: 0;
+}
+</code></pre>
+<p>可以看到它从进入到退出只是改变了透明度。</p>
+<h3 id="div部分">div部分</h3>
+<p>查看transition中的div部分。</p>
+<pre><code>    &lt;div
+      class=&quot;el-alert&quot;
+      :class=&quot;[typeClass, center ? 'is-center' : '', 'is-' + effect]&quot;
+      v-show=&quot;visible&quot;
+      role=&quot;alert&quot;
+    &gt;
+    //props
+    effect: {
+        type: String,
+        default: 'light',
+        validator: function(value) {
+          return ['light', 'dark'].indexOf(value) !== -1;
+        }
+    }
+</code></pre>
+<ul>
+<li>
+<p>运用了<a href="https://cn.vuejs.org/v2/guide/class-and-style.html#%E6%95%B0%E7%BB%84%E8%AF%AD%E6%B3%95">vue 的 class 的数组语法</a>。始终添加typeClass,以及在is-center = true时添加center，根据父组件传入的value进行校验（light or dark）并添加is-light or is-dark。</p>
+</li>
+<li>
+<p>typeClass：通过外部传入的 props 的 type 属性来拼接成 el-alert--${ this.type }，默认值为 info</p>
+</li>
+</ul>
+<pre><code>      typeClass() {
+        return `el-alert--${ this.type }`;// 根据传递的type返回不同的类
+      },
+        //props
+        type: {
+                type: String,
+                default: 'info'
+            },
+      
+</code></pre>
+<ul>
+<li>role属性作用是告诉Accessibility类应用（比如屏幕朗读程序，为盲人提供的访问网络的便利程序），这个元素所扮演的角色，主要是供残疾人使用。使用role可以增强文本的可读性和语义化。</li>
+<li>根据visible来决定该div是否可见。</li>
+</ul>
+<h3 id="i标签部分-图标">i标签部分-图标</h3>
+<pre><code>&lt;i class=&quot;el-alert__icon&quot; :class=&quot;[ iconClass, isBigIcon ]&quot; v-if=&quot;showIcon&quot;&gt;&lt;/i&gt;
+ 
+    iconClass() {
+        return TYPE_CLASSES_MAP[this.type] || 'el-icon-info';
+      },
+
+      isBigIcon() {
+        return this.description || this.$slots.default ? 'is-big' : '';
+      },
+</code></pre>
+<ul>
+<li>iconClass：用来判断如果在显示 icon 的情况下，根据 type 来决定显示哪个 icon，默认为 el-icon-info。决定图标类型。</li>
+<li>isBigIcon：当有辅助性文字介绍的时候，返回 is-big。决定图标大小。<br>
+这两个都是计算属性。</li>
+</ul>
+<p>这里对应的就是alert的相应图标</p>
+<p>小标签<br>
+<img src="https://user-gold-cdn.xitu.io/2020/7/13/1734864d337dbe1a?w=835&amp;h=61&amp;f=png&amp;s=2892" alt="小标签" loading="lazy"><br>
+大标签<br>
+<img src="https://user-gold-cdn.xitu.io/2020/7/13/1734864a35f60fe4?w=825&amp;h=72&amp;f=png&amp;s=4211" alt="大标签" loading="lazy"><br>
+其中TYPE_CLASSES_MAP是一个常量对象，根据传递的type来map到相应的类名。</p>
+<pre><code>  const TYPE_CLASSES_MAP = {
+    'success': 'el-icon-success',
+    'warning': 'el-icon-warning',
+    'error': 'el-icon-error'
+  };
+</code></pre>
+<p>而大图标是由this.description决定的</p>
+<pre><code>//props
+      description: {
+        type: String,
+        default: ''
+      },
+</code></pre>
+<p>当存在描述性内容（description传入）或者用 this.$slots.default 来判断是否是通过默认 slot 传入的，如果有值（为 VNode），就设为相应的class，如果为undefined，就为空。</p>
+<p>slots部分可以参考相关文档：<a href="https://cn.vuejs.org/v2/guide/components-slots.html#%E6%8F%92%E6%A7%BD%E5%86%85%E5%AE%B9">插槽——vuejs官方文档</a></p>
+<p>这里占个坑先。后续开vue的源码详解再附加链接。</p>
+<h3 id="主体部分">主体部分</h3>
+<pre><code class="language-html"> &lt;div class=&quot;el-alert__content&quot;&gt;
+        &lt;span class=&quot;el-alert__title&quot; :class=&quot;[ isBoldTitle ]&quot; v-if=&quot;title || $slots.title&quot;&gt;
+          &lt;slot name=&quot;title&quot;&gt;{{ title }}&lt;/slot&gt;
+        &lt;/span&gt;
+        &lt;p class=&quot;el-alert__description&quot; v-if=&quot;$slots.default &amp;&amp; !description&quot;&gt;&lt;slot&gt;&lt;/slot&gt;&lt;/p&gt;
+        &lt;p class=&quot;el-alert__description&quot; v-if=&quot;description &amp;&amp; !$slots.default&quot;&gt;{{ description }}&lt;/p&gt;
+        &lt;i class=&quot;el-alert__closebtn&quot; :class=&quot;{ 'is-customed': closeText !== '', 'el-icon-close': closeText === '' }&quot; v-show=&quot;closable&quot; @click=&quot;close()&quot;&gt;{{closeText}}&lt;/i&gt;
+      &lt;/div&gt;
+</code></pre>
+<p>内容部分，包括标题、内容和关闭按钮三个部分。</p>
+<ul>
+<li>标题：由名为title的props决定，包括一个isBoldTitle的计算属性判断是否是粗体，显示与否根据title是否存在进行显示</li>
+<li>警告描述slot：可以是自定义，也可以传递description的props内容来决定。</li>
+<li>关闭按钮i：存在closeText这一prop的内容的话，会自定义关闭内容；<br>
+会根据closable这一prop决定是否显示该关闭按钮；<br>
+绑定单击时触发事件close()</li>
+</ul>
+<pre><code>    methods: {
+      close() {
+        this.visible = false;
+        this.$emit('close');
+      }
+    },
+</code></pre>
+<p>将按钮显示关闭，并且触发close事件。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[vue+CodeMirror+垂直双栏布局]]></title>
+        <id>https://giriawsh.github.io/post/vuecodemirrorchui-zhi-shuang-lan-bu-ju/</id>
+        <link href="https://giriawsh.github.io/post/vuecodemirrorchui-zhi-shuang-lan-bu-ju/">
+        </link>
+        <updated>2020-09-10T07:00:33.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="前言">前言</h1>
+<p>关于codemirror在nuxt中正确引入,在上一篇blog里有做介绍,现在想要实现可以像codepen一样,自由调节的垂直双栏代码输入框,要怎么做呢?</p>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="前言">前言</h1>
+<p>关于codemirror在nuxt中正确引入,在上一篇blog里有做介绍,现在想要实现可以像codepen一样,自由调节的垂直双栏代码输入框,要怎么做呢?</p>
+<!-- more -->
+<h1 id="官方文档">官方文档</h1>
+<p>Codemirror官方有给出    <code>resize</code>属性,加上这个css属性,我们会看到右下角有一个小标记,可以自由地调节单个高度与宽度,将其设定为:<br>
+<code>resize: vertical;</code>就可以限定只调整高度了.</p>
+<h1 id="进一步调整">进一步调整</h1>
+<p>然而双栏并不是那么容易,首先理想型的上下栏调整需要中间有一个可以调节的bar,而不是单单的左下角,其次,如何在一个div中恰好地容纳下两个div,并且动态地调整高度呢?</p>
+<p>压缩上面的div,动态更新下面的div并使其占满,这里我们要用到两个属性:flex+overflow</p>
+<h1 id="最终配置">最终配置</h1>
+<!--more-->
+<pre><code class="language-css">    css:
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 580px;
+      overflow: auto;
+    }
+
+    .box1, .box2 {
+      border-radius: 5px;
+      padding: 20px;
+      font-size: 100%;
+      box-sizing: inherit;
+      overflow: auto;//防止拖拽超过wrapper高度
+    }
+
+    .handler {
+      width: 100%;
+      height: 7px;
+      padding: 0;
+      cursor: ns-resize;
+      z-index: 2;//这里是为了防止移动时被codemirror数字覆盖
+    }
+
+    .handler::before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      margin: 0 auto;
+    }
+
+    .CodeMirror {
+      resize: vertical;
+      overflow: auto !important;
+    }
+</code></pre>
+<pre><code class="language-html">&lt;div class=&quot;wrapper&quot;&gt;
+  &lt;no-ssr placeholder=&quot;Codemirror Loading...&quot; class=&quot;box1&quot;&gt;
+    &lt;codemirror v-model=&quot;code1&quot;
+                :options=&quot;cmOption&quot;
+                @cursorActivity=&quot;onCmCursorActivity&quot;
+                @ready=&quot;onCmReady&quot;
+                @focus=&quot;onCmFocus&quot;
+                @blur=&quot;onCmBlur&quot;&gt;
+    &lt;/codemirror&gt;
+  &lt;/no-ssr&gt;
+  &lt;div class=&quot;handler&quot;&gt;&lt;/div&gt;
+  &lt;no-ssr placeholder=&quot;Codemirror Loading...&quot; class=&quot;box2&quot;&gt;
+    &lt;codemirror v-model=&quot;code2&quot;
+                :options=&quot;cmOption&quot;
+                @cursorActivity=&quot;onCmCursorActivity&quot;
+                @ready=&quot;onCmReady&quot;
+                @focus=&quot;onCmFocus&quot;
+                @blur=&quot;onCmBlur&quot;&gt;
+    &lt;/codemirror&gt;
+  &lt;/no-ssr&gt;
+&lt;/div&gt;
+</code></pre>
+<h1 id="效果图">效果图</h1>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/7/173285c79eeb076c?w=598&amp;h=714&amp;f=png&amp;s=17226" alt="效果图" loading="lazy"><br>
+啊无视这个背景颜色，这是我chrome插件的问题。</p>
+<p>这里还存在无法固定底栏的问题,下次查查如何才能将一个div的底栏固定在一个高度,希望可以解决.</p>
+<h1 id="参考">参考</h1>
+<p><a href="https://juejin.im/post/6844903923392872461">vue-resieze深度解读</a></p>
+<p><a href="https://codepen.io/Sphinxxxx/pen/dVPXdX">cm-resieze demo</a>&lt;-这个基于textarea实现效果很好</p>
+<p><a href="https://jsfiddle.net/mindplay/rs2L2vtb/2/">基于div的单栏可变高度</a>&lt;-这个的bar很符合我心目中的标准</p>
+<p><a href="https://codepen.io/sakifargo/pen/KodNyR">codemirror resize+padding</a></p>
+<p>还有一个专门针对codemirror resize的讨论帖,突然找不到了,那个帮助也很大</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[nuxt动态背景设置与立体字体]]></title>
+        <id>https://giriawsh.github.io/post/nuxt-dong-tai-bei-jing-she-zhi-yu-li-ti-zi-ti/</id>
+        <link href="https://giriawsh.github.io/post/nuxt-dong-tai-bei-jing-she-zhi-yu-li-ti-zi-ti/">
+        </link>
+        <updated>2020-09-10T06:59:12.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="前言">😋前言</h1>
+<p>写着玩系列，HTML页面练习，如何写一个全屏的波浪式渐变色动态背景以及一个简单的立体字体demo。</p>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="前言">😋前言</h1>
+<p>写着玩系列，HTML页面练习，如何写一个全屏的波浪式渐变色动态背景以及一个简单的立体字体demo。</p>
+<!-- more -->
+<h1 id="代码">代码</h1>
+<pre><code class="language-css">&lt;template&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div&gt;
+      &lt;h1 id=&quot;text3d-en&quot;&gt;test&lt;/h1&gt;
+      &lt;h1 id=&quot;text3d-ch&quot;&gt;立体字体&lt;/h1&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+
+&lt;/script&gt;
+
+&lt;style&gt;
+  body {
+    background: linear-gradient(-45deg, #99ccff, #006699, #003366, #000);//渐变色背景
+    background-size: 400% 400%;
+    -webkit-animation: gradient 15s ease infinite;
+    animation: gradient 15s ease infinite;
+  }
+
+  @-webkit-keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+&lt;/style&gt;
+&lt;style&gt;
+  h1 {
+    width: 100%;
+    margin: 0 auto 0 auto;
+    font-family: 'Lato', sans-serif;
+    line-height: 10px;
+    font-size: 2.0rem;
+    padding: 50px 50px;
+    text-align: center;
+    text-transform: uppercase;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1::before {
+    content:&quot;&quot;;
+    width: 100%;
+    position: absolute;
+    top: -200px;
+    left: 10px;
+    transform: rotate(55deg);
+  }
+
+  #text3d-ch {
+    color: #70869d;
+    letter-spacing: .15em;
+    text-shadow:
+      -1px -1px 1px #efede3,
+      0px 1px 0 #2e2e2e,
+      0px 2px 0 #2c2c2c,
+      0px 3px 0 #2a2a2a,
+      0px 4px 0 #282828;
+  }
+  #text3d-en {
+    color: #70869d;
+    letter-spacing: .15em;
+  }
+  .v-btn :hover{
+    color: #2983f3;
+  }
+&lt;/style&gt;
+
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[vue路由跳转页面样式混乱，刷新重置问题]]></title>
+        <id>https://giriawsh.github.io/post/vue-lu-you-tiao-zhuan-ye-mian-yang-shi-hun-luan-shua-xin-chong-zhi-wen-ti/</id>
+        <link href="https://giriawsh.github.io/post/vue-lu-you-tiao-zhuan-ye-mian-yang-shi-hun-luan-shua-xin-chong-zhi-wen-ti/">
+        </link>
+        <updated>2020-09-10T06:58:05.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="问题">👣问题</h1>
+<p>项目在跳转到下一页时会出现排版混乱,只有重新刷新页面才能排版正常的bug</p>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="问题">👣问题</h1>
+<p>项目在跳转到下一页时会出现排版混乱,只有重新刷新页面才能排版正常的bug</p>
+<!-- more -->
+<h1 id="解决办法">解决办法</h1>
+<p>在跳转前和跳转后页面的style上加上scoped，把公共样式写到分别写到子组件就OK了</p>
+<p>scoped属性（可选属性）：会自动添加一个唯一的属性 (比如 data-v-21e5b78) 为组件内 CSS 指定作用域，即css样式只在当前页面加载</p>
+<p>如果引入了外部框架，很可能用了全局css，可能会影响你的部分样式，通过审查元素去定位问题就可以了。</p>
+<h1 id="参考">参考</h1>
+<p><a href="https://blog.csdn.net/qq_44333271/article/details/88175219">vue 路由跳转，导致页面样式错乱，刷新又好了的情况</a></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[nuxt部署后svg颜色变黑问题解决]]></title>
+        <id>https://giriawsh.github.io/post/nuxt-bu-shu-hou-svg-yan-se-bian-hei-wen-ti-jie-jue/</id>
+        <link href="https://giriawsh.github.io/post/nuxt-bu-shu-hou-svg-yan-se-bian-hei-wen-ti-jie-jue/">
+        </link>
+        <updated>2020-09-10T06:56:31.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="前言">👣前言</h1>
+<p>在本地dev时并不会出现svg颜色异常问题,但是Prod mode以及部署后会出现相关svg图片只有黑色,今天调查解决了一下</p>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="前言">👣前言</h1>
+<p>在本地dev时并不会出现svg颜色异常问题,但是Prod mode以及部署后会出现相关svg图片只有黑色,今天调查解决了一下</p>
+<!-- more -->
+<h1 id="解决方法">解决方法</h1>
+<blockquote>
+<p>这个机制是依赖css3的 currentColor 的，如果不写 fill-rule:currentColor 的话，svg是没法自动继承颜色的，只有一个默认的黑色。</p>
+</blockquote>
+<p>于是在svg def中将fill-rule改为currentColor,并把fill的颜色注释掉.</p>
+<p>然后在调用该svg的components中</p>
+<pre><code class="language-css">&lt;style&gt;
+  svg{
+    fill: #000 //the color you want
+  }
+&lt;/style&gt;
+</code></pre>
+<h1 id="参考资料">参考资料</h1>
+<p><a href="https://github.com/ant-design/antd-mobile-icons/issues/4">svg color属性无法修改颜色?</a></p>
+<p><a href="https://www.zhangxinxu.com/wordpress/2014/07/svg-sprites-fill-color-currentcolor/">svg颜色继承</a></p>
+<p><a href="https://cloud.tencent.com/developer/ask/173821">SVG路径如何填充CSS颜色？</a></p>
+<p>还有相关的mdn的资料也对svg走线的上色有帮助</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[nuxt引入codemirror 附加python格式示例]]></title>
         <id>https://giriawsh.github.io/post/nuxt-yin-ru-codemirror-fu-jia-python-ge-shi-shi-li/</id>

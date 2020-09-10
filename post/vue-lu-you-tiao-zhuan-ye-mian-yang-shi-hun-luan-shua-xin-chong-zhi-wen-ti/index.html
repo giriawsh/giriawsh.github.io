@@ -2,23 +2,22 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>关于 | Giria&#39;s Blog</title>
+<title>vue路由跳转页面样式混乱，刷新重置问题 | Giria&#39;s Blog</title>
 <link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico?v=1599721419999">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://giriawsh.github.io//styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="关于 | Giria&#39;s Blog - Atom Feed" href="https://giriawsh.github.io//atom.xml">
+<link rel="alternate" type="application/atom+xml" title="vue路由跳转页面样式混乱，刷新重置问题 | Giria&#39;s Blog - Atom Feed" href="https://giriawsh.github.io//atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="
-欢迎来到我的小站呀，很高兴遇见你！🤝
+    <meta name="description" content="👣问题
+项目在跳转到下一页时会出现排版混乱,只有重新刷新页面才能排版正常的bug
 
-🏠 关于本站
-吉莉亚的博客，一个不正经文章集合地，范围包括但不限于前端、算法、小说、日记、学习记录、手绘。
-👨‍💻 博主是谁
-Giria，一只BUPT大四狗，喜欢倒腾东西的程序媛，白日梦专家..." />
-    <meta name="keywords" content="" />
+解决办法
+在跳转前和跳转后页面的style上加上scoped，把公共样式写到分别写到子组件就OK了
+scoped属性（可选属性）：会自动添加一个唯一的属性..." />
+    <meta name="keywords" content="前端,Nuxt.js,Vue.js" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -80,43 +79,48 @@ Giria，一只BUPT大四狗，喜欢倒腾东西的程序媛，白日梦专家..
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              关于
+              vue路由跳转页面样式混乱，刷新重置问题
             </h2>
             <div class="post-info">
               <span>
-                2019-01-25
+                2020-09-10
               </span>
               <span>
                 1 min read
               </span>
               
+                <a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="post-tag">
+                  # 前端
+                </a>
+              
+                <a href="https://giriawsh.github.io/tag/yklmR1Lly/" class="post-tag">
+                  # Nuxt.js
+                </a>
+              
+                <a href="https://giriawsh.github.io/tag/P-LvHoQha/" class="post-tag">
+                  # Vue.js
+                </a>
+              
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<p>吉莉亚的博客，一个不正经文章集合地，范围包括但不限于前端、算法、小说、日记、学习记录、手绘。</p>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<p>Giria，一只BUPT大四狗，喜欢倒腾东西的程序媛，白日梦专家。</p>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<h2 id="联系我呀">📬 联系我呀</h2>
-<p>Github地址：https://github.com/giriawsh</p>
-<p>掘金个人账号：https://juejin.im/user/439393493975245</p>
+                <h1 id="问题">👣问题</h1>
+<p>项目在跳转到下一页时会出现排版混乱,只有重新刷新页面才能排版正常的bug</p>
+<!-- more -->
+<h1 id="解决办法">解决办法</h1>
+<p>在跳转前和跳转后页面的style上加上scoped，把公共样式写到分别写到子组件就OK了</p>
+<p>scoped属性（可选属性）：会自动添加一个唯一的属性 (比如 data-v-21e5b78) 为组件内 CSS 指定作用域，即css样式只在当前页面加载</p>
+<p>如果引入了外部框架，很可能用了全局css，可能会影响你的部分样式，通过审查元素去定位问题就可以了。</p>
+<h1 id="参考">参考</h1>
+<p><a href="https://blog.csdn.net/qq_44333271/article/details/88175219">vue 路由跳转，导致页面样式错乱，刷新又好了的情况</a></p>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
-<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
-<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
-</ul>
-</li>
+<li><a href="#%E9%97%AE%E9%A2%98">👣问题</a></li>
+<li><a href="#%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95">解决办法</a></li>
+<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
 </ul>
 
               </div>
@@ -124,6 +128,15 @@ Giria，一只BUPT大四狗，喜欢倒腾东西的程序媛，白日梦专家..
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://giriawsh.github.io/post/nuxt-bu-shu-hou-svg-yan-se-bian-hei-wen-ti-jie-jue/">
+              <h3 class="post-title">
+                nuxt部署后svg颜色变黑问题解决
+              </h3>
+            </a>
+          </div>
         
 
         

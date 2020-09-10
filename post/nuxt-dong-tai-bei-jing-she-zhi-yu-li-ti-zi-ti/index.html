@@ -2,23 +2,23 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>关于 | Giria&#39;s Blog</title>
+<title>nuxt动态背景设置与立体字体 | Giria&#39;s Blog</title>
 <link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico?v=1599721419999">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://giriawsh.github.io//styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="关于 | Giria&#39;s Blog - Atom Feed" href="https://giriawsh.github.io//atom.xml">
+<link rel="alternate" type="application/atom+xml" title="nuxt动态背景设置与立体字体 | Giria&#39;s Blog - Atom Feed" href="https://giriawsh.github.io//atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="
-欢迎来到我的小站呀，很高兴遇见你！🤝
+    <meta name="description" content="😋前言
+写着玩系列，HTML页面练习，如何写一个全屏的波浪式渐变色动态背景以及一个简单的立体字体demo。
 
-🏠 关于本站
-吉莉亚的博客，一个不正经文章集合地，范围包括但不限于前端、算法、小说、日记、学习记录、手绘。
-👨‍💻 博主是谁
-Giria，一只BUPT大四狗，喜欢倒腾东西的程序媛，白日梦专家..." />
-    <meta name="keywords" content="" />
+代码
+&lt;template&gt;
+  &lt;div class=&quot;container&quot;&gt;
+  ..." />
+    <meta name="keywords" content="前端,Nuxt.js,Vue.js" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -80,43 +80,129 @@ Giria，一只BUPT大四狗，喜欢倒腾东西的程序媛，白日梦专家..
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              关于
+              nuxt动态背景设置与立体字体
             </h2>
             <div class="post-info">
               <span>
-                2019-01-25
+                2020-09-10
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
+              
+                <a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="post-tag">
+                  # 前端
+                </a>
+              
+                <a href="https://giriawsh.github.io/tag/yklmR1Lly/" class="post-tag">
+                  # Nuxt.js
+                </a>
+              
+                <a href="https://giriawsh.github.io/tag/P-LvHoQha/" class="post-tag">
+                  # Vue.js
+                </a>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<p>吉莉亚的博客，一个不正经文章集合地，范围包括但不限于前端、算法、小说、日记、学习记录、手绘。</p>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<p>Giria，一只BUPT大四狗，喜欢倒腾东西的程序媛，白日梦专家。</p>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<h2 id="联系我呀">📬 联系我呀</h2>
-<p>Github地址：https://github.com/giriawsh</p>
-<p>掘金个人账号：https://juejin.im/user/439393493975245</p>
+                <h1 id="前言">😋前言</h1>
+<p>写着玩系列，HTML页面练习，如何写一个全屏的波浪式渐变色动态背景以及一个简单的立体字体demo。</p>
+<!-- more -->
+<h1 id="代码">代码</h1>
+<pre><code class="language-css">&lt;template&gt;
+  &lt;div class=&quot;container&quot;&gt;
+    &lt;div&gt;
+      &lt;h1 id=&quot;text3d-en&quot;&gt;test&lt;/h1&gt;
+      &lt;h1 id=&quot;text3d-ch&quot;&gt;立体字体&lt;/h1&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+
+&lt;/script&gt;
+
+&lt;style&gt;
+  body {
+    background: linear-gradient(-45deg, #99ccff, #006699, #003366, #000);//渐变色背景
+    background-size: 400% 400%;
+    -webkit-animation: gradient 15s ease infinite;
+    animation: gradient 15s ease infinite;
+  }
+
+  @-webkit-keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+&lt;/style&gt;
+&lt;style&gt;
+  h1 {
+    width: 100%;
+    margin: 0 auto 0 auto;
+    font-family: 'Lato', sans-serif;
+    line-height: 10px;
+    font-size: 2.0rem;
+    padding: 50px 50px;
+    text-align: center;
+    text-transform: uppercase;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1::before {
+    content:&quot;&quot;;
+    width: 100%;
+    position: absolute;
+    top: -200px;
+    left: 10px;
+    transform: rotate(55deg);
+  }
+
+  #text3d-ch {
+    color: #70869d;
+    letter-spacing: .15em;
+    text-shadow:
+      -1px -1px 1px #efede3,
+      0px 1px 0 #2e2e2e,
+      0px 2px 0 #2c2c2c,
+      0px 3px 0 #2a2a2a,
+      0px 4px 0 #282828;
+  }
+  #text3d-en {
+    color: #70869d;
+    letter-spacing: .15em;
+  }
+  .v-btn :hover{
+    color: #2983f3;
+  }
+&lt;/style&gt;
+
+</code></pre>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
-<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
-<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
-</ul>
-</li>
+<li><a href="#%E5%89%8D%E8%A8%80">😋前言</a></li>
+<li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li>
 </ul>
 
               </div>
@@ -124,6 +210,15 @@ Giria，一只BUPT大四狗，喜欢倒腾东西的程序媛，白日梦专家..
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://giriawsh.github.io/post/vue-lu-you-tiao-zhuan-ye-mian-yang-shi-hun-luan-shua-xin-chong-zhi-wen-ti/">
+              <h3 class="post-title">
+                vue路由跳转页面样式混乱，刷新重置问题
+              </h3>
+            </a>
+          </div>
         
 
         
