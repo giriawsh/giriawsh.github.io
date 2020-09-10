@@ -1,160 +1,115 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
+  <head>
+    <meta charset="utf-8" >
 
-<head>
-  <meta charset="UTF-8" />
-<title>element源码学习-Alert组件 - Giria&#39;s Blog</title>
-<meta name="description" content="Live only once, make it count">
+<title>element源码学习-Alert组件 | Giria&#39;s Blog</title>
+
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-<link type='text/css' rel='stylesheet' href='https://giriawsh.github.io//styles/main.css' media='screen' />
-<link type="text/css" rel="stylesheet" href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css">
-<link type="text/css" rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico?v=1599723722826">
+<link rel="stylesheet" href="https://giriawsh.github.io//styles/main.css">
 
-<script type="text/javascript" src='https://giriawsh.github.io//media/scripts/jquery.js'></script>
-<script type="text/javascript" src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
 
-<script>
-    hljs.initHighlightingOnLoad();
-</script>
-</head>
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
 
-<body>
-  <div class="layout theme-dark">
-    <div class="layout-header">
+  
 
-	<div class="layout-header-main">
-		<div class="container">
-			<div class="row justify-content-lg-center">
-				<div class="col-12 col-lg-9">
 
-					<div class="navbar">
-
-						<div class="logo">
-							<a href="https://giriawsh.github.io/">
-								<img class="logo"
-									src="https://giriawsh.github.io//media/images/site_avatar.png?v=1599723269114"
-									alt="">
-							</a>
-						</div>
-
-						<div class="menu d-md-inline-block d-none">
-							<ul class="layout-navigation-list">
-								
-								<li class="layout-navigation-item"><a title="首页"
-										href="/">首页</a>
-								</li>
-								
-								<li class="layout-navigation-item"><a title="标签"
-										href="/tags">标签</a>
-								</li>
-								
-								<li class="layout-navigation-item"><a title="归档"
-										href="/archives">归档</a>
-								</li>
-								
-								<li class="layout-navigation-item"><a title="关于"
-										href="/post/about">关于</a>
-								</li>
-								
-							</ul>
-						</div>
-
-						<div class="item d-md-inline-block d-none">
-							<div class="search-icon">
-								<i class="fa fa-search" aria-hidden="true"></i>
-							</div>
-						</div>
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 
 
-						<div class="d-md-inline-block d-none">
-							<div class="search-lightbox">
-								<div class="search-body">
+    <meta name="description" content="🤓前言
+一直受到element组件库的照顾，觉得其中有很多值得分析的点和前端设计思想，遂开始整理这个系列。可能会有点乱，资料和分析参考我会附链接，后期可以再做一次整理。也算是对自己前端的一次提升能力学习。
 
-									<form id="gridea-search-form" data-update="1599723269114" action="/search/" class="search-form">
-										<input type="text" name="q" id="s" value="" class="search-field" placeholder="请输入搜索关键词" aria-label="请输入搜索关键词" required="">
-										<button type="submit" class="submit" aria-label="Submit">
-											<i class="fa fa-search" aria-hidden="true"></i>
-										</button>
-									</form>
-
-								</div>
-							</div>
-						</div>
-
-						<div class="nav d-md-none d-inline-block">
-							<div class="trigger">
-								<i class="fa fa-bars layout-btn-toggle" aria-hidden="true"></i>
-							</div>
-						</div>
-
-					</div>
-
-				</div>
-			</div>
+结构分析
 
 
+.github：..." />
+    <meta name="keywords" content="Element UI,前端,Vue.js,JavaScript" />
+  </head>
+  <body>
+    <div id="app" class="main">
 
-
-		</div>
-	</div>
-
-</div>
-    <div class="layout-collapse d-md-none">
-	<div class="layout-collapse-main">
-		<ul class="layout-collapse-list">
-			
-			<li class="layout-collapse-item"><a title="首页" href="/">首页</a></li>
-			
-			<li class="layout-collapse-item"><a title="标签" href="/tags">标签</a></li>
-			
-			<li class="layout-collapse-item"><a title="归档" href="/archives">归档</a></li>
-			
-			<li class="layout-collapse-item"><a title="关于" href="/post/about">关于</a></li>
-			
-
-		</ul>
-	</div>
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://giriawsh.github.io/">
+        <img src="https://giriawsh.github.io//images/avatar.png?v=1599723722826" class="site-logo">
+        <h1 class="site-title">Giria&#39;s Blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Live only once, make it count
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a> | <a class="rss" href="https://giriawsh.github.io//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
 </div>
 
-    <div class="layout-content">
-      <div class="layout-content-main">
-        <div class="container">
-          <div class="row justify-content-lg-center">
-            <div class="col-12 col-lg-9">
-              <div class="layout-post">
-                <div class="layout-post-body">
-                  <div class="row">
 
-                    <div class="col-12 col-lg-10">
-                      <div class="layout-post-main m-right m-md-right">
-                        <div class="layout-post-header">
-                          <h1 class="layout-post-title">element源码学习-Alert组件</h1>
-                          <div class="layout-post-meta">
-                            <div class="item">
-                               <a href="https://giriawsh.github.io/tag/NJk8FHLCs/" class="post--keyword"
-                                data-title="Element UI" data-type="post_tag" data-term-id="39">Element UI</a>
-                               <a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="post--keyword"
-                                data-title="前端" data-type="post_tag" data-term-id="39">前端</a>
-                               <a href="https://giriawsh.github.io/tag/P-LvHoQha/" class="post--keyword"
-                                data-title="Vue.js" data-type="post_tag" data-term-id="39">Vue.js</a>
-                               <a href="https://giriawsh.github.io/tag/2G-O1ZTp4/" class="post--keyword"
-                                data-title="JavaScript" data-type="post_tag" data-term-id="39">JavaScript</a>
-                              
-                            </div>
-                            <div class="item">
-                              <span>2020-09-10</span>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="layout-post-content">
-                          <div class="layout-post-item">
-                            
-                            <p class="with-img"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200910150246.png"
-                                class="attachment-full size-full wp-post-image" alt="element源码学习-Alert组件" /></p>
-                            
-                            <h1 id="前言">🤓前言</h1>
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">element源码学习-Alert组件</h2>
+            <div class="post-date">2020-09-10</div>
+            
+              <div class="feature-container" style="background-image: url('https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200910150246.png')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="前言">🤓前言</h1>
 <p>一直受到element组件库的照顾，觉得其中有很多值得分析的点和前端设计思想，遂开始整理这个系列。可能会有点乱，资料和分析参考我会附链接，后期可以再做一次整理。也算是对自己前端的一次提升能力学习。</p>
 <!-- more -->
 <h1 id="结构分析">结构分析</h1>
@@ -338,178 +293,99 @@
 </code></pre>
 <p>将按钮显示关闭，并且触发close事件。</p>
 
-                          </div>
-                        </div>
-                        <div class="layout-post-social">
-                          <div class="item reader">
-                            <div id="/post/element-yuan-ma-xue-xi-alert-zu-jian/" class="leancloud-visitors view"
-                              data-flag-title="element源码学习-Alert组件">
-                              <span class="post-meta-item-text">阅读 </span>
-                              <span class="leancloud-visitors-count"></span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="layout-post-navigation">
-                          <div class="navigation-list">
-                            
-                            <div class="post-card row">
-                              
-                              <div class="card-content col-8 col-md-9">
-                                <div class="card-body">
-                                  <div class="header">
-                                    <a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-1-an-zhuang-mu-lu-shi-li-hua-vuemo-ban-yu-fa/" class="title">
-                                      <h4>Vue学习笔记1-安装、目录、实例化vue、模板语法</h4>
-                                    </a>
-                                  </div>
-                                  <div class="inner d-none d-sm-block">
-                                    <div class="abstract">
-                                      <h1 id="前言">👀前言</h1>
-<p>学习笔记，结合官方文档与菜鸟教程，可能会po上学习代码到github。</p>
-
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="card-footer">
-                                  <div class="item"><span>上一篇</span></div>
-                                  <div class="item">2020-09-10</div>
-                                </div>
-                              </div>
-                              <div class="card-thumb col-4 col-md-3">
-                                <div class="thumb">
-                                  <a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-1-an-zhuang-mu-lu-shi-li-hua-vuemo-ban-yu-fa/"
-                                    style="background-image: url('https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200910150938.png');"></a>
-                                </div>
-                              </div>
-                              
-                            </div>
-
-                            <div class="post-card row">
-                              
-                              <div class="card-content col-8 col-md-9">
-                                <div class="card-body">
-                                  <div class="header">
-                                    <a href="https://giriawsh.github.io/post/vuecodemirrorchui-zhi-shuang-lan-bu-ju/" class="title">
-                                      <h4>vue+CodeMirror+垂直双栏布局</h4>
-                                    </a>
-                                  </div>
-                                  <div class="inner d-none d-sm-block">
-                                    <div class="abstract">
-                                      <h1 id="️前言">✍️前言</h1>
-<p>关于codemirror在nuxt中正确引入,在上一篇blog里有做介绍,现在想要实现可以像codepen一样,自由调节的垂直双栏代码输入框,要怎么做呢?</p>
-
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="card-footer">
-                                  <div class="item"><span>下一篇</span></div>
-                                  <div class="item">2020-09-10</div>
-                                </div>
-                              </div>
-                              <div class="card-thumb col-4 col-md-3">
-                                <div class="thumb">
-                                  <a href="https://giriawsh.github.io/post/vuecodemirrorchui-zhi-shuang-lan-bu-ju/"
-                                    style="background-image: url('https://user-gold-cdn.xitu.io/2020/7/7/173285c79eeb076c?w=598&amp;h=714&amp;f=png&amp;s=17226');"></a>
-                                </div>
-                              </div>
-                              
-                            </div>
-
-                            
-                          </div>
-                        </div>
-
-                        <div class="layout-comments"></div>
-                        
-                      </div>
-                    </div>
-
-                    <div class="col-12 col-lg-2 d-none d-lg-block">
-                      <div class="layout-post-sidebar">
-                        <div class="layout-sidebar-item">
-                          <ul class="markdownIt-TOC">
-<li><a href="#%E5%89%8D%E8%A8%80">🤓前言</a></li>
-<li><a href="#%E7%BB%93%E6%9E%84%E5%88%86%E6%9E%90">结构分析</a></li>
-<li><a href="#alert%E7%BB%84%E4%BB%B6%E5%88%86%E6%9E%90">Alert组件分析</a>
-<ul>
-<li><a href="#alert%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84">Alert目录结构</a></li>
-<li><a href="#indexjs">index.js</a></li>
-<li><a href="#mainvue">main.vue</a>
-<ul>
-<li><a href="#transition%E7%BB%84%E4%BB%B6">transition组件</a></li>
-<li><a href="#div%E9%83%A8%E5%88%86">div部分</a></li>
-<li><a href="#i%E6%A0%87%E7%AD%BE%E9%83%A8%E5%88%86-%E5%9B%BE%E6%A0%87">i标签部分-图标</a></li>
-<li><a href="#%E4%B8%BB%E4%BD%93%E9%83%A8%E5%88%86">主体部分</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://giriawsh.github.io/tag/NJk8FHLCs/" class="tag">
+                    Element UI
+                  </a>
+                
+                  <a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="tag">
+                    前端
+                  </a>
+                
+                  <a href="https://giriawsh.github.io/tag/P-LvHoQha/" class="tag">
+                    Vue.js
+                  </a>
+                
+                  <a href="https://giriawsh.github.io/tag/2G-O1ZTp4/" class="tag">
+                    JavaScript
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://giriawsh.github.io/post/vuecodemirrorchui-zhi-shuang-lan-bu-ju/">
+                  <h3 class="post-title">
+                    vue+CodeMirror+垂直双栏布局
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
           </div>
+
         </div>
       </div>
     </div>
 
-    <div class="layout-totop d-none"><i class="fa fa-angle-up" aria-hidden="true"></i></div>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
 
-    	<div class="layout-footer">
+AOS.init();
 
-		<div class="container">
-			<div class="row justify-content-lg-center">
-				<div class="col-12 col-lg-9">
-					<div class="footer">
-						<div class="row">
-							<div class="col-12 col-md-9">
-								<div class="footer-copy">
-									
-									Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>
-									<div class="footer-icp d-none d-sm-inline-block">
-										<span class="px-2">⋅</span>
-										
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-3 d-none d-md-block">
-								<div class="footer-links">
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-									
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
-	</div>
+</script>
 
-	<script type="text/javascript" src='https://giriawsh.github.io//media/scripts/main.js'></script>
-	
 
-  </div>
-</body>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
 
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '',
+        clientSecret: '',
+        repo: '',
+        owner: '',
+        admin: [''],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
 </html>
