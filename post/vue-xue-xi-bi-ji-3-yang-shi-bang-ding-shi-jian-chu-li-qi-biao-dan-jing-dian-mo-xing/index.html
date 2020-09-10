@@ -1,0 +1,637 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vue学习笔记3-样式绑定、事件处理器、表单经典模型 | Giria&#39;s Blog</title>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico?v=1599722161212">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://giriawsh.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Vue学习笔记3-样式绑定、事件处理器、表单经典模型 | Giria&#39;s Blog - Atom Feed" href="https://giriawsh.github.io//atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="👀前言
+结合官方文档与菜鸟教程的学习总结系列3。
+
+样式绑定
+class 与 style 是 HTML 元素的属性，用于设置元素的样式，我们可以用 v-bind 来设置样式属性。
+class属性绑定
+我们可以传给 v-bind:class..." />
+    <meta name="keywords" content="Vue学习系列,前端,Vue.js" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://giriawsh.github.io/">
+  <img class="avatar" src="https://giriawsh.github.io//images/avatar.png?v=1599722161212" alt="">
+  </a>
+  <h1 class="site-title">
+    Giria&#39;s Blog
+  </h1>
+  <p class="site-description">
+    Live only once, make it count
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/giriawsh" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Vue学习笔记3-样式绑定、事件处理器、表单经典模型
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-09-10
+              </span>
+              <span>
+                14 min read
+              </span>
+              
+                <a href="https://giriawsh.github.io/tag/qe64KixUR/" class="post-tag">
+                  # Vue学习系列
+                </a>
+              
+                <a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="post-tag">
+                  # 前端
+                </a>
+              
+                <a href="https://giriawsh.github.io/tag/P-LvHoQha/" class="post-tag">
+                  # Vue.js
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="前言">👀前言</h1>
+<p>结合官方文档与菜鸟教程的学习总结系列3。</p>
+<!-- more -->
+<h1 id="样式绑定">样式绑定</h1>
+<p>class 与 style 是 HTML 元素的属性，用于设置元素的样式，我们可以用 v-bind 来设置样式属性。</p>
+<h2 id="class属性绑定">class属性绑定</h2>
+<p>我们可以传给 v-bind:class 一个对象，以动态地切换 class：</p>
+<pre><code>&lt;div v-bind:class=&quot;{ 'active': isActive }&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>上面的语法表示 active 这个 class 存在与否将取决于数据 property isActive</p>
+<p>可以在对象中传入更多字段来动态切换多个 class。v-bind:class 指令也可以与普通的 class attribute 共存</p>
+<pre><code>&lt;div class=&quot;static&quot;
+     v-bind:class=&quot;{ 'active' : isActive, 'text-danger' : hasError }&quot;&gt;
+&lt;/div&gt;
+
+data: {
+  isActive: true,
+  hasError: false
+}
+
+结果渲染为：
+&lt;div class=&quot;static active&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>支持进行属性计算</p>
+<pre><code>new Vue({
+  el: '#app',
+  data: {
+    isActive: true,
+    error: {
+      value: true,
+      type: 'fatal'
+    }
+  },
+  computed: {
+    classObject: function () {
+      return {
+  base: true,
+        active: this.isActive &amp;&amp; !this.error.value,
+        'text-danger': this.error.value &amp;&amp; this.error.type === 'fatal',
+      }
+    }
+  }
+})
+</code></pre>
+<h3 id="数组语法">数组语法</h3>
+<pre><code>&lt;div v-bind:class=&quot;[activeClass, errorClass]&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>还可以使用三元表达式来切换列表中的 class</p>
+<pre><code>&lt;div v-bind:class=&quot;[errorClass ,isActive ? activeClass : '']&quot;&gt;&lt;/div&gt;
+</code></pre>
+<h3 id="用在组件上">用在组件上</h3>
+<p>当在一个自定义组件上使用 class property 时，这些 class 将被添加到该组件的根元素上面。这个元素上已经存在的 class 不会被覆盖。</p>
+<pre><code>Vue.component('my-component', {
+  template: '&lt;p class=&quot;foo bar&quot;&gt;Hi&lt;/p&gt;'
+})
+
+&lt;my-component class=&quot;baz boo&quot;&gt;&lt;/my-component&gt;
+
+最终渲染：
+&lt;p class=&quot;foo bar baz boo&quot;&gt;Hi&lt;/p&gt;
+
+对于带数据绑定 class 也同样适用
+&lt;my-component v-bind:class=&quot;{ active: isActive }&quot;&gt;&lt;/my-component&gt;
+
+最终渲染：
+&lt;p class=&quot;foo bar active&quot;&gt;Hi&lt;/p&gt;
+</code></pre>
+<h2 id="style内联样式绑定">style内联样式绑定</h2>
+<p>在 v-bind:style 直接设置样式，看着非常像 CSS，但其实是一个 JavaScript 对象。</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+    &lt;div v-bind:style=&quot;{ color: activeColor, fontSize: fontSize + 'px' }&quot;&gt;菜鸟教程&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>直接绑定到一个样式对象通常更好，这会让模板更清晰。</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+  &lt;div v-bind:style=&quot;styleObject&quot;&gt;菜鸟教程&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+new Vue({
+  el: '#app',
+  data: {
+    styleObject: {
+      color: 'green',
+      fontSize: '30px'
+    }
+  }
+})
+</code></pre>
+<p>同样的，对象语法常常结合返回对象的计算属性使用。</p>
+<h3 id="数组语法-2">数组语法</h3>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+  &lt;div v-bind:style=&quot;[baseStyles, overridingStyles]&quot;&gt;菜鸟教程&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="多重值">多重值</h3>
+<p>从 2.3.0 起你可以为 style 绑定中的 property 提供一个包含多个值的数组，常用于提供多个带前缀的值。</p>
+<pre><code>&lt;div :style=&quot;{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>这样写只会渲染数组中最后一个被浏览器支持的值。在本例中，如果浏览器支持不带浏览器前缀的 flexbox，那么就只会渲染 display: flex。</p>
+<h1 id="事件处理器">事件处理器</h1>
+<p>通常情况下，我们需要使用一个方法来调用 JavaScript 方法。</p>
+<h2 id="绑定方法">绑定方法</h2>
+<p><strong>v-on</strong> 可以接收一个定义的方法来调用</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+   &lt;!-- `greet` 是在下面定义的方法名 --&gt;
+  &lt;button v-on:click=&quot;greet&quot;&gt;Greet&lt;/button&gt;
+&lt;/div&gt;
+ 
+&lt;script&gt;
+var app = new Vue({
+  el: '#app',
+  data: {
+    name: 'Vue.js'
+  },
+  // 在 `methods` 对象中定义方法
+  methods: {
+    greet: function (event) {
+      // `this` 在方法里指当前 Vue 实例
+      alert('Hello ' + this.name + '!')
+      // `event` 是原生 DOM 事件
+      if (event) {
+          alert(event.target.tagName)
+      }
+    }
+  }
+})
+// 也可以用 JavaScript 直接调用方法
+app.greet() // -&gt; 'Hello Vue.js!'
+&lt;/script&gt;
+</code></pre>
+<h2 id="使用内联-javascript-语句">使用内联 JavaScript 语句</h2>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+  &lt;button v-on:click=&quot;say('hi')&quot;&gt;Say hi&lt;/button&gt;
+  &lt;button v-on:click=&quot;say('what')&quot;&gt;Say what&lt;/button&gt;
+&lt;/div&gt;
+ 
+&lt;script&gt;
+new Vue({
+  el: '#app',
+  methods: {
+    say: function (message) {
+      alert(message)
+    }
+  }
+})
+&lt;/script&gt;
+</code></pre>
+<p>有时也需要在内联语句处理器中访问原始的 DOM 事件。可以用特殊变量 $event 把它传入方法</p>
+<pre><code>&lt;button v-on:click=&quot;warn('Form cannot be submitted yet.', $event)&quot;&gt;
+  Submit
+&lt;/button&gt;
+methods: {
+  warn: function (message, event) {
+    // 现在我们可以访问原生事件对象
+    if (event) {
+      event.preventDefault()
+    }
+    alert(message)
+  }
+}
+</code></pre>
+<h2 id="事件修饰符">事件修饰符</h2>
+<p>Vue.js通过由点(.)表示的指令后缀来调用修饰符。</p>
+<ul>
+<li>.stop</li>
+<li>.prevent</li>
+<li>.capture</li>
+<li>.self</li>
+<li>.once</li>
+<li>.passive</li>
+</ul>
+<pre><code>&lt;!-- 阻止单击事件冒泡 --&gt;
+&lt;a v-on:click.stop=&quot;doThis&quot;&gt;&lt;/a&gt;
+&lt;!-- 提交事件不再重载页面 --&gt;
+&lt;form v-on:submit.prevent=&quot;onSubmit&quot;&gt;&lt;/form&gt;
+&lt;!-- 修饰符可以串联  --&gt;
+&lt;a v-on:click.stop.prevent=&quot;doThat&quot;&gt;&lt;/a&gt;
+&lt;!-- 只有修饰符 --&gt;
+&lt;form v-on:submit.prevent&gt;&lt;/form&gt;
+&lt;!-- 添加事件侦听器时使用事件捕获模式 --&gt;
+&lt;div v-on:click.capture=&quot;doThis&quot;&gt;...&lt;/div&gt;
+&lt;!-- 只当事件在该元素本身（而不是子元素）触发时触发回调 --&gt;
+&lt;div v-on:click.self=&quot;doThat&quot;&gt;...&lt;/div&gt;
+&lt;!-- click 事件只能点击一次，2.1.4版本新增 --&gt;
+&lt;a v-on:click.once=&quot;doThis&quot;&gt;&lt;/a&gt;
+
+&lt;!-- 滚动事件的默认行为 (即滚动行为) 将会立即触发 --&gt;
+&lt;!-- 而不会等待 `onScroll` 完成  --&gt;
+&lt;!-- 这其中包含 `event.preventDefault()` 的情况 --&gt;
+&lt;div v-on:scroll.passive=&quot;onScroll&quot;&gt;...&lt;/div&gt;
+</code></pre>
+<blockquote>
+<p>使用修饰符时，顺序很重要；相应的代码会以同样的顺序产生。因此，用 v-on:click.prevent.self 会阻止所有的点击，而 v-on:click.self.prevent 只会阻止对元素自身的点击。</p>
+</blockquote>
+<blockquote>
+<p>不要把 .passive 和 .prevent 一起使用，因为 .prevent 将会被忽略，同时浏览器可能会向你展示一个警告。请记住，.passive 会告诉浏览器你不想阻止事件的默认行为。</p>
+</blockquote>
+<p>允许为 v-on 在监听键盘事件时添加按键修饰符 <strong>keyup</strong></p>
+<pre><code>&lt;!-- 只有在 keyCode 是 13 时调用 vm.submit() 在有些浏览器中可能已被废弃--&gt;
+&lt;input v-on:keyup.13=&quot;submit&quot;&gt;
+</code></pre>
+<p>关于按键别名：</p>
+<pre><code>&lt;!-- 同上 --&gt;
+&lt;input v-on:keyup.enter=&quot;submit&quot;&gt;
+&lt;!-- 缩写语法 --&gt;
+&lt;input @keyup.enter=&quot;submit&quot;&gt;
+
+.enter
+.tab
+.delete (捕获 &quot;删除&quot; 和 &quot;退格&quot; 键)
+.esc
+.space
+.up
+.down
+.left
+.right
+
+//系统修饰键
+.ctrl
+.alt
+.shift
+.meta
+
+//鼠标按钮修饰符
+.left
+.right
+.middle
+用法：
+&lt;p&gt;&lt;!-- Alt + C --&gt;
+&lt;input @keyup.alt.67=&quot;clear&quot;&gt;
+&lt;!-- Ctrl + Click --&gt;
+&lt;div @click.ctrl=&quot;doSomething&quot;&gt;Do something&lt;/div&gt;
+</code></pre>
+<p>你还可以通过全局 config.keyCodes 对象自定义按键修饰符别名</p>
+<pre><code>// 可以使用 `v-on:keyup.f1`
+Vue.config.keyCodes.f1 = 112
+</code></pre>
+<p>.exact 修饰符允许你控制由精确的系统修饰符组合触发的事件。</p>
+<pre><code>&lt;!-- 即使 Alt 或 Shift 被一同按下时也会触发 --&gt;
+&lt;button v-on:click.ctrl=&quot;onClick&quot;&gt;A&lt;/button&gt;
+
+&lt;!-- 有且只有 Ctrl 被按下的时候才触发 --&gt;
+&lt;button v-on:click.ctrl.exact=&quot;onCtrlClick&quot;&gt;A&lt;/button&gt;
+
+&lt;!-- 没有任何系统修饰符被按下的时候才触发 --&gt;
+&lt;button v-on:click.exact=&quot;onClick&quot;&gt;A&lt;/button&gt;
+</code></pre>
+<h1 id="vue表单经典数据绑定模型">Vue表单（经典数据绑定模型）</h1>
+<p>可以用 <strong>v-model</strong> 指令在表单<code>&lt;input&gt;</code>、<code>&lt;textarea&gt;</code>及<code>&lt;select&gt;</code> 元素上创建双向数据绑定。它会根据控件类型自动选取正确的方法来更新元素。尽管有些神奇，但 v-model 本质上不过是语法糖。它负责监听用户的输入事件以更新数据，并对一些极端场景进行一些特殊处理。</p>
+<blockquote>
+<p>v-model 会忽略所有表单元素的 value、checked、selected attribute 的初始值而总是将 Vue 实例的数据作为数据来源。你应该通过 JavaScript 在组件的 data 选项中声明初始值。</p>
+</blockquote>
+<p>v-model 在内部为不同的输入元素使用不同的 property 并抛出不同的事件</p>
+<ul>
+<li>text 和 textarea 元素使用 value property 和 input 事件；</li>
+<li>checkbox 和 radio 使用 checked property 和 change 事件；</li>
+<li>select 字段将 value 作为 prop 并将 change 作为事件。</li>
+</ul>
+<h2 id="input表单绑定">input表单绑定</h2>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+  &lt;p&gt;input 元素：&lt;/p&gt;
+  &lt;input v-model=&quot;message&quot; placeholder=&quot;编辑我……&quot;&gt;
+  &lt;p&gt;消息是: {{ message }}&lt;/p&gt;
+	
+  &lt;p&gt;textarea 元素：&lt;/p&gt;
+  &lt;p style=&quot;white-space: pre&quot;&gt;{{ message2 }}&lt;/p&gt;
+  &lt;textarea v-model=&quot;message2&quot; placeholder=&quot;多行文本输入……&quot;&gt;&lt;/textarea&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+new Vue({
+  el: '#app',
+  data: {
+    message: 'Runoob',
+	message2: '菜鸟教程\r\nhttp://www.runoob.com'
+  }
+})
+</code></pre>
+<blockquote>
+<p>在文本区域插值<code>(&lt;textarea&gt;{{text}}&lt;/textarea&gt;)</code>并不会生效，应用 v-model 来代替。</p>
+</blockquote>
+<h2 id="复选框多数据绑定">复选框多数据绑定</h2>
+<p>使用数组，多个check值绑定同一个数组上</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+  &lt;p&gt;单个复选框：&lt;/p&gt;
+  &lt;input type=&quot;checkbox&quot; id=&quot;checkbox&quot; v-model=&quot;checked&quot;&gt;
+  &lt;label for=&quot;checkbox&quot;&gt;{{ checked }}&lt;/label&gt;
+	
+  &lt;p&gt;多个复选框：&lt;/p&gt;
+  &lt;input type=&quot;checkbox&quot; id=&quot;runoob&quot; value=&quot;Runoob&quot; v-model=&quot;checkedNames&quot;&gt;
+  &lt;label for=&quot;runoob&quot;&gt;Runoob&lt;/label&gt;
+  &lt;input type=&quot;checkbox&quot; id=&quot;google&quot; value=&quot;Google&quot; v-model=&quot;checkedNames&quot;&gt;
+  &lt;label for=&quot;google&quot;&gt;Google&lt;/label&gt;
+  &lt;input type=&quot;checkbox&quot; id=&quot;taobao&quot; value=&quot;Taobao&quot; v-model=&quot;checkedNames&quot;&gt;
+  &lt;label for=&quot;taobao&quot;&gt;taobao&lt;/label&gt;
+  &lt;br&gt;
+  &lt;span&gt;选择的值为: {{ checkedNames }}&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+new Vue({
+  el: '#app',
+  data: {
+	checked : false,
+    checkedNames: []
+  }
+})
+&lt;/script&gt;
+</code></pre>
+<h2 id="单选按钮">单选按钮</h2>
+<p>绑定到同一个data上</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+  &lt;input type=&quot;radio&quot; id=&quot;runoob&quot; value=&quot;Runoob&quot; v-model=&quot;picked&quot;&gt;
+  &lt;label for=&quot;runoob&quot;&gt;Runoob&lt;/label&gt;
+  &lt;br&gt;
+  &lt;input type=&quot;radio&quot; id=&quot;google&quot; value=&quot;Google&quot; v-model=&quot;picked&quot;&gt;
+  &lt;label for=&quot;google&quot;&gt;Google&lt;/label&gt;
+  &lt;br&gt;
+  &lt;span&gt;选中值为: {{ picked }}&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+new Vue({
+  el: '#app',
+  data: {
+	picked : 'Runoob'
+  }
+})
+&lt;/script&gt;
+</code></pre>
+<h2 id="下拉列表select">下拉列表select</h2>
+<p>将一个select标签绑定到一个data字符串上</p>
+<pre><code>&lt;div id=&quot;example-5&quot;&gt;
+  &lt;select v-model=&quot;selected&quot;&gt;
+    &lt;option disabled value=&quot;&quot;&gt;请选择&lt;/option&gt;
+    &lt;option&gt;A&lt;/option&gt;
+    &lt;option&gt;B&lt;/option&gt;
+    &lt;option&gt;C&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;span&gt;Selected: {{ selected }}&lt;/span&gt;
+&lt;/div&gt;
+new Vue({
+  el: '...',
+  data: {
+    selected: ''
+  }
+})
+</code></pre>
+<p>推荐像上面这样提供一个值为空的禁用选项。</p>
+<p>用 v-for 渲染的动态选项</p>
+<pre><code>&lt;select v-model=&quot;selected&quot;&gt;
+  &lt;option v-for=&quot;option in options&quot; v-bind:value=&quot;option.value&quot;&gt;
+    {{ option.text }}
+  &lt;/option&gt;
+&lt;/select&gt;
+&lt;span&gt;Selected: {{ selected }}&lt;/span&gt;
+
+new Vue({
+  el: '...',
+  data: {
+    selected: 'A',
+    options: [
+      { text: 'One', value: 'A' },
+      { text: 'Two', value: 'B' },
+      { text: 'Three', value: 'C' }
+    ]
+  }
+})
+</code></pre>
+<h2 id="修饰符">修饰符</h2>
+<h3 id="lazy">.lazy</h3>
+<p>在默认情况下， v-model 在 input 事件中同步输入框的值与数据，但你可以添加一个修饰符 lazy ，从而转变为在 change 事件中同步</p>
+<pre><code>&lt;input v-model.lazy=&quot;msg&quot; &gt;
+</code></pre>
+<h3 id="number">.number</h3>
+<p>如果想自动将用户的输入值转为 Number 类型（如果原值的转换结果为 NaN 则返回原值），可以添加一个修饰符 number 给 v-model 来处理输入值：</p>
+<pre><code>&lt;input v-model.number=&quot;age&quot; type=&quot;number&quot;&gt;
+</code></pre>
+<p>在 type=&quot;number&quot; 时 HTML 中输入的值也总是会返回字符串类型</p>
+<h3 id="trim">.trim</h3>
+<p>如果要自动过滤用户输入的首尾空格，可以添加 trim 修饰符到 v-model 上过滤输入</p>
+<pre><code>&lt;input v-model.trim=&quot;msg&quot;&gt;
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E5%89%8D%E8%A8%80">👀前言</a></li>
+<li><a href="#%E6%A0%B7%E5%BC%8F%E7%BB%91%E5%AE%9A">样式绑定</a>
+<ul>
+<li><a href="#class%E5%B1%9E%E6%80%A7%E7%BB%91%E5%AE%9A">class属性绑定</a>
+<ul>
+<li><a href="#%E6%95%B0%E7%BB%84%E8%AF%AD%E6%B3%95">数组语法</a></li>
+<li><a href="#%E7%94%A8%E5%9C%A8%E7%BB%84%E4%BB%B6%E4%B8%8A">用在组件上</a></li>
+</ul>
+</li>
+<li><a href="#style%E5%86%85%E8%81%94%E6%A0%B7%E5%BC%8F%E7%BB%91%E5%AE%9A">style内联样式绑定</a>
+<ul>
+<li><a href="#%E6%95%B0%E7%BB%84%E8%AF%AD%E6%B3%95-2">数组语法</a></li>
+<li><a href="#%E5%A4%9A%E9%87%8D%E5%80%BC">多重值</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E5%99%A8">事件处理器</a>
+<ul>
+<li><a href="#%E7%BB%91%E5%AE%9A%E6%96%B9%E6%B3%95">绑定方法</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E5%86%85%E8%81%94-javascript-%E8%AF%AD%E5%8F%A5">使用内联 JavaScript 语句</a></li>
+<li><a href="#%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6">事件修饰符</a></li>
+</ul>
+</li>
+<li><a href="#vue%E8%A1%A8%E5%8D%95%E7%BB%8F%E5%85%B8%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E6%A8%A1%E5%9E%8B">Vue表单（经典数据绑定模型）</a>
+<ul>
+<li><a href="#input%E8%A1%A8%E5%8D%95%E7%BB%91%E5%AE%9A">input表单绑定</a></li>
+<li><a href="#%E5%A4%8D%E9%80%89%E6%A1%86%E5%A4%9A%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A">复选框多数据绑定</a></li>
+<li><a href="#%E5%8D%95%E9%80%89%E6%8C%89%E9%92%AE">单选按钮</a></li>
+<li><a href="#%E4%B8%8B%E6%8B%89%E5%88%97%E8%A1%A8select">下拉列表select</a></li>
+<li><a href="#%E4%BF%AE%E9%A5%B0%E7%AC%A6">修饰符</a>
+<ul>
+<li><a href="#lazy">.lazy</a></li>
+<li><a href="#number">.number</a></li>
+<li><a href="#trim">.trim</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-2-tiao-jian-xun-huan-ji-suan-shu-xing-jian-ting/">
+              <h3 class="post-title">
+                Vue学习笔记2-条件、循环、计算属性、监听
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '',
+    clientSecret: '',
+    repo: '',
+    owner: '',
+    admin: [''],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>
+  <a class="rss" href="https://giriawsh.github.io//atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,760 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vue学习笔记4-组件、自定义指令 | Giria&#39;s Blog</title>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico?v=1599722161212">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://giriawsh.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Vue学习笔记4-组件、自定义指令 | Giria&#39;s Blog - Atom Feed" href="https://giriawsh.github.io//atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="前言
+结合官方文档+菜鸟教程学习笔记4。
+
+Vue组件
+组件可以扩展 HTML 元素，封装可重用的代码。一个组件本质上是一个拥有预定义选项的一个 Vue 实例。
+组件系统让我们可以用独立可复用的小组件来构建大型应用，几乎任意类型的应用的界面..." />
+    <meta name="keywords" content="Vue学习系列,前端,Vue.js" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://giriawsh.github.io/">
+  <img class="avatar" src="https://giriawsh.github.io//images/avatar.png?v=1599722161212" alt="">
+  </a>
+  <h1 class="site-title">
+    Giria&#39;s Blog
+  </h1>
+  <p class="site-description">
+    Live only once, make it count
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/giriawsh" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Vue学习笔记4-组件、自定义指令
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-09-10
+              </span>
+              <span>
+                16 min read
+              </span>
+              
+                <a href="https://giriawsh.github.io/tag/qe64KixUR/" class="post-tag">
+                  # Vue学习系列
+                </a>
+              
+                <a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="post-tag">
+                  # 前端
+                </a>
+              
+                <a href="https://giriawsh.github.io/tag/P-LvHoQha/" class="post-tag">
+                  # Vue.js
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="前言">前言</h1>
+<p>结合官方文档+菜鸟教程学习笔记4。</p>
+<!-- more -->
+<h1 id="vue组件">Vue组件</h1>
+<p>组件可以扩展 HTML 元素，封装可重用的代码。一个组件本质上是一个拥有预定义选项的一个 Vue 实例。</p>
+<p>组件系统让我们可以用独立可复用的小组件来构建大型应用，几乎任意类型的应用的界面都可以抽象为一个组件树</p>
+<figure data-type="image" tabindex="1"><img src="https://user-gold-cdn.xitu.io/2020/7/18/17361f1f17c70a9f?w=1406&amp;h=544&amp;f=png&amp;s=32809" alt="组件树" loading="lazy"></figure>
+<h2 id="组件注册">组件注册</h2>
+<pre><code>Vue.component(tagName, options)//tagName 为组件名，options 为配置选项
+&lt;tagName&gt;&lt;/tagName&gt;
+</code></pre>
+<h2 id="全局组件">全局组件</h2>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+	&lt;runoob&gt;&lt;/runoob&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+// 注册
+Vue.component('runoob', {
+  template: '&lt;h1&gt;自定义组件!&lt;/h1&gt;'
+})
+// 创建根实例
+new Vue({
+  el: '#app'
+})
+&lt;/script&gt;
+</code></pre>
+<h2 id="局部组件">局部组件</h2>
+<p>组件只能在这个实例中使用</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+	&lt;runoob&gt;&lt;/runoob&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var Child = {
+  template: '&lt;h1&gt;自定义组件!&lt;/h1&gt;'
+}
+
+// 创建根实例
+new Vue({
+  el: '#app',
+  components: {
+    // &lt;runoob&gt; 将只在父模板可用
+    'runoob': Child
+  }
+})
+&lt;/script&gt;
+</code></pre>
+<h2 id="组件传值">组件传值</h2>
+<h3 id="prop">prop</h3>
+<p>prop 是<strong>子组件用来接受父组件</strong>传递过来的数据的一个自定义属性。</p>
+<p>父组件的数据需要通过 props 把数据传给子组件，子组件需要显式地用 props 选项声明 &quot;prop&quot;：</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+	&lt;child message=&quot;hello!&quot;&gt;&lt;/child&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+// 注册
+Vue.component('child', {
+  // 声明 props
+  props: ['message'],
+  // 同样也可以在 vm 实例中像 “this.message” 这样使用
+  template: '&lt;i&gt;{{ message }}&lt;/i&gt;'
+})
+// 创建根实例
+new Vue({
+  el: '#app'
+})
+&lt;/script&gt;
+</code></pre>
+<h3 id="动态prop">动态prop</h3>
+<p>类似于用 v-bind 绑定 HTML 特性到一个表达式，也可以用 <strong>v-bind 动态绑定 props</strong> 的值到父组件的数据中。每当父组件的数据变化时，该变化也会传导给子组件</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+	&lt;ol&gt;
+    &lt;todo-item v-for=&quot;item in sites&quot; v-bind:todo=&quot;item&quot;&gt;&lt;/todo-item&gt;
+  	&lt;/ol&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+Vue.component('todo-item', {
+  props: ['todo'],//注意这里显式生命的是绑定的变量名，非原本变量名（注册在内部）
+  template: '&lt;li&gt;{{ todo.text }}&lt;/li&gt;'
+})
+new Vue({
+  el: '#app',
+  data: {
+    sites: [
+      { text: 'Runoob' },
+      { text: 'Google' },
+      { text: 'Taobao' }
+    ]
+  }
+})
+&lt;/script&gt;
+</code></pre>
+<h3 id="prop验证">prop验证</h3>
+<p>组件可以为 props 指定验证要求。这块很有用，可以作为数据传递限制，可以在element、表单中有大量运用。</p>
+<pre><code>Vue.component('my-component', {
+  props: {
+    // 基础的类型检查 (`null` 和 `undefined` 会通过任何类型验证)
+    propA: Number,
+    // 多个可能的类型
+    propB: [String, Number],
+    // 必填的字符串
+    propC: {
+      type: String,
+      required: true
+    },
+    // 带有默认值的数字
+    propD: {
+      type: Number,
+      default: 100
+    },
+    // 带有默认值的对象
+    propE: {
+      type: Object,
+      // 对象或数组默认值必须从一个工厂函数获取
+      default: function () {
+        return { message: 'hello' }
+      }
+    },
+    // 自定义验证函数
+    propF: {
+      validator: function (value) {
+        // 这个值必须匹配下列字符串中的一个
+        return ['success', 'warning', 'danger'].indexOf(value) !== -1
+      }
+    }
+  }
+})
+
+//type可以是以下
+String
+Number
+Boolean
+Array
+Object
+Date
+Function
+Symbol
+type 也可以是一个自定义构造器，使用 instanceof 检测。
+</code></pre>
+<p>当 prop 验证失败的时候，(开发环境构建版本的) Vue 将会产生一个控制台的警告。</p>
+<h3 id="在组件上使用v-model">在组件上使用v-model</h3>
+<pre><code>&lt;input v-model=&quot;searchText&quot;&gt;
+等价于
+&lt;input
+  v-bind:value=&quot;searchText&quot;
+  v-on:input=&quot;searchText = $event.target.value&quot;
+&gt;
+</code></pre>
+<p>用在组件上</p>
+<ul>
+<li>将其 value attribute 绑定到一个名叫 value 的 prop 上</li>
+<li>在其 input 事件被触发时，将新的值通过自定义的 input 事件抛出</li>
+</ul>
+<pre><code>&lt;custom-input
+  v-bind:value=&quot;searchText&quot;
+  v-on:input=&quot;searchText = $event&quot;
+&gt;&lt;/custom-input&gt;
+Vue.component('custom-input', {
+  props: ['value'],
+  template: `
+    &lt;input
+      v-bind:value=&quot;value&quot;
+      v-on:input=&quot;$emit('input', $event.target.value)&quot;
+    &gt;
+  `
+})
+&lt;custom-input v-model=&quot;searchText&quot;&gt;&lt;/custom-input&gt;
+</code></pre>
+<h2 id="自定义事件">自定义事件</h2>
+<p>父组件是使用 props 传递数据给子组件，但如果<strong>子组件要把数据传递回父组件</strong>，就需要使用自定义事件</p>
+<p>可以使用 v-on 绑定自定义事件, 每个 Vue 实例都实现了事件接口(Events interface)</p>
+<ul>
+<li>使用 <code>$on(eventName)</code> 监听事件</li>
+<li>使用 <code>$emit(eventName)</code> 触发事件</li>
+<li>父组件可以在使用子组件的地方直接用 v-on 来监听子组件触发的事件</li>
+</ul>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+	&lt;div id=&quot;counter-event-example&quot;&gt;
+	  &lt;p&gt;{{ total }}&lt;/p&gt;
+	  &lt;button-counter v-on:increment=&quot;incrementTotal&quot;&gt;&lt;/button-counter&gt;
+	  &lt;button-counter v-on:increment=&quot;incrementTotal&quot;&gt;&lt;/button-counter&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+Vue.component('button-counter', {
+  template: '&lt;button v-on:click=&quot;incrementHandler&quot;&gt;{{ counter }}&lt;/button&gt;',
+  data: function () {
+    return {
+      counter: 0
+    }
+  },
+  methods: {
+    incrementHandler: function () {
+      this.counter += 1
+      this.$emit('increment')//传递给外层的increment参数上
+    }
+  },
+})
+new Vue({
+  el: '#counter-event-example',
+  data: {
+    total: 0
+  },
+  methods: {
+    incrementTotal: function () {
+      this.total += 1
+    }
+  }
+})
+&lt;/script&gt;
+</code></pre>
+<p>监听一个原生事件。可以使用 .native 修饰 v-on</p>
+<pre><code>&lt;my-component v-on:click.native=&quot;doTheThing&quot;&gt;&lt;/my-component&gt;
+</code></pre>
+<h2 id="data是一个函数">data是一个函数</h2>
+<p>可以看到 button-counter 组件中的 data 不是一个对象，而是一个函数，这样的好处就是每个实例可以<strong>维护一份被返回对象的独立的拷贝</strong>，如果 data 是一个对象则会影响到其他实例。</p>
+<pre><code>&lt;div id=&quot;components-demo3&quot; class=&quot;demo&quot;&gt;
+    &lt;button-counter2&gt;&lt;/button-counter2&gt;
+    &lt;button-counter2&gt;&lt;/button-counter2&gt;
+	&lt;button-counter2&gt;&lt;/button-counter2&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+var buttonCounter2Data = {
+  count: 0
+}
+Vue.component('button-counter2', {
+    
+    data: function () {
+	    // data 选项是一个函数，组件不相互影响
+        return {
+            count: 0
+        }
+    },
+    /*
+    data: function () {
+        // data 选项是一个对象，会影响到其他实例
+        return buttonCounter2Data
+    },*/
+    template: '&lt;button v-on:click=&quot;count++&quot;&gt;点击了 {{ count }} 次。&lt;/button&gt;'
+})
+new Vue({ el: '#components-demo3' })
+&lt;/script&gt;
+</code></pre>
+<p>有的时候用一个事件来抛出一个特定的值是非常有用的。例如我们可能想让 <blog-post> 组件决定它的文本要放大多少。这时可以使用 $emit 的第二个参数来提供这个值</p>
+<pre><code>&lt;blog-post
+  ...
+  v-on:enlarge-text=&quot;postFontSize += $event&quot;
+&gt;&lt;/blog-post&gt;
+
+或者
+&lt;blog-post
+  ...
+  v-on:enlarge-text=&quot;onEnlargeText&quot;
+&gt;&lt;/blog-post&gt;
+
+methods: {
+  onEnlargeText: function (enlargeAmount) {
+    this.postFontSize += enlargeAmount
+  }
+}
+</code></pre>
+<h2 id="动态组件">动态组件</h2>
+<p>有的时候，在不同组件之间进行动态切换是非常有用的</p>
+<p>可以通过 Vue 的 <code>&lt;component&gt;</code> 元素加一个特殊的 is attribute 来实现</p>
+<pre><code>&lt;!-- 组件会在 `currentTabComponent` 改变时改变 --&gt;
+&lt;component v-bind:is=&quot;currentTabComponent&quot;&gt;&lt;/component&gt;
+</code></pre>
+<p>已注册组件的名字，或<br>
+一个组件的选项对象</p>
+<pre><code>    &lt;div id=&quot;dynamic-component-demo&quot; class=&quot;demo&quot;&gt;
+      &lt;button
+        v-for=&quot;tab in tabs&quot;
+        v-bind:key=&quot;tab&quot;
+        v-bind:class=&quot;['tab-button', { active: currentTab === tab }]&quot;
+        v-on:click=&quot;currentTab = tab&quot;
+      &gt;
+        {{ tab }}
+      &lt;/button&gt;
+
+      &lt;component v-bind:is=&quot;currentTabComponent&quot; class=&quot;tab&quot;&gt;&lt;/component&gt;
+    &lt;/div&gt;
+
+    &lt;script&gt;
+      Vue.component(&quot;tab-home&quot;, {
+        template: &quot;&lt;div&gt;Home component&lt;/div&gt;&quot;
+      });
+      Vue.component(&quot;tab-posts&quot;, {
+        template: &quot;&lt;div&gt;Posts component&lt;/div&gt;&quot;
+      });
+      Vue.component(&quot;tab-archive&quot;, {
+        template: &quot;&lt;div&gt;Archive component&lt;/div&gt;&quot;
+      });
+
+      new Vue({
+        el: &quot;#dynamic-component-demo&quot;,
+        data: {
+          currentTab: &quot;Home&quot;,
+          tabs: [&quot;Home&quot;, &quot;Posts&quot;, &quot;Archive&quot;]
+        },
+        computed: {
+          currentTabComponent: function() {
+            return &quot;tab-&quot; + this.currentTab.toLowerCase();
+          }
+        }
+      });
+    &lt;/script&gt;
+</code></pre>
+<p>这个 attribute 可以用于常规 HTML 元素，但这些元素将被视为组件，这意味着所有的 attribute 都会作为 DOM attribute 被绑定。</p>
+<p>对于像 value 这样的 property，若想让其如预期般工作，你需要使用 .prop 修饰器。</p>
+<h3 id="解析dom模板注意事项">解析DOM模板注意事项</h3>
+<p>有些 HTML 元素，诸如 <code>&lt;ul&gt;、&lt;ol&gt;、&lt;table&gt; 和 &lt;select&gt;</code>，对于哪些元素可以出现在其内部是有严格限制的。而有些元素，诸如 <code>&lt;li&gt;、&lt;tr&gt; 和 &lt;option&gt;</code>，只能出现在其它某些特定的元素内部。<br>
+这会导致我们使用这些有约束条件的元素时遇到一些问题。</p>
+<p>这个特殊的 is attribute 给了我们一个变通的办法：</p>
+<pre><code>&lt;table&gt;
+  &lt;blog-post-row&gt;&lt;/blog-post-row&gt;
+&lt;/table&gt;
+
+变更为：
+&lt;table&gt;
+  &lt;tr is=&quot;blog-post-row&quot;&gt;&lt;/tr&gt;
+&lt;/table&gt;
+</code></pre>
+<p>需要注意的是如果我们从以下来源使用模板的话，这条限制是不存在的</p>
+<pre><code>字符串 (例如：template: '...')
+单文件组件 (.vue)
+&lt;script type=&quot;text/x-template&quot;&gt;
+</code></pre>
+<h1 id="自定义指令">自定义指令</h1>
+<p>除了默认设置的核心指令( v-model 和 v-show ), Vue 也允许注册自定义指令。</p>
+<p>除了核心功能默认内置的指令 (v-model 和 v-show)，Vue 也允许注册自定义指令。注意，在 Vue2.0 中，代码复用和抽象的主要形式是组件。然而，有的情况下，你仍然需要对普通 DOM 元素进行底层操作，这时候就会用到自定义指令。</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+	&lt;p&gt;页面载入时，input 元素自动获取焦点：&lt;/p&gt;
+	&lt;input v-focus&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+// 注册一个全局自定义指令 v-focus
+Vue.directive('focus', {////如果想注册局部指令，组件中也接受一个 directives 的选项
+  // 当绑定元素插入到 DOM 中。
+  inserted: function (el) {
+    // 聚焦元素
+    el.focus()
+  }
+})
+// 创建根实例
+new Vue({
+  el: '#app'
+})
+&lt;/script&gt;
+
+//然后你可以在模板中任何元素上使用新的 v-focus property：
+&lt;input v-focus&gt;
+
+-----------------------------------
+局部指令注册:
+&lt;div id=&quot;app&quot;&gt;
+  &lt;p&gt;页面载入时，input 元素自动获取焦点：&lt;/p&gt;
+  &lt;input v-focus&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+// 创建根实例
+new Vue({
+  el: '#app',
+  directives: {
+    // 注册一个局部的自定义指令 v-focus
+    focus: {
+      // 指令的定义
+      inserted: function (el) {
+        // 聚焦元素
+        el.focus()
+      }
+    }
+  }
+})
+&lt;/script&gt;
+
+</code></pre>
+<h2 id="钩子函数">钩子函数</h2>
+<ul>
+<li>
+<p>bind: 只调用一次，指令第一次绑定到元素时调用，用这个钩子函数可以定义一个在绑定时执行一次的初始化动作。</p>
+</li>
+<li>
+<p>inserted: 被绑定元素插入父节点时调用（父节点存在即可调用，不必存在于 document 中）。</p>
+</li>
+<li>
+<p>update: 被绑定元素所在的模板更新时调用，而<strong>不论绑定值是否变化</strong>。通过比较更新前后的绑定值，可以忽略不必要的模板更新（详细的钩子函数参数见下）。<strong>但是可能发生在其子 VNode 更新之前。</strong></p>
+</li>
+<li>
+<p>componentUpdated: 被绑定元素所在模板完成一次更新周期时调用。<strong>指令所在组件的 VNode 及其子 VNode 全部更新后调用。</strong></p>
+</li>
+<li>
+<p>unbind: 只调用一次， 指令与元素解绑时调用。</p>
+</li>
+</ul>
+<h3 id="钩子函数参数">钩子函数参数</h3>
+<ul>
+<li>el: 指令所绑定的元素，可以用来直接操作 DOM 。</li>
+<li>binding: 一个对象，包含以下属性：
+<ul>
+<li>name: 指令名，不包括 v- 前缀。</li>
+<li>value: 指令的绑定值， 例如： v-my-directive=&quot;1 + 1&quot;, value 的值是 2。</li>
+<li>oldValue: 指令绑定的前一个值，仅在 update 和 componentUpdated 钩子中可用。无论值是否改变都可用。</li>
+<li>expression: 绑定值的表达式或变量名。 例如 v-my-directive=&quot;1 + 1&quot; ， expression 的值是 &quot;1 + 1&quot;。</li>
+<li>arg: 传给指令的参数。例如 v-my-directive:foo， arg 的值是 &quot;foo&quot;。</li>
+<li>modifiers: 一个包含修饰符的对象。 例如： v-my-directive.foo.bar, 修饰符对象 modifiers 的值是 { foo: true, bar: true }。</li>
+</ul>
+</li>
+<li>vnode: Vue 编译生成的虚拟节点。</li>
+<li>oldVnode: 上一个虚拟节点，仅在 update 和 componentUpdated 钩子中可用。</li>
+</ul>
+<pre><code>&lt;div id=&quot;app&quot;  v-runoob:hello.a.b=&quot;message&quot;&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+Vue.directive('runoob', {
+  bind: function (el, binding, vnode) {
+    var s = JSON.stringify
+    el.innerHTML =
+      'name: '       + s(binding.name) + '&lt;br&gt;' +
+      'value: '      + s(binding.value) + '&lt;br&gt;' +
+      'expression: ' + s(binding.expression) + '&lt;br&gt;' +
+      'argument: '   + s(binding.arg) + '&lt;br&gt;' +
+      'modifiers: '  + s(binding.modifiers) + '&lt;br&gt;' +
+      'vnode keys: ' + Object.keys(vnode).join(', ')
+  }
+})
+new Vue({
+  el: '#app',
+  data: {
+    message: '菜鸟教程!'
+  }
+})
+&lt;/script&gt;
+------------------
+result：
+name: &quot;runoob&quot;//自定义指令名
+value: &quot;菜鸟教程!&quot;//data值
+expression: &quot;message&quot;//data变量名
+argument: &quot;hello&quot;//v-runoob:hello
+modifiers: {&quot;a&quot;:true,&quot;b&quot;:true}//包含修饰符的对象
+vnode keys: tag, data, children, text, elm, ns, context, functionalContext, key, componentOptions, componentInstance, parent, raw, isStatic, isRootInsert, isComment, isCloned, isOnce//Vue 编译生成的虚拟节点
+</code></pre>
+<p>部分功能,可以简写钩子函数</p>
+<pre><code>Vue.directive('runoob', function (el, binding) {
+  // 设置指令的背景颜色
+  el.style.backgroundColor = binding.value.color
+})
+</code></pre>
+<h3 id="传入js对象">传入js对象</h3>
+<p>指令函数可接受所有合法的 JavaScript 表达式</p>
+<pre><code>&lt;div id=&quot;app&quot;&gt;
+    &lt;div v-runoob=&quot;{ color: 'green', text: '菜鸟教程!' }&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+ 
+&lt;script&gt;
+Vue.directive('runoob', function (el, binding) {
+    // 简写方式设置文本及背景颜色
+    el.innerHTML = binding.value.text
+    el.style.backgroundColor = binding.value.color
+})
+new Vue({
+  el: '#app'
+})
+&lt;/script&gt;
+</code></pre>
+<h3 id="动态指令参数">动态指令参数</h3>
+<p>指令的参数可以是动态的。例如，在 v-mydirective:[argument]=&quot;value&quot; 中，argument 参数可以根据组件实例数据进行更新！这使得自定义指令可以在应用中被灵活使用。</p>
+<p>例如你想要创建一个自定义指令，用来通过固定布局将元素固定在页面上。我们可以像这样创建一个通过指令值来更新竖直位置像素值的自定义指令</p>
+<pre><code>&lt;div id=&quot;baseexample&quot;&gt;
+  &lt;p&gt;Scroll down the page&lt;/p&gt;
+  &lt;p v-pin=&quot;200&quot;&gt;Stick me 200px from the top of the page&lt;/p&gt;
+&lt;/div&gt;
+
+Vue.directive('pin', {
+  bind: function (el, binding, vnode) {
+    el.style.position = 'fixed'
+    el.style.top = binding.value + 'px'
+  }
+})
+
+new Vue({
+  el: '#baseexample'
+})
+</code></pre>
+<p>这会把该元素固定在距离页面顶部 200 像素的位置。但如果场景是我们需要把元素固定在左侧而不是顶部又该怎么办呢？这时使用动态参数就可以非常方便地根据每个组件实例来进行更新</p>
+<pre><code>&lt;div id=&quot;dynamicexample&quot;&gt;
+  &lt;h3&gt;Scroll down inside this section ↓&lt;/h3&gt;
+  &lt;p v-pin:[direction]=&quot;200&quot;&gt;I am pinned onto the page at 200px to the left.&lt;/p&gt;
+&lt;/div&gt;
+Vue.directive('pin', {
+  bind: function (el, binding, vnode) {
+    el.style.position = 'fixed'
+    var s = (binding.arg == 'left' ? 'left' : 'top')//用binding.arg取得参数
+    el.style[s] = binding.value + 'px'
+  }
+})
+
+new Vue({
+  el: '#dynamicexample',
+  data: function () {
+    return {
+      direction: 'left'
+    }
+  }
+})
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E5%89%8D%E8%A8%80">前言</a></li>
+<li><a href="#vue%E7%BB%84%E4%BB%B6">Vue组件</a>
+<ul>
+<li><a href="#%E7%BB%84%E4%BB%B6%E6%B3%A8%E5%86%8C">组件注册</a></li>
+<li><a href="#%E5%85%A8%E5%B1%80%E7%BB%84%E4%BB%B6">全局组件</a></li>
+<li><a href="#%E5%B1%80%E9%83%A8%E7%BB%84%E4%BB%B6">局部组件</a></li>
+<li><a href="#%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC">组件传值</a>
+<ul>
+<li><a href="#prop">prop</a></li>
+<li><a href="#%E5%8A%A8%E6%80%81prop">动态prop</a></li>
+<li><a href="#prop%E9%AA%8C%E8%AF%81">prop验证</a></li>
+<li><a href="#%E5%9C%A8%E7%BB%84%E4%BB%B6%E4%B8%8A%E4%BD%BF%E7%94%A8v-model">在组件上使用v-model</a></li>
+</ul>
+</li>
+<li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6">自定义事件</a></li>
+<li><a href="#data%E6%98%AF%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0">data是一个函数</a></li>
+<li><a href="#%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6">动态组件</a>
+<ul>
+<li><a href="#%E8%A7%A3%E6%9E%90dom%E6%A8%A1%E6%9D%BF%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">解析DOM模板注意事项</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4">自定义指令</a>
+<ul>
+<li><a href="#%E9%92%A9%E5%AD%90%E5%87%BD%E6%95%B0">钩子函数</a>
+<ul>
+<li><a href="#%E9%92%A9%E5%AD%90%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0">钩子函数参数</a></li>
+<li><a href="#%E4%BC%A0%E5%85%A5js%E5%AF%B9%E8%B1%A1">传入js对象</a></li>
+<li><a href="#%E5%8A%A8%E6%80%81%E6%8C%87%E4%BB%A4%E5%8F%82%E6%95%B0">动态指令参数</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-3-yang-shi-bang-ding-shi-jian-chu-li-qi-biao-dan-jing-dian-mo-xing/">
+              <h3 class="post-title">
+                Vue学习笔记3-样式绑定、事件处理器、表单经典模型
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '',
+    clientSecret: '',
+    repo: '',
+    owner: '',
+    admin: [''],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>
+  <a class="rss" href="https://giriawsh.github.io//atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
