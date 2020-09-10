@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-10T06:52:47.561Z</updated>
+    <updated>2020-09-10T06:54:33.009Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -10,6 +10,154 @@
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[nuxt引入codemirror 附加python格式示例]]></title>
+        <id>https://giriawsh.github.io/post/nuxt-yin-ru-codemirror-fu-jia-python-ge-shi-shi-li/</id>
+        <link href="https://giriawsh.github.io/post/nuxt-yin-ru-codemirror-fu-jia-python-ge-shi-shi-li/">
+        </link>
+        <updated>2020-09-10T06:53:06.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="️前言">✍️前言</h1>
+<p>code mirror是一个集成度很高的代码嵌入插件，支持python、js、java等多个语法识别，如果有后台支持，可以进行编译工作，这个后面可以试试看。</p>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="️前言">✍️前言</h1>
+<p>code mirror是一个集成度很高的代码嵌入插件，支持python、js、java等多个语法识别，如果有后台支持，可以进行编译工作，这个后面可以试试看。</p>
+<!-- more -->
+<p>这篇文章里列了很多codemirror的相关配置：(code mirror配置)[https://blog.csdn.net/qq_20389175/article/details/50956296]</p>
+<h2 id="问题提出">问题提出</h2>
+<p>查了很多文档，一直没有看到nuxt对这个插件的支持，于是自己就尝试集成了一下，附加代码如下：</p>
+<h2 id="问题解决">问题解决</h2>
+<ol>
+<li>
+<p>安装依赖<br>
+<code>npm install vue-codemirror --save</code></p>
+</li>
+<li>
+<p>nuxt配置</p>
+</li>
+</ol>
+<pre><code class="language-js">head: {
+...
+   link: [
+     { rel: 'stylesheet' ,href: &quot;https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css&quot;},
+   ]
+ },
+ css: [
+   // lib css
+   'codemirror/lib/codemirror.css',
+   // merge css
+   'codemirror/addon/merge/merge.css',
+   // theme css
+   'codemirror/theme/base16-dark.css',
+   'codemirror/theme/idea.css'
+ ],
+</code></pre>
+<ol start="3">
+<li>页面引入</li>
+</ol>
+<pre><code>&lt;template&gt;
+  &lt;section class=&quot;container&quot;&gt;
+    &lt;no-ssr placeholder=&quot;Codemirror Loading...&quot;&gt;
+      &lt;codemirror v-model=&quot;code&quot;
+                  :options=&quot;cmOption&quot;
+                  @cursorActivity=&quot;onCmCursorActivity&quot;
+                  @ready=&quot;onCmReady&quot;
+                  @focus=&quot;onCmFocus&quot;
+                  @blur=&quot;onCmBlur&quot;&gt;
+      &lt;/codemirror&gt;
+    &lt;/no-ssr&gt;
+  &lt;/section&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+    export default {
+        data() {
+            const code = `# for test
+# -*- coding: UTF-8 -*-
+
+if __name__ == '__main__':
+    N = len(a)
+    print a
+    for i in range(len(a) / 2):
+        a[i],a[N - i - 1] = a[N - i - 1],a[i]
+    print a`;
+            return {
+                code,
+                cmOption: {
+                    tabSize: 4,
+                    foldGutter: true,
+                    styleActiveLine: true,
+                    smartIndent: true,
+                    lineNumbers: true,
+                    line: true,
+                    keyMap: &quot;sublime&quot;,
+                    mode: 'python',
+                    theme: 'idea',
+                    indentWithTabs: true,
+                    lineWrapping: true,
+                    extraKeys: {
+                        'F11'(cm) {
+                            cm.setOption(&quot;fullScreen&quot;, !cm.getOption(&quot;fullScreen&quot;))
+                        },
+                        'Esc'(cm) {
+                            if (cm.getOption(&quot;fullScreen&quot;)) cm.setOption(&quot;fullScreen&quot;, false)
+                        }
+                    }
+                }
+            }
+        },
+        methods: {
+            onCmCursorActivity(codemirror) {
+                console.log('onCmCursorActivity', codemirror)
+            },
+            onCmReady(codemirror) {
+                console.log('onCmReady', codemirror)
+            },
+            onCmFocus(codemirror) {
+                console.log('onCmFocus', codemirror)
+            },
+            onCmBlur(codemirror) {
+                console.log('onCmBlur', codemirror)
+            }
+        }
+    }
+&lt;/script&gt;
+
+&lt;style lang=&quot;scss&quot; scoped&gt;
+  .container {
+    width: 100%;
+    margin: 0 auto;
+    top: 0;
+    text-align: left;
+  }
+&lt;/style&gt;
+
+</code></pre>
+<p>这里的更多配置可以参考如下：</p>
+<pre><code class="language-js">mode: &quot;python&quot;, // 语言模式
+       theme: &quot;leetcode&quot;, // 主题
+       keyMap: &quot;sublime&quot;, // 快键键风格
+       lineNumbers: true, // 显示行号
+       smartIndent: true, // 智能缩进
+       indentUnit: 4, // 智能缩进单位为4个空格长度
+       indentWithTabs: true, // 使用制表符进行智能缩进
+       lineWrapping: true, //
+       // 在行槽中添加行号显示器、折叠器、语法检测器
+       gutters: [&quot;CodeMirror-linenumbers&quot;, &quot;CodeMirror-foldgutter&quot;, &quot;CodeMirror-lint-markers&quot;],
+       foldGutter: true, // 启用行槽中的代码折叠
+       autofocus: true, // 自动聚焦
+       matchBrackets: true, // 匹配结束符号，比如&quot;]、}&quot;
+       autoCloseBrackets: true, // 自动闭合符号
+       styleActiveLine: true, // 显示选中行的样式
+</code></pre>
+<h2 id="效果">效果</h2>
+<figure data-type="image" tabindex="1"><img src="https://user-gold-cdn.xitu.io/2020/7/6/173246f6b2d48c51?w=608&amp;h=270&amp;f=png&amp;s=18631" alt="nuxt引入mirror效果图" loading="lazy"></figure>
+<h2 id="参考链接">参考链接</h2>
+<p><a href="https://zhuanlan.zhihu.com/p/22163474">code mirror简介 知乎</a></p>
+<p><a href="https://segmentfault.com/a/1190000017875558">code mirror + python</a></p>
+<p><a href="https://github.com/cnu4/vue-codemirror-lite">code mirror vue demo</a></p>
+<p><a href="https://ithelp.ithome.com.tw/articles/10205140">vue codemirror</a></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[nuxt字体包与components引入]]></title>
         <id>https://giriawsh.github.io/post/nuxt-zi-ti-bao-yu-components-yin-ru/</id>
