@@ -17,7 +17,7 @@
 <div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
 <div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
 <div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/archives" class="selected active current nav__item" >归档</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
-<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1599750036977" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1599750844949" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
 </div></div>
 <script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
 
@@ -27,7 +27,7 @@
 <h2 class="post_title sm_margin"><a>nuxt项目搭建+element+vuetify+axios+页面切分</a></h2>
 <script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
 <section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-09-10</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="tag">前端</a> | 	<a href="https://giriawsh.github.io/tag/yklmR1Lly/" class="tag">Nuxt.js</a> | 	<a href="https://giriawsh.github.io/tag/P-LvHoQha/" class="tag">Vue.js</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">1228字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">5 min read</span>
-<font color=e42b2b>置顶♜</font></section>
+</section>
 
 <img class="featureImg" alt="featureimg" src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200910144817.png" referrerpolicy="no-referrer">
 
@@ -62,7 +62,7 @@
 </ul>
 <h1 id="vuetify引入">vuetify引入</h1>
 <p>vuetify是一个精美的组件库，里面有很多方便快速制作网页的组件，之后想出几篇blog进行源码分析，因为组件中的一些小细节做得非常有意思且值得学习。拿v-btn来说，和一般的组件库不一样的是它具有响应点focus，点击按钮的不同位置可以看到点击相应的不同扩散处。</p>
-<p>在nuxt中引入vuetify，它本身支持也很好，这里看官方文档：<a href="https://vuetifyjs.com/zh-Hans/getting-started/quick-start">nuxt引入vuetify官方文档</a></p>
+<p>在nuxt中引入vuetify，它本身支持也很好，这里看官方文档：<a href="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200910230827.png">nuxt引入vuetify官方文档</a></p>
 <p>里面的步骤很清楚，包括要更改的配置也写出来了，按步骤走完后，重新编译，然后测试<br>
 <code>&lt;v-btn&gt;button&lt;/v-btn&gt;</code>有没有相应的提示就知道有没有安装成功了。</p>
 <h1 id="axios引入">axios引入</h1>
@@ -165,7 +165,7 @@ plugins: [
 &lt;/v-container&gt;
 </code></pre>
 <p>页面效果如下：<br>
-<img src="https://user-gold-cdn.xitu.io/2020/7/6/173243817994f145?w=1889&amp;h=865&amp;f=png&amp;s=41957" alt="1:2切分页面" loading="lazy"></p>
+<img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200910230740.png" alt="1:2切分页面" loading="lazy"></p>
 
 <span id="footnote"></span>
 <div id = "warn"></div>
@@ -210,7 +210,7 @@ content="本文最后更新于2020-09-10，已超过 1 年没有更新，涉及�
 </script>
 <style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
 <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
-<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>20</strong> posts</span></div></div>
+<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>21</strong> posts</span></div></div>
 <script>
 console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;", );
 </script>
