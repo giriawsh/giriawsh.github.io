@@ -81,7 +81,7 @@ code {
 .header {
   margin: 0 auto;
   padding: 2.3em 0 4em;
-  max-width: 50pc;
+  max-width: 70pc;
   background-size: cover;
   -webkit-background-size: cover;
 }
@@ -186,7 +186,7 @@ code {
 .main-inner {
   margin: 3.3em auto 0;
   padding: 3.3em 0 2.7em;
-  max-width: 50pc;
+  max-width: 70pc;
   background: #fff !important;
   box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19) !important;
   border-radius: 10px;
@@ -530,9 +530,11 @@ code {
 }
 .paginator .pre {
   float: left;
+  font-size: 2em;
 }
 .paginator .next {
   float: right;
+  font-size: 2em;
 }
 .md_block {
   font-size: 1pc;
