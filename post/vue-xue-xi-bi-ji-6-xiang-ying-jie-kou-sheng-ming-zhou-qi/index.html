@@ -1,0 +1,330 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vue学习笔记6-响应接口、生命周期 | Giria&#39;s Blog</title>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico?v=1599722453152">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://giriawsh.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Vue学习笔记6-响应接口、生命周期 | Giria&#39;s Blog - Atom Feed" href="https://giriawsh.github.io//atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="👀前言
+结合官方文档与菜鸟教程的vue学习笔记系列6。
+
+Vue响应接口
+Vue 可以添加数据动态响应接口。
+通过使用 $watch 属性来实现数据的监听，$watch 必须添加在 Vue 实例之外才能实现正确的响应
+&lt;div id..." />
+    <meta name="keywords" content="Vue学习系列,前端,Vue.js" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://giriawsh.github.io/">
+  <img class="avatar" src="https://giriawsh.github.io//images/avatar.png?v=1599722453152" alt="">
+  </a>
+  <h1 class="site-title">
+    Giria&#39;s Blog
+  </h1>
+  <p class="site-description">
+    Live only once, make it count
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/giriawsh" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Vue学习笔记6-响应接口、生命周期
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-09-10
+              </span>
+              <span>
+                5 min read
+              </span>
+              
+                <a href="https://giriawsh.github.io/tag/qe64KixUR/" class="post-tag">
+                  # Vue学习系列
+                </a>
+              
+                <a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="post-tag">
+                  # 前端
+                </a>
+              
+                <a href="https://giriawsh.github.io/tag/P-LvHoQha/" class="post-tag">
+                  # Vue.js
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="前言">👀前言</h1>
+<p>结合官方文档与菜鸟教程的vue学习笔记系列6。</p>
+<!-- more -->
+<h1 id="vue响应接口">Vue响应接口</h1>
+<p>Vue 可以添加数据动态响应接口。</p>
+<p>通过使用 <code>$watch</code> 属性来实现数据的监听，<code>$watch</code> 必须添加在 Vue 实例之外才能实现正确的响应</p>
+<pre><code>&lt;div id = &quot;app&quot;&gt;
+    &lt;p style = &quot;font-size:25px;&quot;&gt;计数器: {{ counter }}&lt;/p&gt;
+    &lt;button @click = &quot;counter++&quot; style = &quot;font-size:25px;&quot;&gt;点我&lt;/button&gt;
+&lt;/div&gt;
+&lt;script type = &quot;text/javascript&quot;&gt;
+var vm = new Vue({
+    el: '#app',
+    data: {
+        counter: 1
+    }
+});
+vm.$watch('counter', function(nval, oval) {
+    alert('计数器值的变化 :' + oval + ' 变为 ' + nval + '!');
+});
+setTimeout(
+    function(){
+        vm.counter += 20;
+    },10000
+);
+&lt;/script&gt;
+</code></pre>
+<p>Vue 不允许在已经创建的实例上动态添加新的根级响应式属性。</p>
+<p>Vue 不能检测到对象属性的添加或删除，最好的方式就是在初始化实例前声明根级响应式属性，哪怕只是一个空值。</p>
+<p>如果我们需要在运行过程中实现属性的添加或删除，则可以使用全局 Vue，Vue.set 和 Vue.delete 方法。</p>
+<h2 id="vueset">Vue.set</h2>
+<p>Vue.set 方法用于设置对象的属性，它可以解决 Vue 无法检测添加属性的限制。</p>
+<pre><code>Vue.set( target, key, value )
+/*
+target: 可以是对象或数组
+key : 可以是字符串或数字
+value: 可以是任何类型
+*/
+</code></pre>
+<pre><code>&lt;div id = &quot;app&quot;&gt;
+   &lt;p style = &quot;font-size:25px;&quot;&gt;计数器: {{ products.id }}&lt;/p&gt;
+   &lt;button @click = &quot;products.id++&quot; style = &quot;font-size:25px;&quot;&gt;点我&lt;/button&gt;
+&lt;/div&gt;
+&lt;script type = &quot;text/javascript&quot;&gt;
+var myproduct = {&quot;id&quot;:1, name:&quot;book&quot;, &quot;price&quot;:&quot;20.00&quot;};
+var vm = new Vue({
+   el: '#app',
+   data: {
+      products: myproduct
+   }
+});
+vm.products.qty = &quot;1&quot;;//给 myproduct 数组添加一个或多个属性
+console.log(vm);
+vm.$watch('products.id', function(nval, oval) {
+   alert('计数器值的变化 :' + oval + ' 变为 ' + nval + '!');
+});
+&lt;/script&gt;
+</code></pre>
+<p>但是 get/set 方法只可用于 id，name 和 price 属性，却不能在 qty 属性中使用</p>
+<p>不能通过添加 Vue 对象来实现响应。 Vue 主要在开始时创建所有属性。 如果我们要实现这个功能，可以通过 Vue.set 来实现</p>
+<pre><code>&lt;div id = &quot;app&quot;&gt;
+&lt;p style = &quot;font-size:25px;&quot;&gt;计数器: {{ products.id }}&lt;/p&gt;
+&lt;button @click = &quot;products.id++&quot; style = &quot;font-size:25px;&quot;&gt;点我&lt;/button&gt;
+&lt;/div&gt;
+&lt;script type = &quot;text/javascript&quot;&gt;
+var myproduct = {&quot;id&quot;:1, name:&quot;book&quot;, &quot;price&quot;:&quot;20.00&quot;};
+var vm = new Vue({
+   el: '#app',
+   data: {
+      products: myproduct
+   }
+});
+Vue.set(myproduct, 'qty', 1);//重点！
+console.log(vm);
+vm.$watch('products.id', function(nval, oval) {
+   alert('计数器值的变化 :' + oval + ' 变为 ' + nval + '!');
+});
+&lt;/script&gt;
+</code></pre>
+<h2 id="vuedelete">Vue.delete</h2>
+<p>Vue.delete 用于删除动态添加的属性</p>
+<pre><code>Vue.delete( target, key )
+
+target: 可以是对象或数组
+key : 可以是字符串或数字
+
+Vue.delete(myproduct, 'price');
+price 属性的 get/set 方法也已删除。
+</code></pre>
+<h1 id="实例生命周期钩子">实例生命周期钩子</h1>
+<p>每个 Vue 实例在被创建时都要经过一系列的初始化过程——例如，需要设置数据监听、编译模板、将实例挂载到 DOM 并在数据变化时更新 DOM 等。同时在这个过程中也会运行一些叫做生命周期钩子的函数，这给了用户在不同阶段添加自己的代码的机会。</p>
+<pre><code>new Vue({
+  data: {
+    a: 1
+  },
+  created: function () {
+    // `this` 指向 vm 实例
+    console.log('a is: ' + this.a)
+  }
+})
+// =&gt; &quot;a is: 1&quot;
+</code></pre>
+<p>created 钩子可以用来在一个实例被创建之后执行代码。</p>
+<p>也有一些其它的钩子，在实例生命周期的不同阶段被调用，如 mounted、updated 和 destroyed。生命周期钩子的 this 上下文指向调用它的 Vue 实例。</p>
+<blockquote>
+<p>不要在选项 property 或回调上使用箭头函数，比如<code>created: () =&gt; console.log(this.a)</code>或 <code>vm.$watch('a', newValue =&gt; this.myMethod())</code>。<strong>因为箭头函数并没有 this</strong>，this 会作为变量一直向上级词法作用域查找，直至找到为止。经常导致 <code>Uncaught TypeError: Cannot read property of undefined 或 Uncaught TypeError: this.myMethod is not a function</code> 之类的错误。</p>
+</blockquote>
+<figure data-type="image" tabindex="1"><img src="https://user-gold-cdn.xitu.io/2020/7/18/17361fedb0016cb6?w=1200&amp;h=3039&amp;f=png&amp;s=224354" alt="vue生命周期图" loading="lazy"></figure>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E5%89%8D%E8%A8%80">👀前言</a></li>
+<li><a href="#vue%E5%93%8D%E5%BA%94%E6%8E%A5%E5%8F%A3">Vue响应接口</a>
+<ul>
+<li><a href="#vueset">Vue.set</a></li>
+<li><a href="#vuedelete">Vue.delete</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AE%9E%E4%BE%8B%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E9%92%A9%E5%AD%90">实例生命周期钩子</a></li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-5-lu-you-guo-du-dong-hua-hun-ru/">
+              <h3 class="post-title">
+                Vue学习笔记5-路由、过渡动画、混入
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '',
+    clientSecret: '',
+    repo: '',
+    owner: '',
+    admin: [''],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>
+  <a class="rss" href="https://giriawsh.github.io//atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

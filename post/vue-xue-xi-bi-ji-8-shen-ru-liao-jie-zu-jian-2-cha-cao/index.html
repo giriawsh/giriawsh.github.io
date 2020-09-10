@@ -1,0 +1,526 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vue学习笔记8-深入了解组件2-插槽 | Giria&#39;s Blog</title>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico?v=1599722453152">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://giriawsh.github.io//styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Vue学习笔记8-深入了解组件2-插槽 | Giria&#39;s Blog - Atom Feed" href="https://giriawsh.github.io//atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="🏃前言
+结合官方文档、废弃用法文档、知乎、掘金等资料进行插槽知识点整理。
+
+插槽
+
+在 2.6.0 中，我们为具名插槽和作用域插槽引入了一个新的统一的语法 (即 v-slot 指令)。它取代了 slot 和 slot-scope 这两个目..." />
+    <meta name="keywords" content="Vue学习系列,前端,Vue.js" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://giriawsh.github.io/">
+  <img class="avatar" src="https://giriawsh.github.io//images/avatar.png?v=1599722453152" alt="">
+  </a>
+  <h1 class="site-title">
+    Giria&#39;s Blog
+  </h1>
+  <p class="site-description">
+    Live only once, make it count
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+        <a href="https://github.com/giriawsh" target="_blank">
+          <i class="ri-github-line"></i>
+        </a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              Vue学习笔记8-深入了解组件2-插槽
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-09-10
+              </span>
+              <span>
+                14 min read
+              </span>
+              
+                <a href="https://giriawsh.github.io/tag/qe64KixUR/" class="post-tag">
+                  # Vue学习系列
+                </a>
+              
+                <a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="post-tag">
+                  # 前端
+                </a>
+              
+                <a href="https://giriawsh.github.io/tag/P-LvHoQha/" class="post-tag">
+                  # Vue.js
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="前言">🏃前言</h1>
+<p>结合官方文档、废弃用法文档、知乎、掘金等资料进行插槽知识点整理。</p>
+<!-- more -->
+<h1 id="插槽">插槽</h1>
+<blockquote>
+<p>在 2.6.0 中，我们为具名插槽和作用域插槽引入了一个新的统一的语法 (即 v-slot 指令)。它取代了 slot 和 slot-scope 这两个目前已被废弃但未被移除且仍在文档中的 attribute。</p>
+</blockquote>
+<h2 id="插槽是什么">插槽是什么</h2>
+<p>slot，也称插槽，可以类比为插卡式的FC游戏机，<strong>游戏机（子组件）暴露卡槽（插槽）让用户插入不同的游戏磁条（自定义内容）</strong>，游戏机会读取并加载磁条里的游戏。</p>
+<p>Vue的slot，是组件的一块HTML模版，这块模版由使用组件者即父组件提供。可以说是<strong>子组件暴露的一个让父组件传入自定义内容的接口</strong>。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/20/1736807a35805823?w=750&amp;h=534&amp;f=png&amp;s=507743" alt="游戏机" loading="lazy"><br>
+转载自掘金：<a href="https://juejin.im/post/6844903817746628615">slots详解</a></p>
+<h2 id="为什么需要引入插槽">为什么需要引入插槽</h2>
+<p>举个例子，比如我要实现一个这样的 Alert 组件：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/20/173680db10879d83?w=284&amp;h=101&amp;f=png&amp;s=49497" alt="插槽例子" loading="lazy"><br>
+它会有默认的内容和样式，比如第一行的 Default 我们只需要使用：</p>
+<pre><code class="language-html">&lt;alert&gt;&lt;/alert&gt;
+</code></pre>
+<p>当需要换用不同的样式与内容时，我们希望只需要这样调用：</p>
+<pre><code class="language-html">&lt;alert type=&quot;success&quot;&gt;
+    &lt;strong&gt;Success!&lt;/strong&gt; Looks good to me!
+&lt;/alert&gt;
+</code></pre>
+<p>要实现这个功能就可以使用slots</p>
+<figure data-type="image" tabindex="1"><img src="https://user-gold-cdn.xitu.io/2020/7/20/17368104fde76574?w=643&amp;h=532&amp;f=png&amp;s=28705" alt="代码1" loading="lazy"></figure>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/20/17368108b5ae8ca2?w=643&amp;h=574&amp;f=png&amp;s=27001" alt="代码2" loading="lazy"><br>
+当外部调用<code>&lt;slot&gt;</code>标签内容的时候，如果外部调用没有提供内容，则使用自己默认的内容，否则提供外部的内容。</p>
+<p>转载自知乎：<a href="https://www.zhihu.com/question/37548226/answer/609289491">如何理解Vue.js的组件中的slot?</a></p>
+<h2 id="插槽内容">插槽内容</h2>
+<p>Vue 实现了一套内容分发的 API，将 <slot> 元素作为承载分发内容的出口。</p>
+<pre><code class="language-html">&lt;navigation-link url=&quot;/profile&quot;&gt;
+  Your Profile
+&lt;/navigation-link&gt;
+
+在模板内部：
+&lt;a
+  v-bind:href=&quot;url&quot;
+  class=&quot;nav-link&quot;
+&gt;
+  &lt;slot&gt;&lt;/slot&gt;
+&lt;/a&gt;
+</code></pre>
+<p>当组件渲染的时候，<code>&lt;slot&gt;&lt;/slot&gt;</code> 将会被替换为“Your Profile”。插槽内可以包含任何模板代码，包括 HTML、甚至其它的组件。</p>
+<p>如果 <code>&lt;navigation-link</code>&gt; 的 template 中没有包含一个 <code>&lt;slot&gt;</code> 元素，则该组件起始标签和结束标签之间的任何内容都会被抛弃。</p>
+<h2 id="编译作用域">编译作用域</h2>
+<p>当你想在一个插槽中使用数据时</p>
+<pre><code class="language-html">&lt;navigation-link url=&quot;/profile&quot;&gt;
+  Logged in as {{ user.name }}
+&lt;/navigation-link&gt;
+</code></pre>
+<p>该插槽跟模板的其它地方一样可以访问相同的实例 property (也就是相同的“作用域”)，而不能访问 <code>&lt;navigation-link&gt;</code> 的作用域</p>
+<p><strong>父级模板里的所有内容都是在父级作用域中编译的；子模板里的所有内容都是在子作用域中编译的。</strong></p>
+<h2 id="后备内容">后备内容</h2>
+<p>有时为一个插槽设置具体的后备 (也就是默认的) 内容是很有用的，它只会在没有提供内容的时候被渲染。</p>
+<p>我们可能希望<code>&lt;button&gt;</code> 内绝大多数情况下都渲染文本“Submit”。为了将“Submit”作为后备内容，我们可以将它放在 <code>&lt;slot&gt;</code> 标签内</p>
+<pre><code class="language-html">&lt;button type=&quot;submit&quot;&gt;
+  &lt;slot&gt;Submit&lt;/slot&gt;
+&lt;/button&gt;
+</code></pre>
+<h2 id="具名插槽">具名插槽</h2>
+<p>有时我们需要多个插槽。</p>
+<p>对于这样的情况，<code>&lt;slot&gt;</code> 元素有一个特殊的 attribute：name。这个 attribute 可以用来定义额外的插槽</p>
+<pre><code class="language-html">&lt;div class=&quot;container&quot;&gt;
+  &lt;header&gt;
+    &lt;slot name=&quot;header&quot;&gt;&lt;/slot&gt;
+  &lt;/header&gt;
+  &lt;main&gt;
+    &lt;slot&gt;&lt;/slot&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;
+    &lt;slot name=&quot;footer&quot;&gt;&lt;/slot&gt;
+  &lt;/footer&gt;
+&lt;/div&gt; 
+</code></pre>
+<p>一个不带 name 的 <code>&lt;slot&gt;</code> 出口会带有隐含的名字“default”</p>
+<p>在向具名插槽提供内容的时候，我们可以在一个<code>&lt;template&gt;</code> 元素上使用 v-slot 指令，并以 v-slot 的参数的形式提供其名称</p>
+<pre><code class="language-html">&lt;base-layout&gt;
+  &lt;template v-slot:header&gt;
+    &lt;h1&gt;Here might be a page title&lt;/h1&gt;
+  &lt;/template&gt;
+
+  &lt;p&gt;A paragraph for the main content.&lt;/p&gt;
+  &lt;p&gt;And another one.&lt;/p&gt;
+
+  &lt;template v-slot:footer&gt;
+    &lt;p&gt;Here's some contact info&lt;/p&gt;
+  &lt;/template&gt;
+&lt;/base-layout&gt;
+</code></pre>
+<p>任何没有被包裹在带有 v-slot 的 <code>&lt;template&gt;</code> 中的内容都会被视为默认插槽的内容。</p>
+<p><strong>注意 v-slot 只能添加在 <code>&lt;template&gt;</code> 上</strong> (只有一种例外情况-&gt;独占默认插槽的缩写语法，不带参数的 v-slot 被假定对应默认插槽，同时不支持和具名插槽混用)，这一点和已经废弃的 slot attribute 不同。</p>
+<h2 id="作用域插槽">作用域插槽</h2>
+<p>用于<strong>让插槽内容能够访问子组件中才有的数据</strong>。</p>
+<pre><code class="language-html">&lt;span&gt;
+  &lt;slot&gt;{{ user.lastName }}&lt;/slot&gt;//子组件内部的property
+&lt;/span&gt;
+我们可能想换掉备用内容，用名而非姓来显示：
+&lt;current-user&gt;
+  {{ user.firstName }}//外部无法访问内部的数据
+&lt;/current-user&gt;
+</code></pre>
+<p>然而上述代码不会正常工作，因为只有 <code>&lt;current-user&gt;</code> 组件可以访问到 user 而我们提供的内容是在父级渲染的。</p>
+<p>为了让 user 在父级的插槽内容中可用，我们可以将 user 作为<code>&lt;slot&gt;</code>元素的一个 attribute 绑定上去。</p>
+<pre><code class="language-html">&lt;span&gt;
+  &lt;slot v-bind:user=&quot;user&quot;&gt;//暴露在外层
+    {{ user.lastName }}
+  &lt;/slot&gt;
+&lt;/span&gt;
+</code></pre>
+<p>绑定在 <code>&lt;slot&gt;</code> 元素上的 attribute 被称为插槽 prop。现在在父级作用域中，我们可以使用带值的 v-slot 来定义我们提供的插槽 prop 的名字</p>
+<pre><code>&lt;current-user&gt;html
+  &lt;template v-slot:default=&quot;slotProps&quot;&gt;//使用带值的 v-slot 来定义我们提供的插槽 prop 的名字
+    {{ slotProps.user.firstName }}
+  &lt;/template&gt;
+&lt;/current-user&gt;
+</code></pre>
+<p>在这个例子中，我们选择将包含所有插槽 prop 的对象命名为 slotProps，但你也可以使用任意你喜欢的名字。</p>
+<h3 id="独占默认插槽的缩写语法">独占默认插槽的缩写语法</h3>
+<p>在上述情况下，当被提供的内容<strong>只有默认插槽</strong>时，组件的标签才可以被当作插槽的模板来使用。这样我们就可以把 v-slot 直接用在组件上。</p>
+<p>这种写法还可以更简单。就像假定未指明的内容对应默认插槽一样，不带参数的 v-slot 被假定对应默认插槽。</p>
+<pre><code class="language-html">&lt;current-user v-slot=&quot;slotProps&quot;&gt;
+  {{ slotProps.user.firstName }}
+&lt;/current-user&gt;
+</code></pre>
+<p>注意默认插槽的缩写语法不能和具名插槽混用，因为它会导致作用域不明确.</p>
+<pre><code class="language-html">&lt;!-- 无效，会导致警告 --&gt;
+&lt;current-user v-slot=&quot;slotProps&quot;&gt;
+  {{ slotProps.user.firstName }}
+  &lt;template v-slot:other=&quot;otherSlotProps&quot;&gt;
+    slotProps is NOT available here
+  &lt;/template&gt;
+&lt;/current-user&gt;
+</code></pre>
+<p><strong>只要出现多个插槽，请始终为所有的插槽使用完整的基于 <code>&lt;template&gt;</code> 的语法</strong></p>
+<h3 id="解构插槽-prop">解构插槽 Prop</h3>
+<p>作用域插槽的内部工作原理是将你的插槽内容包括在一个传入单个参数的函数里。</p>
+<pre><code class="language-html">function (slotProps) {
+  // 插槽内容
+}
+</code></pre>
+<p>这意味着 v-slot 的值实际上可以是任何能够作为函数定义中的参数的 JavaScript 表达式。</p>
+<p>所以在支持的环境下 (单文件组件或现代浏览器)，你也可以使用 ES2015 解构来传入具体的插槽 prop。</p>
+<pre><code class="language-html">&lt;current-user v-slot=&quot;{ user }&quot;&gt;
+  {{ user.firstName }}
+&lt;/current-user&gt;
+</code></pre>
+<p>这样可以使模板更简洁，尤其是在该插槽提供了多个 prop 的时候。它同样开启了 prop 重命名等其它可能。</p>
+<pre><code class="language-html">将 user 重命名为 person
+
+&lt;current-user v-slot=&quot;{ user: person }&quot;&gt;
+  {{ person.firstName }}
+&lt;/current-user&gt;
+
+甚至可以定义后备内容，用于插槽 prop 是 undefined 的情形
+&lt;current-user v-slot=&quot;{ user = { firstName: 'Guest' } }&quot;&gt;
+  {{ user.firstName }}
+&lt;/current-user&gt;
+</code></pre>
+<h2 id="动态插槽名">动态插槽名</h2>
+<p>动态指令参数也可以用在 v-slot 上，来定义动态的插槽名</p>
+<pre><code>&lt;base-layout&gt;
+  &lt;template v-slot:[dynamicSlotName]&gt;
+    ...
+  &lt;/template&gt;
+&lt;/base-layout&gt;
+</code></pre>
+<h2 id="具体插槽的缩写">具体插槽的缩写</h2>
+<p>把参数之前的所有内容 (v-slot:) 替换为字符 #。例如 v-slot:header 可以被重写为 #header</p>
+<p><strong>该缩写只在其有参数的时候才可用</strong></p>
+<pre><code class="language-html">&lt;!-- 这样会触发一个警告 --&gt;
+&lt;current-user #=&quot;{ user }&quot;&gt;
+  {{ user.firstName }}
+&lt;/current-user&gt;
+
+如果你希望使用缩写的话，你必须始终以明确插槽名取而代之：
+&lt;current-user #default=&quot;{ user }&quot;&gt;
+  {{ user.firstName }}
+&lt;/current-user&gt;
+</code></pre>
+<h2 id="其他示例">其他示例</h2>
+<p>插槽 prop 允许我们将插槽转换为可复用的模板，这些模板可以基于输入的 prop 渲染出不同的内容。</p>
+<p>要实现一个 <code>&lt;todo-list&gt;</code> 组件，它是一个列表且包含布局和过滤逻辑</p>
+<pre><code class="language-html">&lt;ul&gt;
+  &lt;li
+    v-for=&quot;todo in filteredTodos&quot;
+    v-bind:key=&quot;todo.id&quot;
+  &gt;
+    {{ todo.text }}
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>我们可以将每个 todo 作为父级组件的插槽，以此通过父级组件对其进行控制，然后将 todo 作为一个插槽 prop 进行绑定</p>
+<pre><code class="language-html">&lt;ul&gt;
+  &lt;li
+    v-for=&quot;todo in filteredTodos&quot;
+    v-bind:key=&quot;todo.id&quot;
+  &gt;
+    &lt;!--
+    我们为每个 todo 准备了一个插槽，
+    将 `todo` 对象作为一个插槽的 prop 传入。
+    --&gt;
+    &lt;slot name=&quot;todo&quot; v-bind:todo=&quot;todo&quot;&gt;
+      &lt;!-- 后备内容 --&gt;
+      {{ todo.text }}
+    &lt;/slot&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>现在当我们使用 <code>&lt;todo-list&gt;</code>组件的时候，我们可以选择为 todo 定义一个不一样的 <code>&lt;template&gt;</code> 作为替代方案，并且可以从子组件获取数据。</p>
+<pre><code class="language-html">&lt;todo-list v-bind:todos=&quot;todos&quot;&gt;
+  &lt;template v-slot:todo=&quot;{ todo }&quot;&gt;
+    &lt;span v-if=&quot;todo.isComplete&quot;&gt;✓&lt;/span&gt;
+    {{ todo.text }}
+  &lt;/template&gt;
+&lt;/todo-list&gt;
+</code></pre>
+<h2 id="废弃了的语法">废弃了的语法</h2>
+<p>在接下来所有的 2.x 版本中 slot 和 slot-scope attribute 仍会被支持，但已经被官方废弃且不会出现在 Vue 3 中。</p>
+<h3 id="带有-slot-attribute-的具名插槽">带有 slot attribute 的具名插槽</h3>
+<p>在 <code>&lt;template&gt;</code> 上使用特殊的 slot attribute，可以将内容从父级传给具名插槽 (把这里提到过的 <code>&lt;base-layout&gt;</code> 组件作为示例)</p>
+<pre><code class="language-html">&lt;base-layout&gt;
+  &lt;template slot=&quot;header&quot;&gt;
+    &lt;h1&gt;Here might be a page title&lt;/h1&gt;
+  &lt;/template&gt;
+
+  &lt;p&gt;A paragraph for the main content.&lt;/p&gt;
+  &lt;p&gt;And another one.&lt;/p&gt;
+
+  &lt;template slot=&quot;footer&quot;&gt;
+    &lt;p&gt;Here's some contact info&lt;/p&gt;
+  &lt;/template&gt;
+&lt;/base-layout&gt;
+</code></pre>
+<p>或者直接把 slot attribute 用在一个普通元素上：</p>
+<pre><code class="language-html">&lt;base-layout&gt;
+  &lt;h1 slot=&quot;header&quot;&gt;Here might be a page title&lt;/h1&gt;
+
+  &lt;p&gt;A paragraph for the main content.&lt;/p&gt;
+  &lt;p&gt;And another one.&lt;/p&gt;
+
+  &lt;p slot=&quot;footer&quot;&gt;Here's some contact info&lt;/p&gt;
+&lt;/base-layout&gt;
+</code></pre>
+<p>未命名插槽，也就是默认插槽，捕获所有未被匹配的内容。</p>
+<p>类似于具名插槽</p>
+<h3 id="带有-slot-scope-attribute-的作用域插槽">带有 slot-scope attribute 的作用域插槽</h3>
+<p>在 <code>&lt;template&gt;</code> 上使用特殊的 slot-scope attribute，可以接收传递给插槽的 prop。</p>
+<pre><code class="language-html">&lt;slot-example&gt;
+  &lt;template slot=&quot;default&quot; slot-scope=&quot;slotProps&quot;&gt;
+    {{ slotProps.msg }}
+  &lt;/template&gt;
+&lt;/slot-example&gt;
+这里的 slot=&quot;default&quot; 可以被忽略为隐性写法：
+&lt;slot-example&gt;
+  &lt;template slot-scope=&quot;slotProps&quot;&gt;
+    {{ slotProps.msg }}
+  &lt;/template&gt;
+&lt;/slot-example&gt;
+</code></pre>
+<p>类似于作用域插槽</p>
+<p>这里的 slot-scope 声明了被接收的 prop 对象会作为 slotProps 变量存在于<code>&lt;template&gt;</code> 作用域中。你可以像命名 JavaScript 函数参数一样随意命名 slotProps。</p>
+<p>slot-scope attribute 也可以直接用于非 <code>&lt;template&gt;</code> 元素 (包括组件)。</p>
+<p>slot-scope 的值可以接收任何有效的可以出现在函数定义的参数位置上的 JavaScript 表达式。这意味着在支持的环境下 (单文件组件或现代浏览器)，你也可以在表达式中使用 ES2015 解构</p>
+<pre><code class="language-html">&lt;slot-example&gt;
+  &lt;span slot-scope=&quot;{ msg }&quot;&gt;
+    {{ msg }}
+  &lt;/span&gt;
+&lt;/slot-example&gt;
+</code></pre>
+<p><code>&lt;todo-list&gt;</code>等价的使用 slot-scope 的代码是</p>
+<pre><code class="language-html">//废弃语法
+&lt;todo-list v-bind:todos=&quot;todos&quot;&gt;
+  &lt;template slot=&quot;todo&quot; slot-scope=&quot;{ todo }&quot;&gt;
+    &lt;span v-if=&quot;todo.isComplete&quot;&gt;✓&lt;/span&gt;
+    {{ todo.text }}
+  &lt;/template&gt;
+&lt;/todo-list&gt;
+
+//新语法
+对比于：
+&lt;todo-list v-bind:todos=&quot;todos&quot;&gt;
+  &lt;template v-slot:todo=&quot;{ todo }&quot;&gt;
+    &lt;span v-if=&quot;todo.isComplete&quot;&gt;✓&lt;/span&gt;
+    {{ todo.text }}
+  &lt;/template&gt;
+&lt;/todo-list&gt;
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E5%89%8D%E8%A8%80">🏃前言</a></li>
+<li><a href="#%E6%8F%92%E6%A7%BD">插槽</a>
+<ul>
+<li><a href="#%E6%8F%92%E6%A7%BD%E6%98%AF%E4%BB%80%E4%B9%88">插槽是什么</a></li>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%BC%95%E5%85%A5%E6%8F%92%E6%A7%BD">为什么需要引入插槽</a></li>
+<li><a href="#%E6%8F%92%E6%A7%BD%E5%86%85%E5%AE%B9">插槽内容</a></li>
+<li><a href="#%E7%BC%96%E8%AF%91%E4%BD%9C%E7%94%A8%E5%9F%9F">编译作用域</a></li>
+<li><a href="#%E5%90%8E%E5%A4%87%E5%86%85%E5%AE%B9">后备内容</a></li>
+<li><a href="#%E5%85%B7%E5%90%8D%E6%8F%92%E6%A7%BD">具名插槽</a></li>
+<li><a href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%8F%92%E6%A7%BD">作用域插槽</a>
+<ul>
+<li><a href="#%E7%8B%AC%E5%8D%A0%E9%BB%98%E8%AE%A4%E6%8F%92%E6%A7%BD%E7%9A%84%E7%BC%A9%E5%86%99%E8%AF%AD%E6%B3%95">独占默认插槽的缩写语法</a></li>
+<li><a href="#%E8%A7%A3%E6%9E%84%E6%8F%92%E6%A7%BD-prop">解构插槽 Prop</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8A%A8%E6%80%81%E6%8F%92%E6%A7%BD%E5%90%8D">动态插槽名</a></li>
+<li><a href="#%E5%85%B7%E4%BD%93%E6%8F%92%E6%A7%BD%E7%9A%84%E7%BC%A9%E5%86%99">具体插槽的缩写</a></li>
+<li><a href="#%E5%85%B6%E4%BB%96%E7%A4%BA%E4%BE%8B">其他示例</a></li>
+<li><a href="#%E5%BA%9F%E5%BC%83%E4%BA%86%E7%9A%84%E8%AF%AD%E6%B3%95">废弃了的语法</a>
+<ul>
+<li><a href="#%E5%B8%A6%E6%9C%89-slot-attribute-%E7%9A%84%E5%85%B7%E5%90%8D%E6%8F%92%E6%A7%BD">带有 slot attribute 的具名插槽</a></li>
+<li><a href="#%E5%B8%A6%E6%9C%89-slot-scope-attribute-%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%8F%92%E6%A7%BD">带有 slot-scope attribute 的作用域插槽</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-7-shen-ru-liao-jie-zu-jian-1-zu-jian-zhu-ce-propzi-ding-yi-shi-jian/">
+              <h3 class="post-title">
+                Vue学习笔记7-深入了解组件1-组件注册、Prop、自定义事件
+              </h3>
+            </a>
+          </div>
+        
+
+        
+          
+            <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+<script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+<div id="gitalk-container"></div>
+
+<script>
+
+  var gitalk = new Gitalk({
+    clientID: '',
+    clientSecret: '',
+    repo: '',
+    owner: '',
+    admin: [''],
+    id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+  })
+
+  gitalk.render('gitalk-container')
+
+</script>
+
+          
+
+          
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>
+  <a class="rss" href="https://giriawsh.github.io//atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
