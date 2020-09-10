@@ -2,11 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-10T07:03:41.836Z</updated>
+    <updated>2020-09-10T07:06:50.089Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
-    <subtitle>温故而知新</subtitle>
+    <subtitle>Live only once, make it count</subtitle>
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
@@ -16,8 +16,12 @@
         <link href="https://giriawsh.github.io/post/element-yuan-ma-xue-xi-alert-zu-jian/">
         </link>
         <updated>2020-09-10T07:02:09.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="前言">前言</h1>
+        <summary type="html"><![CDATA[<h1 id="前言">🤓前言</h1>
 <p>一直受到element组件库的照顾，觉得其中有很多值得分析的点和前端设计思想，遂开始整理这个系列。可能会有点乱，资料和分析参考我会附链接，后期可以再做一次整理。也算是对自己前端的一次提升能力学习。</p>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="前言">🤓前言</h1>
+<p>一直受到element组件库的照顾，觉得其中有很多值得分析的点和前端设计思想，遂开始整理这个系列。可能会有点乱，资料和分析参考我会附链接，后期可以再做一次整理。也算是对自己前端的一次提升能力学习。</p>
+<!-- more -->
 <h1 id="结构分析">结构分析</h1>
 <figure data-type="image" tabindex="1"><img src="https://user-gold-cdn.xitu.io/2020/7/11/1733e545aec77110?w=213&amp;h=249&amp;f=png&amp;s=7799" alt="element结构" loading="lazy"></figure>
 <ul>
@@ -206,10 +210,10 @@
         <link href="https://giriawsh.github.io/post/vuecodemirrorchui-zhi-shuang-lan-bu-ju/">
         </link>
         <updated>2020-09-10T07:00:33.000Z</updated>
-        <summary type="html"><![CDATA[<h1 id="前言">前言</h1>
+        <summary type="html"><![CDATA[<h1 id="️前言">✍️前言</h1>
 <p>关于codemirror在nuxt中正确引入,在上一篇blog里有做介绍,现在想要实现可以像codepen一样,自由调节的垂直双栏代码输入框,要怎么做呢?</p>
 ]]></summary>
-        <content type="html"><![CDATA[<h1 id="前言">前言</h1>
+        <content type="html"><![CDATA[<h1 id="️前言">✍️前言</h1>
 <p>关于codemirror在nuxt中正确引入,在上一篇blog里有做介绍,现在想要实现可以像codepen一样,自由调节的垂直双栏代码输入框,要怎么做呢?</p>
 <!-- more -->
 <h1 id="官方文档">官方文档</h1>
