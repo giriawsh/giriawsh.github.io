@@ -2,24 +2,23 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Hello Gridea | Giria&#39;s Blog</title>
+<title>nuxt字体包与components引入 | Giria&#39;s Blog</title>
 <link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico?v=1599720763370">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://giriawsh.github.io//styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Hello Gridea | Giria&#39;s Blog - Atom Feed" href="https://giriawsh.github.io//atom.xml">
+<link rel="alternate" type="application/atom+xml" title="nuxt字体包与components引入 | Giria&#39;s Blog - Atom Feed" href="https://giriawsh.github.io//atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="👏  欢迎使用 Gridea ！
-✍️  Gridea 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...
+    <meta name="description" content="👣前言
+本文记录了nuxt字体包引入与components组件引入解决。
 
-Github
-Gridea 主页
-示例网站
-特性👇
-📝  你可以使用最酷的 Markdo..." />
-    <meta name="keywords" content="前端,随笔,Nuxt.js,Vue.js,日记,书摘,JavaScript,JS学习系列,ES6学习系列,Gridea" />
+字体包引入问题
+首先尝试了教程上的本地依赖办法，附上链接：vuetify引入mdi
+然后很光荣地失败了，无论怎么都渲染不出来，于是参考了其他配置：
+nuxt引入f..." />
+    <meta name="keywords" content="前端,Nuxt.js,Vue.js" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -81,11 +80,11 @@ Gridea 主页
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Hello Gridea
+              nuxt字体包与components引入
             </h2>
             <div class="post-info">
               <span>
-                2018-12-12
+                2020-09-10
               </span>
               <span>
                 2 min read
@@ -93,10 +92,6 @@ Gridea 主页
               
                 <a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="post-tag">
                   # 前端
-                </a>
-              
-                <a href="https://giriawsh.github.io/tag/9OedYhieZ/" class="post-tag">
-                  # 随笔
                 </a>
               
                 <a href="https://giriawsh.github.io/tag/yklmR1Lly/" class="post-tag">
@@ -107,66 +102,60 @@ Gridea 主页
                   # Vue.js
                 </a>
               
-                <a href="https://giriawsh.github.io/tag/m5zWIbBTf/" class="post-tag">
-                  # 日记
-                </a>
-              
-                <a href="https://giriawsh.github.io/tag/RTYD43Ant/" class="post-tag">
-                  # 书摘
-                </a>
-              
-                <a href="https://giriawsh.github.io/tag/2G-O1ZTp4/" class="post-tag">
-                  # JavaScript
-                </a>
-              
-                <a href="https://giriawsh.github.io/tag/mwArQWtwB/" class="post-tag">
-                  # JS学习系列
-                </a>
-              
-                <a href="https://giriawsh.github.io/tag/Z0ATkY09H/" class="post-tag">
-                  # ES6学习系列
-                </a>
-              
-                <a href="https://giriawsh.github.io/tag/xRMTqhBD2/" class="post-tag">
-                  # Gridea
-                </a>
-              
             </div>
             
-              <img class="post-feature-image" src="https://giriawsh.github.io//post-images/hello-gridea.png" alt="">
+              <img class="post-feature-image" src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200910144817.png" alt="">
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+                <h1 id="前言">👣前言</h1>
+<p>本文记录了nuxt字体包引入与components组件引入解决。</p>
 <!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+<h1 id="字体包引入问题">字体包引入问题</h1>
+<p>首先尝试了教程上的本地依赖办法，附上链接：<a href="https://vuetifyjs.com/zh-Hans/customization/icons#install-material-design-icons-js-svg">vuetify引入mdi</a></p>
+<p>然后很光荣地失败了，无论怎么都渲染不出来，于是参考了其他配置：</p>
+<p><a href="https://www.dazhuanlan.com/2019/10/28/5db667a47e816/">nuxt引入font awesome</a></p>
+<p><a href="https://xbuba.com/questions/56520508">nuxt引入mdi配置</a><br>
+等一串google，还是没有解决</p>
+<h1 id="解决方法">解决方法</h1>
+<p>最后采用官方文档提供的cdn方法，也是参考了引入font awesome的建议，最后在config.js中这样配置：</p>
+<!--more-->
+<pre><code class="language-js">head: {
+  link: [
+    { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+    { rel: 'stylesheet' ,href: &quot;https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css&quot;}
+  ]
+},
+</code></pre>
+<p>successfully solved</p>
+<h1 id="components引入问题">components引入问题</h1>
+<p>这个好像在官方文档里没有找到，遇到的问题是在page中怎么引入components，统一解决方案放在下面：</p>
+<pre><code class="language-js">//Pages
+&lt;template&gt;
+  &lt;test /&gt;
+&lt;/template&gt;
+&lt;script&gt;
+  import test from '~/components/test'//这个“~”很重要
+  export default{
+    components: {test}
+  }
+&lt;/script&gt;
+
+//test.vue
+&lt;script&gt;
+  export default{
+    name: 'test'
+  }
+&lt;/script&gt;
+</code></pre>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E7%89%B9%E6%80%A7">特性👇</a></li>
-</ul>
-</li>
+<li><a href="#%E5%89%8D%E8%A8%80">👣前言</a></li>
+<li><a href="#%E5%AD%97%E4%BD%93%E5%8C%85%E5%BC%95%E5%85%A5%E9%97%AE%E9%A2%98">字体包引入问题</a></li>
+<li><a href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95">解决方法</a></li>
+<li><a href="#components%E5%BC%95%E5%85%A5%E9%97%AE%E9%A2%98">components引入问题</a></li>
 </ul>
 
               </div>
@@ -174,6 +163,15 @@ Gridea 主页
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://giriawsh.github.io/post/nuxt-xiang-mu-da-jian-elementvuetifyaxiosye-mian-qie-fen/">
+              <h3 class="post-title">
+                nuxt项目搭建+element+vuetify+axios+页面切分
+              </h3>
+            </a>
+          </div>
         
 
         

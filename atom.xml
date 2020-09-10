@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-10T06:49:24.102Z</updated>
+    <updated>2020-09-10T06:52:47.561Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -11,25 +11,68 @@
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
     <entry>
+        <title type="html"><![CDATA[nuxt字体包与components引入]]></title>
+        <id>https://giriawsh.github.io/post/nuxt-zi-ti-bao-yu-components-yin-ru/</id>
+        <link href="https://giriawsh.github.io/post/nuxt-zi-ti-bao-yu-components-yin-ru/">
+        </link>
+        <updated>2020-09-10T06:50:44.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="前言">👣前言</h1>
+<p>本文记录了nuxt字体包引入与components组件引入解决。</p>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="前言">👣前言</h1>
+<p>本文记录了nuxt字体包引入与components组件引入解决。</p>
+<!-- more -->
+<h1 id="字体包引入问题">字体包引入问题</h1>
+<p>首先尝试了教程上的本地依赖办法，附上链接：<a href="https://vuetifyjs.com/zh-Hans/customization/icons#install-material-design-icons-js-svg">vuetify引入mdi</a></p>
+<p>然后很光荣地失败了，无论怎么都渲染不出来，于是参考了其他配置：</p>
+<p><a href="https://www.dazhuanlan.com/2019/10/28/5db667a47e816/">nuxt引入font awesome</a></p>
+<p><a href="https://xbuba.com/questions/56520508">nuxt引入mdi配置</a><br>
+等一串google，还是没有解决</p>
+<h1 id="解决方法">解决方法</h1>
+<p>最后采用官方文档提供的cdn方法，也是参考了引入font awesome的建议，最后在config.js中这样配置：</p>
+<!--more-->
+<pre><code class="language-js">head: {
+  link: [
+    { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+    { rel: 'stylesheet' ,href: &quot;https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css&quot;}
+  ]
+},
+</code></pre>
+<p>successfully solved</p>
+<h1 id="components引入问题">components引入问题</h1>
+<p>这个好像在官方文档里没有找到，遇到的问题是在page中怎么引入components，统一解决方案放在下面：</p>
+<pre><code class="language-js">//Pages
+&lt;template&gt;
+  &lt;test /&gt;
+&lt;/template&gt;
+&lt;script&gt;
+  import test from '~/components/test'//这个“~”很重要
+  export default{
+    components: {test}
+  }
+&lt;/script&gt;
+
+//test.vue
+&lt;script&gt;
+  export default{
+    name: 'test'
+  }
+&lt;/script&gt;
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[nuxt项目搭建+element+vuetify+axios+页面切分]]></title>
         <id>https://giriawsh.github.io/post/nuxt-xiang-mu-da-jian-elementvuetifyaxiosye-mian-qie-fen/</id>
         <link href="https://giriawsh.github.io/post/nuxt-xiang-mu-da-jian-elementvuetifyaxiosye-mian-qie-fen/">
         </link>
         <updated>2020-09-10T06:46:27.000Z</updated>
-        <summary type="html"><![CDATA[<h1 id="前言">前言</h1>
+        <summary type="html"><![CDATA[<h1 id="️前言">✍️前言</h1>
 <p>话不多说，有关nuxt的社区建设还是亟待完善的，我也为新人入坑贡献一份力量吧。</p>
-<h1 id="nuxt搭建">nuxt搭建</h1>
-<p>这一块主要参照官方文档来就OK，这里附上地址：<a href="https://zh.nuxtjs.org/guide/installation">nuxt快速搭建官方教程</a>，还是挺详细的，主要步骤如下：</p>
-<ol>
-<li>运行 create-nuxt-app（官方提供的脚手架）</li>
-<li>进行选择，可以在这里选上element ui，因为element如果后期手动引入会带来一些问题，所以不妨这里直接继承到项目中，可以更完美地进行兼容。</li>
-<li>按照官方文档进行后，再进入pakage.json，直接run dev就可以了</li>
-</ol>
-<h1 id="项目结构">项目结构</h1>
-<p>这里顺便把项目结构解释一下,完成上一步骤之后我们可以得到的目录结构如下：</p>
 ]]></summary>
-        <content type="html"><![CDATA[<h1 id="前言">前言</h1>
+        <content type="html"><![CDATA[<h1 id="️前言">✍️前言</h1>
 <p>话不多说，有关nuxt的社区建设还是亟待完善的，我也为新人入坑贡献一份力量吧。</p>
+<!-- more -->
 <h1 id="nuxt搭建">nuxt搭建</h1>
 <p>这一块主要参照官方文档来就OK，这里附上地址：<a href="https://zh.nuxtjs.org/guide/installation">nuxt快速搭建官方教程</a>，还是挺详细的，主要步骤如下：</p>
 <ol>
