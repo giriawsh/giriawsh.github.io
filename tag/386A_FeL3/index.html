@@ -1,172 +1,50 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" >
+<head>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>codemirror | Giria&#39;s Blog</title>
+<link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+  
+</head>
+<body>
+<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
+<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://giriawsh.github.io/"><img alt="logo" style="display:inline-block;" src="https://giriawsh.github.io//images/avatar.png"/></a><h1 title="Giria&#39;s Blog" class="weaklink"><a  href="/">Giria&#39;s Blog</a></h1>
 
-<title>codemirror | Giria&#39;s Blog</title>
+<div class="navbar weaklink">
+<div class="normal_nav">
+<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/archives" class="selected active current nav__item" >归档</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li></ul></nav>
+<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
+<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/archives" class="selected active current nav__item" >归档</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1599746976828" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+</div></div>
+<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
 
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<div class="main"><div class="main-inner"><div class="content"><div class="round-shape-one"></div><div class="post_list" >
 
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico?v=1599723722826">
-<link rel="stylesheet" href="https://giriawsh.github.io//styles/main.css">
+<div class="post">
 
-
-
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
-
-
-    <meta name="description" content="Live only once, make it count">
-  </head>
-  <body>
-    <div id="app" class="main">
-
-      <div class="sidebar" :class="{ 'full-height': menuVisible }">
-  <div class="top-container" data-aos="fade-right">
-    <div class="top-header-container">
-      <a class="site-title-container" href="https://giriawsh.github.io/">
-        <img src="https://giriawsh.github.io//images/avatar.png?v=1599723722826" class="site-logo">
-        <h1 class="site-title">Giria&#39;s Blog</h1>
-      </a>
-      <div class="menu-btn" @click="menuVisible = !menuVisible">
-        <div class="line"></div>
-      </div>
-    </div>
-    <div>
-      
-        
-          <a href="/" class="site-nav">
-            首页
-          </a>
-        
-      
-        
-          <a href="/tags" class="site-nav">
-            标签
-          </a>
-        
-      
-        
-          <a href="/archives" class="site-nav">
-            归档
-          </a>
-        
-      
-        
-          <a href="/post/about" class="site-nav">
-            关于
-          </a>
-        
-      
-    </div>
-  </div>
-  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
-    <div class="social-container">
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    </div>
-    <div class="site-description">
-      Live only once, make it count
-    </div>
-    <div class="site-footer">
-      Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a> | <a class="rss" href="https://giriawsh.github.io//atom.xml" target="_blank">RSS</a>
-    </div>
-  </div>
-</div>
-
-
-      <div class="main-container">
-        <div class="content-container" data-aos="fade-up">
-          <h2 class="current-tag">标签: codemirror</h2>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://giriawsh.github.io/post/vuecodemirrorchui-zhi-shuang-lan-bu-ju/">
-                  <h2 class="post-title">vue+CodeMirror+垂直双栏布局</h2>
-                </a>
-                <div class="post-date">
-                  2020-09-10
-                </div>
-                <div class="post-abstract">
-                  <h1 id="️前言">✍️前言</h1>
+<div class="post_title weaklink"><h2><a href="https://giriawsh.github.io/post/vuecodemirrorchui-zhi-shuang-lan-bu-ju/">vue+CodeMirror+垂直双栏布局</a></h2></div>
+<div class="post_content markdown"><div class="p_part"><p><h1 id="️前言">✍️前言</h1>
 <p>关于codemirror在nuxt中正确引入,在上一篇blog里有做介绍,现在想要实现可以像codepen一样,自由调节的垂直双栏代码输入框,要怎么做呢?</p>
+</p></div></div>
+<div class="post_footer"><section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-09-10</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://giriawsh.github.io/tag/386A_FeL3/"class="tag">codemirror</a>| <a href="https://giriawsh.github.io/tag/IMEC1slRP/"class="tag">前端</a>| <a href="https://giriawsh.github.io/tag/yklmR1Lly/"class="tag">Nuxt.js</a>| <a href="https://giriawsh.github.io/tag/P-LvHoQha/"class="tag">Vue.js</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">571字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">3 min read</span></section>
+</div></div>
 
-                </div>
-              </div>
-              
-                <a class="right" href="https://giriawsh.github.io/post/vuecodemirrorchui-zhi-shuang-lan-bu-ju/">
-                  <div class="feature-container" style="background-image: url('https://user-gold-cdn.xitu.io/2020/7/7/173285c79eeb076c?w=598&amp;h=714&amp;f=png&amp;s=17226')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://giriawsh.github.io/post/nuxt-yin-ru-codemirror-fu-jia-python-ge-shi-shi-li/">
-                  <h2 class="post-title">nuxt引入codemirror 附加python格式示例</h2>
-                </a>
-                <div class="post-date">
-                  2020-09-10
-                </div>
-                <div class="post-abstract">
-                  <h1 id="️前言">✍️前言</h1>
+<div class="post">
+<div style="right:0;top:0;position:absolute"><div style="background-color: #f6e05e;font-size: .55rem;color: #000;padding-left: .5rem;padding-right: .5rem;border-bottom-left-radius: .5rem;">TOP</div></div>
+<div class="post_title weaklink"><h2><a href="https://giriawsh.github.io/post/nuxt-yin-ru-codemirror-fu-jia-python-ge-shi-shi-li/">nuxt引入codemirror 附加python格式示例</a></h2></div>
+<div class="post_content markdown"><div class="p_part"><p><h1 id="️前言">✍️前言</h1>
 <p>code mirror是一个集成度很高的代码嵌入插件，支持python、js、java等多个语法识别，如果有后台支持，可以进行编译工作，这个后面可以试试看。</p>
-
-                </div>
-              </div>
-              
-                <a class="right" href="https://giriawsh.github.io/post/nuxt-yin-ru-codemirror-fu-jia-python-ge-shi-shi-li/">
-                  <div class="feature-container" style="background-image: url('https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200910145408.png')">
-                  </div>
-                </a>
-              
-            </article>
-          
-
-          <div class="pagination-container">
-  
-  
-</div>
-
-        </div>
-      </div>
-    </div>
-
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-<script type="application/javascript">
-
-AOS.init();
-
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
-
+</p></div></div>
+<div class="post_footer"><section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-09-10</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://giriawsh.github.io/tag/386A_FeL3/"class="tag">codemirror</a>| <a href="https://giriawsh.github.io/tag/IMEC1slRP/"class="tag">前端</a>| <a href="https://giriawsh.github.io/tag/yklmR1Lly/"class="tag">Nuxt.js</a>| <a href="https://giriawsh.github.io/tag/P-LvHoQha/"class="tag">Vue.js</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">576字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">3 min read</span></section>
+</div></div>
+	
+<div class="round-shape-one"></div><div class="paginator pager pagination"><div style="clear:both;height:0;"></div></div></div></div></div></div>
+<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
+<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>20</strong> posts</span></div></div>
+<script>
+console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;", );
 </script>
-
-
-  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>
-    hljs.initHighlightingOnLoad()
-  </script>
-
-
-
-
-
-  </body>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+</body>
 </html>

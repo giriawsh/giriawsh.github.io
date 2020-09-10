@@ -1,310 +1,122 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" >
+<head>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>Vue.js | Giria&#39;s Blog</title>
+<link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+  
+</head>
+<body>
+<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
+<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://giriawsh.github.io/"><img alt="logo" style="display:inline-block;" src="https://giriawsh.github.io//images/avatar.png"/></a><h1 title="Giria&#39;s Blog" class="weaklink"><a  href="/">Giria&#39;s Blog</a></h1>
 
-<title>Vue.js | Giria&#39;s Blog</title>
+<div class="navbar weaklink">
+<div class="normal_nav">
+<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/archives" class="selected active current nav__item" >归档</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li></ul></nav>
+<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
+<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/archives" class="selected active current nav__item" >归档</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1599746976828" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+</div></div>
+<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
 
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<div class="main"><div class="main-inner"><div class="content"><div class="round-shape-one"></div><div class="post_list" >
 
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico?v=1599723722826">
-<link rel="stylesheet" href="https://giriawsh.github.io//styles/main.css">
+<div class="post">
 
-
-
-<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
-
-
-    <meta name="description" content="Live only once, make it count">
-  </head>
-  <body>
-    <div id="app" class="main">
-
-      <div class="sidebar" :class="{ 'full-height': menuVisible }">
-  <div class="top-container" data-aos="fade-right">
-    <div class="top-header-container">
-      <a class="site-title-container" href="https://giriawsh.github.io/">
-        <img src="https://giriawsh.github.io//images/avatar.png?v=1599723722826" class="site-logo">
-        <h1 class="site-title">Giria&#39;s Blog</h1>
-      </a>
-      <div class="menu-btn" @click="menuVisible = !menuVisible">
-        <div class="line"></div>
-      </div>
-    </div>
-    <div>
-      
-        
-          <a href="/" class="site-nav">
-            首页
-          </a>
-        
-      
-        
-          <a href="/tags" class="site-nav">
-            标签
-          </a>
-        
-      
-        
-          <a href="/archives" class="site-nav">
-            归档
-          </a>
-        
-      
-        
-          <a href="/post/about" class="site-nav">
-            关于
-          </a>
-        
-      
-    </div>
-  </div>
-  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
-    <div class="social-container">
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    </div>
-    <div class="site-description">
-      Live only once, make it count
-    </div>
-    <div class="site-footer">
-      Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a> | <a class="rss" href="https://giriawsh.github.io//atom.xml" target="_blank">RSS</a>
-    </div>
-  </div>
-</div>
-
-
-      <div class="main-container">
-        <div class="content-container" data-aos="fade-up">
-          <h2 class="current-tag">标签: Vue.js</h2>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-9-shen-ru-liao-jie-zu-jian-3-dong-tai-zu-jian-yi-bu-zu-jian-bian-jie-chu-li/">
-                  <h2 class="post-title">Vue学习笔记9-深入了解组件3-动态组件、异步组件、边界处理</h2>
-                </a>
-                <div class="post-date">
-                  2020-09-10
-                </div>
-                <div class="post-abstract">
-                  <h1 id="前言">🏃前言</h1>
+<div class="post_title weaklink"><h2><a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-9-shen-ru-liao-jie-zu-jian-3-dong-tai-zu-jian-yi-bu-zu-jian-bian-jie-chu-li/">Vue学习笔记9-深入了解组件3-动态组件、异步组件、边界处理</a></h2></div>
+<div class="post_content markdown"><div class="p_part"><p><h1 id="前言">🏃前言</h1>
 <p>这块基本参照官方文档与API文档进行知识点整理。</p>
+</p></div></div>
+<div class="post_footer"><section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-09-10</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://giriawsh.github.io/tag/qe64KixUR/"class="tag">Vue学习系列</a>| <a href="https://giriawsh.github.io/tag/IMEC1slRP/"class="tag">前端</a>| <a href="https://giriawsh.github.io/tag/P-LvHoQha/"class="tag">Vue.js</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">4778字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">20 min read</span></section>
+</div></div>
 
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-8-shen-ru-liao-jie-zu-jian-2-cha-cao/">
-                  <h2 class="post-title">Vue学习笔记8-深入了解组件2-插槽</h2>
-                </a>
-                <div class="post-date">
-                  2020-09-10
-                </div>
-                <div class="post-abstract">
-                  <h1 id="前言">🏃前言</h1>
+<div class="post">
+
+<div class="post_title weaklink"><h2><a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-8-shen-ru-liao-jie-zu-jian-2-cha-cao/">Vue学习笔记8-深入了解组件2-插槽</a></h2></div>
+<div class="post_content markdown"><div class="p_part"><p><h1 id="前言">🏃前言</h1>
 <p>结合官方文档、废弃用法文档、知乎、掘金等资料进行插槽知识点整理。</p>
+</p></div></div>
+<div class="post_footer"><section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-09-10</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://giriawsh.github.io/tag/qe64KixUR/"class="tag">Vue学习系列</a>| <a href="https://giriawsh.github.io/tag/IMEC1slRP/"class="tag">前端</a>| <a href="https://giriawsh.github.io/tag/P-LvHoQha/"class="tag">Vue.js</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">3058字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">14 min read</span></section>
+</div></div>
 
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-7-shen-ru-liao-jie-zu-jian-1-zu-jian-zhu-ce-propzi-ding-yi-shi-jian/">
-                  <h2 class="post-title">Vue学习笔记7-深入了解组件1-组件注册、Prop、自定义事件</h2>
-                </a>
-                <div class="post-date">
-                  2020-09-10
-                </div>
-                <div class="post-abstract">
-                  <h1 id="前言">‍🏃前言</h1>
+<div class="post">
+
+<div class="post_title weaklink"><h2><a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-7-shen-ru-liao-jie-zu-jian-1-zu-jian-zhu-ce-propzi-ding-yi-shi-jian/">Vue学习笔记7-深入了解组件1-组件注册、Prop、自定义事件</a></h2></div>
+<div class="post_content markdown"><div class="p_part"><p><h1 id="前言">‍🏃前言</h1>
 <p>组件的深入理解，这块基本是官方文档的重要知识点梳理，详情可移步：<a href="https://cn.vuejs.org/v2/guide/components-slots.html">官方文档</a></p>
+</p></div></div>
+<div class="post_footer"><section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-09-10</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://giriawsh.github.io/tag/qe64KixUR/"class="tag">Vue学习系列</a>| <a href="https://giriawsh.github.io/tag/IMEC1slRP/"class="tag">前端</a>| <a href="https://giriawsh.github.io/tag/P-LvHoQha/"class="tag">Vue.js</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">3398字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">14 min read</span></section>
+</div></div>
 
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-6-xiang-ying-jie-kou-sheng-ming-zhou-qi/">
-                  <h2 class="post-title">Vue学习笔记6-响应接口、生命周期</h2>
-                </a>
-                <div class="post-date">
-                  2020-09-10
-                </div>
-                <div class="post-abstract">
-                  <h1 id="前言">👀前言</h1>
+<div class="post">
+
+<div class="post_title weaklink"><h2><a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-6-xiang-ying-jie-kou-sheng-ming-zhou-qi/">Vue学习笔记6-响应接口、生命周期</a></h2></div>
+<div class="post_content markdown"><div class="p_part"><p><h1 id="前言">👀前言</h1>
 <p>结合官方文档与菜鸟教程的vue学习笔记系列6。</p>
+</p></div></div>
+<div class="post_footer"><section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-09-10</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://giriawsh.github.io/tag/qe64KixUR/"class="tag">Vue学习系列</a>| <a href="https://giriawsh.github.io/tag/IMEC1slRP/"class="tag">前端</a>| <a href="https://giriawsh.github.io/tag/P-LvHoQha/"class="tag">Vue.js</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">993字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">5 min read</span></section>
+</div></div>
 
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-5-lu-you-guo-du-dong-hua-hun-ru/">
-                  <h2 class="post-title">Vue学习笔记5-路由、过渡动画、混入</h2>
-                </a>
-                <div class="post-date">
-                  2020-09-10
-                </div>
-                <div class="post-abstract">
-                  <h1 id="前言">👀前言</h1>
+<div class="post">
+
+<div class="post_title weaklink"><h2><a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-5-lu-you-guo-du-dong-hua-hun-ru/">Vue学习笔记5-路由、过渡动画、混入</a></h2></div>
+<div class="post_content markdown"><div class="p_part"><p><h1 id="前言">👀前言</h1>
 <p>结合官方文档与菜鸟教程的vue学习笔记系列5。</p>
+</p></div></div>
+<div class="post_footer"><section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-09-10</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://giriawsh.github.io/tag/qe64KixUR/"class="tag">Vue学习系列</a>| <a href="https://giriawsh.github.io/tag/IMEC1slRP/"class="tag">前端</a>| <a href="https://giriawsh.github.io/tag/P-LvHoQha/"class="tag">Vue.js</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">3149字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">15 min read</span></section>
+</div></div>
 
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-4-zu-jian-zi-ding-yi-zhi-ling/">
-                  <h2 class="post-title">Vue学习笔记4-组件、自定义指令</h2>
-                </a>
-                <div class="post-date">
-                  2020-09-10
-                </div>
-                <div class="post-abstract">
-                  <h1 id="前言">👀前言</h1>
+<div class="post">
+
+<div class="post_title weaklink"><h2><a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-4-zu-jian-zi-ding-yi-zhi-ling/">Vue学习笔记4-组件、自定义指令</a></h2></div>
+<div class="post_content markdown"><div class="p_part"><p><h1 id="前言">👀前言</h1>
 <p>结合官方文档+菜鸟教程学习笔记4。</p>
+</p></div></div>
+<div class="post_footer"><section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-09-10</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://giriawsh.github.io/tag/qe64KixUR/"class="tag">Vue学习系列</a>| <a href="https://giriawsh.github.io/tag/IMEC1slRP/"class="tag">前端</a>| <a href="https://giriawsh.github.io/tag/P-LvHoQha/"class="tag">Vue.js</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">3428字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">16 min read</span></section>
+</div></div>
 
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-3-yang-shi-bang-ding-shi-jian-chu-li-qi-biao-dan-jing-dian-mo-xing/">
-                  <h2 class="post-title">Vue学习笔记3-样式绑定、事件处理器、表单经典模型</h2>
-                </a>
-                <div class="post-date">
-                  2020-09-10
-                </div>
-                <div class="post-abstract">
-                  <h1 id="前言">👀前言</h1>
+<div class="post">
+
+<div class="post_title weaklink"><h2><a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-3-yang-shi-bang-ding-shi-jian-chu-li-qi-biao-dan-jing-dian-mo-xing/">Vue学习笔记3-样式绑定、事件处理器、表单经典模型</a></h2></div>
+<div class="post_content markdown"><div class="p_part"><p><h1 id="前言">👀前言</h1>
 <p>结合官方文档与菜鸟教程的学习总结系列3。</p>
+</p></div></div>
+<div class="post_footer"><section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-09-10</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://giriawsh.github.io/tag/qe64KixUR/"class="tag">Vue学习系列</a>| <a href="https://giriawsh.github.io/tag/IMEC1slRP/"class="tag">前端</a>| <a href="https://giriawsh.github.io/tag/P-LvHoQha/"class="tag">Vue.js</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">2792字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">14 min read</span></section>
+</div></div>
 
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-2-tiao-jian-xun-huan-ji-suan-shu-xing-jian-ting/">
-                  <h2 class="post-title">Vue学习笔记2-条件、循环、计算属性、监听</h2>
-                </a>
-                <div class="post-date">
-                  2020-09-10
-                </div>
-                <div class="post-abstract">
-                  <h1 id="前言">👀前言</h1>
+<div class="post">
+
+<div class="post_title weaklink"><h2><a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-2-tiao-jian-xun-huan-ji-suan-shu-xing-jian-ting/">Vue学习笔记2-条件、循环、计算属性、监听</a></h2></div>
+<div class="post_content markdown"><div class="p_part"><p><h1 id="前言">👀前言</h1>
 <p>结合官方文档与菜鸟教程的vue学习笔记。</p>
+</p></div></div>
+<div class="post_footer"><section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-09-10</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://giriawsh.github.io/tag/qe64KixUR/"class="tag">Vue学习系列</a>| <a href="https://giriawsh.github.io/tag/IMEC1slRP/"class="tag">前端</a>| <a href="https://giriawsh.github.io/tag/P-LvHoQha/"class="tag">Vue.js</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">2912字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">13 min read</span></section>
+</div></div>
 
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-1-an-zhuang-mu-lu-shi-li-hua-vuemo-ban-yu-fa/">
-                  <h2 class="post-title">Vue学习笔记1-安装、目录、实例化vue、模板语法</h2>
-                </a>
-                <div class="post-date">
-                  2020-09-10
-                </div>
-                <div class="post-abstract">
-                  <h1 id="前言">👀前言</h1>
+<div class="post">
+<div style="right:0;top:0;position:absolute"><div style="background-color: #f6e05e;font-size: .55rem;color: #000;padding-left: .5rem;padding-right: .5rem;border-bottom-left-radius: .5rem;">TOP</div></div>
+<div class="post_title weaklink"><h2><a href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-1-an-zhuang-mu-lu-shi-li-hua-vuemo-ban-yu-fa/">Vue学习笔记1-安装、目录、实例化vue、模板语法</a></h2></div>
+<div class="post_content markdown"><div class="p_part"><p><h1 id="前言">👀前言</h1>
 <p>学习笔记，结合官方文档与菜鸟教程，可能会po上学习代码到github。</p>
+</p></div></div>
+<div class="post_footer"><section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-09-10</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://giriawsh.github.io/tag/qe64KixUR/"class="tag">Vue学习系列</a>| <a href="https://giriawsh.github.io/tag/IMEC1slRP/"class="tag">前端</a>| <a href="https://giriawsh.github.io/tag/P-LvHoQha/"class="tag">Vue.js</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">2627字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">11 min read</span></section>
+</div></div>
 
-                </div>
-              </div>
-              
-                <a class="right" href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-1-an-zhuang-mu-lu-shi-li-hua-vuemo-ban-yu-fa/">
-                  <div class="feature-container" style="background-image: url('https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200910150938.png')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://giriawsh.github.io/post/element-yuan-ma-xue-xi-alert-zu-jian/">
-                  <h2 class="post-title">element源码学习-Alert组件</h2>
-                </a>
-                <div class="post-date">
-                  2020-09-10
-                </div>
-                <div class="post-abstract">
-                  <h1 id="前言">🤓前言</h1>
+<div class="post">
+<div style="right:0;top:0;position:absolute"><div style="background-color: #f6e05e;font-size: .55rem;color: #000;padding-left: .5rem;padding-right: .5rem;border-bottom-left-radius: .5rem;">TOP</div></div>
+<div class="post_title weaklink"><h2><a href="https://giriawsh.github.io/post/element-yuan-ma-xue-xi-alert-zu-jian/">element源码学习-Alert组件</a></h2></div>
+<div class="post_content markdown"><div class="p_part"><p><h1 id="前言">🤓前言</h1>
 <p>一直受到element组件库的照顾，觉得其中有很多值得分析的点和前端设计思想，遂开始整理这个系列。可能会有点乱，资料和分析参考我会附链接，后期可以再做一次整理。也算是对自己前端的一次提升能力学习。</p>
-
-                </div>
-              </div>
-              
-                <a class="right" href="https://giriawsh.github.io/post/element-yuan-ma-xue-xi-alert-zu-jian/">
-                  <div class="feature-container" style="background-image: url('https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200910150246.png')">
-                  </div>
-                </a>
-              
-            </article>
-          
-
-          <div class="pagination-container">
-  
-  
-    <a href="https://giriawsh.github.io/tag/P-LvHoQha/page/2" class="next">下一页 <i class="icon-arrow-ios-forward-outline"></i></a>
-  
-</div>
-
-        </div>
-      </div>
-    </div>
-
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-<script type="application/javascript">
-
-AOS.init();
-
-var app = new Vue({
-  el: '#app',
-  data: {
-    menuVisible: false,
-  },
-})
-
+</p></div></div>
+<div class="post_footer"><section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-09-10</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://giriawsh.github.io/tag/NJk8FHLCs/"class="tag">Element UI</a>| <a href="https://giriawsh.github.io/tag/IMEC1slRP/"class="tag">前端</a>| <a href="https://giriawsh.github.io/tag/P-LvHoQha/"class="tag">Vue.js</a>| <a href="https://giriawsh.github.io/tag/2G-O1ZTp4/"class="tag">JavaScript</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">1694字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">8 min read</span></section>
+</div></div>
+	
+<div class="round-shape-one"></div><div class="paginator pager pagination"><a href="https://giriawsh.github.io/tag/P-LvHoQha/page/2"class="btn next older-posts older_posts">Older Posts</a><div style="clear:both;height:0;"></div></div></div></div></div></div>
+<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
+<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>20</strong> posts</span></div></div>
+<script>
+console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;", );
 </script>
-
-
-  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>
-    hljs.initHighlightingOnLoad()
-  </script>
-
-
-
-
-
-  </body>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+</body>
 </html>
