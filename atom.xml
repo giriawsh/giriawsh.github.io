@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-10T07:20:55.723Z</updated>
+    <updated>2020-09-10T07:31:03.221Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -10,6 +10,362 @@
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[Vue学习笔记10-深入了解混入、渲染函数节点树相关]]></title>
+        <id>https://giriawsh.github.io/post/vue-xue-xi-bi-ji-10-shen-ru-liao-jie-hun-ru-xuan-ran-han-shu-jie-dian-shu-xiang-guan/</id>
+        <link href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-10-shen-ru-liao-jie-hun-ru-xuan-ran-han-shu-jie-dian-shu-xiang-guan/">
+        </link>
+        <updated>2020-09-10T07:21:14.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="前言">🏃前言</h1>
+<p>本文深入了解混入、渲染函数节点树相关，vue学习笔记10.</p>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="前言">🏃前言</h1>
+<p>本文深入了解混入、渲染函数节点树相关，vue学习笔记10.</p>
+<!-- more -->
+<h1 id="过渡与动画">过渡与动画</h1>
+<p>这块放到后面的开发demo里再写吧，说不定能够结合数据可视化组件进行分析写。</p>
+<h1 id="混入">混入</h1>
+<p>混入 (mixin) 提供了一种非常灵活的方式，来分发 Vue 组件中的可复用功能。一个混入对象可以包含任意组件选项。当组件使用混入对象时，所有混入对象的选项将被“混合”进入该组件本身的选项。</p>
+<pre><code>// 定义一个混入对象
+var myMixin = {
+  created: function () {
+    this.hello()
+  },
+  methods: {
+    hello: function () {
+      console.log('hello from mixin!')
+    }
+  }
+}
+
+// 定义一个使用混入对象的组件
+var Component = Vue.extend({
+  mixins: [myMixin]
+})
+
+var component = new Component() // =&gt; &quot;hello from mixin!&quot;
+</code></pre>
+<h2 id="选项合并">选项合并</h2>
+<p>当组件和混入对象含有同名选项时，这些选项将以恰当的方式进行“合并”。</p>
+<p>数据对象在内部会进行递归合并，并在发生冲突时以<strong>组件数据优先</strong>。</p>
+<pre><code>var mixin = {
+  data: function () {
+    return {
+      message: 'hello',
+      foo: 'abc'
+    }
+  }
+}
+
+new Vue({
+  mixins: [mixin],
+  data: function () {
+    return {
+      message: 'goodbye',//组件数据优先
+      bar: 'def'
+    }
+  },
+  created: function () {
+    console.log(this.$data)
+    // =&gt; { message: &quot;goodbye&quot;, foo: &quot;abc&quot;, bar: &quot;def&quot; }
+  }
+})
+</code></pre>
+<p>同名钩子函数将<strong>合并为一个数组</strong>，因此<strong>都将被调用</strong>。另外，<strong>混入对象的钩子将在组件自身钩子之前调用</strong>。</p>
+<pre><code>var mixin = {
+  created: function () {
+    console.log('混入对象的钩子被调用')
+  }
+}
+
+new Vue({
+  mixins: [mixin],
+  created: function () {
+    console.log('组件钩子被调用')
+  }
+})
+
+// =&gt; &quot;混入对象的钩子被调用&quot;
+// =&gt; &quot;组件钩子被调用&quot;
+</code></pre>
+<p>值为对象的选项，例如 methods、components 和 directives，将被合并为同一个对象。两个对象键名冲突时，<strong>取组件对象</strong>的键值对。</p>
+<pre><code>var mixin = {
+  methods: {
+    foo: function () {
+      console.log('foo')
+    },
+    conflicting: function () {
+      console.log('from mixin')
+    }
+  }
+}
+
+var vm = new Vue({
+  mixins: [mixin],
+  methods: {
+    bar: function () {
+      console.log('bar')
+    },
+    conflicting: function () {
+      console.log('from self')
+    }
+  }
+})
+
+vm.foo() // =&gt; &quot;foo&quot;
+vm.bar() // =&gt; &quot;bar&quot;
+vm.conflicting() // =&gt; &quot;from self&quot;
+</code></pre>
+<p>反正冲突时候组件数据最大就对了。</p>
+<blockquote>
+<p>Vue.extend() 也使用同样的策略进行合并。</p>
+</blockquote>
+<h2 id="全局混入">全局混入</h2>
+<p>混入也可以进行全局注册。使用时格外小心！一旦使用全局混入，它<strong>将影响每一个之后创建的 Vue 实例</strong>。使用恰当时，这可以用来为自定义选项注入处理逻辑。</p>
+<pre><code>// 为自定义的选项 'myOption' 注入一个处理器。
+Vue.mixin({
+  created: function () {
+    var myOption = this.$options.myOption
+    if (myOption) {
+      console.log(myOption)
+    }
+  }
+})
+
+new Vue({
+  myOption: 'hello!'
+})
+// =&gt; &quot;hello!&quot;
+</code></pre>
+<blockquote>
+<p>慎用！！！</p>
+</blockquote>
+<h2 id="自定义选项合并策略">自定义选项合并策略</h2>
+<p>自定义选项将使用默认策略，即简单地覆盖已有值。如果想让自定义选项以自定义逻辑合并，可以向 Vue.config.optionMergeStrategies 添加一个函数。（不过模块化之后感觉基本用不到了啦）</p>
+<pre><code>Vue.config.optionMergeStrategies.myOption = function (toVal, fromVal) {
+  // 返回合并后的值
+}
+</code></pre>
+<p>对于多数值为对象的选项，可以使用与 methods 相同的合并策略</p>
+<pre><code>var strategies = Vue.config.optionMergeStrategies
+strategies.myOption = strategies.methods
+</code></pre>
+<pre><code>一个更高级的例子
+const merge = Vue.config.optionMergeStrategies.computed
+Vue.config.optionMergeStrategies.vuex = function (toVal, fromVal) {
+  if (!toVal) return fromVal
+  if (!fromVal) return toVal
+  return {
+    getters: merge(toVal.getters, fromVal.getters),
+    state: merge(toVal.state, fromVal.state),
+    actions: merge(toVal.actions, fromVal.actions)
+  }
+}
+</code></pre>
+<h1 id="渲染函数jsx">渲染函数&amp;JSX</h1>
+<p>Vue 推荐在绝大多数情况下使用模板来创建你的 HTML。然而在一些场景中，你真的需要 JavaScript 的完全编程的能力。这时你可以用渲染函数，它比模板更接近编译器。</p>
+<p>假设我们要生成一些带锚点的标题</p>
+<pre><code>&lt;h1&gt;
+  &lt;a name=&quot;hello-world&quot; href=&quot;#hello-world&quot;&gt;
+    Hello world!
+  &lt;/a&gt;
+&lt;/h1&gt;
+对于上面的 HTML，你决定这样定义组件接口
+&lt;anchored-heading :level=&quot;1&quot;&gt;Hello world!&lt;/anchored-heading&gt;
+
+
+&lt;h1 v-if=&quot;level === 1&quot;&gt;
+    &lt;slot&gt;&lt;/slot&gt;
+  &lt;/h1&gt;
+
+</code></pre>
+<p>我们来尝试使用 render 函数替代一大串v-if与v-else-if</p>
+<pre><code>Vue.component('anchored-heading', {
+  render: function (createElement) {
+    return createElement(
+      'h' + this.level,   // 标签名称
+      this.$slots.default // 子节点数组
+    )
+  },
+  props: {
+    level: {
+      type: Number,
+      required: true
+    }
+  }
+})
+</code></pre>
+<p>向组件中传递不带 v-slot 指令的子节点时，比如 anchored-heading 中的 Hello world!，这些子节点被存储在组件实例中的 $slots.default 中。</p>
+<h3 id="vmslots">vm.$slots</h3>
+<p>用来访问被插槽分发的内容。每个具名插槽有其相应的 property (例如：<strong>v-slot:foo 中的内容将会在 vm.$slots.foo 中被找到)</strong>。default property 包括了所有没有被包含在具名插槽中的节点，或 v-slot:default 的内容。</p>
+<h3 id="vmscopedslots">vm.$scopedSlots</h3>
+<p>用来访问作用域插槽。对于包括 默认 slot 在内的每一个插槽，该对象都包含一个返回相应 VNode 的函数。</p>
+<p>作用域插槽函数现在保证返回一个 VNode 数组，除非在返回值无效的情况下返回 undefined。</p>
+<p>所有的 <code>$slots</code> 现在都会作为函数暴露在 <code>$scopedSlots</code> 中。如果你在使用渲染函数，不论当前插槽是否带有作用域，我们都推荐始终通过 <code>$scopedSlots</code> 访问它们。这不仅仅使得在未来添加作用域变得简单，也可以让你最终轻松迁移到所有插槽都是函数的 Vue 3。</p>
+<h2 id="节点-树以及虚拟-dom超级重点哦">节点、树以及虚拟 DOM（超级重点哦！）</h2>
+<pre><code>&lt;div&gt;
+  &lt;h1&gt;My title&lt;/h1&gt;
+  Some text content
+  &lt;!-- TODO: Add tagline --&gt;
+&lt;/div&gt;
+</code></pre>
+<p>对应的DOM节点树</p>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/20/1736cce00ce94b46?w=1352&amp;h=860&amp;f=png&amp;s=55766" alt="DOM节点树" loading="lazy"><br>
+每个元素都是一个节点。每段文字也是一个节点。甚至注释也都是节点。一个节点就是页面的一个部分。就像家谱树一样，每个节点都可以有孩子节点 (也就是说每个部分可以包含其它的一些部分)。</p>
+<p>高效地更新所有这些节点会是比较困难的，不过所幸你不必手动完成这个工作。你只需要告诉 Vue 你希望页面上的 HTML 是什么</p>
+<pre><code>这可以是在一个模板里
+&lt;h1&gt;{{ blogTitle }}&lt;/h1&gt;
+
+或者一个渲染函数里
+
+render: function (createElement) {
+  return createElement('h1', this.blogTitle)
+}
+</code></pre>
+<p>在这两种情况下，Vue 都会自动保持页面的更新，即便 blogTitle 发生了改变。</p>
+<h3 id="虚拟dom">虚拟DOM</h3>
+<p>Vue 通过建立一个虚拟 DOM 来追踪自己要如何改变真实 DOM</p>
+<p>上面的return到底会返回什么呢？</p>
+<p>其实不是一个实际的 DOM 元素。它更准确的名字可能是 createNodeDescription，因为它所包含的信息<strong>会告诉 Vue 页面上需要渲染什么样的节点，包括及其子节点的描述信息</strong>。我们把这样的节点描述为“<strong>虚拟节点</strong> (virtual node)”，也常简写它为“VNode”。“虚拟 DOM”是我们对由 Vue 组件树建立起来的整个 VNode 树的称呼。</p>
+<h2 id="createelement-参数">createElement 参数</h2>
+<pre><code>// @returns {VNode}
+createElement(
+  // {String | Object | Function}
+  // 一个 HTML 标签名、组件选项对象，或者
+  // resolve 了上述任何一种的一个 async 函数。必填项。
+  'div',
+
+  // {Object}
+  // 一个与模板中 attribute 对应的数据对象。可选。
+  {
+    // (详情见下一节)
+  },
+
+  // {String | Array}
+  // 子级虚拟节点 (VNodes)，由 `createElement()` 构建而成，
+  // 也可以使用字符串来生成“文本虚拟节点”。可选。
+  [
+    '先写一些文字',
+    createElement('h1', '一则头条'),
+    createElement(MyComponent, {
+      props: {
+        someProp: 'foobar'
+      }
+    })
+  ]
+)
+</code></pre>
+<h3 id="深入数据对象">深入数据对象</h3>
+<p>正如 v-bind:class 和 v-bind:style 在模板语法中会被特别对待一样，它们在 VNode 数据对象中也有对应的顶层字段。</p>
+<p>该对象也允许你绑定普通的 HTML attribute，也允许绑定如 innerHTML 这样的 DOM property (这会覆盖 v-html 指令)</p>
+<blockquote>
+<p>这块详见官方文档吧，我也不是很搞得懂，后面再做补充好了</p>
+</blockquote>
+<h3 id="约束">约束</h3>
+<p>VNode 必须唯一，组件树中的所有 VNode 必须是唯一的。</p>
+<p>这意味着，下面的渲染函数是不合法的</p>
+<pre><code>render: function (createElement) {
+  var myParagraphVNode = createElement('p', 'hi')
+  return createElement('div', [
+    // 错误 - 重复的 VNode
+    myParagraphVNode, myParagraphVNode
+  ])
+}
+</code></pre>
+<p>如果你真的需要重复很多次的元素/组件，你可以使用工厂函数来实现。</p>
+<pre><code>render: function (createElement) {
+  return createElement('div',
+    Array.apply(null, { length: 20 }).map(function () {
+      return createElement('p', 'hi')
+    })
+  )
+}
+</code></pre>
+<h2 id="使用-javascript-代替模板功能">使用 JavaScript 代替模板功能</h2>
+<h3 id="v-if和v-for">v-if和v-for</h3>
+<p>只要在原生的 JavaScript 中可以轻松完成的操作，Vue 的渲染函数就<strong>不会提供专有的替代方法</strong>。比如，在模板中使用的 v-if 和 v-for</p>
+<pre><code>&lt;ul v-if=&quot;items.length&quot;&gt;
+  &lt;li v-for=&quot;item in items&quot;&gt;{{ item.name }}&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p v-else&gt;No items found.&lt;/p&gt;
+
+//这些都可以在渲染函数中用 JavaScript 的 if/else 和 map 来重写
+props: ['items'],
+render: function (createElement) {
+  if (this.items.length) {
+    return createElement('ul', this.items.map(function (item) {
+      return createElement('li', item.name)
+    }))
+  } else {
+    return createElement('p', 'No items found.')
+  }
+}
+</code></pre>
+<h3 id="v-model打个重点标记">v-model（打个重点标记）</h3>
+<p>渲染函数中没有与 v-model 的直接对应——你必须自己实现相应的逻辑。</p>
+<pre><code>props: ['value'],
+render: function (createElement) {
+  var self = this
+  return createElement('input', {
+    domProps: {
+      value: self.value
+    },
+    on: {
+      input: function (event) {
+        self.$emit('input', event.target.value)
+      }
+    }
+  })
+}
+</code></pre>
+<h3 id="事件-按键修饰符">事件 &amp; 按键修饰符</h3>
+<p>对于 .passive、.capture 和 .once 这些事件修饰符，Vue 提供了相应的前缀可以用于 on</p>
+<figure data-type="image" tabindex="1"><img src="https://user-gold-cdn.xitu.io/2020/7/20/1736cdf2d12af7ce?w=262&amp;h=242&amp;f=png&amp;s=10196" alt="Vue前缀" loading="lazy"></figure>
+<pre><code>on: {
+  '!click': this.doThisInCapturingMode,
+  '~keyup': this.doThisOnce,
+  '~!mouseover': this.doThisOnceInCapturingMode
+}
+</code></pre>
+<p>对于所有其它的修饰符，私有前缀都不是必须的，因为你可以在事件处理函数中使用事件方法（有种源码重现的味儿了）</p>
+<figure data-type="image" tabindex="2"><img src="https://user-gold-cdn.xitu.io/2020/7/20/1736cdeee4c082f5?w=718&amp;h=319&amp;f=png&amp;s=37578" alt="处理函数等价操作" loading="lazy"></figure>
+<h3 id="插槽">插槽</h3>
+<p>你可以通过 this.$slots 访问静态插槽的内容，每个插槽都是一个 VNode 数组</p>
+<pre><code>render: function (createElement) {
+  // `&lt;div&gt;&lt;slot&gt;&lt;/slot&gt;&lt;/div&gt;`
+  return createElement('div', this.$slots.default)
+}
+</code></pre>
+<p>也可以通过 this.$scopedSlots 访问作用域插槽，每个作用域插槽都是一个返回若干 VNode 的函数</p>
+<pre><code>props: ['message'],
+render: function (createElement) {
+  // `&lt;div&gt;&lt;slot :text=&quot;message&quot;&gt;&lt;/slot&gt;&lt;/div&gt;`
+  return createElement('div', [
+    this.$scopedSlots.default({
+      text: this.message
+    })
+  ])
+}
+</code></pre>
+<p>如果要用渲染函数<strong>向子组件中传递作用域插槽</strong>，可以利用 VNode 数据对象中的 scopedSlots 字段</p>
+<pre><code>render: function (createElement) {
+  // `&lt;div&gt;&lt;child v-slot=&quot;props&quot;&gt;&lt;span&gt;{{ props.text }}&lt;/span&gt;&lt;/child&gt;&lt;/div&gt;`
+  return createElement('div', [
+    createElement('child', {
+      // 在数据对象中传递 `scopedSlots`
+      // 格式为 { name: props =&gt; VNode | Array&lt;VNode&gt; }
+      scopedSlots: {
+        default: function (props) {
+          return createElement('span', props.text)//？？需要demo进行验证
+        }
+      }
+    })
+  ])
+}
+</code></pre>
+<p>render这块有点搞晕了，等冲一遍react再回来写好了。一般来讲用HTML模板就足足够够了。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Vue学习笔记9-深入了解组件3-动态组件、异步组件、边界处理]]></title>
         <id>https://giriawsh.github.io/post/vue-xue-xi-bi-ji-9-shen-ru-liao-jie-zu-jian-3-dong-tai-zu-jian-yi-bu-zu-jian-bian-jie-chu-li/</id>
@@ -3175,200 +3531,6 @@ v-on:click -&gt; @click
 &lt;!-- 动态参数的缩写 (2.6.0+) --&gt;
 &lt;a @[event]=&quot;doSomething&quot;&gt; ... &lt;/a&gt;
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[element源码学习-Alert组件]]></title>
-        <id>https://giriawsh.github.io/post/element-yuan-ma-xue-xi-alert-zu-jian/</id>
-        <link href="https://giriawsh.github.io/post/element-yuan-ma-xue-xi-alert-zu-jian/">
-        </link>
-        <updated>2020-09-10T07:02:09.000Z</updated>
-        <summary type="html"><![CDATA[<h1 id="前言">🤓前言</h1>
-<p>一直受到element组件库的照顾，觉得其中有很多值得分析的点和前端设计思想，遂开始整理这个系列。可能会有点乱，资料和分析参考我会附链接，后期可以再做一次整理。也算是对自己前端的一次提升能力学习。</p>
-]]></summary>
-        <content type="html"><![CDATA[<h1 id="前言">🤓前言</h1>
-<p>一直受到element组件库的照顾，觉得其中有很多值得分析的点和前端设计思想，遂开始整理这个系列。可能会有点乱，资料和分析参考我会附链接，后期可以再做一次整理。也算是对自己前端的一次提升能力学习。</p>
-<!-- more -->
-<h1 id="结构分析">结构分析</h1>
-<figure data-type="image" tabindex="1"><img src="https://user-gold-cdn.xitu.io/2020/7/11/1733e545aec77110?w=213&amp;h=249&amp;f=png&amp;s=7799" alt="element结构" loading="lazy"></figure>
-<ul>
-<li>.github：github生成文件</li>
-<li>.idea：编译器文件</li>
-<li>build：建构相关</li>
-<li>examples：官网例子相关</li>
-<li>node_modules: node相关包</li>
-<li>packages：组件相关源码</li>
-<li>src：公共工具函数</li>
-</ul>
-<h1 id="alert组件分析">Alert组件分析</h1>
-<h2 id="alert目录结构">Alert目录结构</h2>
-<p><img src="https://user-gold-cdn.xitu.io/2020/7/11/1733e638fb890179?w=168&amp;h=86&amp;f=png&amp;s=2226" alt="Alert目录结构" loading="lazy"><br>
-可以注意到每个package里面的组件文件夹中都有一个 index.js</p>
-<h2 id="indexjs">index.js</h2>
-<p><img src="https://user-gold-cdn.xitu.io/2020/7/11/1733e645c101004a?w=354&amp;h=231&amp;f=png&amp;s=10990" alt="index.js" loading="lazy"><br>
-添加install方法来方便作为插件使用，如果单独引用这个组件，就注册这个单独的组件</p>
-<p>/* istanbul ignore next */，这个是一个npm代码覆盖率的工具istanbul，在写测试的时候，有些不必要的文件，在计算覆盖率时会被计算到，所以加上这句注释就可以忽略下面的代码。</p>
-<h2 id="mainvue">main.vue</h2>
-<pre><code class="language-html">&lt;template&gt;
-  &lt;transition name=&quot;el-alert-fade&quot;&gt;
-    &lt;div
-      class=&quot;el-alert&quot;
-      :class=&quot;[typeClass, center ? 'is-center' : '', 'is-' + effect]&quot;
-      v-show=&quot;visible&quot;
-      role=&quot;alert&quot;
-    &gt;
-      &lt;i class=&quot;el-alert__icon&quot; :class=&quot;[ iconClass, isBigIcon ]&quot; v-if=&quot;showIcon&quot;&gt;&lt;/i&gt;
-      &lt;div class=&quot;el-alert__content&quot;&gt;
-        &lt;span class=&quot;el-alert__title&quot; :class=&quot;[ isBoldTitle ]&quot; v-if=&quot;title || $slots.title&quot;&gt;
-          &lt;slot name=&quot;title&quot;&gt;{{ title }}&lt;/slot&gt;
-        &lt;/span&gt;
-        &lt;p class=&quot;el-alert__description&quot; v-if=&quot;$slots.default &amp;&amp; !description&quot;&gt;&lt;slot&gt;&lt;/slot&gt;&lt;/p&gt;
-        &lt;p class=&quot;el-alert__description&quot; v-if=&quot;description &amp;&amp; !$slots.default&quot;&gt;{{ description }}&lt;/p&gt;
-        &lt;i class=&quot;el-alert__closebtn&quot; :class=&quot;{ 'is-customed': closeText !== '', 'el-icon-close': closeText === '' }&quot; v-show=&quot;closable&quot; @click=&quot;close()&quot;&gt;{{closeText}}&lt;/i&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/transition&gt;
-&lt;/template&gt;
-</code></pre>
-<p>这里就是alert函数的主体部分</p>
-<h3 id="transition组件">transition组件</h3>
-<p>常规的template模块里面包裹的是vue提供的transition组件：<a href="https://cn.vuejs.org/v2/guide/transitions.html">官方transition文档</a></p>
-<figure data-type="image" tabindex="2"><img src="https://user-gold-cdn.xitu.io/2020/7/11/1733e940ead5ac72?w=728&amp;h=158&amp;f=png&amp;s=14070" alt="transition功能展示" loading="lazy"></figure>
-<p>Vue在元素显示与隐藏的过渡中，提供了 6 个 class 来切换：</p>
-<ul>
-<li>
-<p>v-enter：定义进入过渡的开始状态。在元素被插入之前生效，在元素被插入之后的下一帧移除。</p>
-</li>
-<li>
-<p>v-enter-active：定义进入过渡生效时的状态。在整个进入过渡的阶段中应用，在元素被插入之前生效，在过渡/动画完成之后移除。这个类可以被用来定义进入过渡的过程时间，延迟和曲线函数。</p>
-</li>
-<li>
-<p>v-enter-to: 2.1.8版及以上 定义进入过渡的结束状态。在元素被插入之后下一帧生效 (与此同时 v-enter 被移除)，在过渡/动画完成之后移除。</p>
-</li>
-<li>
-<p>v-leave: 定义离开过渡的开始状态。在离开过渡被触发时立刻生效，下一帧被移除。</p>
-</li>
-<li>
-<p>v-leave-active：定义离开过渡生效时的状态。在整个离开过渡的阶段中应用，在离开过渡被触发时立刻生效，在过渡/动画完成之后移除。这个类可以被用来定义离开过渡的过程时间，延迟和曲线函数。</p>
-</li>
-<li>
-<p>v-leave-to: 2.1.8版及以上 定义离开过渡的结束状态。在离开过渡被触发之后下一帧生效 (与此同时 v-leave 被删除)，在过渡/动画完成之后移除。</p>
-</li>
-</ul>
-<pre><code> &lt;transition name=&quot;el-alert-fade&quot;&gt;
- ...
- &lt;/transition&gt;
-</code></pre>
-<p>定位它的过渡动画，位于packages/theme-chalk/src/alert.scss</p>
-<pre><code class="language-css">.el-alert-fade-enter,
-.el-alert-fade-leave-active {
-  opacity: 0;
-}
-</code></pre>
-<p>可以看到它从进入到退出只是改变了透明度。</p>
-<h3 id="div部分">div部分</h3>
-<p>查看transition中的div部分。</p>
-<pre><code>    &lt;div
-      class=&quot;el-alert&quot;
-      :class=&quot;[typeClass, center ? 'is-center' : '', 'is-' + effect]&quot;
-      v-show=&quot;visible&quot;
-      role=&quot;alert&quot;
-    &gt;
-    //props
-    effect: {
-        type: String,
-        default: 'light',
-        validator: function(value) {
-          return ['light', 'dark'].indexOf(value) !== -1;
-        }
-    }
-</code></pre>
-<ul>
-<li>
-<p>运用了<a href="https://cn.vuejs.org/v2/guide/class-and-style.html#%E6%95%B0%E7%BB%84%E8%AF%AD%E6%B3%95">vue 的 class 的数组语法</a>。始终添加typeClass,以及在is-center = true时添加center，根据父组件传入的value进行校验（light or dark）并添加is-light or is-dark。</p>
-</li>
-<li>
-<p>typeClass：通过外部传入的 props 的 type 属性来拼接成 el-alert--${ this.type }，默认值为 info</p>
-</li>
-</ul>
-<pre><code>      typeClass() {
-        return `el-alert--${ this.type }`;// 根据传递的type返回不同的类
-      },
-        //props
-        type: {
-                type: String,
-                default: 'info'
-            },
-      
-</code></pre>
-<ul>
-<li>role属性作用是告诉Accessibility类应用（比如屏幕朗读程序，为盲人提供的访问网络的便利程序），这个元素所扮演的角色，主要是供残疾人使用。使用role可以增强文本的可读性和语义化。</li>
-<li>根据visible来决定该div是否可见。</li>
-</ul>
-<h3 id="i标签部分-图标">i标签部分-图标</h3>
-<pre><code>&lt;i class=&quot;el-alert__icon&quot; :class=&quot;[ iconClass, isBigIcon ]&quot; v-if=&quot;showIcon&quot;&gt;&lt;/i&gt;
- 
-    iconClass() {
-        return TYPE_CLASSES_MAP[this.type] || 'el-icon-info';
-      },
-
-      isBigIcon() {
-        return this.description || this.$slots.default ? 'is-big' : '';
-      },
-</code></pre>
-<ul>
-<li>iconClass：用来判断如果在显示 icon 的情况下，根据 type 来决定显示哪个 icon，默认为 el-icon-info。决定图标类型。</li>
-<li>isBigIcon：当有辅助性文字介绍的时候，返回 is-big。决定图标大小。<br>
-这两个都是计算属性。</li>
-</ul>
-<p>这里对应的就是alert的相应图标</p>
-<p>小标签<br>
-<img src="https://user-gold-cdn.xitu.io/2020/7/13/1734864d337dbe1a?w=835&amp;h=61&amp;f=png&amp;s=2892" alt="小标签" loading="lazy"><br>
-大标签<br>
-<img src="https://user-gold-cdn.xitu.io/2020/7/13/1734864a35f60fe4?w=825&amp;h=72&amp;f=png&amp;s=4211" alt="大标签" loading="lazy"><br>
-其中TYPE_CLASSES_MAP是一个常量对象，根据传递的type来map到相应的类名。</p>
-<pre><code>  const TYPE_CLASSES_MAP = {
-    'success': 'el-icon-success',
-    'warning': 'el-icon-warning',
-    'error': 'el-icon-error'
-  };
-</code></pre>
-<p>而大图标是由this.description决定的</p>
-<pre><code>//props
-      description: {
-        type: String,
-        default: ''
-      },
-</code></pre>
-<p>当存在描述性内容（description传入）或者用 this.$slots.default 来判断是否是通过默认 slot 传入的，如果有值（为 VNode），就设为相应的class，如果为undefined，就为空。</p>
-<p>slots部分可以参考相关文档：<a href="https://cn.vuejs.org/v2/guide/components-slots.html#%E6%8F%92%E6%A7%BD%E5%86%85%E5%AE%B9">插槽——vuejs官方文档</a></p>
-<p>这里占个坑先。后续开vue的源码详解再附加链接。</p>
-<h3 id="主体部分">主体部分</h3>
-<pre><code class="language-html"> &lt;div class=&quot;el-alert__content&quot;&gt;
-        &lt;span class=&quot;el-alert__title&quot; :class=&quot;[ isBoldTitle ]&quot; v-if=&quot;title || $slots.title&quot;&gt;
-          &lt;slot name=&quot;title&quot;&gt;{{ title }}&lt;/slot&gt;
-        &lt;/span&gt;
-        &lt;p class=&quot;el-alert__description&quot; v-if=&quot;$slots.default &amp;&amp; !description&quot;&gt;&lt;slot&gt;&lt;/slot&gt;&lt;/p&gt;
-        &lt;p class=&quot;el-alert__description&quot; v-if=&quot;description &amp;&amp; !$slots.default&quot;&gt;{{ description }}&lt;/p&gt;
-        &lt;i class=&quot;el-alert__closebtn&quot; :class=&quot;{ 'is-customed': closeText !== '', 'el-icon-close': closeText === '' }&quot; v-show=&quot;closable&quot; @click=&quot;close()&quot;&gt;{{closeText}}&lt;/i&gt;
-      &lt;/div&gt;
-</code></pre>
-<p>内容部分，包括标题、内容和关闭按钮三个部分。</p>
-<ul>
-<li>标题：由名为title的props决定，包括一个isBoldTitle的计算属性判断是否是粗体，显示与否根据title是否存在进行显示</li>
-<li>警告描述slot：可以是自定义，也可以传递description的props内容来决定。</li>
-<li>关闭按钮i：存在closeText这一prop的内容的话，会自定义关闭内容；<br>
-会根据closable这一prop决定是否显示该关闭按钮；<br>
-绑定单击时触发事件close()</li>
-</ul>
-<pre><code>    methods: {
-      close() {
-        this.visible = false;
-        this.$emit('close');
-      }
-    },
-</code></pre>
-<p>将按钮显示关闭，并且触发close事件。</p>
 ]]></content>
     </entry>
 </feed>
