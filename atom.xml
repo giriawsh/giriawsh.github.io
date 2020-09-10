@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-10T06:45:46.465Z</updated>
+    <updated>2020-09-10T06:49:02.764Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -10,6 +10,157 @@
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[nuxt项目搭建+element+vuetify+axios+页面切分]]></title>
+        <id>https://giriawsh.github.io/post/nuxt-xiang-mu-da-jian-elementvuetifyaxiosye-mian-qie-fen/</id>
+        <link href="https://giriawsh.github.io/post/nuxt-xiang-mu-da-jian-elementvuetifyaxiosye-mian-qie-fen/">
+        </link>
+        <updated>2020-09-10T06:46:27.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="前言">前言</h1>
+<p>话不多说，有关nuxt的社区建设还是亟待完善的，我也为新人入坑贡献一份力量吧。</p>
+<h1 id="nuxt搭建">nuxt搭建</h1>
+<p>这一块主要参照官方文档来就OK，这里附上地址：<a href="https://zh.nuxtjs.org/guide/installation">nuxt快速搭建官方教程</a>，还是挺详细的，主要步骤如下：</p>
+<ol>
+<li>运行 create-nuxt-app（官方提供的脚手架）</li>
+<li>进行选择，可以在这里选上element ui，因为element如果后期手动引入会带来一些问题，所以不妨这里直接继承到项目中，可以更完美地进行兼容。</li>
+<li>按照官方文档进行后，再进入pakage.json，直接run dev就可以了</li>
+</ol>
+<h1 id="项目结构">项目结构</h1>
+<p>这里顺便把项目结构解释一下,完成上一步骤之后我们可以得到的目录结构如下：</p>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="前言">前言</h1>
+<p>话不多说，有关nuxt的社区建设还是亟待完善的，我也为新人入坑贡献一份力量吧。</p>
+<h1 id="nuxt搭建">nuxt搭建</h1>
+<p>这一块主要参照官方文档来就OK，这里附上地址：<a href="https://zh.nuxtjs.org/guide/installation">nuxt快速搭建官方教程</a>，还是挺详细的，主要步骤如下：</p>
+<ol>
+<li>运行 create-nuxt-app（官方提供的脚手架）</li>
+<li>进行选择，可以在这里选上element ui，因为element如果后期手动引入会带来一些问题，所以不妨这里直接继承到项目中，可以更完美地进行兼容。</li>
+<li>按照官方文档进行后，再进入pakage.json，直接run dev就可以了</li>
+</ol>
+<h1 id="项目结构">项目结构</h1>
+<p>这里顺便把项目结构解释一下,完成上一步骤之后我们可以得到的目录结构如下：</p>
+<!--more-->
+<figure data-type="image" tabindex="1"><img src="https://user-gold-cdn.xitu.io/2020/7/6/1732438177f26f0a?w=282&amp;h=594&amp;f=png&amp;s=24334" alt="项目结构图" loading="lazy"></figure>
+<ul>
+<li>assets：放一些未编译的静态资源</li>
+<li>components：组织应用，可以视作page的组织部件（注意这些组件不会有asyncData方法的特性，这个在项目中经常会用到）</li>
+<li>layouts：总体布局，如果是多页面项目会有多个背景layout，写在这里会自动编译进整个页面</li>
+<li>middleware：中间件，一般用不到，但是可以用在注册登录的auth中（如果不用中间件需要重新写路由，之后再做一个demo用来演示）</li>
+<li>pages：页面目录，基本上可视的浏览窗里看到的就是一个个page页面</li>
+<li>plugins：插件目录，组织实例化钱需要运行的js插件，可以把通用的api或者需要在页面加载前统一处理的请求（js等）放在这。</li>
+<li>static：静态文件，服务器启动时才被映射，我的话基本把图片放在这或者assets里</li>
+<li>store：状态树，这里可以用来存放通用变量或者方法，当然还有更多配置功能，详情参考官方文档</li>
+<li>nuxt.config.js文件：这里就是设置配置的地方，在加入什么新的需要特殊处理的插件时，需要在这里进行调整</li>
+<li>package.json文件：这个文件里放的基本上是和编译相关的，这块可以去看npm或者yarn的说明。</li>
+</ul>
+<h1 id="vuetify引入">vuetify引入</h1>
+<p>vuetify是一个精美的组件库，里面有很多方便快速制作网页的组件，之后想出几篇blog进行源码分析，因为组件中的一些小细节做得非常有意思且值得学习。拿v-btn来说，和一般的组件库不一样的是它具有响应点focus，点击按钮的不同位置可以看到点击相应的不同扩散处。</p>
+<p>在nuxt中引入vuetify，它本身支持也很好，这里看官方文档：<a href="https://vuetifyjs.com/zh-Hans/getting-started/quick-start">nuxt引入vuetify官方文档</a></p>
+<p>里面的步骤很清楚，包括要更改的配置也写出来了，按步骤走完后，重新编译，然后测试<br>
+<code>&lt;v-btn&gt;button&lt;/v-btn&gt;</code>有没有相应的提示就知道有没有安装成功了。</p>
+<h1 id="axios引入">axios引入</h1>
+<p>在nuxt手脚架里可以自动引入axois，但是配置上好像存在一些问题，由于api接口的需要，我重写了axios。</p>
+<pre><code class="language-js">import Cookies from 'js-cookie'
+
+const baseURL = '这里放api前缀';
+
+function getApiURL (path, baseURL) {
+  return path.substring(baseURL.length)
+}
+
+</code></pre>
+<pre><code class="language-js">//nuxt.config.js里更改配置
+plugins: [
+    '@/plugins/element-ui',
+    '@/plugins/axios',
+  ],
+</code></pre>
+<p>这样就没问题了</p>
+<h1 id="页面切分">页面切分</h1>
+<p>之后做一个简单的页面切分吧，这里不得不提vuetify的栅格系统，可以很方便地自适应浏览器，并且调整相应位置以及居中元素。</p>
+<h2 id="vuetify栅格">vuetify栅格</h2>
+<p>Vuetify 附带了一个使用 flex-box 构建的 12 点栅格系统。 网格用于在应用程序的内容中创建特定布局。其中包含 5 种媒体断点，分别用于定位特定屏幕大小或方向：xs, sm, md, lg 和 xl。</p>
+<table>
+<thead>
+<tr>
+<th>Device</th>
+<th>code</th>
+<th>Types</th>
+<th>Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Extra   small</td>
+<td>xs</td>
+<td>small to large handset</td>
+<td>&lt; 600px</td>
+</tr>
+<tr>
+<td>Small</td>
+<td>sm</td>
+<td>small to medium tablet</td>
+<td>600px &gt; &lt; 960px</td>
+</tr>
+<tr>
+<td>Medium</td>
+<td>md</td>
+<td>large tablet to laptop</td>
+<td>960px &gt; &lt; 1264px*</td>
+</tr>
+<tr>
+<td>large</td>
+<td>lg</td>
+<td>desktop</td>
+<td>1264px* &gt; &lt; 1904px*</td>
+</tr>
+<tr>
+<td>Extra large</td>
+<td>xl</td>
+<td>4k and ultra-wides</td>
+<td>&gt; 1904px*</td>
+</tr>
+</tbody>
+</table>
+<p>所以这些都是特定于不同屏幕的标准而已</p>
+<ul>
+<li>v-row 是 v-col 的包装组件。它利用 flex 属性来控制内部列的布局和流。它使用的标准边距是 24px。这可以减少 dense 属性或完全移除 no-gutters</li>
+</ul>
+<p>详细应用可以参考vuetify中的实战场，这里给出一个demo</p>
+<p>如果我们要把页面按1:2划分，可以这样写：</p>
+<pre><code class="language-vue">&lt;v-container class=&quot;grey lighten-5&quot; fluid&gt;
+  &lt;v-row&gt;
+    &lt;v-col
+      cols=&quot;12&quot;
+      md=&quot;4&quot;
+    &gt;
+      &lt;v-card
+        class=&quot;pa-2&quot;
+        tile
+        height=&quot;650px&quot;
+      &gt;
+      1
+      &lt;/v-card&gt;
+    &lt;/v-col&gt;
+    &lt;v-col
+      cols=&quot;12&quot;
+      md=&quot;8&quot;
+    &gt;
+      &lt;v-card
+        class=&quot;pa-2&quot;
+        tile
+        height=&quot;650px&quot;
+      &gt;
+      2
+      &lt;/v-card&gt;
+    &lt;/v-col&gt;
+  &lt;/v-row&gt;
+&lt;/v-container&gt;
+</code></pre>
+<p>页面效果如下：<br>
+<img src="https://user-gold-cdn.xitu.io/2020/7/6/173243817994f145?w=1889&amp;h=865&amp;f=png&amp;s=41957" alt="1:2切分页面" loading="lazy"></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
         <id>https://giriawsh.github.io/post/hello-gridea/</id>
