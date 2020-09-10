@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-10T15:14:14.551Z</updated>
+    <updated>2020-09-10T15:14:51.227Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -11,12 +11,12 @@
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
     <entry>
-        <title type="html"><![CDATA[博客迁移中🏇]]></title>
+        <title type="html"><![CDATA[博客建设中🏇]]></title>
         <id>https://giriawsh.github.io/post/bo-ke-qian-yi-zhong/</id>
         <link href="https://giriawsh.github.io/post/bo-ke-qian-yi-zhong/">
         </link>
         <updated>2020-09-10T15:11:15.000Z</updated>
-        <content type="html"><![CDATA[<p>本站正在进行博文迁移计划，计划尚未完成，暂时博文较少。🤙</p>
+        <content type="html"><![CDATA[<p>本站正在进行博文迁移计划，建设尚未完成，暂时博文较少🤣</p>
 <p>若想浏览更多，可先移步👉<a href="https://juejin.im/user/439393493975245/posts">个人掘金主页</a></p>
 ]]></content>
     </entry>
