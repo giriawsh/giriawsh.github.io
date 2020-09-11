@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-11T05:50:55.596Z</updated>
+    <updated>2020-09-11T05:52:31.101Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -16,10 +16,10 @@
         <link href="https://giriawsh.github.io/post/svg-xue-xi-xi-lie-3-lu-jing-mo-hu-xiao-guo-jian-bian/">
         </link>
         <updated>2020-09-11T05:46:47.000Z</updated>
-        <summary type="html"><![CDATA[<h1 id="前言">前言</h1>
+        <summary type="html"><![CDATA[<h1 id="前言">🎨前言</h1>
 <p>WebGL学习系列，结合菜鸟教程、CSDN、MDN等多平台进行学习总结。</p>
 ]]></summary>
-        <content type="html"><![CDATA[<h1 id="前言">前言</h1>
+        <content type="html"><![CDATA[<h1 id="前言">🎨前言</h1>
 <p>WebGL学习系列，结合菜鸟教程、CSDN、MDN等多平台进行学习总结。</p>
 <!-- more -->
 <h1 id="svg滤镜">SVG滤镜</h1>
@@ -235,10 +235,10 @@ feSpotLight - 用于照明过滤
         <link href="https://giriawsh.github.io/post/svg-xue-xi-xi-lie-2-lu-jing-wen-ben-stroke-shu-xing/">
         </link>
         <updated>2020-09-11T05:45:29.000Z</updated>
-        <summary type="html"><![CDATA[<h1 id="前言">前言</h1>
+        <summary type="html"><![CDATA[<h1 id="前言">🎨前言</h1>
 <p>WebGL学习系列，结合菜鸟教程、CSDN、MDN等多平台进行学习总结。</p>
 ]]></summary>
-        <content type="html"><![CDATA[<h1 id="前言">前言</h1>
+        <content type="html"><![CDATA[<h1 id="前言">🎨前言</h1>
 <p>WebGL学习系列，结合菜鸟教程、CSDN、MDN等多平台进行学习总结。</p>
 <!-- more -->
 <h1 id="svg路径">SVG路径</h1>
@@ -513,7 +513,7 @@ xmlns:xlink="http://www.w3.org/1999/xlink"><br>
         <link href="https://giriawsh.github.io/post/svg-xue-xi-xi-lie-1-jian-jie-qian-ru-fang-shi-ji-ben-xing-zhuang/">
         </link>
         <updated>2020-09-11T04:51:54.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="前言">前言</h1>
+        <content type="html"><![CDATA[<h1 id="前言">🎨前言</h1>
 <p>WebGL学习系列，结合菜鸟教程、CSDN、MDN等多平台进行学习总结。</p>
 <p><a href="https://www.runoob.com/svg/svg-reference.html">SVG 实用参考手册</a></p>
 <h1 id="svg简介">SVG简介</h1>
