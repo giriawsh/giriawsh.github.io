@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-11T09:35:42.648Z</updated>
+    <updated>2020-09-11T09:39:22.989Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -1841,7 +1841,7 @@ function pop()
 <p>设置、保存并同步后评论模块就可用了。</p>
 <h2 id="踩坑">踩坑</h2>
 <p>开始配置完成后，虽然文章末尾已经显示评论界面，但是只要我一点击登录评论，就会跳转到首页。这个情况常常发生在有自己域名的博主身上，我把Authorization callback URL中的www去掉就可以正常登陆了（原理不知）如下图所示：<br>
-<img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911152740.png" alt="image-20200911152740673" loading="lazy"><br>
+<img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911173848.png" alt="image-comment" loading="lazy"><br>
 效果如下：<br>
 <img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911152812.png" alt="image-20200911152811984" loading="lazy"></p>
 <h1 id="主题配置">主题配置</h1>
