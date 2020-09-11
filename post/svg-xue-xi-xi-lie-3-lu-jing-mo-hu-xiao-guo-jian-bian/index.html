@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>SVG学习系列3-滤镜、模糊效果、渐变 | Giria&#39;s Blog</title>
+<link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+
+<link rel="canonical" href="https://giriawsh.github.io/post/svg-xue-xi-xi-lie-3-lu-jing-mo-hu-xiao-guo-jian-bian/" />
+</head>
+<body>
+<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
+<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://giriawsh.github.io/"><img alt="logo" style="display:inline-block;" src="https://giriawsh.github.io//images/avatar.png"/></a><h1 title="Giria&#39;s Blog" class="weaklink"><a  href="/">Giria&#39;s Blog</a></h1>
+
+<div class="navbar weaklink">
+<div class="normal_nav">
+<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/IMEC1slRP/" class="selected active current nav__item" >前端</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/d3SOBOYxM/" class="selected active current nav__item" >算法题解</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li></ul></nav>
+<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
+<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/IMEC1slRP/" class="selected active current nav__item" >前端</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/d3SOBOYxM/" class="selected active current nav__item" >算法题解</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1599803253742" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+</div></div>
+<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
+
+
+<div class="main"><div class="main-inner"><div class="content">
+<article class="post">
+<h2 class="post_title sm_margin"><a>SVG学习系列3-滤镜、模糊效果、渐变</a></h2>
+<script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-09-11</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/7Xal1JEGf/" class="tag">学习系列</a> | 	<a href="https://giriawsh.github.io/tag/JHwBaalAU/" class="tag">SVG.js</a> | 	<a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="tag">前端</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">1862字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">10 min read</span>
+</section>
+
+<div style="display:flex">
+<div class="md_block" id="md_block">
+<div class="round-shape-one"></div>
+<h1 id="前言">前言</h1>
+<p>WebGL学习系列，结合菜鸟教程、CSDN、MDN等多平台进行学习总结。</p>
+<!-- more -->
+<h1 id="svg滤镜">SVG滤镜</h1>
+<p>SVG可用的滤镜是：</p>
+<pre><code>feBlend - 与图像相结合的滤镜
+feColorMatrix - 用于彩色滤光片转换
+feComponentTransfer
+feComposite
+feConvolveMatrix
+feDiffuseLighting
+feDisplacementMap
+feFlood
+feGaussianBlur - 高斯模糊
+feImage
+feMerge
+feMorphology
+feOffset - 过滤阴影
+feSpecularLighting
+feTile
+feTurbulence
+feDistantLight - 用于照明过滤
+fePointLight - 用于照明过滤
+feSpotLight - 用于照明过滤
+</code></pre>
+<h1 id="svg模糊效果">SVG模糊效果</h1>
+<p>所有互联网的SVG滤镜定义在<code>&lt;defs&gt;</code>元素中。<code>&lt;defs&gt;</code>元素定义短并含有特殊元素（如滤镜）定义。</p>
+<p><code>&lt;filter&gt;</code>标签用来定义SVG滤镜。<code>&lt;filter&gt;</code>标签使用必需的id属性来定义向图形应用哪个滤镜</p>
+<p><code>&lt;feGaussianBlur&gt;</code> 元素是用于创建模糊效果：</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;defs&gt;
+    &lt;filter id=&quot;f1&quot; x=&quot;0&quot; y=&quot;0&quot;&gt;
+      &lt;feGaussianBlur in=&quot;SourceGraphic&quot; stdDeviation=&quot;15&quot; /&gt;
+    &lt;/filter&gt;
+  &lt;/defs&gt;
+  &lt;rect width=&quot;90&quot; height=&quot;90&quot; stroke=&quot;green&quot; stroke-width=&quot;3&quot; fill=&quot;yellow&quot; filter=&quot;url(#f1)&quot; /&gt;
+&lt;/svg&gt;
+</code></pre>
+<ul>
+<li>filter	滤镜效果的容器</li>
+<li>feGaussianBlur	SVG滤镜。执行高斯模糊图像</li>
+<li>sourceGraphic该关键词表示图形元素自身将作为<filter>原语的原始输入.</li>
+<li>stdDeviation属性定义模糊量</li>
+<li><rect>元素的滤镜属性用来把元素链接到&quot;f1&quot;滤镜</li>
+</ul>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <defs>
+    <filter id="f1" x="0" y="0">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="15" />
+    </filter>
+  </defs>
+  <rect width="90" height="90" stroke="green" stroke-width="3" fill="yellow" filter="url(#f1)" />
+</svg>
+<h1 id="阴影">阴影</h1>
+<p><code>&lt;feOffset&gt;</code>元素是用于创建阴影效果。我们的想法是采取一个SVG图形（图像或元素）并移动它在xy平面上一点儿。</p>
+<p>第一个例子偏移一个矩形（带<code>&lt;feOffset&gt;</code>），然后混合偏移图像顶部（含<code>&lt;feBlend&gt;</code>）：</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;defs&gt;
+    &lt;filter id=&quot;f1&quot; x=&quot;0&quot; y=&quot;0&quot; width=&quot;200%&quot; height=&quot;200%&quot;&gt;
+      &lt;feOffset result=&quot;offOut&quot; in=&quot;SourceGraphic&quot; dx=&quot;20&quot; dy=&quot;20&quot; /&gt;
+      &lt;feBlend in=&quot;SourceGraphic&quot; in2=&quot;offOut&quot; mode=&quot;normal&quot; /&gt;
+    &lt;/filter&gt;
+  &lt;/defs&gt;
+  &lt;rect width=&quot;90&quot; height=&quot;90&quot; stroke=&quot;green&quot; stroke-width=&quot;3&quot;
+  fill=&quot;yellow&quot; filter=&quot;url(#f1)&quot; /&gt;
+&lt;/svg&gt;
+</code></pre>
+<ul>
+<li><code>&lt;feBlend&gt;</code>	使用不同的混合模式把两个对象合成在一起</li>
+</ul>
+<p>偏移图像变的模糊（含 <feGaussianBlur>）</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;defs&gt;
+    &lt;filter id=&quot;f1&quot; x=&quot;0&quot; y=&quot;0&quot; width=&quot;200%&quot; height=&quot;200%&quot;&gt;
+      &lt;feOffset result=&quot;offOut&quot; in=&quot;SourceGraphic&quot; dx=&quot;20&quot; dy=&quot;20&quot; /&gt;
+      &lt;feGaussianBlur result=&quot;blurOut&quot; in=&quot;offOut&quot; stdDeviation=&quot;10&quot; /&gt;
+      &lt;feBlend in=&quot;SourceGraphic&quot; in2=&quot;blurOut&quot; mode=&quot;normal&quot; /&gt;
+    &lt;/filter&gt;
+  &lt;/defs&gt;
+  &lt;rect width=&quot;90&quot; height=&quot;90&quot; stroke=&quot;green&quot; stroke-width=&quot;3&quot;
+  fill=&quot;yellow&quot; filter=&quot;url(#f1)&quot; /&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>制作一个黑色的阴影：</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;defs&gt;
+    &lt;filter id=&quot;f1&quot; x=&quot;0&quot; y=&quot;0&quot; width=&quot;200%&quot; height=&quot;200%&quot;&gt;
+      &lt;feOffset result=&quot;offOut&quot; in=&quot;SourceAlpha&quot; dx=&quot;20&quot; dy=&quot;20&quot; /&gt;
+      &lt;feGaussianBlur result=&quot;blurOut&quot; in=&quot;offOut&quot; stdDeviation=&quot;10&quot; /&gt;
+      &lt;feBlend in=&quot;SourceGraphic&quot; in2=&quot;blurOut&quot; mode=&quot;normal&quot; /&gt;
+    &lt;/filter&gt;
+  &lt;/defs&gt;
+  &lt;rect width=&quot;90&quot; height=&quot;90&quot; stroke=&quot;green&quot; stroke-width=&quot;3&quot;
+  fill=&quot;yellow&quot; filter=&quot;url(#f1)&quot; /&gt;
+&lt;/svg&gt;
+</code></pre>
+<ul>
+<li><code>&lt;feOffset&gt;</code>元素的属性改为&quot;SourceAlpha&quot;在Alpha通道使用残影，而不是整个RGBA像素。</li>
+</ul>
+<p>再为阴影涂上一层颜色</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;defs&gt;
+    &lt;filter id=&quot;f1&quot; x=&quot;0&quot; y=&quot;0&quot; width=&quot;200%&quot; height=&quot;200%&quot;&gt;
+      &lt;feOffset result=&quot;offOut&quot; in=&quot;SourceGraphic&quot; dx=&quot;20&quot; dy=&quot;20&quot; /&gt;
+      &lt;feColorMatrix result=&quot;matrixOut&quot; in=&quot;offOut&quot; type=&quot;matrix&quot;
+      values=&quot;0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0&quot; /&gt;
+      &lt;feGaussianBlur result=&quot;blurOut&quot; in=&quot;matrixOut&quot; stdDeviation=&quot;10&quot; /&gt;
+      &lt;feBlend in=&quot;SourceGraphic&quot; in2=&quot;blurOut&quot; mode=&quot;normal&quot; /&gt;
+    &lt;/filter&gt;
+  &lt;/defs&gt;
+  &lt;rect width=&quot;90&quot; height=&quot;90&quot; stroke=&quot;green&quot; stroke-width=&quot;3&quot;
+  fill=&quot;yellow&quot; filter=&quot;url(#f1)&quot; /&gt;
+&lt;/svg&gt;
+</code></pre>
+<ul>
+<li><code>&lt;feColorMatrix&gt;</code>过滤器是用来转换偏移的图像使之更接近黑色的颜色。 '0.2'矩阵的三个值都获取乘以红色，绿色和蓝色通道。降低其值带来的颜色至黑色（黑色为0）</li>
+</ul>
+<p>最终效果：</p>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <defs>
+    <filter id="f1" x="0" y="0" width="200%" height="200%">
+      <feOffset result="offOut" in="SourceGraphic" dx="20" dy="20" />
+      <feColorMatrix result="matrixOut" in="offOut" type="matrix"
+      values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0" />
+      <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="10" />
+      <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+    </filter>
+  </defs>
+  <rect width="90" height="90" stroke="green" stroke-width="3"
+  fill="yellow" filter="url(#f1)" />
+</svg>
+<h1 id="渐变-线性">渐变-线性</h1>
+<p><code>&lt;linearGradient&gt;</code>元素用于定义线性渐变。</p>
+<p><code>&lt;linearGradient&gt;</code>标签必须嵌套在<code>&lt;defs&gt;</code>的内部。<code>&lt;defs&gt;</code>标签是definitions的缩写，它可对诸如渐变之类的特殊元素进行定义。</p>
+<p>线性渐变可以定义为水平，垂直或角渐变：</p>
+<ul>
+<li>当y1和y2相等，而x1和x2不同时，可创建水平渐变</li>
+<li>当x1和x2相等，而y1和y2不同时，可创建垂直渐变</li>
+<li>当x1和x2不同，且y1和y2不同时，可创建角形渐变</li>
+</ul>
+<p>水平渐变：</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;defs&gt;
+    &lt;linearGradient id=&quot;grad1&quot; x1=&quot;0%&quot; y1=&quot;0%&quot; x2=&quot;100%&quot; y2=&quot;0%&quot;&gt;
+      &lt;stop offset=&quot;0%&quot; style=&quot;stop-color:rgb(255,255,0);stop-opacity:1&quot; /&gt;
+      &lt;stop offset=&quot;100%&quot; style=&quot;stop-color:rgb(255,0,0);stop-opacity:1&quot; /&gt;
+    &lt;/linearGradient&gt;
+  &lt;/defs&gt;
+  &lt;ellipse cx=&quot;200&quot; cy=&quot;70&quot; rx=&quot;85&quot; ry=&quot;55&quot; fill=&quot;url(#grad1)&quot; /&gt;
+&lt;/svg&gt;
+</code></pre>
+<ul>
+<li><code>&lt;linearGradient&gt;</code>标签的id属性可为渐变定义一个唯一的名称</li>
+<li><code>&lt;linearGradient&gt;</code>标签的X1，X2，Y1，Y2属性定义渐变开始和结束位置</li>
+<li>渐变的颜色范围可由两种或多种颜色组成。每种颜色通过一个<stop>标签来规定。offset属性用来定义渐变的开始和结束位置。</li>
+<li>填充属性把 ellipse 元素链接到此渐变</li>
+</ul>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:rgb(255,255,0);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgb(255,0,0);stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <ellipse cx="200" cy="70" rx="85" ry="55" fill="url(#grad1)" />
+</svg>
+<p>垂直线性渐变</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;defs&gt;
+    &lt;linearGradient id=&quot;grad1&quot; x1=&quot;0%&quot; y1=&quot;0%&quot; x2=&quot;0%&quot; y2=&quot;100%&quot;&gt;
+      &lt;stop offset=&quot;0%&quot; style=&quot;stop-color:rgb(255,255,0);stop-opacity:1&quot; /&gt;
+      &lt;stop offset=&quot;100%&quot; style=&quot;stop-color:rgb(255,0,0);stop-opacity:1&quot; /&gt;
+    &lt;/linearGradient&gt;
+  &lt;/defs&gt;
+  &lt;ellipse cx=&quot;200&quot; cy=&quot;70&quot; rx=&quot;85&quot; ry=&quot;55&quot; fill=&quot;url(#grad1)&quot; /&gt;
+&lt;/svg&gt;
+
+</code></pre>
+<h1 id="渐变-放射性">渐变-放射性</h1>
+<p><code>&lt;radialGradient&gt;</code>元素用于定义放射性渐变。</p>
+<p><code>&lt;radialGradient&gt;</code>标签必须嵌套在<defs>的内部。</p>
+<p>放射性渐变从白色到蓝色椭圆：</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;defs&gt;
+    &lt;radialGradient id=&quot;grad1&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; r=&quot;50%&quot; fx=&quot;50%&quot; fy=&quot;50%&quot;&gt;
+      &lt;stop offset=&quot;0%&quot; style=&quot;stop-color:rgb(255,255,255);
+      stop-opacity:0&quot; /&gt;
+      &lt;stop offset=&quot;100%&quot; style=&quot;stop-color:rgb(0,0,255);stop-opacity:1&quot; /&gt;
+    &lt;/radialGradient&gt;
+  &lt;/defs&gt;
+  &lt;ellipse cx=&quot;200&quot; cy=&quot;70&quot; rx=&quot;85&quot; ry=&quot;55&quot; fill=&quot;url(#grad1)&quot; /&gt;
+&lt;/svg&gt;
+</code></pre>
+<ul>
+<li><code>&lt;radialGradient&gt;</code>标签的 id 属性可为渐变定义一个唯一的名称</li>
+<li>CX，CY和r属性定义的最外层圆和Fx和Fy定义的最内层圆<br>
+= 渐变颜色范围可以由两个或两个以上的颜色组成。每种颜色用一个<code>&lt;stop&gt;</code>标签指定。offset属性用来定义渐变色开始和结束</li>
+<li>填充属性把ellipse元素链接到此渐变</li>
+</ul>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <defs>
+    <radialGradient id="grad1" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" style="stop-color:rgb(255,255,255);
+      stop-opacity:0" />
+      <stop offset="100%" style="stop-color:rgb(0,0,255);stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  <ellipse cx="200" cy="70" rx="85" ry="55" fill="url(#grad1)" />
+</svg>
+<span id="footnote"></span>
+<div id = "warn"></div>
+</div>
+<div class="toc-container"><ul class="markdownIt-TOC">
+<li><a href="#%E5%89%8D%E8%A8%80">前言</a></li>
+<li><a href="#svg%E6%BB%A4%E9%95%9C">SVG滤镜</a></li>
+<li><a href="#svg%E6%A8%A1%E7%B3%8A%E6%95%88%E6%9E%9C">SVG模糊效果</a></li>
+<li><a href="#%E9%98%B4%E5%BD%B1">阴影</a></li>
+<li><a href="#%E6%B8%90%E5%8F%98-%E7%BA%BF%E6%80%A7">渐变-线性</a></li>
+<li><a href="#%E6%B8%90%E5%8F%98-%E6%94%BE%E5%B0%84%E6%80%A7">渐变-放射性</a></li>
+</ul>
+</div>
+</div>
+<div id="fullPage"><canvas id="canvas"></canvas></div>
+</article>
+<div id="eof"><span>EOF</span></div><div class="round-shape-one"></div>
+<section>
+<div class="doc_comments">
+
+	  
+		<div id="gitalk-container"></div>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/qyxtim/Static@3.8/gitalk.min.js"></script><link href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.css"rel="stylesheet"><script>var gitalk=new Gitalk({clientID:"ee7c215043d62409bb53",clientSecret:"455d2f4a532bbe073ca25fdf9111932f00bbc624",repo:"giriawsh.github.io",owner:"giriawsh",admin:["giriawsh"],id:(location.pathname).substring(0, 49),distractionFreeMode:false});gitalk.render("gitalk-container");</script>
+	  
+
+	  
+
+</div></section>
+</div></div></div><script>
+"use strict";!function(){for(var n=document.getElementsByTagName("pre"),e=n.length,s=0;s<e;s++){n[s].innerHTML='<span class="line-number"></span>'+n[s].innerHTML+'<span class="cl"></span>';for(var a=n[s].innerHTML.split(/\n/).length,r=0;r<a-1;r++){n[s].getElementsByTagName("span")[0].innerHTML+="<span>"+(r+1)+"</span>"}}}();
+let mainNavLinks=document.querySelectorAll(".markdownIt-TOC a");window.addEventListener("scroll",event=>{let fromTop=window.scrollY;mainNavLinks.forEach((link,index)=>{let section=document.getElementById(decodeURI(link.hash).substring(1));let nextSection=null
+if(mainNavLinks[index+1]){nextSection=document.getElementById(decodeURI(mainNavLinks[index+1].hash).substring(1));}
+if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop){link.classList.add("currentToc");}else{link.classList.remove("currentToc");}}else{link.classList.add("currentToc");}}else{link.classList.remove("currentToc");}});});
+var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
+var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
+var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
+content="本文最后更新于2020-09-11，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-09-11 13:46:47";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+</script>
+<style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
+<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"><a href="https://github.com/giriawsh"title="github"><i class="iconfont icon-github"></i></a></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
+<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>31</strong> posts</span></div></div>
+<script>
+console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;", );
+</script>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+<script type="text/javascript" async src="https://giriawsh.github.io//media/js/prism.js"></script>
+</body>
+
+</html>

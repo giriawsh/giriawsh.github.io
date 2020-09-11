@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>SVG学习系列2-路径、文本、stroke属性 | Giria&#39;s Blog</title>
+<link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+
+<link rel="canonical" href="https://giriawsh.github.io/post/svg-xue-xi-xi-lie-2-lu-jing-wen-ben-stroke-shu-xing/" />
+</head>
+<body>
+<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
+<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://giriawsh.github.io/"><img alt="logo" style="display:inline-block;" src="https://giriawsh.github.io//images/avatar.png"/></a><h1 title="Giria&#39;s Blog" class="weaklink"><a  href="/">Giria&#39;s Blog</a></h1>
+
+<div class="navbar weaklink">
+<div class="normal_nav">
+<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/IMEC1slRP/" class="selected active current nav__item" >前端</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/d3SOBOYxM/" class="selected active current nav__item" >算法题解</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li></ul></nav>
+<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
+<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/IMEC1slRP/" class="selected active current nav__item" >前端</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/d3SOBOYxM/" class="selected active current nav__item" >算法题解</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1599803253742" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+</div></div>
+<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
+
+
+<div class="main"><div class="main-inner"><div class="content">
+<article class="post">
+<h2 class="post_title sm_margin"><a>SVG学习系列2-路径、文本、stroke属性</a></h2>
+<script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-09-11</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/7Xal1JEGf/" class="tag">学习系列</a> | 	<a href="https://giriawsh.github.io/tag/JHwBaalAU/" class="tag">SVG.js</a> | 	<a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="tag">前端</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">2365字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">13 min read</span>
+</section>
+
+<div style="display:flex">
+<div class="md_block" id="md_block">
+<div class="round-shape-one"></div>
+<h1 id="前言">前言</h1>
+<p>WebGL学习系列，结合菜鸟教程、CSDN、MDN等多平台进行学习总结。</p>
+<!-- more -->
+<h1 id="svg路径">SVG路径</h1>
+<p><path> 元素用于定义一个路径。</p>
+<p>下面的命令可用于路径数据：</p>
+<pre><code>M = moveto
+L = lineto
+H = horizontal lineto//绘制水平线
+V = vertical lineto//绘制垂直线
+C = curveto
+S = smooth curveto
+Q = quadratic Bézier curve
+T = smooth quadratic Bézier curveto
+A = elliptical Arc
+Z = closepath
+</code></pre>
+<p>注意：以上所有命令均允许小写字母。大写表示绝对定位，小写表示相对定位。</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+    &lt;path d=&quot;M150 0 L75 200 L225 200 Z&quot; /&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>定义了一条路径，它开始于位置150 0，到达位置75 200，然后从那里开始到225 200，最后在150 0关闭路径。</p>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <path d="M150 0 L75 200 L225 200 Z" />
+</svg>
+<h2 id="曲线">曲线</h2>
+<p>在path元素里，只存在两种贝塞尔曲线：三次贝塞尔曲线C，和二次贝塞尔曲线Q。</p>
+<h2 id="二次方贝赛尔曲线">二次方贝赛尔曲线</h2>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;path id=&quot;lineAB&quot; d=&quot;M 100 350 l 150 -300&quot; stroke=&quot;red&quot;
+  stroke-width=&quot;3&quot; fill=&quot;none&quot; /&gt;
+  &lt;path id=&quot;lineBC&quot; d=&quot;M 250 50 l 150 300&quot; stroke=&quot;red&quot;
+  stroke-width=&quot;3&quot; fill=&quot;none&quot; /&gt;
+  &lt;path d=&quot;M 175 200 l 150 0&quot; stroke=&quot;green&quot; stroke-width=&quot;3&quot;
+  fill=&quot;none&quot; /&gt;
+  &lt;path d=&quot;M 100 350 q 150 -300 300 0&quot; stroke=&quot;blue&quot;
+  stroke-width=&quot;5&quot; fill=&quot;none&quot; /&gt;
+  &lt;!-- Mark relevant points --&gt;
+  &lt;g stroke=&quot;black&quot; stroke-width=&quot;3&quot; fill=&quot;black&quot;&gt;
+    &lt;circle id=&quot;pointA&quot; cx=&quot;100&quot; cy=&quot;350&quot; r=&quot;3&quot; /&gt;
+    &lt;circle id=&quot;pointB&quot; cx=&quot;250&quot; cy=&quot;50&quot; r=&quot;3&quot; /&gt;
+    &lt;circle id=&quot;pointC&quot; cx=&quot;400&quot; cy=&quot;350&quot; r=&quot;3&quot; /&gt;
+  &lt;/g&gt;
+  &lt;!-- Label the points --&gt;
+  &lt;g font-size=&quot;30&quot; font=&quot;sans-serif&quot; fill=&quot;black&quot; stroke=&quot;none&quot;
+  text-anchor=&quot;middle&quot;&gt;
+    &lt;text x=&quot;100&quot; y=&quot;350&quot; dx=&quot;-30&quot;&gt;A&lt;/text&gt;
+    &lt;text x=&quot;250&quot; y=&quot;50&quot; dy=&quot;-10&quot;&gt;B&lt;/text&gt;
+    &lt;text x=&quot;400&quot; y=&quot;350&quot; dx=&quot;30&quot;&gt;C&lt;/text&gt;
+  &lt;/g&gt;
+&lt;/svg&gt;
+</code></pre>
+<p><code>&lt;g&gt;</code>	用于把相关元素进行组合的容器元素	id=&quot;该组的名称&quot;<br>
+fill=&quot;该组填充颜色&quot;<br>
+opacity=&quot;该组不透明度&quot;</p>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911125246.png" alt="" loading="lazy"></figure>
+<h2 id="三次方贝赛尔曲线">三次方贝赛尔曲线</h2>
+<p>三次贝塞尔曲线需要定义一个点和两个控制点，所以用C命令创建三次贝塞尔曲线，需要设置三组坐标参数：</p>
+<pre><code> C x1 y1, x2 y2, x y (or c dx1 dy1, dx2 dy2, dx dy)
+</code></pre>
+<p>这里的最后一个坐标(x,y)表示的是曲线的终点，另外两个坐标是控制点，(x1,y1)是起点的控制点，(x2,y2)是终点的控制点。如果你熟悉代数或者微积分的话，会更容易理解控制点，控制点描述的是曲线起始点的斜率，曲线上各个点的斜率，是从起点斜率到终点斜率的渐变过程。</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
+
+&lt;svg width=&quot;190px&quot; height=&quot;160px&quot; version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+
+  &lt;path d=&quot;M10 10 C 20 20, 40 20, 50 10&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
+  &lt;path d=&quot;M70 10 C 70 20, 120 20, 120 10&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
+  &lt;path d=&quot;M130 10 C 120 20, 180 20, 170 10&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
+  &lt;path d=&quot;M10 60 C 20 80, 40 80, 50 60&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
+  &lt;path d=&quot;M70 60 C 70 80, 110 80, 110 60&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
+  &lt;path d=&quot;M130 60 C 120 80, 180 80, 170 60&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
+  &lt;path d=&quot;M10 110 C 20 140, 40 140, 50 110&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
+  &lt;path d=&quot;M70 110 C 70 140, 110 140, 110 110&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
+  &lt;path d=&quot;M130 110 C 120 140, 180 140, 170 110&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
+
+&lt;/svg&gt;
+</code></pre>
+<?xml version="1.0" standalone="no"?>
+<svg width="190px" height="160px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M10 10 C 20 20, 40 20, 50 10" stroke="black" fill="transparent"/>
+  <path d="M70 10 C 70 20, 120 20, 120 10" stroke="black" fill="transparent"/>
+  <path d="M130 10 C 120 20, 180 20, 170 10" stroke="black" fill="transparent"/>
+  <path d="M10 60 C 20 80, 40 80, 50 60" stroke="black" fill="transparent"/>
+  <path d="M70 60 C 70 80, 110 80, 110 60" stroke="black" fill="transparent"/>
+  <path d="M130 60 C 120 80, 180 80, 170 60" stroke="black" fill="transparent"/>
+  <path d="M10 110 C 20 140, 40 140, 50 110" stroke="black" fill="transparent"/>
+  <path d="M70 110 C 70 140, 110 140, 110 110" stroke="black" fill="transparent"/>
+  <path d="M130 110 C 120 140, 180 140, 170 110" stroke="black" fill="transparent"/>
+</svg>
+<p>S命令可以用来创建与前面一样的贝塞尔曲线，但是，如果S命令跟在一个C或S命令后面，则它的第一个控制点会被假设成前一个命令曲线的第二个控制点的中心对称点。</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
+&lt;svg width=&quot;190px&quot; height=&quot;160px&quot; version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+  &lt;path d=&quot;M10 80 C 40 10, 65 10, 95 80 S 150 150, 180 80&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
+&lt;/svg&gt;
+</code></pre>
+<?xml version="1.0" standalone="no"?>
+<svg width="190px" height="160px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M10 80 C 40 10, 65 10, 95 80 S 150 150, 180 80" stroke="black" fill="transparent"/>
+</svg>
+<p>二次贝塞尔曲线有一个差不多的T命令，可以通过更简短的参数，延长二次贝塞尔曲线。</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
+&lt;svg width=&quot;190px&quot; height=&quot;160px&quot; version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+  &lt;path d=&quot;M10 80 Q 52.5 10, 95 80 T 180 80&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
+&lt;/svg&gt;
+</code></pre>
+<?xml version="1.0" standalone="no"?>
+<svg width="190px" height="160px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M10 80 Q 52.5 10, 95 80 T 180 80" stroke="black" fill="transparent"/>
+</svg>
+<h2 id="弧形">弧形</h2>
+<p>假设，已知椭圆形的长轴半径和短轴半径，并且已知两个点（在椭圆上），根据半径和两点，可以画出两个椭圆，在每个椭圆上根据两点都可以画出两种弧形。所以，仅仅根据半径和两点，可以画出四种弧形。为了保证创建的弧形唯一，A命令需要用到比较多的参数：</p>
+<pre><code> A rx ry x-axis-rotation large-arc-flag sweep-flag x y
+ //x轴半径,y轴半径,弧形的旋转情况,角度大小,弧线的方向,x坐标点,y坐标点
+ a rx ry x-axis-rotation large-arc-flag sweep-flag dx dy
+ 
+ 例子：
+ &lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
+&lt;svg width=&quot;320px&quot; height=&quot;320px&quot; version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+  &lt;path d=&quot;M10 315
+           L 110 215
+           A 30 50 0 0 1 162.55 162.45
+           L 172.55 152.45
+           A 30 50 -45 0 1 215.1 109.9
+           L 315 10&quot; stroke=&quot;black&quot; fill=&quot;green&quot; stroke-width=&quot;2&quot; fill-opacity=&quot;0.5&quot;/&gt;
+&lt;/svg&gt;
+</code></pre>
+<?xml version="1.0" standalone="no"?>
+<svg width="320px" height="320px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <path d="M10 315
+           L 110 215
+           A 30 50 0 0 1 162.55 162.45
+           L 172.55 152.45
+           A 30 50 -45 0 1 215.1 109.9
+           L 315 10" stroke="black" fill="green" stroke-width="2" fill-opacity="0.5"/>
+</svg>
+<h1 id="文本">文本</h1>
+<p><code>&lt;text&gt;</code>元素用于定义文本。</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;text x=&quot;0&quot; y=&quot;15&quot; fill=&quot;red&quot;&gt;I love SVG&lt;/text&gt;
+&lt;/svg&gt;
+</code></pre>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <text x="0" y="15" fill="red">I love SVG</text>
+</svg>
+<p>文字旋转：</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;text x=&quot;0&quot; y=&quot;15&quot; fill=&quot;red&quot; transform=&quot;rotate(30 20,40)&quot;&gt;I love SVG&lt;/text&gt;
+&lt;/svg&gt;
+</code></pre>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <text x="0" y="15" fill="red" transform="rotate(30 20,40)">I love SVG</text>
+</svg>
+<p>文字与路径依附<code>&lt;textPath&gt;</code></p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot;&gt;
+  &lt;defs&gt;
+    &lt;path id=&quot;path1&quot; d=&quot;M75,20 a1,1 0 0,0 100,0&quot; /&gt;
+  &lt;/defs&gt;
+  &lt;text x=&quot;10&quot; y=&quot;100&quot; style=&quot;fill:red;&quot;&gt;
+    &lt;textPath xlink:href=&quot;#path1&quot;&gt;I love SVG I love SVG&lt;/textPath&gt;
+  &lt;/text&gt;
+&lt;/svg&gt;
+</code></pre>
+<ul>
+<li><code>&lt;defs&gt;</code>引用的元素容器</li>
+</ul>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <path id="path1" d="M75,20 a1,1 0 0,0 100,0" />
+  </defs>
+  <text x="10" y="100" style="fill:red;">
+    <textPath xlink:href="#path1">I love SVG I love SVG</textPath>
+  </text>
+</svg>
+<p>元素可以安排任何分小组与<code>&lt;tspan&gt;</code>元素的数量。每个<code>&lt;tspan&gt;</code> 元素可以包含不同的格式和位置</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;text x=&quot;10&quot; y=&quot;20&quot; style=&quot;fill:red;&quot;&gt;Several lines:
+    &lt;tspan x=&quot;10&quot; y=&quot;45&quot;&gt;First line&lt;/tspan&gt;
+    &lt;tspan x=&quot;10&quot; y=&quot;70&quot;&gt;Second line&lt;/tspan&gt;
+  &lt;/text&gt;
+&lt;/svg&gt;
+</code></pre>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <text x="10" y="20" style="fill:red;">Several lines:
+    <tspan x="10" y="45">First line</tspan>
+    <tspan x="10" y="70">Second line</tspan>
+  </text>
+</svg>
+<p>添加链接属性：</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;
+xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot;&gt;
+  &lt;a xlink:href=&quot;http://www.w3schools.com/svg/&quot; target=&quot;_blank&quot;&gt;
+    &lt;text x=&quot;0&quot; y=&quot;15&quot; fill=&quot;red&quot;&gt;I love SVG&lt;/text&gt;
+  &lt;/a&gt;
+&lt;/svg&gt;
+</code></pre>
+<p><svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+xmlns:xlink="http://www.w3.org/1999/xlink"><br>
+<a xlink:href="http://www.w3schools.com/svg/" target="_blank"><br>
+<text x="0" y="15" fill="red">I love SVG</text><br>
+</a><br>
+</svg></p>
+<h1 id="stroke属性">Stroke属性</h1>
+<p>所有stroke属性，可应用于任何种类的线条，文字和元素就像一个圆的轮廓。</p>
+<p>Stroke属性定义一条线，文本或元素轮廓颜色：</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;g fill=&quot;none&quot;&gt;
+    &lt;path stroke=&quot;red&quot; d=&quot;M5 20 l215 0&quot; /&gt;
+    &lt;path stroke=&quot;blue&quot; d=&quot;M5 40 l215 0&quot; /&gt;
+    &lt;path stroke=&quot;black&quot; d=&quot;M5 60 l215 0&quot; /&gt;
+  &lt;/g&gt;
+&lt;/svg&gt;
+</code></pre>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <g fill="none">
+    <path stroke="red" d="M5 20 l215 0" />
+    <path stroke="blue" d="M5 40 l215 0" />
+    <path stroke="black" d="M5 60 l215 0" />
+  </g>
+</svg>
+<p>stroke- width属性定义了一条线，文本或元素轮廓厚度：</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;g fill=&quot;none&quot; stroke=&quot;black&quot;&gt;
+    &lt;path stroke-width=&quot;2&quot; d=&quot;M5 20 l215 0&quot; /&gt;
+    &lt;path stroke-width=&quot;4&quot; d=&quot;M5 40 l215 0&quot; /&gt;
+    &lt;path stroke-width=&quot;6&quot; d=&quot;M5 60 l215 0&quot; /&gt;
+  &lt;/g&gt;
+&lt;/svg&gt;
+</code></pre>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <g fill="none" stroke="black">
+    <path stroke-width="2" d="M5 20 l215 0" />
+    <path stroke-width="4" d="M5 40 l215 0" />
+    <path stroke-width="6" d="M5 60 l215 0" />
+  </g>
+</svg>
+<p>stroke-linecap属性定义不同类型的开放路径的终结（看端口）</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;g fill=&quot;none&quot; stroke=&quot;black&quot; stroke-width=&quot;6&quot;&gt;
+    &lt;path stroke-linecap=&quot;butt&quot; d=&quot;M5 20 l215 0&quot; /&gt;
+    &lt;path stroke-linecap=&quot;round&quot; d=&quot;M5 40 l215 0&quot; /&gt;
+    &lt;path stroke-linecap=&quot;square&quot; d=&quot;M5 60 l215 0&quot; /&gt;
+  &lt;/g&gt;
+&lt;/svg&gt;
+</code></pre>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <g fill="none" stroke="black" stroke-width="6">
+    <path stroke-linecap="butt" d="M5 20 l215 0" />
+    <path stroke-linecap="round" d="M5 40 l215 0" />
+    <path stroke-linecap="square" d="M5 60 l215 0" />
+  </g>
+</svg>
+<p>stroke-dasharray属性用于创建虚线：</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;g fill=&quot;none&quot; stroke=&quot;black&quot; stroke-width=&quot;4&quot;&gt;
+    &lt;path stroke-dasharray=&quot;5,5&quot; d=&quot;M5 20 l215 0&quot; /&gt;
+    &lt;path stroke-dasharray=&quot;10,10&quot; d=&quot;M5 40 l215 0&quot; /&gt;
+    &lt;path stroke-dasharray=&quot;20,10,5,5,5,10&quot; d=&quot;M5 60 l215 0&quot; /&gt;
+  &lt;/g&gt;
+&lt;/svg&gt;
+</code></pre>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <g fill="none" stroke="black" stroke-width="4">
+    <path stroke-dasharray="5,5" d="M5 20 l215 0" />
+    <path stroke-dasharray="10,10" d="M5 40 l215 0" />
+    <path stroke-dasharray="20,10,5,5,5,10" d="M5 60 l215 0" />
+  </g>
+</svg>
+<span id="footnote"></span>
+<div id = "warn"></div>
+</div>
+<div class="toc-container"><ul class="markdownIt-TOC">
+<li><a href="#%E5%89%8D%E8%A8%80">前言</a></li>
+<li><a href="#svg%E8%B7%AF%E5%BE%84">SVG路径</a>
+<ul>
+<li><a href="#%E6%9B%B2%E7%BA%BF">曲线</a></li>
+<li><a href="#%E4%BA%8C%E6%AC%A1%E6%96%B9%E8%B4%9D%E8%B5%9B%E5%B0%94%E6%9B%B2%E7%BA%BF">二次方贝赛尔曲线</a></li>
+<li><a href="#%E4%B8%89%E6%AC%A1%E6%96%B9%E8%B4%9D%E8%B5%9B%E5%B0%94%E6%9B%B2%E7%BA%BF">三次方贝赛尔曲线</a></li>
+<li><a href="#%E5%BC%A7%E5%BD%A2">弧形</a></li>
+</ul>
+</li>
+<li><a href="#%E6%96%87%E6%9C%AC">文本</a></li>
+<li><a href="#stroke%E5%B1%9E%E6%80%A7">Stroke属性</a></li>
+</ul>
+</div>
+</div>
+<div id="fullPage"><canvas id="canvas"></canvas></div>
+</article>
+<div id="eof"><span>EOF</span></div><div class="round-shape-one"></div>
+<section>
+<div class="doc_comments">
+
+	  
+		<div id="gitalk-container"></div>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/qyxtim/Static@3.8/gitalk.min.js"></script><link href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.css"rel="stylesheet"><script>var gitalk=new Gitalk({clientID:"ee7c215043d62409bb53",clientSecret:"455d2f4a532bbe073ca25fdf9111932f00bbc624",repo:"giriawsh.github.io",owner:"giriawsh",admin:["giriawsh"],id:(location.pathname).substring(0, 49),distractionFreeMode:false});gitalk.render("gitalk-container");</script>
+	  
+
+	  
+
+</div></section>
+</div></div></div><script>
+"use strict";!function(){for(var n=document.getElementsByTagName("pre"),e=n.length,s=0;s<e;s++){n[s].innerHTML='<span class="line-number"></span>'+n[s].innerHTML+'<span class="cl"></span>';for(var a=n[s].innerHTML.split(/\n/).length,r=0;r<a-1;r++){n[s].getElementsByTagName("span")[0].innerHTML+="<span>"+(r+1)+"</span>"}}}();
+let mainNavLinks=document.querySelectorAll(".markdownIt-TOC a");window.addEventListener("scroll",event=>{let fromTop=window.scrollY;mainNavLinks.forEach((link,index)=>{let section=document.getElementById(decodeURI(link.hash).substring(1));let nextSection=null
+if(mainNavLinks[index+1]){nextSection=document.getElementById(decodeURI(mainNavLinks[index+1].hash).substring(1));}
+if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop){link.classList.add("currentToc");}else{link.classList.remove("currentToc");}}else{link.classList.add("currentToc");}}else{link.classList.remove("currentToc");}});});
+var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
+var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
+var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
+content="本文最后更新于2020-09-11，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-09-11 13:45:29";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+</script>
+<style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
+<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"><a href="https://github.com/giriawsh"title="github"><i class="iconfont icon-github"></i></a></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
+<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>31</strong> posts</span></div></div>
+<script>
+console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;", );
+</script>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+<script type="text/javascript" async src="https://giriawsh.github.io//media/js/prism.js"></script>
+</body>
+
+</html>

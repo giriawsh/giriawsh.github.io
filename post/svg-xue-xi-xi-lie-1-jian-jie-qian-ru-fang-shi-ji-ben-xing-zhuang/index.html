@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>SVG学习系列1-简介、嵌入方式、基本形状 | Giria&#39;s Blog</title>
+<link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+
+<link rel="canonical" href="https://giriawsh.github.io/post/svg-xue-xi-xi-lie-1-jian-jie-qian-ru-fang-shi-ji-ben-xing-zhuang/" />
+</head>
+<body>
+<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
+<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://giriawsh.github.io/"><img alt="logo" style="display:inline-block;" src="https://giriawsh.github.io//images/avatar.png"/></a><h1 title="Giria&#39;s Blog" class="weaklink"><a  href="/">Giria&#39;s Blog</a></h1>
+
+<div class="navbar weaklink">
+<div class="normal_nav">
+<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/IMEC1slRP/" class="selected active current nav__item" >前端</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/d3SOBOYxM/" class="selected active current nav__item" >算法题解</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li></ul></nav>
+<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
+<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/IMEC1slRP/" class="selected active current nav__item" >前端</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/d3SOBOYxM/" class="selected active current nav__item" >算法题解</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1599803253742" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+</div></div>
+<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
+
+
+<div class="main"><div class="main-inner"><div class="content">
+<article class="post">
+<h2 class="post_title sm_margin"><a>SVG学习系列1-简介、嵌入方式、基本形状</a></h2>
+<script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-09-11</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/7Xal1JEGf/" class="tag">学习系列</a> | 	<a href="https://giriawsh.github.io/tag/JHwBaalAU/" class="tag">SVG.js</a> | 	<a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="tag">前端</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">1910字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">9 min read</span>
+</section>
+
+<div style="display:flex">
+<div class="md_block" id="md_block">
+<div class="round-shape-one"></div>
+<h1 id="前言">前言</h1>
+<p>WebGL学习系列，结合菜鸟教程、CSDN、MDN等多平台进行学习总结。</p>
+<p><a href="https://www.runoob.com/svg/svg-reference.html">SVG 实用参考手册</a></p>
+<h1 id="svg简介">SVG简介</h1>
+<p>SVG 意为可缩放矢量图形（Scalable Vector Graphics）。使用 XML 格式定义图像。</p>
+<p>一个标准SVG创建声明：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
+&lt;!DOCTYPE svg PUBLIC &quot;-//W3C//DTD SVG 1.1//EN&quot;
+&quot;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&quot;&gt;
+
+&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;circle cx=&quot;100&quot; cy=&quot;50&quot; r=&quot;40&quot; stroke=&quot;black&quot;
+  stroke-width=&quot;2&quot; fill=&quot;red&quot; /&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>第一行包含了 XML 声明。请注意 standalone 属性！该属性规定此 SVG 文件是否是&quot;独立的&quot;，或含有对外部文件的引用。</p>
+<p>standalone=&quot;no&quot; 意味着 SVG 文档会引用一个外部文件 - 在这里，是 DTD 文件。</p>
+<p>第二和第三行引用了这个外部的 SVG DTD。该 DTD 位于 &quot;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&quot;。该 DTD 位于 W3C，含有所有允许的 SVG 元素。</p>
+<p>SVG 代码以 <code>&lt;svg&gt;</code>元素开始，包括开启标签 <code>&lt;svg&gt;</code> 和关闭标签<code>&lt;/svg&gt;</code> 。这是根元素。width 和 height 属性可设置此 SVG 文档的宽度和高度。version 属性可定义所使用的 SVG 版本，xmlns 属性可定义 SVG 命名空间。</p>
+<p>SVG 的 <circle> 用来创建一个圆。cx 和 cy 属性定义圆中心的 x 和 y 坐标。如果忽略这两个属性，那么圆点会被设置为 (0, 0)。r 属性定义圆的半径。</p>
+<p>stroke 和 stroke-width 属性控制如何显示形状的轮廓。我们把圆的轮廓设置为 2px 宽，黑边框。</p>
+<p>fill 属性设置形状内的颜色。我们把填充颜色设置为红色。</p>
+<p>关闭标签的作用是关闭 SVG 元素和文档本身。</p>
+<h2 id="svg网格">SVG网格</h2>
+<p>对于所有元素，SVG使用的坐标系统或者说网格系统，和Canvas用的差不多（所有计算机绘图都差不多）。这种坐标系统是：以页面的左上角为(0,0)坐标点，坐标以像素为单位，x轴正方向是向右，y轴正方向是向下。注意，这和你小时候所教的绘图方式是相反的。但是在HTML文档中，元素都是用这种方式定位的。</p>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911125217.png" alt="" loading="lazy"></figure>
+<h1 id="svg如何嵌入html">SVG如何嵌入HTML</h1>
+<p>SVG 文件可通过以下标签嵌入 HTML 文档：<embed>、<object> 或者 <iframe>。</p>
+<p>SVG的代码可以直接嵌入到HTML页面中，或您可以直接链接到SVG文件。</p>
+<h2 id="使用embed-标签">使用<code>&lt;embed&gt;</code> 标签</h2>
+<p>优势：所有主要浏览器都支持，并允许使用脚本</p>
+<p>缺点：不推荐在HTML4和XHTML中使用（但在HTML5允许）</p>
+<pre><code>&lt;embed src=&quot;circle1.svg&quot; type=&quot;image/svg+xml&quot; /&gt;
+</code></pre>
+<h2 id="使用-object-标签">使用 <code>&lt;object&gt;</code> 标签</h2>
+<p>优势：所有主要浏览器都支持，并支持HTML4，XHTML和HTML5标准</p>
+<p>缺点：不允许使用脚本。</p>
+<pre><code>&lt;object data=&quot;circle1.svg&quot; type=&quot;image/svg+xml&quot;&gt;&lt;/object&gt;
+</code></pre>
+<h2 id="使用-iframe-标签">使用 <code>&lt;iframe&gt;</code> 标签</h2>
+<p>优势：所有主要浏览器都支持，并允许使用脚本</p>
+<p>缺点：不推荐在HTML4和XHTML中使用（但在HTML5允许）</p>
+<pre><code>&lt;iframe src=&quot;circle1.svg&quot;&gt;&lt;/iframe&gt;
+</code></pre>
+<h2 id="直接嵌入">直接嵌入</h2>
+<p>在Firefox、Internet Explorer9、谷歌Chrome和Safari中，你可以直接在HTML嵌入SVG代码。</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+   &lt;circle cx=&quot;100&quot; cy=&quot;50&quot; r=&quot;40&quot; stroke=&quot;black&quot; stroke-width=&quot;2&quot; fill=&quot;red&quot; /&gt;
+&lt;/svg&gt;
+</code></pre>
+<h2 id="链接文件">链接文件</h2>
+<p>还可以用<code>&lt;a&gt;</code>标签链接到一个SVG文件</p>
+<pre><code>&lt;a href=&quot;circle1.svg&quot;&gt;View SVG file&lt;/a&gt;
+</code></pre>
+<h1 id="svg基本形状">SVG基本形状</h1>
+<h2 id="1矩形">1.矩形</h2>
+<p><code>&lt;rect&gt;</code> 标签可用来创建矩形，以及矩形的变种</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;rect width=&quot;300&quot; height=&quot;100&quot;
+  style=&quot;fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)&quot;/&gt;
+&lt;/svg&gt;
+</code></pre>
+<ul>
+<li>rect 元素的 width 和 height 属性可定义矩形的高度和宽度</li>
+<li>style 属性用来定义 CSS 属性</li>
+<li>CSS 的 fill 属性定义矩形的填充颜色（rgb 值、颜色名或者十六进制值）</li>
+<li>CSS 的 stroke-width 属性定义矩形边框的宽度</li>
+<li>CSS 的 stroke 属性定义矩形边框的颜色</li>
+</ul>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;rect x=&quot;50&quot; y=&quot;20&quot; width=&quot;150&quot; height=&quot;150&quot;
+  style=&quot;fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;
+  stroke-opacity:0.9;opacity:0.5&quot;/&gt;
+&lt;/svg&gt;
+</code></pre>
+<ul>
+<li>x 属性定义矩形的左侧位置（例如，x=&quot;0&quot; 定义矩形到浏览器窗口左侧的距离是 0px）</li>
+<li>y 属性定义矩形的顶端位置（例如，y=&quot;0&quot; 定义矩形到浏览器窗口顶端的距离是 0px）</li>
+<li>CSS 的 fill-opacity 属性定义填充颜色透明度（合法的范围是：0 - 1）</li>
+<li>CSS 的 stroke-opacity 属性定义轮廓颜色的透明度（合法的范围是：0 - 1）</li>
+<li>CSS opacity 属性用于定义了元素的透明值 (范围: 0 到 1)。</li>
+</ul>
+<p>圆角矩形：</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;rect x=&quot;50&quot; y=&quot;20&quot; rx=&quot;20&quot; ry=&quot;20&quot; width=&quot;150&quot; height=&quot;150&quot;
+  style=&quot;fill:red;stroke:black;stroke-width:5;opacity:0.5&quot;/&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>rx 和 ry 属性可使矩形产生圆角。</p>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <rect x="50" y="20" rx="20" ry="20" width="150" height="150"
+  style="fill:red;stroke:black;stroke-width:5;opacity:0.5"/>
+</svg>
+<h2 id="2-圆形">2. 圆形</h2>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;circle cx=&quot;100&quot; cy=&quot;50&quot; r=&quot;40&quot; stroke=&quot;black&quot;
+  stroke-width=&quot;2&quot; fill=&quot;red&quot;/&gt;
+&lt;/svg&gt;
+</code></pre>
+<ul>
+<li>cx和cy属性定义圆点的x和y坐标。如果省略cx和cy，圆的中心会被设置为(0, 0)</li>
+<li>r属性定义圆的半径</li>
+</ul>
+<h2 id="3-椭圆">3. 椭圆</h2>
+<p><code>&lt;ellipse&gt;</code> 元素是用来创建一个椭圆：</p>
+<p>椭圆与圆很相似。不同之处在于椭圆有不同的x和y半径，而圆的x和y半径是相同的：</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;ellipse cx=&quot;300&quot; cy=&quot;80&quot; rx=&quot;100&quot; ry=&quot;50&quot;
+  style=&quot;fill:yellow;stroke:purple;stroke-width:2&quot;/&gt;
+&lt;/svg&gt;
+</code></pre>
+<ul>
+<li>RX属性定义的水平半径</li>
+<li>RY属性定义的垂直半径</li>
+</ul>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <ellipse cx="300" cy="80" rx="100" ry="50"
+  style="fill:yellow;stroke:purple;stroke-width:2"/>
+</svg>
+<h2 id="4-直线">4. 直线</h2>
+<p><code>&lt;line&gt;</code> 元素是用来创建一个直线</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;line x1=&quot;0&quot; y1=&quot;0&quot; x2=&quot;200&quot; y2=&quot;200&quot;
+  style=&quot;stroke:rgb(255,0,0);stroke-width:2&quot;/&gt;
+&lt;/svg&gt;
+</code></pre>
+<ul>
+<li>x1 属性在 x 轴定义线条的开始</li>
+<li>y1 属性在 y 轴定义线条的开始</li>
+<li>x2 属性在 x 轴定义线条的结束</li>
+<li>y2 属性在 y 轴定义线条的结束</li>
+</ul>
+<h2 id="5-多边形">5. 多边形</h2>
+<p><code>&lt;polygon&gt;</code> 标签用来创建含有不少于三个边的图形。</p>
+<pre><code>&lt;svg  height=&quot;210&quot; width=&quot;500&quot;&gt;
+  &lt;polygon points=&quot;200,10 250,190 160,210&quot;
+  style=&quot;fill:lime;stroke:purple;stroke-width:1&quot;/&gt;
+&lt;/svg&gt;
+</code></pre>
+<p>points 属性定义多边形每个角的 x 和 y 坐标</p>
+<svg  height="210" width="500">
+  <polygon points="200,10 250,190 160,210"
+  style="fill:lime;stroke:purple;stroke-width:1"/>
+</svg>
+<p>星型：</p>
+<pre><code>&lt;svg height=&quot;210&quot; width=&quot;500&quot;&gt;
+  &lt;polygon points=&quot;100,10 40,198 190,78 10,78 160,198&quot;
+  style=&quot;fill:lime;stroke:purple;stroke-width:5;fill-rule:nonzero;&quot; /&gt;
+&lt;/svg&gt;
+</code></pre>
+<svg height="210" width="500">
+  <polygon points="100,10 40,198 190,78 10,78 160,198"
+  style="fill:lime;stroke:purple;stroke-width:5;fill-rule:nonzero;" />
+</svg>
+<pre><code>&lt;svg height=&quot;210&quot; width=&quot;500&quot;&gt;
+  &lt;polygon points=&quot;100,10 40,198 190,78 10,78 160,198&quot;
+  style=&quot;fill:lime;stroke:purple;stroke-width:5;fill-rule:evenodd;&quot; /&gt;
+&lt;/svg&gt;
+</code></pre>
+<svg height="210" width="500">
+  <polygon points="100,10 40,198 190,78 10,78 160,198"
+  style="fill:lime;stroke:purple;stroke-width:5;fill-rule:evenodd;" />
+</svg>
+<h2 id="6-曲线">6. 曲线</h2>
+<p><code>&lt;polyline&gt;</code> 元素是用于创建任何只有直线的形状：</p>
+<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
+  &lt;polyline points=&quot;0,40 40,40 40,80 80,80 80,120 120,120 120,160&quot; style=&quot;fill:white;stroke:red;stroke-width:4&quot; /&gt;
+&lt;/svg&gt;
+</code></pre>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <polyline points="0,40 40,40 40,80 80,80 80,120 120,120 120,160" style="fill:white;stroke:red;stroke-width:4" />
+</svg>
+<span id="footnote"></span>
+<div id = "warn"></div>
+</div>
+<div class="toc-container"><ul class="markdownIt-TOC">
+<li><a href="#%E5%89%8D%E8%A8%80">前言</a></li>
+<li><a href="#svg%E7%AE%80%E4%BB%8B">SVG简介</a>
+<ul>
+<li><a href="#svg%E7%BD%91%E6%A0%BC">SVG网格</a></li>
+</ul>
+</li>
+<li><a href="#svg%E5%A6%82%E4%BD%95%E5%B5%8C%E5%85%A5html">SVG如何嵌入HTML</a>
+<ul>
+<li><a href="#%E4%BD%BF%E7%94%A8embed-%E6%A0%87%E7%AD%BE">使用<code>&lt;embed&gt;</code> 标签</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8-object-%E6%A0%87%E7%AD%BE">使用 <code>&lt;object&gt;</code> 标签</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8-iframe-%E6%A0%87%E7%AD%BE">使用 <code>&lt;iframe&gt;</code> 标签</a></li>
+<li><a href="#%E7%9B%B4%E6%8E%A5%E5%B5%8C%E5%85%A5">直接嵌入</a></li>
+<li><a href="#%E9%93%BE%E6%8E%A5%E6%96%87%E4%BB%B6">链接文件</a></li>
+</ul>
+</li>
+<li><a href="#svg%E5%9F%BA%E6%9C%AC%E5%BD%A2%E7%8A%B6">SVG基本形状</a>
+<ul>
+<li><a href="#1%E7%9F%A9%E5%BD%A2">1.矩形</a></li>
+<li><a href="#2-%E5%9C%86%E5%BD%A2">2. 圆形</a></li>
+<li><a href="#3-%E6%A4%AD%E5%9C%86">3. 椭圆</a></li>
+<li><a href="#4-%E7%9B%B4%E7%BA%BF">4. 直线</a></li>
+<li><a href="#5-%E5%A4%9A%E8%BE%B9%E5%BD%A2">5. 多边形</a></li>
+<li><a href="#6-%E6%9B%B2%E7%BA%BF">6. 曲线</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="fullPage"><canvas id="canvas"></canvas></div>
+</article>
+<div id="eof"><span>EOF</span></div><div class="round-shape-one"></div>
+<section>
+<div class="doc_comments">
+
+	  
+		<div id="gitalk-container"></div>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/qyxtim/Static@3.8/gitalk.min.js"></script><link href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.css"rel="stylesheet"><script>var gitalk=new Gitalk({clientID:"ee7c215043d62409bb53",clientSecret:"455d2f4a532bbe073ca25fdf9111932f00bbc624",repo:"giriawsh.github.io",owner:"giriawsh",admin:["giriawsh"],id:(location.pathname).substring(0, 49),distractionFreeMode:false});gitalk.render("gitalk-container");</script>
+	  
+
+	  
+
+</div></section>
+</div></div></div><script>
+"use strict";!function(){for(var n=document.getElementsByTagName("pre"),e=n.length,s=0;s<e;s++){n[s].innerHTML='<span class="line-number"></span>'+n[s].innerHTML+'<span class="cl"></span>';for(var a=n[s].innerHTML.split(/\n/).length,r=0;r<a-1;r++){n[s].getElementsByTagName("span")[0].innerHTML+="<span>"+(r+1)+"</span>"}}}();
+let mainNavLinks=document.querySelectorAll(".markdownIt-TOC a");window.addEventListener("scroll",event=>{let fromTop=window.scrollY;mainNavLinks.forEach((link,index)=>{let section=document.getElementById(decodeURI(link.hash).substring(1));let nextSection=null
+if(mainNavLinks[index+1]){nextSection=document.getElementById(decodeURI(mainNavLinks[index+1].hash).substring(1));}
+if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop){link.classList.add("currentToc");}else{link.classList.remove("currentToc");}}else{link.classList.add("currentToc");}}else{link.classList.remove("currentToc");}});});
+var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
+var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
+var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
+content="本文最后更新于2020-09-11，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-09-11 12:51:54";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+</script>
+<style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
+<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"><a href="https://github.com/giriawsh"title="github"><i class="iconfont icon-github"></i></a></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
+<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>31</strong> posts</span></div></div>
+<script>
+console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;", );
+</script>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+<script type="text/javascript" async src="https://giriawsh.github.io//media/js/prism.js"></script>
+</body>
+
+</html>
