@@ -17,7 +17,7 @@
 <div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
 <div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
 <div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/archives" class="selected active current nav__item" >归档</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
-<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1599793872119" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1599796262947" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
 </div></div>
 <script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
 
@@ -38,7 +38,7 @@
 <p>一直受到element组件库的照顾，觉得其中有很多值得分析的点和前端设计思想，遂开始整理这个系列。可能会有点乱，资料和分析参考我会附链接，后期可以再做一次整理。也算是对自己前端的一次提升能力学习。</p>
 <!-- more -->
 <h1 id="结构分析">结构分析</h1>
-<figure data-type="image" tabindex="1"><img src="https://user-gold-cdn.xitu.io/2020/7/11/1733e545aec77110?w=213&amp;h=249&amp;f=png&amp;s=7799" alt="element结构" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911112128.png" alt="element结构" loading="lazy"></figure>
 <ul>
 <li>.github：github生成文件</li>
 <li>.idea：编译器文件</li>
@@ -50,10 +50,10 @@
 </ul>
 <h1 id="alert组件分析">Alert组件分析</h1>
 <h2 id="alert目录结构">Alert目录结构</h2>
-<p><img src="https://user-gold-cdn.xitu.io/2020/7/11/1733e638fb890179?w=168&amp;h=86&amp;f=png&amp;s=2226" alt="Alert目录结构" loading="lazy"><br>
+<p><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911112130.png" alt="Alert目录结构" loading="lazy"><br>
 可以注意到每个package里面的组件文件夹中都有一个 index.js</p>
 <h2 id="indexjs">index.js</h2>
-<p><img src="https://user-gold-cdn.xitu.io/2020/7/11/1733e645c101004a?w=354&amp;h=231&amp;f=png&amp;s=10990" alt="index.js" loading="lazy"><br>
+<p><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911112134.png" alt="index.js" loading="lazy"><br>
 添加install方法来方便作为插件使用，如果单独引用这个组件，就注册这个单独的组件</p>
 <p>/* istanbul ignore next */，这个是一个npm代码覆盖率的工具istanbul，在写测试的时候，有些不必要的文件，在计算覆盖率时会被计算到，所以加上这句注释就可以忽略下面的代码。</p>
 <h2 id="mainvue">main.vue</h2>
@@ -171,9 +171,9 @@
 </ul>
 <p>这里对应的就是alert的相应图标</p>
 <p>小标签<br>
-<img src="https://user-gold-cdn.xitu.io/2020/7/13/1734864d337dbe1a?w=835&amp;h=61&amp;f=png&amp;s=2892" alt="小标签" loading="lazy"><br>
+<img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911112138.png" alt="小标签" loading="lazy"><br>
 大标签<br>
-<img src="https://user-gold-cdn.xitu.io/2020/7/13/1734864a35f60fe4?w=825&amp;h=72&amp;f=png&amp;s=4211" alt="大标签" loading="lazy"><br>
+<img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911112139.png" alt="大标签" loading="lazy"><br>
 其中TYPE_CLASSES_MAP是一个常量对象，根据传递的type来map到相应的类名。</p>
 <pre><code>  const TYPE_CLASSES_MAP = {
     'success': 'el-icon-success',
