@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-11T04:27:51.866Z</updated>
+    <updated>2020-09-11T04:29:25.660Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -16,8 +16,12 @@
         <link href="https://giriawsh.github.io/post/grideagithubpagesgodaddygitalk-ge-ren-bo-ke-pei-zhi/">
         </link>
         <updated>2020-09-11T04:26:04.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="前言">前言</h1>
+        <summary type="html"><![CDATA[<h1 id="前言">👨‍💻前言</h1>
 <p>最近重新思考了一下生命的意义，觉得在人世间活过一遭总归是要留下些什么，如果更好的是能够带去些什么。</p>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="前言">👨‍💻前言</h1>
+<p>最近重新思考了一下生命的意义，觉得在人世间活过一遭总归是要留下些什么，如果更好的是能够带去些什么。</p>
+<!-- more -->
 <p>之前有写过hexo建站，但是hexo的不稳定性以及频繁的hexo d hexo g手动命令操作使我厌烦。机缘巧合之中，在知乎上看到了一款快速建站软件。</p>
 <p>它体积量很小，也很年轻，除了主题外配置都是一个人在维护，但是现在看来总体运行情况十分稳定。我承蒙了该软件的好处，写下这篇新人向的快速建站手册，希望能够帮助到有同样想法的人。</p>
 <h1 id="简单介绍">简单介绍</h1>
@@ -120,10 +124,10 @@
         <link href="https://giriawsh.github.io/post/gui-ze-zhi-xia-de-shi-jie-lesslessdian-shi-ren-greatergreater-you-gan/">
         </link>
         <updated>2020-09-10T16:23:13.000Z</updated>
-        <summary type="html"><![CDATA[<h1 id="前言">前言</h1>
+        <summary type="html"><![CDATA[<h1 id="前言">📚前言</h1>
 <p>不知道上一回动笔写这种随笔类的东西是什么时候的事儿了。高中毕业以来，断断续续地读了很多书，不知是冥冥中有缘分，还是只是秉性比较相近，唯一留下过的几篇读后感都是村上春树的书。</p>
 ]]></summary>
-        <content type="html"><![CDATA[<h1 id="前言">前言</h1>
+        <content type="html"><![CDATA[<h1 id="前言">📚前言</h1>
 <p>不知道上一回动笔写这种随笔类的东西是什么时候的事儿了。高中毕业以来，断断续续地读了很多书，不知是冥冥中有缘分，还是只是秉性比较相近，唯一留下过的几篇读后感都是村上春树的书。</p>
 <!-- more -->
 <p>我对怪物有着特别的痴迷情节，当然说的不是克鲁苏神话中的多眼形象，而是人性中的善恶之形，亦或是一种行为所带来的可视性后果。说到底，我对是什么塑造了使我们区别于万物这一特性着迷，怪物也不过是千千万万人类不同点的具象性特征。言语上很难描绘，不过我正在试图用写小说来阐释使我夜夜流连忘返的世界。</p>
