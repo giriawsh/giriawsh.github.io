@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-11T04:43:17.346Z</updated>
+    <updated>2020-09-11T04:46:27.264Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -10,6 +10,218 @@
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[《剑指Offer》JS题解——JZ21~25]]></title>
+        <id>https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz21~25/</id>
+        <link href="https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz21~25/">
+        </link>
+        <updated>2020-09-11T04:45:17.000Z</updated>
+        <content type="html"><![CDATA[<p>function IsPopOrder(pushV, popV) {<br>
+// write code here<br>
+//1,2,3,4,5  4,5,3,2,1  4,3,5,1,2<br>
+let stackV = [];<br>
+let indexPush = 0;<br>
+let indexPop = 0;<br>
+while (indexPop &lt; popV.length &amp;&amp; indexPush &lt; pushV.length) {<br>
+if (pushV[indexPush] !== popV[indexPop]) {<br>
+//不相等，继续压<br>
+stackV.push(pushV[indexPush]);<br>
+indexPush++;<br>
+} else {<br>
+//相等，指针后移，弹出栈中与pop匹配元素<br>
+indexPop++;<br>
+indexPush++;<br>
+while (stackV.length !== 0 &amp;&amp; stackV[stackV.length - 1] === popV[indexPop]) {<br>
+indexPop++;<br>
+stackV.pop();<br>
+}<br>
+}<br>
+}<br>
+return stackV.length === 0;<br>
+}</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[《剑指Offer》JS题解——JZ16~20]]></title>
+        <id>https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz16~20/</id>
+        <link href="https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz16~20/">
+        </link>
+        <updated>2020-09-11T04:44:33.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="jz16-合并两个排序的链表">JZ16 合并两个排序的链表</h1>
+<h2 id="题目描述">题目描述</h2>
+<p>输入两个单调递增的链表，输出两个链表合成后的链表，当然我们需要合成后的链表满足单调不减规则。</p>
+<h2 id="解法一">解法一</h2>
+<p>无递归。构造一个链表头，指向每次比较中较小的那个。如果最后某串链表还有多余，则指向剩下的那串链表。</p>
+<pre><code class="language-js">function Merge(pHead1, pHead2)
+{
+    var head = new ListNode(0);
+    var pHead = head;
+    while(pHead1 != null &amp;&amp; pHead2!= null)
+    {
+        if(pHead1.val &lt; pHead2.val)
+        {
+            head.next = pHead1;
+            pHead1 = pHead1.next;
+        }else{
+            head.next = pHead2;
+            pHead2 = pHead2.next;
+        }
+        head = head.next;
+    }
+    if(pHead1 === null)
+    {
+        head.next = pHead2;
+    }
+    if(pHead2 === null)
+    {
+        head.next = pHead1;
+    }
+    return pHead.next;
+}
+</code></pre>
+<h2 id="解法二">解法二</h2>
+<p>递归法，很好理解。每次要得到下一个位置就进行递归计算</p>
+<pre><code class="language-js">function Merge(pHead1, pHead2) {
+    let p = null;
+    if(!pHead1) return pHead2;//pHead1已经遍历完毕
+    if(!pHead2) return pHead1;
+    if(pHead1.val &lt; pHead2.val)
+    {
+        p = pHead1;
+        p.next = Merge(pHead1.next, pHead2);//本次选取phead1，phead1前进
+    }else{
+        p = pHead2;
+        p.next = Merge(pHead1, pHead2.next);
+    }
+    return p;
+}
+</code></pre>
+<h1 id="jz17-树的子结构">JZ17 树的子结构</h1>
+<h2 id="题目描述-2">题目描述</h2>
+<p>输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）</p>
+<h2 id="解法">解法</h2>
+<p>子结构定义：树A和树B的根结点相等，并且树A的左子树和树B的左子树相等，树A的右子树和树B的右子树相等</p>
+<p>主要是进行每个节点的匹配，首先找基准点，看以当前为根节点向下匹配是否能成功，不能的话就以左子树为基准点，再不能，以右子树为基准点</p>
+<pre><code class="language-js">/**
+ * @return {boolean}
+ */
+function HasSubtree(pRoot1, pRoot2)
+{
+    // write code here
+    var result = false;
+    if(pRoot1 != null &amp;&amp; pRoot2 != null)//如果root为零，直接返回false
+    {
+        //看以当前根节点作为基准是否和root2一致，如果不一致找左子树，再找右子树
+        return (doeTreeHaveSubTree(pRoot1, pRoot2) || HasSubtree(pRoot1.left, pRoot2) || HasSubtree(pRoot1.right, pRoot2));
+    }
+    return result;
+}
+function doeTreeHaveSubTree(node1, node2) {
+    if(node2 === null)
+    {
+        return true;//要找的树已经遍历完了，ok
+    }
+    if(node1 === null)
+    {
+        return false;
+    }
+    if(node1.val !== node2.val)
+    {
+        return false;//没匹配上
+    }
+    return doeTreeHaveSubTree(node1.left, node2.left) &amp;&amp; doeTreeHaveSubTree(node1.right, node2.right);//分别匹配左右子树
+}
+</code></pre>
+<h1 id="jz18-二叉树的镜像">JZ18 二叉树的镜像</h1>
+<h2 id="题目描述-3">题目描述</h2>
+<p>操作给定的二叉树，将其变换为源二叉树的镜像。</p>
+<h2 id="解法-2">解法</h2>
+<p>记住每次递归都是你想要的值，那么你只要把左子树定义为右边递归的值，右子树赋值为左边递归的值即可。</p>
+<pre><code class="language-js">function TreeNode(x) {
+    this.val = x;
+    this.left = null;
+    this.right = null;
+}
+
+function Mirror(root) {
+    if (!root) return null;
+    var temp = root.left;
+    root.left = Mirror(root.right);
+    root.right = Mirror(temp);
+    return root;
+}
+</code></pre>
+<h1 id="jz19-顺时针打印矩阵">JZ19 顺时针打印矩阵</h1>
+<h2 id="题目描述-4">题目描述</h2>
+<p>输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，例如，如果输入如下4 X 4矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10.</p>
+<h2 id="解法-3">解法</h2>
+<p>可以定义左右上下边界，每次递归以后把边界往里收，注意边界情况。</p>
+<pre><code class="language-js">function printMatrix(matrix)
+{
+    // write code here
+    var low = 0;
+    var high = matrix.length-1;
+    var left = 0;
+    var right = matrix[0].length-1;
+    var ret = [];
+    while(low &lt;= high &amp;&amp; left &lt;= right)
+    {
+        for(let i = left; i &lt;= right; i++)
+        {
+            ret.push(matrix[low][i]);//从左到右
+        }
+        if(low === high){break;}//只有一行，默认执行完从左到右后就不再执行了
+        for(let j = low+1; j &lt;= high; j++)
+        {
+            ret.push(matrix[j][right]);//从上到下
+        }
+        if(left === right){break;}//只有一列，默认执行完从上到下后就不再执行了
+        for(let m = right-1; m &gt;= left; m--)
+        {
+            ret.push(matrix[high][m]);//从右到左
+        }
+        for(let n = high-1; n &gt;= low+1; n--)
+        {
+            ret.push(matrix[n][left]);//从下到上
+        }
+        low++;
+        high--;
+        left++;
+        right--;
+    }
+    return ret;
+}
+</code></pre>
+<h1 id="jz20-包含min函数的栈">JZ20 包含min函数的栈</h1>
+<h2 id="题目描述-5">题目描述</h2>
+<p>定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））</p>
+<h2 id="解法-4">解法</h2>
+<p>这个好像没什么好说，求最小值可以用math库的函数</p>
+<pre><code class="language-js">    let stack = [];
+    function push(node)
+    {
+        // write code here
+        return stack.push(node);
+    }
+    function pop()
+    {
+        // write code here
+        return stack.pop();
+    }
+    function top()
+    {
+        // write code here
+        return stack.pop();
+    }
+    function min()
+    {
+        // write code here
+        return Math.min(...stack);
+        //也可以return Math.min.apply(this, stack)
+    }
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[《剑指Offer》JS题解——JZ11~15]]></title>
         <id>https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz11~15/</id>
@@ -1740,659 +1952,6 @@ Vue.component('hello-world', {
 })
 </code></pre>
 <p>试着不要过度使用这个模式。当你需要渲染大量静态内容时，极少数的情况下它会给你带来便利，除非你非常留意渲染变慢了，不然它完全是没有必要的——再加上它在后期会带来很多困惑。例如，设想另一个开发者并不熟悉 v-once 或漏看了它在模板中，他们可能会花很多个小时去找出模板为什么无法正确更新。变得难以维护。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Vue学习笔记8-深入了解组件2-插槽]]></title>
-        <id>https://giriawsh.github.io/post/vue-xue-xi-bi-ji-8-shen-ru-liao-jie-zu-jian-2-cha-cao/</id>
-        <link href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-8-shen-ru-liao-jie-zu-jian-2-cha-cao/">
-        </link>
-        <updated>2020-09-10T07:19:14.000Z</updated>
-        <summary type="html"><![CDATA[<h1 id="前言">🏃前言</h1>
-<p>结合官方文档、废弃用法文档、知乎、掘金等资料进行插槽知识点整理。</p>
-]]></summary>
-        <content type="html"><![CDATA[<h1 id="前言">🏃前言</h1>
-<p>结合官方文档、废弃用法文档、知乎、掘金等资料进行插槽知识点整理。</p>
-<!-- more -->
-<h1 id="插槽">插槽</h1>
-<blockquote>
-<p>在 2.6.0 中，我们为具名插槽和作用域插槽引入了一个新的统一的语法 (即 v-slot 指令)。它取代了 slot 和 slot-scope 这两个目前已被废弃但未被移除且仍在文档中的 attribute。</p>
-</blockquote>
-<h2 id="插槽是什么">插槽是什么</h2>
-<p>slot，也称插槽，可以类比为插卡式的FC游戏机，<strong>游戏机（子组件）暴露卡槽（插槽）让用户插入不同的游戏磁条（自定义内容）</strong>，游戏机会读取并加载磁条里的游戏。</p>
-<p>Vue的slot，是组件的一块HTML模版，这块模版由使用组件者即父组件提供。可以说是<strong>子组件暴露的一个让父组件传入自定义内容的接口</strong>。</p>
-<p><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911111939.png" alt="游戏机" loading="lazy"><br>
-转载自掘金：<a href="https://juejin.im/post/6844903817746628615">slots详解</a></p>
-<h2 id="为什么需要引入插槽">为什么需要引入插槽</h2>
-<p>举个例子，比如我要实现一个这样的 Alert 组件：</p>
-<p><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911111945.png" alt="插槽例子" loading="lazy"><br>
-它会有默认的内容和样式，比如第一行的 Default 我们只需要使用：</p>
-<pre><code class="language-html">&lt;alert&gt;&lt;/alert&gt;
-</code></pre>
-<p>当需要换用不同的样式与内容时，我们希望只需要这样调用：</p>
-<pre><code class="language-html">&lt;alert type=&quot;success&quot;&gt;
-    &lt;strong&gt;Success!&lt;/strong&gt; Looks good to me!
-&lt;/alert&gt;
-</code></pre>
-<p>要实现这个功能就可以使用slots</p>
-<figure data-type="image" tabindex="1"><img src="https://user-gold-cdn.xitu.io/2020/7/20/17368104fde76574?w=643&amp;h=532&amp;f=png&amp;s=28705" alt="代码1" loading="lazy"></figure>
-<p><img src="https://user-gold-cdn.xitu.io/2020/7/20/17368108b5ae8ca2?w=643&amp;h=574&amp;f=png&amp;s=27001" alt="代码2" loading="lazy"><br>
-当外部调用<code>&lt;slot&gt;</code>标签内容的时候，如果外部调用没有提供内容，则使用自己默认的内容，否则提供外部的内容。</p>
-<p>转载自知乎：<a href="https://www.zhihu.com/question/37548226/answer/609289491">如何理解Vue.js的组件中的slot?</a></p>
-<h2 id="插槽内容">插槽内容</h2>
-<p>Vue 实现了一套内容分发的 API，将 <slot> 元素作为承载分发内容的出口。</p>
-<pre><code class="language-html">&lt;navigation-link url=&quot;/profile&quot;&gt;
-  Your Profile
-&lt;/navigation-link&gt;
-
-在模板内部：
-&lt;a
-  v-bind:href=&quot;url&quot;
-  class=&quot;nav-link&quot;
-&gt;
-  &lt;slot&gt;&lt;/slot&gt;
-&lt;/a&gt;
-</code></pre>
-<p>当组件渲染的时候，<code>&lt;slot&gt;&lt;/slot&gt;</code> 将会被替换为“Your Profile”。插槽内可以包含任何模板代码，包括 HTML、甚至其它的组件。</p>
-<p>如果 <code>&lt;navigation-link</code>&gt; 的 template 中没有包含一个 <code>&lt;slot&gt;</code> 元素，则该组件起始标签和结束标签之间的任何内容都会被抛弃。</p>
-<h2 id="编译作用域">编译作用域</h2>
-<p>当你想在一个插槽中使用数据时</p>
-<pre><code class="language-html">&lt;navigation-link url=&quot;/profile&quot;&gt;
-  Logged in as {{ user.name }}
-&lt;/navigation-link&gt;
-</code></pre>
-<p>该插槽跟模板的其它地方一样可以访问相同的实例 property (也就是相同的“作用域”)，而不能访问 <code>&lt;navigation-link&gt;</code> 的作用域</p>
-<p><strong>父级模板里的所有内容都是在父级作用域中编译的；子模板里的所有内容都是在子作用域中编译的。</strong></p>
-<h2 id="后备内容">后备内容</h2>
-<p>有时为一个插槽设置具体的后备 (也就是默认的) 内容是很有用的，它只会在没有提供内容的时候被渲染。</p>
-<p>我们可能希望<code>&lt;button&gt;</code> 内绝大多数情况下都渲染文本“Submit”。为了将“Submit”作为后备内容，我们可以将它放在 <code>&lt;slot&gt;</code> 标签内</p>
-<pre><code class="language-html">&lt;button type=&quot;submit&quot;&gt;
-  &lt;slot&gt;Submit&lt;/slot&gt;
-&lt;/button&gt;
-</code></pre>
-<h2 id="具名插槽">具名插槽</h2>
-<p>有时我们需要多个插槽。</p>
-<p>对于这样的情况，<code>&lt;slot&gt;</code> 元素有一个特殊的 attribute：name。这个 attribute 可以用来定义额外的插槽</p>
-<pre><code class="language-html">&lt;div class=&quot;container&quot;&gt;
-  &lt;header&gt;
-    &lt;slot name=&quot;header&quot;&gt;&lt;/slot&gt;
-  &lt;/header&gt;
-  &lt;main&gt;
-    &lt;slot&gt;&lt;/slot&gt;
-  &lt;/main&gt;
-  &lt;footer&gt;
-    &lt;slot name=&quot;footer&quot;&gt;&lt;/slot&gt;
-  &lt;/footer&gt;
-&lt;/div&gt; 
-</code></pre>
-<p>一个不带 name 的 <code>&lt;slot&gt;</code> 出口会带有隐含的名字“default”</p>
-<p>在向具名插槽提供内容的时候，我们可以在一个<code>&lt;template&gt;</code> 元素上使用 v-slot 指令，并以 v-slot 的参数的形式提供其名称</p>
-<pre><code class="language-html">&lt;base-layout&gt;
-  &lt;template v-slot:header&gt;
-    &lt;h1&gt;Here might be a page title&lt;/h1&gt;
-  &lt;/template&gt;
-
-  &lt;p&gt;A paragraph for the main content.&lt;/p&gt;
-  &lt;p&gt;And another one.&lt;/p&gt;
-
-  &lt;template v-slot:footer&gt;
-    &lt;p&gt;Here's some contact info&lt;/p&gt;
-  &lt;/template&gt;
-&lt;/base-layout&gt;
-</code></pre>
-<p>任何没有被包裹在带有 v-slot 的 <code>&lt;template&gt;</code> 中的内容都会被视为默认插槽的内容。</p>
-<p><strong>注意 v-slot 只能添加在 <code>&lt;template&gt;</code> 上</strong> (只有一种例外情况-&gt;独占默认插槽的缩写语法，不带参数的 v-slot 被假定对应默认插槽，同时不支持和具名插槽混用)，这一点和已经废弃的 slot attribute 不同。</p>
-<h2 id="作用域插槽">作用域插槽</h2>
-<p>用于<strong>让插槽内容能够访问子组件中才有的数据</strong>。</p>
-<pre><code class="language-html">&lt;span&gt;
-  &lt;slot&gt;{{ user.lastName }}&lt;/slot&gt;//子组件内部的property
-&lt;/span&gt;
-我们可能想换掉备用内容，用名而非姓来显示：
-&lt;current-user&gt;
-  {{ user.firstName }}//外部无法访问内部的数据
-&lt;/current-user&gt;
-</code></pre>
-<p>然而上述代码不会正常工作，因为只有 <code>&lt;current-user&gt;</code> 组件可以访问到 user 而我们提供的内容是在父级渲染的。</p>
-<p>为了让 user 在父级的插槽内容中可用，我们可以将 user 作为<code>&lt;slot&gt;</code>元素的一个 attribute 绑定上去。</p>
-<pre><code class="language-html">&lt;span&gt;
-  &lt;slot v-bind:user=&quot;user&quot;&gt;//暴露在外层
-    {{ user.lastName }}
-  &lt;/slot&gt;
-&lt;/span&gt;
-</code></pre>
-<p>绑定在 <code>&lt;slot&gt;</code> 元素上的 attribute 被称为插槽 prop。现在在父级作用域中，我们可以使用带值的 v-slot 来定义我们提供的插槽 prop 的名字</p>
-<pre><code>&lt;current-user&gt;html
-  &lt;template v-slot:default=&quot;slotProps&quot;&gt;//使用带值的 v-slot 来定义我们提供的插槽 prop 的名字
-    {{ slotProps.user.firstName }}
-  &lt;/template&gt;
-&lt;/current-user&gt;
-</code></pre>
-<p>在这个例子中，我们选择将包含所有插槽 prop 的对象命名为 slotProps，但你也可以使用任意你喜欢的名字。</p>
-<h3 id="独占默认插槽的缩写语法">独占默认插槽的缩写语法</h3>
-<p>在上述情况下，当被提供的内容<strong>只有默认插槽</strong>时，组件的标签才可以被当作插槽的模板来使用。这样我们就可以把 v-slot 直接用在组件上。</p>
-<p>这种写法还可以更简单。就像假定未指明的内容对应默认插槽一样，不带参数的 v-slot 被假定对应默认插槽。</p>
-<pre><code class="language-html">&lt;current-user v-slot=&quot;slotProps&quot;&gt;
-  {{ slotProps.user.firstName }}
-&lt;/current-user&gt;
-</code></pre>
-<p>注意默认插槽的缩写语法不能和具名插槽混用，因为它会导致作用域不明确.</p>
-<pre><code class="language-html">&lt;!-- 无效，会导致警告 --&gt;
-&lt;current-user v-slot=&quot;slotProps&quot;&gt;
-  {{ slotProps.user.firstName }}
-  &lt;template v-slot:other=&quot;otherSlotProps&quot;&gt;
-    slotProps is NOT available here
-  &lt;/template&gt;
-&lt;/current-user&gt;
-</code></pre>
-<p><strong>只要出现多个插槽，请始终为所有的插槽使用完整的基于 <code>&lt;template&gt;</code> 的语法</strong></p>
-<h3 id="解构插槽-prop">解构插槽 Prop</h3>
-<p>作用域插槽的内部工作原理是将你的插槽内容包括在一个传入单个参数的函数里。</p>
-<pre><code class="language-html">function (slotProps) {
-  // 插槽内容
-}
-</code></pre>
-<p>这意味着 v-slot 的值实际上可以是任何能够作为函数定义中的参数的 JavaScript 表达式。</p>
-<p>所以在支持的环境下 (单文件组件或现代浏览器)，你也可以使用 ES2015 解构来传入具体的插槽 prop。</p>
-<pre><code class="language-html">&lt;current-user v-slot=&quot;{ user }&quot;&gt;
-  {{ user.firstName }}
-&lt;/current-user&gt;
-</code></pre>
-<p>这样可以使模板更简洁，尤其是在该插槽提供了多个 prop 的时候。它同样开启了 prop 重命名等其它可能。</p>
-<pre><code class="language-html">将 user 重命名为 person
-
-&lt;current-user v-slot=&quot;{ user: person }&quot;&gt;
-  {{ person.firstName }}
-&lt;/current-user&gt;
-
-甚至可以定义后备内容，用于插槽 prop 是 undefined 的情形
-&lt;current-user v-slot=&quot;{ user = { firstName: 'Guest' } }&quot;&gt;
-  {{ user.firstName }}
-&lt;/current-user&gt;
-</code></pre>
-<h2 id="动态插槽名">动态插槽名</h2>
-<p>动态指令参数也可以用在 v-slot 上，来定义动态的插槽名</p>
-<pre><code>&lt;base-layout&gt;
-  &lt;template v-slot:[dynamicSlotName]&gt;
-    ...
-  &lt;/template&gt;
-&lt;/base-layout&gt;
-</code></pre>
-<h2 id="具体插槽的缩写">具体插槽的缩写</h2>
-<p>把参数之前的所有内容 (v-slot:) 替换为字符 #。例如 v-slot:header 可以被重写为 #header</p>
-<p><strong>该缩写只在其有参数的时候才可用</strong></p>
-<pre><code class="language-html">&lt;!-- 这样会触发一个警告 --&gt;
-&lt;current-user #=&quot;{ user }&quot;&gt;
-  {{ user.firstName }}
-&lt;/current-user&gt;
-
-如果你希望使用缩写的话，你必须始终以明确插槽名取而代之：
-&lt;current-user #default=&quot;{ user }&quot;&gt;
-  {{ user.firstName }}
-&lt;/current-user&gt;
-</code></pre>
-<h2 id="其他示例">其他示例</h2>
-<p>插槽 prop 允许我们将插槽转换为可复用的模板，这些模板可以基于输入的 prop 渲染出不同的内容。</p>
-<p>要实现一个 <code>&lt;todo-list&gt;</code> 组件，它是一个列表且包含布局和过滤逻辑</p>
-<pre><code class="language-html">&lt;ul&gt;
-  &lt;li
-    v-for=&quot;todo in filteredTodos&quot;
-    v-bind:key=&quot;todo.id&quot;
-  &gt;
-    {{ todo.text }}
-  &lt;/li&gt;
-&lt;/ul&gt;
-</code></pre>
-<p>我们可以将每个 todo 作为父级组件的插槽，以此通过父级组件对其进行控制，然后将 todo 作为一个插槽 prop 进行绑定</p>
-<pre><code class="language-html">&lt;ul&gt;
-  &lt;li
-    v-for=&quot;todo in filteredTodos&quot;
-    v-bind:key=&quot;todo.id&quot;
-  &gt;
-    &lt;!--
-    我们为每个 todo 准备了一个插槽，
-    将 `todo` 对象作为一个插槽的 prop 传入。
-    --&gt;
-    &lt;slot name=&quot;todo&quot; v-bind:todo=&quot;todo&quot;&gt;
-      &lt;!-- 后备内容 --&gt;
-      {{ todo.text }}
-    &lt;/slot&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-</code></pre>
-<p>现在当我们使用 <code>&lt;todo-list&gt;</code>组件的时候，我们可以选择为 todo 定义一个不一样的 <code>&lt;template&gt;</code> 作为替代方案，并且可以从子组件获取数据。</p>
-<pre><code class="language-html">&lt;todo-list v-bind:todos=&quot;todos&quot;&gt;
-  &lt;template v-slot:todo=&quot;{ todo }&quot;&gt;
-    &lt;span v-if=&quot;todo.isComplete&quot;&gt;✓&lt;/span&gt;
-    {{ todo.text }}
-  &lt;/template&gt;
-&lt;/todo-list&gt;
-</code></pre>
-<h2 id="废弃了的语法">废弃了的语法</h2>
-<p>在接下来所有的 2.x 版本中 slot 和 slot-scope attribute 仍会被支持，但已经被官方废弃且不会出现在 Vue 3 中。</p>
-<h3 id="带有-slot-attribute-的具名插槽">带有 slot attribute 的具名插槽</h3>
-<p>在 <code>&lt;template&gt;</code> 上使用特殊的 slot attribute，可以将内容从父级传给具名插槽 (把这里提到过的 <code>&lt;base-layout&gt;</code> 组件作为示例)</p>
-<pre><code class="language-html">&lt;base-layout&gt;
-  &lt;template slot=&quot;header&quot;&gt;
-    &lt;h1&gt;Here might be a page title&lt;/h1&gt;
-  &lt;/template&gt;
-
-  &lt;p&gt;A paragraph for the main content.&lt;/p&gt;
-  &lt;p&gt;And another one.&lt;/p&gt;
-
-  &lt;template slot=&quot;footer&quot;&gt;
-    &lt;p&gt;Here's some contact info&lt;/p&gt;
-  &lt;/template&gt;
-&lt;/base-layout&gt;
-</code></pre>
-<p>或者直接把 slot attribute 用在一个普通元素上：</p>
-<pre><code class="language-html">&lt;base-layout&gt;
-  &lt;h1 slot=&quot;header&quot;&gt;Here might be a page title&lt;/h1&gt;
-
-  &lt;p&gt;A paragraph for the main content.&lt;/p&gt;
-  &lt;p&gt;And another one.&lt;/p&gt;
-
-  &lt;p slot=&quot;footer&quot;&gt;Here's some contact info&lt;/p&gt;
-&lt;/base-layout&gt;
-</code></pre>
-<p>未命名插槽，也就是默认插槽，捕获所有未被匹配的内容。</p>
-<p>类似于具名插槽</p>
-<h3 id="带有-slot-scope-attribute-的作用域插槽">带有 slot-scope attribute 的作用域插槽</h3>
-<p>在 <code>&lt;template&gt;</code> 上使用特殊的 slot-scope attribute，可以接收传递给插槽的 prop。</p>
-<pre><code class="language-html">&lt;slot-example&gt;
-  &lt;template slot=&quot;default&quot; slot-scope=&quot;slotProps&quot;&gt;
-    {{ slotProps.msg }}
-  &lt;/template&gt;
-&lt;/slot-example&gt;
-这里的 slot=&quot;default&quot; 可以被忽略为隐性写法：
-&lt;slot-example&gt;
-  &lt;template slot-scope=&quot;slotProps&quot;&gt;
-    {{ slotProps.msg }}
-  &lt;/template&gt;
-&lt;/slot-example&gt;
-</code></pre>
-<p>类似于作用域插槽</p>
-<p>这里的 slot-scope 声明了被接收的 prop 对象会作为 slotProps 变量存在于<code>&lt;template&gt;</code> 作用域中。你可以像命名 JavaScript 函数参数一样随意命名 slotProps。</p>
-<p>slot-scope attribute 也可以直接用于非 <code>&lt;template&gt;</code> 元素 (包括组件)。</p>
-<p>slot-scope 的值可以接收任何有效的可以出现在函数定义的参数位置上的 JavaScript 表达式。这意味着在支持的环境下 (单文件组件或现代浏览器)，你也可以在表达式中使用 ES2015 解构</p>
-<pre><code class="language-html">&lt;slot-example&gt;
-  &lt;span slot-scope=&quot;{ msg }&quot;&gt;
-    {{ msg }}
-  &lt;/span&gt;
-&lt;/slot-example&gt;
-</code></pre>
-<p><code>&lt;todo-list&gt;</code>等价的使用 slot-scope 的代码是</p>
-<pre><code class="language-html">//废弃语法
-&lt;todo-list v-bind:todos=&quot;todos&quot;&gt;
-  &lt;template slot=&quot;todo&quot; slot-scope=&quot;{ todo }&quot;&gt;
-    &lt;span v-if=&quot;todo.isComplete&quot;&gt;✓&lt;/span&gt;
-    {{ todo.text }}
-  &lt;/template&gt;
-&lt;/todo-list&gt;
-
-//新语法
-对比于：
-&lt;todo-list v-bind:todos=&quot;todos&quot;&gt;
-  &lt;template v-slot:todo=&quot;{ todo }&quot;&gt;
-    &lt;span v-if=&quot;todo.isComplete&quot;&gt;✓&lt;/span&gt;
-    {{ todo.text }}
-  &lt;/template&gt;
-&lt;/todo-list&gt;
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Vue学习笔记7-深入了解组件1-组件注册、Prop、自定义事件]]></title>
-        <id>https://giriawsh.github.io/post/vue-xue-xi-bi-ji-7-shen-ru-liao-jie-zu-jian-1-zu-jian-zhu-ce-propzi-ding-yi-shi-jian/</id>
-        <link href="https://giriawsh.github.io/post/vue-xue-xi-bi-ji-7-shen-ru-liao-jie-zu-jian-1-zu-jian-zhu-ce-propzi-ding-yi-shi-jian/">
-        </link>
-        <updated>2020-09-10T07:17:52.000Z</updated>
-        <summary type="html"><![CDATA[<h1 id="前言">‍🏃前言</h1>
-<p>组件的深入理解，这块基本是官方文档的重要知识点梳理，详情可移步：<a href="https://cn.vuejs.org/v2/guide/components-slots.html">官方文档</a></p>
-]]></summary>
-        <content type="html"><![CDATA[<h1 id="前言">‍🏃前言</h1>
-<p>组件的深入理解，这块基本是官方文档的重要知识点梳理，详情可移步：<a href="https://cn.vuejs.org/v2/guide/components-slots.html">官方文档</a></p>
-<!-- more -->
-<h1 id="组件注册">组件注册</h1>
-<h2 id="组件名">组件名</h2>
-<pre><code>Vue.component('my-component-name', { /* ... */ })
-</code></pre>
-<p>该组件名就是 Vue.component 的第一个参数。</p>
-<h2 id="命名风格">命名风格</h2>
-<p>使用 kebab-case</p>
-<pre><code>Vue.component('my-component-name', { /* ... */ })
-</code></pre>
-<p>使用 PascalCase</p>
-<pre><code>Vue.component('MyComponentName', { /* ... */ })
-</code></pre>
-<h2 id="全局注册">全局注册</h2>
-<pre><code>Vue.component('component-a', { /* ... */ })
-Vue.component('component-b', { /* ... */ })
-Vue.component('component-c', { /* ... */ })
-
-new Vue({ el: '#app' })
-
-&lt;div id=&quot;app&quot;&gt;
-  &lt;component-a&gt;&lt;/component-a&gt;
-  &lt;component-b&gt;&lt;/component-b&gt;
-  &lt;component-c&gt;&lt;/component-c&gt;
-&lt;/div&gt;
-</code></pre>
-<p>这些组件是全局注册的。也就是说它们在注册之后可以用在任何新创建的 Vue 根实例 (new Vue) 的模板中。</p>
-<p><strong>全局注册往往是不够理想的。比如，如果你使用一个像 webpack 这样的构建系统，全局注册所有的组件意味着即便你已经不再使用一个组件了，它仍然会被包含在你最终的构建结果中。这造成了用户下载的 JavaScript 的无谓的增加。</strong></p>
-<h2 id="局部注册">局部注册</h2>
-<pre><code>var ComponentA = { /* ... */ }
-var ComponentB = { /* ... */ }
-var ComponentC = { /* ... */ }
-
-new Vue({
-  el: '#app',
-  components: {
-    'component-a': ComponentA,
-    'component-b': ComponentB
-  }
-})
-</code></pre>
-<p>注意局部注册的组件<strong>在其子组件中不可用</strong>。如果需要可用，需要重新注册。</p>
-<pre><code>import ComponentA from './ComponentA.vue'
-
-export default {
-  components: {
-    ComponentA
-  },
-  // ...
-}
-</code></pre>
-<p>注意在 ES2015+ 中，在对象中放一个类似 ComponentA 的变量名其实是 ComponentA: ComponentA 的缩写，即这个变量名同时是：</p>
-<ul>
-<li>用在模板中的自定义元素的名称</li>
-<li>包含了这个组件选项的变量名</li>
-</ul>
-<h2 id="模块系统">模块系统</h2>
-<p>可能你的许多组件只是包裹了一个输入框或按钮之类的元素，是相对通用的。我们有时候会把它们称为基础组件，它们会在各个组件中被频繁的用到。所以会导致很多组件里都会有一个包含基础组件的长列表。</p>
-<p>如果你恰好使用了 webpack (或在内部使用了 webpack 的 Vue CLI 3+)，那么就可以使用 require.context 只全局注册这些非常通用的基础组件。这里有一份可以让你在应用入口文件 (比如 src/main.js) 中全局导入基础组件的示例代码</p>
-<pre><code>import Vue from 'vue'
-import upperFirst from 'lodash/upperFirst'
-import camelCase from 'lodash/camelCase'
-
-const requireComponent = require.context(
-  // 其组件目录的相对路径
-  './components',
-  // 是否查询其子目录
-  false,
-  // 匹配基础组件文件名的正则表达式
-  /Base[A-Z]\w+\.(vue|js)$/
-)
-
-requireComponent.keys().forEach(fileName =&gt; {
-  // 获取组件配置
-  const componentConfig = requireComponent(fileName)
-
-  // 获取组件的 PascalCase 命名
-  const componentName = upperFirst(
-    camelCase(
-      // 获取和目录深度无关的文件名
-      fileName
-        .split('/')
-        .pop()
-        .replace(/\.\w+$/, '')
-    )
-  )
-
-  // 全局注册组件
-  Vue.component(
-    componentName,
-    // 如果这个组件选项是通过 `export default` 导出的，
-    // 那么就会优先使用 `.default`，
-    // 否则回退到使用模块的根。
-    componentConfig.default || componentConfig
-  )
-})
-</code></pre>
-<p><strong>全局注册的行为必须在根 Vue 实例 (通过 new Vue) 创建之前发生</strong></p>
-<h1 id="prop">Prop</h1>
-<p>HTML 中的 attribute 名是大小写不敏感的，所以浏览器会把所有大写字符解释为小写字符。这意味着当你使用 DOM 中的模板时，camelCase (驼峰命名法) 的 prop 名需要使用其等价的 kebab-case (短横线分隔命名) 命名。</p>
-<pre><code>Vue.component('blog-post', {
-  // 在 JavaScript 中是 camelCase 的
-  props: ['postTitle'],
-  template: '&lt;h3&gt;{{ postTitle }}&lt;/h3&gt;'
-})
-
-&lt;!-- 在 HTML 中是 kebab-case 的 --&gt;
-&lt;blog-post post-title=&quot;hello!&quot;&gt;&lt;/blog-post&gt;
-</code></pre>
-<p>如果你使用字符串模板，那么这个限制就不存在了。</p>
-<h2 id="prop类型">Prop类型</h2>
-<p>通常你希望每个 prop 都有指定的值类型。这时，你可以以对象形式列出 prop，这些 property 的名称和值分别是 prop 各自的名称和类型。</p>
-<pre><code>props: {
-  title: String,
-  likes: Number,
-  isPublished: Boolean,
-  commentIds: Array,
-  author: Object,
-  callback: Function,
-  contactsPromise: Promise // or any other constructor
-}
-</code></pre>
-<h2 id="传递静态或者动态prop">传递静态或者动态prop</h2>
-<p>prop可以传入一个静态值，也可以通过v-bind动态赋值。</p>
-<p>可通过v-bind传入数字、布尔值、数组、对象、传入一个对象的所有property</p>
-<pre><code>post: {
-  id: 1,
-  title: 'My Journey with Vue'
-}
-&lt;blog-post v-bind=&quot;post&quot;&gt;&lt;/blog-post&gt;
-
-等价于
-&lt;blog-post
-  v-bind:id=&quot;post.id&quot;
-  v-bind:title=&quot;post.title&quot;
-&gt;&lt;/blog-post&gt;
-</code></pre>
-<h2 id="单向数据流">单向数据流</h2>
-<p>所有的 prop 都使得其父子 prop 之间形成了一个<strong>单向下行绑定</strong>。</p>
-<p>父级 prop 的更新会向下流动到子组件中，但是反过来则不行。这样会防止从子组件意外变更父级组件的状态，从而导致你的应用的数据流向难以理解。</p>
-<p>额外的，每次父级组件发生变更时，子组件中所有的 prop 都将会刷新为最新的值。这意味着你不应该在一个子组件内部改变 prop。如果你这样做了，Vue 会在浏览器的控制台中发出警告。</p>
-<p>两种典型变更prop情形：</p>
-<ol>
-<li>这个 prop 用来传递一个初始值；<strong>这个子组件接下来希望将其作为一个本地的 prop 数据来使用</strong>。在这种情况下，最好定义一个本地的 <strong>data property</strong> 并将这个 prop 用作其初始值</li>
-</ol>
-<pre><code>props: ['initialCounter'],
-data: function () {
-  return {
-    counter: this.initialCounter
-  }
-}
-</code></pre>
-<ol start="2">
-<li>这个 prop 以一种原始的值传入<strong>且需要进行转换</strong>。在这种情况下，最好使用这个 prop 的值来定义一个<strong>计算属性</strong></li>
-</ol>
-<pre><code>props: ['size'],
-computed: {
-  normalizedSize: function () {
-    return this.size.trim().toLowerCase()
-  }
-}
-</code></pre>
-<blockquote>
-<p>注意在 JavaScript 中对象和数组是通过<strong>引用传入</strong>的，所以对于一个数组或对象类型的 prop 来说，在子组件中改变变更这个对象或数组本身<strong>将会影响到父组件的状态</strong>。</p>
-</blockquote>
-<h2 id="prop验证">Prop验证</h2>
-<p>我们可以为组件的 prop 指定验证要求，例如你知道的这些类型。如果有一个需求没有被满足，则 Vue 会在浏览器控制台中警告你。这在开发一个会被别人用到的组件时尤其有帮助。</p>
-<p>为了定制 prop 的验证方式，你可以为 props 中的值提供一个带有验证需求的对象，而不是一个字符串数组。<br>
-这里的demo详见组件板块的学习笔记。</p>
-<blockquote>
-<p>注意那些 prop 会在一个<strong>组件实例创建之前进行验证</strong>，所以实例的 <strong>property (如 data、computed 等) 在 default 或 validator 函数中是不可用的</strong>。</p>
-</blockquote>
-<h3 id="类型检查">类型检查</h3>
-<p>type 可以是下列原生构造函数中的一个：</p>
-<pre><code>String
-Number
-Boolean
-Array
-Object
-Date
-Function
-Symbol
-</code></pre>
-<p>额外的，type 还可以是一个自定义的构造函数，并且通过 instanceof 来进行检查确认。</p>
-<h2 id="非prop的attribute">非Prop的Attribute</h2>
-<p>因为显式定义的 prop 适用于向一个子组件传入信息，然而组件库的作者并不总能预见组件会被用于怎样的场景。这也是为什么组件可以接受任意的 attribute，而这些 attribute 会被添加到这个组件的根元素上。</p>
-<p>例如，想象一下你通过一个 Bootstrap 插件使用了一个第三方的 <code>&lt;bootstrap-date-input&gt;</code>组件，这个插件需要在其 <code>&lt;input&gt;</code> 上用到一个 data-date-picker attribute。我们可以将这个 attribute 添加到你的组件实例上</p>
-<pre><code>&lt;bootstrap-date-input data-date-picker=&quot;activated&quot;&gt;&lt;/bootstrap-date-input&gt;
-</code></pre>
-<p>然后这个 data-date-picker=&quot;activated&quot; attribute 就会自动添加到 <code>&lt;bootstrap-date-input&gt;</code>  的根元素上。</p>
-<h3 id="替换合并已有的-attribute">替换/合并已有的 Attribute</h3>
-<pre><code>&lt;bootstrap-date-input&gt;的内部模板：
-&lt;input type=&quot;date&quot; class=&quot;form-control&quot;&gt;
-
-外部模板：
-&lt;bootstrap-date-input
-  data-date-picker=&quot;activated&quot;
-  class=&quot;date-picker-theme-dark&quot;
-&gt;&lt;/bootstrap-date-input&gt;
-</code></pre>
-<p>在这种情况下，我们定义了两个不同的 class 的值：</p>
-<ul>
-<li>form-control，这是在组件的模板内设置好的</li>
-<li>date-picker-theme-dark，这是从组件的父级传入的</li>
-</ul>
-<p>class 和 style attribute 会稍微智能一些，即两边的值会被合并起来，从而得到最终的值：form-control date-picker-theme-dark。</p>
-<h3 id="禁用attribute继承待补充">禁用Attribute继承？（待补充）</h3>
-<p>如果你<strong>不希望组件的根元素继承 attribute</strong>，你可以在组件的选项中设置 inheritAttrs: false。</p>
-<pre><code>Vue.component('my-component', {
-  inheritAttrs: false,
-  // ...
-})
-</code></pre>
-<p>这尤其适合配合实例的 $attrs property 使用，该 property 包含了传递给一个组件的 attribute 名和 attribute 值</p>
-<pre><code>{
-  required: true,
-  placeholder: 'Enter your username'
-}
-</code></pre>
-<p>有了 inheritAttrs: false 和 $attrs，你就可以手动决定这些 attribute 会被赋予哪个元素。在撰写基础组件的时候是常会用到的</p>
-<pre><code>Vue.component('base-input', {
-  inheritAttrs: false,
-  props: ['label', 'value'],
-  template: `
-    &lt;label&gt;
-      {{ label }}
-      &lt;input
-        v-bind=&quot;$attrs&quot;
-        v-bind:value=&quot;value&quot;
-        v-on:input=&quot;$emit('input', $event.target.value)&quot;
-      &gt;
-    &lt;/label&gt;
-  `
-})
-</code></pre>
-<blockquote>
-<p>注意 inheritAttrs: false 选项<strong>不会影响 style 和 class 的绑定</strong></p>
-</blockquote>
-<h1 id="自定义事件">自定义事件</h1>
-<h2 id="事件名">事件名</h2>
-<p>不同于组件和 prop，事件名不存在任何自动化的大小写转换。而是触发的事件名需要<strong>完全匹配</strong>监听这个事件所用的名称。</p>
-<p>不同于组件和 prop，事件名不会被用作一个 JavaScript 变量名或 property 名，所以就没有理由使用 camelCase 或 PascalCase 了。并且 v-on 事件监听器在 DOM 模板中会被自动转换为全小写 (因为 HTML 是大小写不敏感的)，所以 v-on:myEvent 将会变成 v-on:myevent——导致 myEvent 不可能被监听到。</p>
-<p><strong>因此，我们推荐你始终使用 kebab-case 的事件名。</strong></p>
-<h2 id="自定义组件的v-model">自定义组件的v-model</h2>
-<p>一个组件上的 v-model 默认会利用名为 value 的 prop 和名为 input 的事件，但是像单选框、复选框等类型的输入控件可能会将 value attribute 用于不同的目的。model 选项可以用来避免这样的冲突</p>
-<pre><code>Vue.component('base-checkbox', {
-  model: {
-    prop: 'checked',
-    event: 'change'
-  },
-  props: {
-    checked: Boolean //注意你仍然需要在组件的 props 选项里声明 checked 这个 prop。
-  },
-  template: `
-    &lt;input
-      type=&quot;checkbox&quot;
-      v-bind:checked=&quot;checked&quot;
-      v-on:change=&quot;$emit('change', $event.target.checked)&quot;
-    &gt;
-  `
-})
-现在在这个组件上使用 v-model 的时候：
-&lt;base-checkbox v-model=&quot;lovingVue&quot;&gt;&lt;/base-checkbox&gt;
-</code></pre>
-<p>这里的 lovingVue 的值将会传入这个名为 <strong>checked</strong> 的 prop。同时当 <code>&lt;base-checkbox&gt;</code> 触发一个 <strong>change 事件</strong>并附带一个新的值的时候，这个 lovingVue 的 property 将会被更新。</p>
-<h2 id="将原生事件绑定到组件">将原生事件绑定到组件</h2>
-<p>想要在一个组件的根元素上直接监听一个原生事件。这时，你可以使用 v-on 的 .native 修饰符。</p>
-<pre><code>&lt;base-input v-on:focus.native=&quot;onFocus&quot;&gt;&lt;/base-input&gt;
-</code></pre>
-<p>不过在你尝试监听一个类似 <code>&lt;input&gt;</code> 的非常特定的元素时，这并不是个好主意。比如上述<code>&lt;base-input&gt;</code> 组件可能做了如下重构，<strong>所以根元素实际上是一个 <code>&lt;label&gt;</code> 元素</strong></p>
-<pre><code>&lt;label&gt;
-  {{ label }}
-  &lt;input
-    v-bind=&quot;$attrs&quot;
-    v-bind:value=&quot;value&quot;
-    v-on:input=&quot;$emit('input', $event.target.value)&quot;
-  &gt;
-&lt;/label&gt;
-</code></pre>
-<p>这时，父级的 .native 监听器将静默失败。它不会产生任何报错，但是 onFocus 处理函数不会如你预期地被调用。</p>
-<p>为了解决这个问题，Vue 提供了一个 <strong>$listeners property</strong>，它是一个对象，里面包含了作用在这个组件上的所有监听器。</p>
-<pre><code>{
-  focus: function (event) { /* ... */ }
-  input: function (value) { /* ... */ },
-}
-</code></pre>
-<p>有了这个 <code>$listeners property</code>，你就可以配合<code>v-on=&quot;$listeners&quot;</code> 将所有的事件监听器指向这个组件的某个特定的子元素。</p>
-<p>类似 <code>&lt;input&gt;</code> 的你希望它也可以配合 v-model 工作的组件来说，为这些监听器创建一个类似下述 inputListeners 的计算属性。</p>
-<pre><code>Vue.component('base-input', {
-  inheritAttrs: false,
-  props: ['label', 'value'],
-  computed: {
-    inputListeners: function () {
-      var vm = this
-      // `Object.assign` 将所有的对象合并为一个新对象
-      return Object.assign({},
-        // 我们从父级添加所有的监听器
-        this.$listeners,
-        // 然后我们添加自定义监听器，
-        // 或覆写一些监听器的行为
-        {
-          // 这里确保组件配合 `v-model` 的工作
-          input: function (event) {
-            vm.$emit('input', event.target.value)
-          }
-        }
-      )
-    }
-  },
-  template: `
-    &lt;label&gt;
-      {{ label }}
-      &lt;input
-        v-bind=&quot;$attrs&quot;
-        v-bind:value=&quot;value&quot;
-        v-on=&quot;inputListeners&quot;
-      &gt;
-    &lt;/label&gt;
-  `
-})
-</code></pre>
-<p>现在 <code>&lt;base-input&gt;</code> 组件是一个完全透明的包裹器了，也就是说它可以完全像一个普通的 <code>&lt;input&gt;</code> 元素一样使用了：所有跟它相同的 attribute 和监听器都可以工作，不必再使用 .native 监听器。</p>
-<h2 id="sync修饰符">.sync修饰符</h2>
-<p>在有些情况下，我们可能需要对一个 prop 进行“双向绑定”。不幸的是，真正的双向绑定会带来维护上的问题，因为子组件可以变更父组件，且在父组件和子组件都没有明显的变更来源。</p>
-<p>我们推荐以<strong>update:myPropName</strong> 的模式触发事件取而代之。</p>
-<pre><code>子组件：
-this.$emit('update:title', newTitle)
-
-父组件可以监听那个事件并根据需要更新一个本地的数据 property
-&lt;text-document
-  v-bind:title=&quot;doc.title&quot;
-  v-on:update:title=&quot;doc.title = $event&quot;
-&gt;&lt;/text-document&gt;
-</code></pre>
-<p>为了方便起见，我们为这种模式提供一个缩写，即 .sync 修饰符</p>
-<pre><code>&lt;text-document v-bind:title.sync=&quot;doc.title&quot;&gt;&lt;/text-document&gt;
-</code></pre>
-<p>注意带有 .sync 修饰符的 v-bind <strong>不能和表达式一起使用</strong> (例如 v-bind:title.sync=”doc.title + ‘!’” 是无效的)。取而代之的是，你只能提供你想要绑定的 property 名，类似 v-model。</p>
-<pre><code>&lt;text-document v-bind.sync=&quot;doc&quot;&gt;&lt;/text-document&gt;
-</code></pre>
-<p>这样会把 doc 对象中的每一个 property (如 title) 都作为一个独立的 prop 传进去，然后各自添加用于更新的 v-on 监听器。</p>
-<p>将 v-bind.sync 用在一个字面量的对象上，例如 <code>v-bind.sync=”{ title: doc.title }”</code>，是无法正常工作的</p>
 ]]></content>
     </entry>
 </feed>
