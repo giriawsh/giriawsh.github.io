@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>nuxt动态背景设置与立体字体 | Giria&#39;s Blog</title>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>《剑指Offer》JS题解——JZ11~15 | Giria&#39;s Blog</title>
 <link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
 <script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
 
-<link rel="canonical" href="https://giriawsh.github.io/post/nuxt-dong-tai-bei-jing-she-zhi-yu-li-ti-zi-ti/" />
+<link rel="canonical" href="https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz11~15/" />
 </head>
 <body>
 <div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
@@ -24,112 +24,208 @@
 
 <div class="main"><div class="main-inner"><div class="content">
 <article class="post">
-<h2 class="post_title sm_margin"><a>nuxt动态背景设置与立体字体</a></h2>
+<h2 class="post_title sm_margin"><a>《剑指Offer》JS题解——JZ11~15</a></h2>
 <script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
-<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-09-10</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="tag">前端</a> | 	<a href="https://giriawsh.github.io/tag/yklmR1Lly/" class="tag">Nuxt.js</a> | 	<a href="https://giriawsh.github.io/tag/P-LvHoQha/" class="tag">Vue.js</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">264字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">2 min read</span>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-09-11</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/d3SOBOYxM/" class="tag">算法</a> | 	<a href="https://giriawsh.github.io/tag/1kBgZI6K7/" class="tag">剑指offer系列</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">866字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">4 min read</span>
 </section>
 
 <div style="display:flex">
 <div class="md_block" id="md_block">
 <div class="round-shape-one"></div>
-<h1 id="前言">😋前言</h1>
-<p>写着玩系列，HTML页面练习，如何写一个全屏的波浪式渐变色动态背景以及一个简单的立体字体demo。</p>
+<h1 id="前言">前言</h1>
+<p>又是每日一刷，既然没人看那我就开启自嗨式写法。</p>
 <!-- more -->
-<h1 id="代码">代码</h1>
-<pre><code class="language-css">&lt;template&gt;
-  &lt;div class=&quot;container&quot;&gt;
-    &lt;div&gt;
-      &lt;h1 id=&quot;text3d-en&quot;&gt;test&lt;/h1&gt;
-      &lt;h1 id=&quot;text3d-ch&quot;&gt;立体字体&lt;/h1&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-
-&lt;/script&gt;
-
-&lt;style&gt;
-  body {
-    background: linear-gradient(-45deg, #99ccff, #006699, #003366, #000);//渐变色背景
-    background-size: 400% 400%;
-    -webkit-animation: gradient 15s ease infinite;
-    animation: gradient 15s ease infinite;
-  }
-
-  @-webkit-keyframes gradient {
-    0% {
-      background-position: 0% 50%;
+<h1 id="jz11-二进制中1的个数">JZ11 二进制中1的个数</h1>
+<h2 id="题目">题目</h2>
+<p>输入一个整数，输出该数32位二进制表示中1的个数。其中负数用补码表示。</p>
+<h2 id="解法">解法</h2>
+<p>顺便复习下如何用js十进制转二进制：</p>
+<pre><code>parseInt(n).toString(2)
+</code></pre>
+<p>这题一开始也挺蒙的，后面看了高人指点，能够领略一二，有种玩数竞的感觉。</p>
+<p>1100 减去1后 -》1011.</p>
+<p>可以发现减1的结果是把最右边的一个1开始的所有位都取反了。</p>
+<p>这个时候如果我们再把原来的整数和减去1之后的结果做与运算：1100&amp;1011=1000.</p>
+<p>也就是说，把一个整数减去1，再和原整数做与运算，<strong>会把该整数最右边一个1变成0</strong>.</p>
+<p><strong>那么一个整数的二进制有多少个1，就可以进行多少次这样的操作</strong>。</p>
+<pre><code>function NumberOf1(n)
+{
+    // write code here
+    var count = 0;
+    while(n)
+    {
+        n = n &amp; (n-1);
+        count++;
     }
-    50% {
-      background-position: 100% 50%;
+    return count;
+    
+}
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://user-gold-cdn.xitu.io/2020/7/24/1737cc0d717c452e?w=172&amp;h=59&amp;f=png&amp;s=1953" alt="xiaolv" loading="lazy"></figure>
+<h1 id="jz12-数值的整数次方">JZ12 数值的整数次方</h1>
+<h2 id="题目描述">题目描述</h2>
+<p>给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。</p>
+<p>保证base和exponent不同时为0</p>
+<h2 id="答案">答案</h2>
+<h3 id="解法一">解法一</h3>
+<p>pow函数的简单实现</p>
+<pre><code class="language-js">  /**
+   * @return {number}
+   */
+  function Power(base, exponent) {
+      // write code here
+      if (exponent === 0) {
+          return 1;
+      } else if (exponent === 1) {
+          return base;
+      }
+      let ret = base;
+      if (exponent &gt; 0) {
+          for (let i = 1; i &lt; exponent; i++) {
+              ret *= base;
+          }
+          return ret;
+      } else {
+          for (let i = 1; i &lt; Math.abs(exponent); i++) {
+              ret *= base;
+          }
+          return 1 / ret;
+      }
+  }
+</code></pre>
+<h3 id="解法二">解法二</h3>
+<p>应用ES6最新运算符 **</p>
+<pre><code>function Power(base, exponent)
+{
+    // write code here
+    return base**exponent;
+}
+</code></pre>
+<h1 id="jz13-调整数组顺序使奇数在偶数前面">JZ13 调整数组顺序使奇数在偶数前面</h1>
+<h2 id="题目描述-2">题目描述</h2>
+<p>输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。</p>
+<h2 id="解法一-2">解法一</h2>
+<p>开两个数组分别记录</p>
+<pre><code>function reOrderArray(array)
+{
+    let oddArray = [];
+        let evenArray = [];
+        for(let i = 0; i &lt; array.length; i++)
+        {
+            if(array[i]%2 === 0){
+                evenArray.push(array[i]);
+            }else{
+                oddArray.push(array[i]);
+            }
+        }
+        return oddArray.concat(evenArray);
+}
+</code></pre>
+<h2 id="解法二-2">解法二</h2>
+<p>相当于一个特殊条件判断的插入排序.是奇数的话把他插入到前面，其余数字后移</p>
+<pre><code>function reOrderArray2(array) {
+    let k = 0;
+    for(let i = 0; i &lt; array.length; i++)
+    {
+        let tmp = array[i];
+        if(tmp &amp; 1){//是奇数
+            for(let j = i - 1; j &gt;= k; j--)//到已经排序好的为止
+            {
+                array[j+1] = array[j];
+            }
+            array[k++] = tmp;
+        }
     }
-    100% {
-      background-position: 0% 50%;
+    return array;
+}
+console.log(reOrderArray2([1,2,3,4,5,6]))
+</code></pre>
+<h1 id="jz14-链表中倒数第k个节点">JZ14 链表中倒数第k个节点</h1>
+<h2 id="题目描述-3">题目描述</h2>
+<p>输入一个链表，输出该链表中倒数第k个结点。</p>
+<h2 id="解法-2">解法</h2>
+<p>快慢指针，相距k个，那么快指针到末尾时，慢指针的位置便是倒数k个</p>
+<pre><code>function FindKthToTail(head, k) {
+    if (!head || k &lt; 1) return null;
+    let slowptr = head;
+    let fastptr = head;
+    let count = 0;
+    while (fastptr != null &amp;&amp; count &lt; k) {
+        count++;
+        fastptr = fastptr.next;
     }
-  }
-
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
+    if (count &lt; k) return null;//k的取值超过了链表本身的长度
+    while (fastptr != null) {
+        fastptr = fastptr.next;
+        slowptr = slowptr.next;
     }
-    50% {
-      background-position: 100% 50%;
+    return slowptr;
+}
+</code></pre>
+<h1 id="jz15-反转链表">JZ15 反转链表</h1>
+<h2 id="题目描述-4">题目描述</h2>
+<p>输入一个链表，反转链表后，输出新链表的表头。</p>
+<h2 id="解答">解答</h2>
+<p>基本思路，保存当前指针.next.next，再将当前指针.next指向当前指针，然后前移</p>
+<pre><code>function ReverseList(pHead) {
+    // write code here
+    if (!pHead) return null;
+    if (!pHead.next) return pHead;
+    let p1 = pHead;
+    let p2 = pHead.next;
+    p1.next = null;
+    let temp;
+    while (p2 != null) {
+        temp = p2.next;
+        p2.next = p1;
+        p1 = p2;
+        p2 = temp;
     }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
-&lt;/style&gt;
-&lt;style&gt;
-  h1 {
-    width: 100%;
-    margin: 0 auto 0 auto;
-    font-family: 'Lato', sans-serif;
-    line-height: 10px;
-    font-size: 2.0rem;
-    padding: 50px 50px;
-    text-align: center;
-    text-transform: uppercase;
-    text-rendering: optimizeLegibility;
-  }
-
-  h1::before {
-    content:&quot;&quot;;
-    width: 100%;
-    position: absolute;
-    top: -200px;
-    left: 10px;
-    transform: rotate(55deg);
-  }
-
-  #text3d-ch {
-    color: #70869d;
-    letter-spacing: .15em;
-    text-shadow:
-      -1px -1px 1px #efede3,
-      0px 1px 0 #2e2e2e,
-      0px 2px 0 #2c2c2c,
-      0px 3px 0 #2a2a2a,
-      0px 4px 0 #282828;
-  }
-  #text3d-en {
-    color: #70869d;
-    letter-spacing: .15em;
-  }
-  .v-btn :hover{
-    color: #2983f3;
-  }
-&lt;/style&gt;
-
+    return p1;
+}
 </code></pre>
 
 <span id="footnote"></span>
 <div id = "warn"></div>
 </div>
 <div class="toc-container"><ul class="markdownIt-TOC">
-<li><a href="#%E5%89%8D%E8%A8%80">😋前言</a></li>
-<li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li>
+<li><a href="#%E5%89%8D%E8%A8%80">前言</a></li>
+<li><a href="#jz11-%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%B8%AD1%E7%9A%84%E4%B8%AA%E6%95%B0">JZ11 二进制中1的个数</a>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE">题目</a></li>
+<li><a href="#%E8%A7%A3%E6%B3%95">解法</a></li>
+</ul>
+</li>
+<li><a href="#jz12-%E6%95%B0%E5%80%BC%E7%9A%84%E6%95%B4%E6%95%B0%E6%AC%A1%E6%96%B9">JZ12 数值的整数次方</a>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
+<li><a href="#%E7%AD%94%E6%A1%88">答案</a>
+<ul>
+<li><a href="#%E8%A7%A3%E6%B3%95%E4%B8%80">解法一</a></li>
+<li><a href="#%E8%A7%A3%E6%B3%95%E4%BA%8C">解法二</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#jz13-%E8%B0%83%E6%95%B4%E6%95%B0%E7%BB%84%E9%A1%BA%E5%BA%8F%E4%BD%BF%E5%A5%87%E6%95%B0%E5%9C%A8%E5%81%B6%E6%95%B0%E5%89%8D%E9%9D%A2">JZ13 调整数组顺序使奇数在偶数前面</a>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-2">题目描述</a></li>
+<li><a href="#%E8%A7%A3%E6%B3%95%E4%B8%80-2">解法一</a></li>
+<li><a href="#%E8%A7%A3%E6%B3%95%E4%BA%8C-2">解法二</a></li>
+</ul>
+</li>
+<li><a href="#jz14-%E9%93%BE%E8%A1%A8%E4%B8%AD%E5%80%92%E6%95%B0%E7%AC%ACk%E4%B8%AA%E8%8A%82%E7%82%B9">JZ14 链表中倒数第k个节点</a>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-3">题目描述</a></li>
+<li><a href="#%E8%A7%A3%E6%B3%95-2">解法</a></li>
+</ul>
+</li>
+<li><a href="#jz15-%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8">JZ15 反转链表</a>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-4">题目描述</a></li>
+<li><a href="#%E8%A7%A3%E7%AD%94">解答</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -155,7 +251,7 @@ if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop)
 var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
 var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
 var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
-content="本文最后更新于2020-09-10，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-09-10 14:59:12";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+content="本文最后更新于2020-09-11，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-09-11 12:42:05";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
 </script>
 <style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
 <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"><a href="https://github.com/giriawsh"title="github"><i class="iconfont icon-github"></i></a></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>

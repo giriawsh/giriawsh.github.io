@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>《剑指Offer》JS题解——JZ6~10 | Giria&#39;s Blog</title>
+<link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+
+<link rel="canonical" href="https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz6~10/" />
+</head>
+<body>
+<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
+<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://giriawsh.github.io/"><img alt="logo" style="display:inline-block;" src="https://giriawsh.github.io//images/avatar.png"/></a><h1 title="Giria&#39;s Blog" class="weaklink"><a  href="/">Giria&#39;s Blog</a></h1>
+
+<div class="navbar weaklink">
+<div class="normal_nav">
+<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/IMEC1slRP/" class="selected active current nav__item" >前端</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/archives" class="selected active current nav__item" >归档</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li></ul></nav>
+<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
+<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/IMEC1slRP/" class="selected active current nav__item" >前端</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/archives" class="selected active current nav__item" >归档</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1599799377470" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+</div></div>
+<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
+
+
+<div class="main"><div class="main-inner"><div class="content">
+<article class="post">
+<h2 class="post_title sm_margin"><a>《剑指Offer》JS题解——JZ6~10</a></h2>
+<script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-09-11</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/d3SOBOYxM/" class="tag">算法</a> | 	<a href="https://giriawsh.github.io/tag/1kBgZI6K7/" class="tag">剑指offer系列</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">1883字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">8 min read</span>
+</section>
+
+<div style="display:flex">
+<div class="md_block" id="md_block">
+<div class="round-shape-one"></div>
+<h1 id="️前言">✍️前言</h1>
+<p>话不多说，肝就完事。不过感觉在掘金上写算法没啥人看……也有可能是我太菜了吧。</p>
+<!-- more -->
+<h1 id="jz6-旋转数组的最小数字">JZ6 旋转数组的最小数字</h1>
+<h2 id="题目">题目</h2>
+<p>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。<br>
+输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。<br>
+例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。<br>
+NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。</p>
+<h2 id="解法一">解法一</h2>
+<p>恕我直言，好像没什么意思啊，第一直觉，O(n)扫一遍</p>
+<pre><code>while(line=readline()){
+    //将json字符串转换为JavaScript值或对象
+    let arr = JSON.parse(line);
+    print(minNumberInRotateArray(arr));
+}
+function minNumberInRotateArray(rotateArray)
+{
+    // write code here
+    var len = rotateArray.length;
+    if(len == 0)
+        return 0;
+    var min = rotateArray[0];
+    for(var i = 0; i &lt; len; i++)
+    {
+        if(min &gt; rotateArray[i]){
+            min = rotateArray[i];
+        }
+    }
+    return min;
+}
+</code></pre>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/22/17376ccec4afc05d?w=160&amp;h=76&amp;f=png&amp;s=2029" alt="效率" loading="lazy"><br>
+js搜索有更简单的办法：</p>
+<pre><code>function minNumberInRotateArray(rotateArray)
+{
+    return Math.min(...rotateArray)
+}
+</code></pre>
+<h2 id="解法二">解法二</h2>
+<p>仔细观察下题目，会发现有着某种设定，输入的总是经过一次旋转的数组，也就是说会形成从小到大然后一个跌越再从小到大这样的规律。而我们要找的便是中间那个跌越点，就是整个数组的最小值。</p>
+<p>也就是说实际上最小的元素就是两个子数组的分界线。</p>
+<p>既然两个子数组是有序的，可以用<strong>二分查找</strong>来找。</p>
+<ol>
+<li>我们用两个指针left,right分别指向数组的第一个元素和最后一个元素。按照题目的旋转的规则，第一个元素应该是大于最后一个元素的</li>
+<li>找到数组的中间元素。</li>
+</ol>
+<pre><code>(1)array[mid] &gt; array[high]:
+出现这种情况的array类似[3,4,5,6,0,1,2]，此时最小数字一定在mid的右边。
+low = mid + 1
+(2)array[mid] == array[high]:
+出现这种情况的array类似 [1,0,1,1,1] 或者[1,1,1,0,1]，此时最小数字不好判断在mid左边
+还是右边,这时只好一个一个试 ，把范围缩小一步
+high = high - 1
+(3)array[mid] &lt; array[high]:
+出现这种情况的array类似[2,2,3,4,5,6,6],此时最小数字一定就是array[mid]或者在mid的左
+边。因为右边必然都是递增的。
+high = mid
+</code></pre>
+<p>代码如下：</p>
+<pre><code>while(line=readline()){
+    //将json字符串转换为JavaScript值或对象
+    let arr = JSON.parse(line);
+    print(minNumberInRotateArray(arr));
+}
+function minNumberInRotateArray(rotateArray)
+{
+    // write code here
+    var len = rotateArray.length;
+    if(len == 0)    return 0;
+    var left = 0;
+    var right = len - 1;
+    while(left &lt; right)
+    {
+        var mid = parseInt((left + right) / 2);
+        if(rotateArray[mid] &gt; rotateArray[right])
+        {
+            left = mid + 1;
+        }else if(rotateArray[mid] &lt; rotateArray[right])
+        {
+            right = mid;
+        }else{
+            right--;
+        }
+    }
+    return rotateArray[left];
+}
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://user-gold-cdn.xitu.io/2020/7/22/17376dde81ca17b9?w=181&amp;h=71&amp;f=png&amp;s=2064" alt="效率" loading="lazy"></figure>
+<h1 id="jz7-斐波那契数列">JZ7 斐波那契数列</h1>
+<h2 id="题目-2">题目</h2>
+<p>大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（从0开始，第0项为0，第1项是1）。<br>
+n&lt;=39</p>
+<h2 id="解法一-2">解法一</h2>
+<p>一个比较丑陋的解法，直接依照公式。<br>
+F(1)=1，F(2)=1, F(n)=F(n - 1)+F(n - 2)</p>
+<pre><code>function Fibonacci(n)
+{
+    // write code here
+    if(n == 0) return 0;
+    if(n == 1) return 1;
+    if(n == 2) return 1;
+    var ret = 0;
+    ret = Fibonacci(n-1) + Fibonacci(n-2);
+    return ret;
+}
+
+</code></pre>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/22/17376e6c1323cae3?w=190&amp;h=89&amp;f=png&amp;s=2250" alt="可以看到效果差的出奇" loading="lazy"><br>
+可以看到效果差的出奇。</p>
+<h2 id="解法二-2">解法二</h2>
+<p>一种动态规划方法.详细看注释</p>
+<pre><code>function Fibonacci(n)
+{
+    // write code here
+    if(n == 0) return 0;
+    if(n == 1) return 1;
+    if(n == 2) return 1;
+    let a = 0, b = 1;
+    while(n--)
+    {
+        b += a;//形成新的后值
+        a = b - a;//相当于原来b的值
+    }
+    return a;
+}
+</code></pre>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/22/17376ee57cbadb45?w=168&amp;h=76&amp;f=png&amp;s=1993" alt="xiaolv" loading="lazy"><br>
+这成绩进排行榜了吧可以。</p>
+<p>还有一种从榜上看到的写法：</p>
+<pre><code>function Fibonacci(n)
+{
+    // write code here
+    const arr=[0,1]
+    for(let i=2;i&lt;=n;i++){
+        arr[i]=arr[i-1]+arr[i-2]
+    }
+    return arr[n]
+}
+</code></pre>
+<h1 id="jz8-跳台阶">JZ8 跳台阶</h1>
+<h2 id="题目-3">题目</h2>
+<p>一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。</p>
+<h2 id="解法一-3">解法一</h2>
+<p>很典型的递归啦，一般都练到过吧伙伴们？说下思路，一次跳两级或者一级，那么我们就作为青蛙站在某个台阶上思考蛙生，我只有两种可能来到这里：1.从我下面一级跳上来的2.从我下面两级那里跳上来的。</p>
+<p>得到这样的表达式：</p>
+<pre><code>if(n == 1)  return 1;
+if(n == 2)  return 3;
+
+F(n) = F(n-1) + F(n-2);
+</code></pre>
+<p>代码如下：</p>
+<pre><code>function jumpFloor(number)
+{
+    // write code here
+    if(number == 1)  return 1;
+    if(number == 2)  return 2;
+    let ret = 0;
+    ret = jumpFloor(number - 1) + jumpFloor(number - 2);
+    return ret;
+}
+</code></pre>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/22/17376f367b7dbbae?w=165&amp;h=80&amp;f=png&amp;s=2189" alt="xiaolv " loading="lazy"><br>
+一般不进行优化的递归也就这种效率了。</p>
+<h2 id="解法二-3">解法二</h2>
+<p>同样可以用动态规划进行优化。</p>
+<pre><code>function jumpFloor(number)
+{
+    // write code here
+    if(number == 1)  return 1;
+    if(number == 2)  return 2;
+    let ret = 0;
+    let a = 1, b = 2, c = 0;//分别表示跳上一级、二级有几种方法 三级的还没算，每次移步都算下一步的值
+    while(number &gt; 2)
+    {
+        c = a + b;
+        a = b;
+        b = c;
+        number--;
+    }
+    return c;
+}
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://user-gold-cdn.xitu.io/2020/7/22/17376fcd3b7967d3?w=164&amp;h=70&amp;f=png&amp;s=1953" alt="xiaolv" loading="lazy"></figure>
+<p>榜上有一种写法：</p>
+<pre><code>function jumpFloor(number) {
+      let dp = []
+      dp[0] = 1
+      dp[1] = 2
+      for (let i = 2; i &lt; number; i++) {
+        dp[i]=dp[i-1]+dp[i-2]
+      }
+      return dp[number-1]
+    }
+</code></pre>
+<h1 id="jz9-变态跳台阶">JZ9 变态跳台阶</h1>
+<h2 id="题目-4">题目</h2>
+<p>一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。</p>
+<h2 id="解法">解法</h2>
+<p>哦豁，真的变态。但是其实很简单啦。</p>
+<p>每个台阶可以看作一块木板，让青蛙跳上去，n个台阶就有n块木板，最后一块木板是青蛙到达的位子， 必须存在，其他 (n-1) 块木板可以任意选择是否存在（存在即是选择了踏上这块跳板），则每个木板有存在和不存在两种选择，(n-1) 块木板 就有 [2^(n-1)] 种跳法，可以直接得到结果。</p>
+<p>所要求的序列为：0,1,2,4,8,16,……</p>
+<pre><code>function jumpFloorII(number)
+{
+    // write code here
+    if(number == 1)    return 1;
+    return jumpFloorII(number-1)*2;
+}
+</code></pre>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/22/1737731ae8d21b0c?w=173&amp;h=70&amp;f=png&amp;s=2031" alt="" loading="lazy"><br>
+这才是真的算法题吧（头秃的那种）</p>
+<h1 id="jz10-矩形覆盖">JZ10 矩形覆盖</h1>
+<h2 id="题目-5">题目</h2>
+<p>我们可以用2<code>*</code>1的小矩形横着或者竖着去覆盖更大的矩形。请问用n个2<code>*</code>1的小矩形无重叠地覆盖一个2<code>*</code>n的大矩形，总共有多少种方法？</p>
+<p>比如n=3时，2*3的矩形块有3种覆盖方法：</p>
+<figure data-type="image" tabindex="3"><img src="https://user-gold-cdn.xitu.io/2020/7/22/173773333d9fb587?w=767&amp;h=586&amp;f=png&amp;s=39258" alt="" loading="lazy"></figure>
+<h1 id="解法-2">解法</h1>
+<p>这里主要是思路的问题，我一开始用没想明白，分奇偶解决，但是不知为啥一直溢出。后面重新分析了一下。</p>
+<p>n = 1时 return 1；</p>
+<p>n = 2时，只有||和=两种情况；</p>
+<p>n = 3时，有上面三种情况；</p>
+<p>n = 4时，有从n=3出发的变形情况：和=||和||||和|=|这样三种情况，所以只在n=3的基础上往后面添加了一个竖着的。</p>
+<p>从n=2出发的变形情况||=，==，=||和||||（这两种重复了），所以只在n=2的基础上往后面添加了两个横着的情况。</p>
+<p>这样的话n=4的情况就是和n=2的情况+n=3的情况数量一致。</p>
+<p>其他情况都是类似的。可以自然得到这样一个规律，f(n) = f(n-1) + f(n-2)，就是我们之前做过的斐波那契数列了。</p>
+<pre><code>function rectCover(number)
+{
+    // write code here
+    if(number == 0) return 0;
+    if(number == 1) return 1;
+    if(number == 2) return 2;
+    let a = 1, b = 2;
+    while(number-- &gt;= 2)
+    {
+        b += a;
+        a = b - a;
+    }
+    return a;
+}
+</code></pre>
+<p><img src="https://user-gold-cdn.xitu.io/2020/7/23/17377605740a999c?w=156&amp;h=74&amp;f=png&amp;s=1976" alt="" loading="lazy"><br>
+注意下我们的起始值与之前的斐波那契不大一样。</p>
+
+<span id="footnote"></span>
+<div id = "warn"></div>
+</div>
+<div class="toc-container"><ul class="markdownIt-TOC">
+<li><a href="#%EF%B8%8F%E5%89%8D%E8%A8%80">✍️前言</a></li>
+<li><a href="#jz6-%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E6%95%B0%E5%AD%97">JZ6 旋转数组的最小数字</a>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE">题目</a></li>
+<li><a href="#%E8%A7%A3%E6%B3%95%E4%B8%80">解法一</a></li>
+<li><a href="#%E8%A7%A3%E6%B3%95%E4%BA%8C">解法二</a></li>
+</ul>
+</li>
+<li><a href="#jz7-%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97">JZ7 斐波那契数列</a>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE-2">题目</a></li>
+<li><a href="#%E8%A7%A3%E6%B3%95%E4%B8%80-2">解法一</a></li>
+<li><a href="#%E8%A7%A3%E6%B3%95%E4%BA%8C-2">解法二</a></li>
+</ul>
+</li>
+<li><a href="#jz8-%E8%B7%B3%E5%8F%B0%E9%98%B6">JZ8 跳台阶</a>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE-3">题目</a></li>
+<li><a href="#%E8%A7%A3%E6%B3%95%E4%B8%80-3">解法一</a></li>
+<li><a href="#%E8%A7%A3%E6%B3%95%E4%BA%8C-3">解法二</a></li>
+</ul>
+</li>
+<li><a href="#jz9-%E5%8F%98%E6%80%81%E8%B7%B3%E5%8F%B0%E9%98%B6">JZ9 变态跳台阶</a>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE-4">题目</a></li>
+<li><a href="#%E8%A7%A3%E6%B3%95">解法</a></li>
+</ul>
+</li>
+<li><a href="#jz10-%E7%9F%A9%E5%BD%A2%E8%A6%86%E7%9B%96">JZ10 矩形覆盖</a>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE-5">题目</a></li>
+</ul>
+</li>
+<li><a href="#%E8%A7%A3%E6%B3%95-2">解法</a></li>
+</ul>
+</div>
+</div>
+<div id="fullPage"><canvas id="canvas"></canvas></div>
+</article>
+<div id="eof"><span>EOF</span></div><div class="round-shape-one"></div>
+<section>
+<div class="doc_comments">
+
+	  
+		<div id="gitalk-container"></div>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/qyxtim/Static@3.8/gitalk.min.js"></script><link href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.css"rel="stylesheet"><script>var gitalk=new Gitalk({clientID:"ee7c215043d62409bb53",clientSecret:"455d2f4a532bbe073ca25fdf9111932f00bbc624",repo:"giriawsh.github.io",owner:"giriawsh",admin:["giriawsh"],id:(location.pathname).substring(0, 49),distractionFreeMode:false});gitalk.render("gitalk-container");</script>
+	  
+
+	  
+
+</div></section>
+</div></div></div><script>
+"use strict";!function(){for(var n=document.getElementsByTagName("pre"),e=n.length,s=0;s<e;s++){n[s].innerHTML='<span class="line-number"></span>'+n[s].innerHTML+'<span class="cl"></span>';for(var a=n[s].innerHTML.split(/\n/).length,r=0;r<a-1;r++){n[s].getElementsByTagName("span")[0].innerHTML+="<span>"+(r+1)+"</span>"}}}();
+let mainNavLinks=document.querySelectorAll(".markdownIt-TOC a");window.addEventListener("scroll",event=>{let fromTop=window.scrollY;mainNavLinks.forEach((link,index)=>{let section=document.getElementById(decodeURI(link.hash).substring(1));let nextSection=null
+if(mainNavLinks[index+1]){nextSection=document.getElementById(decodeURI(mainNavLinks[index+1].hash).substring(1));}
+if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop){link.classList.add("currentToc");}else{link.classList.remove("currentToc");}}else{link.classList.add("currentToc");}}else{link.classList.remove("currentToc");}});});
+var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
+var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
+var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
+content="本文最后更新于2020-09-11，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-09-11 12:41:06";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+</script>
+<style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
+<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"><a href="https://github.com/giriawsh"title="github"><i class="iconfont icon-github"></i></a></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
+<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>26</strong> posts</span></div></div>
+<script>
+console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;", );
+</script>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+<script type="text/javascript" async src="https://giriawsh.github.io//media/js/prism.js"></script>
+</body>
+
+</html>
