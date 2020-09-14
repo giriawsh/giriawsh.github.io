@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://giriawsh.github.io/</id>
+    <id>http://localhost:4000</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-14T14:12:09.957Z</updated>
+    <updated>2020-09-14T14:13:53.575Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://giriawsh.github.io/"/>
-    <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
+    <link rel="alternate" href="http://localhost:4000"/>
+    <link rel="self" href="http://localhost:4000/atom.xml"/>
     <subtitle>Live only once, make it count</subtitle>
-    <logo>https://giriawsh.github.io/images/avatar.png</logo>
-    <icon>https://giriawsh.github.io/favicon.ico</icon>
+    <logo>http://localhost:4000/images/avatar.png</logo>
+    <icon>http://localhost:4000/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
     <entry>
         <title type="html"><![CDATA[《JS权威指南》第二章]]></title>
-        <id>https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-er-zhang-ci-fa-jie-gou/</id>
-        <link href="https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-er-zhang-ci-fa-jie-gou/">
+        <id>http://localhost:4000/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-er-zhang-ci-fa-jie-gou/</id>
+        <link href="http://localhost:4000/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-er-zhang-ci-fa-jie-gou/">
         </link>
         <updated>2020-09-14T14:09:56.000Z</updated>
         <summary type="html"><![CDATA[<h1 id="️词法结构">✍️词法结构</h1>
@@ -24,17 +24,17 @@
 <!-- more -->
 <h2 id="1-字符集">1. 字符集</h2>
 <p>JS使用的是Unicode字符集。Unicode是ASCII和Latin-1的超集（父集）</p>
-<h4 id="unicode是什么">*Unicode是什么?</h4>
+<h4 id="unicode是什么">👉Unicode是什么?</h4>
 <p>世界上存在着多种编码方式，同一个二进制数字可以被解释成不同的符号。因此，要想打开一个文本文件，就必须知道它的编码方式，否则用错误的编码方式解读，就会出现乱码。</p>
 <p>可以想象，如果有一种编码，将世界上所有的符号都纳入其中。每一个符号都给予一个独一无二的编码，那么乱码问题就会消失。这就是 Unicode，就像它的名字都表示的，<strong>这是一种所有符号的编码</strong>。</p>
 <p>Unicode 当然是一个很大的集合，现在的规模可以容纳100多万个符号。每个符号的编码都不一样，比如，<code>U+0639</code>表示阿拉伯字母<code>Ain</code>，<code>U+0041</code>表示英语的大写字母<code>A</code>，<code>U+4E25</code>表示汉字<code>严</code>。具体的符号对应表，可以查询<a href="http://www.unicode.org/">unicode.org</a>，或者专门的<a href="http://www.chi2ko.com/tool/CJK.htm">汉字对应表</a>。</p>
-<h4 id="ascii是什么">*ASCII是什么？</h4>
+<h4 id="ascii是什么">👉ASCII是什么？</h4>
 <p>如上所说，ASCII是unicode的一个子集。计算机内部，所有信息最终都是一个二进制值。每一个二进制位（bit）有<code>0</code>和<code>1</code>两种状态，因此八个二进制位就可以组合出256种状态，这被称为一个字节（byte）。也就是说，一个字节一共可以用来表示256种不同的状态，每一个状态对应一个符号，就是256个符号，从<code>00000000</code>到<code>11111111</code>。</p>
 <p>上个世纪60年代，美国制定了一套字符编码，对英语字符与二进制位之间的关系，做了统一规定。这被称为 ASCII 码，一直沿用至今。</p>
 <p>ASCII 码一共规定了128个字符的编码，比如空格<code>SPACE</code>是32（二进制<code>00100000</code>），大写的字母<code>A</code>是65（二进制<code>01000001</code>）。这128个符号（包括32个不能打印出来的控制符号），只占用了一个字节的后面7位，最前面的一位统一规定为<code>0</code>。</p>
 <p>这个符号表相信学过计算机导论都有见到过它的身影。</p>
 <p><strong>但是</strong>用来表示其他语言，128个符号是不够的。<strong>一些欧洲国家就决定，利用字节中闲置的最高位编入新的符号进行拓展，可以表示最多256个符号。</strong></p>
-<h4 id="latin-1字符集">*Latin-1字符集</h4>
+<h4 id="latin-1字符集">👉Latin-1字符集</h4>
 <p>SO Latin-1字符集是Unicode字符集的一个子集，<strong>对应于Unicode字符指令表的前256个条目</strong>。其中Unicode字符为双字节16位，可以表示任何一种语言符号；而Latin-1字符集是单字节8位，<strong>只能够表示英文和西欧字符</strong>。</p>
 <p>因为ISO-8859-1编码范围<strong>使用了单字节内的所有空间</strong>，在支持ISO-8859-1的系统中传输和存储其他任何编码的字节流都不会被抛弃。**换言之，把其他任何编码的字节流当作ISO-8859-1编码看待都没有问题。**这是个很重要的特性，MySQL数据库默认编码是Latin1就是利用了这个特性。ASCII编码是一个7位的容器，ISO-8859-1编码是一个8位的容器。</p>
 <blockquote>
@@ -102,8 +102,8 @@ x; ++y;
     </entry>
     <entry>
         <title type="html"><![CDATA[SVG学习系列3-滤镜、模糊效果、渐变]]></title>
-        <id>https://giriawsh.github.io/post/svg-xue-xi-xi-lie-3-lu-jing-mo-hu-xiao-guo-jian-bian/</id>
-        <link href="https://giriawsh.github.io/post/svg-xue-xi-xi-lie-3-lu-jing-mo-hu-xiao-guo-jian-bian/">
+        <id>http://localhost:4000/post/svg-xue-xi-xi-lie-3-lu-jing-mo-hu-xiao-guo-jian-bian/</id>
+        <link href="http://localhost:4000/post/svg-xue-xi-xi-lie-3-lu-jing-mo-hu-xiao-guo-jian-bian/">
         </link>
         <updated>2020-09-11T05:46:47.000Z</updated>
         <summary type="html"><![CDATA[<h1 id="前言">🎨前言</h1>
@@ -321,8 +321,8 @@ feSpotLight - 用于照明过滤
     </entry>
     <entry>
         <title type="html"><![CDATA[SVG学习系列2-路径、文本、stroke属性]]></title>
-        <id>https://giriawsh.github.io/post/svg-xue-xi-xi-lie-2-lu-jing-wen-ben-stroke-shu-xing/</id>
-        <link href="https://giriawsh.github.io/post/svg-xue-xi-xi-lie-2-lu-jing-wen-ben-stroke-shu-xing/">
+        <id>http://localhost:4000/post/svg-xue-xi-xi-lie-2-lu-jing-wen-ben-stroke-shu-xing/</id>
+        <link href="http://localhost:4000/post/svg-xue-xi-xi-lie-2-lu-jing-wen-ben-stroke-shu-xing/">
         </link>
         <updated>2020-09-11T05:45:29.000Z</updated>
         <summary type="html"><![CDATA[<h1 id="前言">🎨前言</h1>
@@ -599,8 +599,8 @@ xmlns:xlink="http://www.w3.org/1999/xlink"><br>
     </entry>
     <entry>
         <title type="html"><![CDATA[SVG学习系列1-简介、嵌入方式、基本形状]]></title>
-        <id>https://giriawsh.github.io/post/svg-xue-xi-xi-lie-1-jian-jie-qian-ru-fang-shi-ji-ben-xing-zhuang/</id>
-        <link href="https://giriawsh.github.io/post/svg-xue-xi-xi-lie-1-jian-jie-qian-ru-fang-shi-ji-ben-xing-zhuang/">
+        <id>http://localhost:4000/post/svg-xue-xi-xi-lie-1-jian-jie-qian-ru-fang-shi-ji-ben-xing-zhuang/</id>
+        <link href="http://localhost:4000/post/svg-xue-xi-xi-lie-1-jian-jie-qian-ru-fang-shi-ji-ben-xing-zhuang/">
         </link>
         <updated>2020-09-11T04:51:54.000Z</updated>
         <content type="html"><![CDATA[<h1 id="前言">🎨前言</h1>
@@ -778,8 +778,8 @@ xmlns:xlink="http://www.w3.org/1999/xlink"><br>
     </entry>
     <entry>
         <title type="html"><![CDATA[《剑指Offer》JS题解——JZ21~25]]></title>
-        <id>https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz21~25/</id>
-        <link href="https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz21~25/">
+        <id>http://localhost:4000/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz21~25/</id>
+        <link href="http://localhost:4000/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz21~25/">
         </link>
         <updated>2020-09-11T04:45:17.000Z</updated>
         <summary type="html"><![CDATA[<h1 id="jz21-栈的压入和弹出序列">JZ21 栈的压入和弹出序列</h1>
@@ -943,8 +943,8 @@ function calculatePath(node, expectNumber) {
     </entry>
     <entry>
         <title type="html"><![CDATA[《剑指Offer》JS题解——JZ16~20]]></title>
-        <id>https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz16~20/</id>
-        <link href="https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz16~20/">
+        <id>http://localhost:4000/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz16~20/</id>
+        <link href="http://localhost:4000/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz16~20/">
         </link>
         <updated>2020-09-11T04:44:33.000Z</updated>
         <summary type="html"><![CDATA[<h1 id="jz16-合并两个排序的链表">JZ16 合并两个排序的链表</h1>
@@ -1129,8 +1129,8 @@ function Mirror(root) {
     </entry>
     <entry>
         <title type="html"><![CDATA[《剑指Offer》JS题解——JZ11~15]]></title>
-        <id>https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz11~15/</id>
-        <link href="https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz11~15/">
+        <id>http://localhost:4000/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz11~15/</id>
+        <link href="http://localhost:4000/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz11~15/">
         </link>
         <updated>2020-09-11T04:42:05.000Z</updated>
         <summary type="html"><![CDATA[<h1 id="️前言">✍️前言</h1>
@@ -1292,8 +1292,8 @@ console.log(reOrderArray2([1,2,3,4,5,6]))
     </entry>
     <entry>
         <title type="html"><![CDATA[《剑指Offer》JS题解——JZ6~10]]></title>
-        <id>https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz6~10/</id>
-        <link href="https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz6~10/">
+        <id>http://localhost:4000/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz6~10/</id>
+        <link href="http://localhost:4000/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz6~10/">
         </link>
         <updated>2020-09-11T04:41:06.000Z</updated>
         <summary type="html"><![CDATA[<h1 id="️前言">✍️前言</h1>
@@ -1545,8 +1545,8 @@ F(n) = F(n-1) + F(n-2);
     </entry>
     <entry>
         <title type="html"><![CDATA[《剑指Offer》JS题解——JZ1~5]]></title>
-        <id>https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz1~5/</id>
-        <link href="https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz1~5/">
+        <id>http://localhost:4000/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz1~5/</id>
+        <link href="http://localhost:4000/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz1~5/">
         </link>
         <updated>2020-09-11T04:38:47.000Z</updated>
         <summary type="html"><![CDATA[<h1 id="️前言">✍️前言</h1>
@@ -1842,8 +1842,8 @@ function pop()
     </entry>
     <entry>
         <title type="html"><![CDATA[Gridea+GithubPages+godaddy+gitalk个人博客配置]]></title>
-        <id>https://giriawsh.github.io/post/grideagithubpagesgodaddygitalk-ge-ren-bo-ke-pei-zhi/</id>
-        <link href="https://giriawsh.github.io/post/grideagithubpagesgodaddygitalk-ge-ren-bo-ke-pei-zhi/">
+        <id>http://localhost:4000/post/grideagithubpagesgodaddygitalk-ge-ren-bo-ke-pei-zhi/</id>
+        <link href="http://localhost:4000/post/grideagithubpagesgodaddygitalk-ge-ren-bo-ke-pei-zhi/">
         </link>
         <updated>2020-09-11T04:26:04.000Z</updated>
         <summary type="html"><![CDATA[<h1 id="前言">👨‍💻前言</h1>
