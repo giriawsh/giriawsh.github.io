@@ -1,19 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>http://localhost:4000</id>
+    <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-14T14:13:53.575Z</updated>
+    <updated>2020-09-14T15:04:15.223Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="http://localhost:4000"/>
-    <link rel="self" href="http://localhost:4000/atom.xml"/>
+    <link rel="alternate" href="https://giriawsh.github.io/"/>
+    <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
     <subtitle>Live only once, make it count</subtitle>
-    <logo>http://localhost:4000/images/avatar.png</logo>
-    <icon>http://localhost:4000/favicon.ico</icon>
+    <logo>https://giriawsh.github.io/images/avatar.png</logo>
+    <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
     <entry>
+        <title type="html"><![CDATA[《梦江南》赏析]]></title>
+        <id>https://giriawsh.github.io/post/lesslessmeng-jiang-nan-greatergreater-shang-xi/</id>
+        <link href="https://giriawsh.github.io/post/lesslessmeng-jiang-nan-greatergreater-shang-xi/">
+        </link>
+        <updated>2020-09-14T14:58:57.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="梦江南纳兰性德">梦江南——纳兰性德</h1>
+<h2 id="原诗">原诗</h2>
+<p>昏鸦<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>尽，小立恨因谁。急雪乍翻香阁<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>絮，清风吹进胆瓶<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>梅，心字<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>已成灰。</p>
+<h2 id="注释见底部">注释见底部</h2>
+<h2 id="大意">大意</h2>
+<p>黄昏时的乌鸦都飞尽了，我却站在那里凝神远望，心中的怨恨都是为了谁呢？眼前柳絮好像飘飞的急雪，散落到香阁里，微微的晚风又轻轻地吹拂着胆瓶里的梅花。心字型的篆香已经燃成灰烬。</p>
+<h2 id="背景">背景</h2>
+<p>写作背景：这首词应该是写在纳兰的表妹雪梅被选到宫里之后。他与表妹雪梅一块长大，从小青梅竹马，两小无猜，虽然没有挑明爱情关系，但纳兰深深地爱着雪梅这是事实。</p>
+<p>他与表妹曾经一块去读私塾，一块儿玩耍，一块儿对诗作赋。如今，表妹走了，走进了皇宫，当了妃子。一场早期的恋爱就这样成了泡影，叫谁能不痛苦呢？</p>
+<p>表妹走后，纳兰曾经装扮成僧人进宫去见过表妹一面，但那是多么危险的举动。一经被康熙皇帝发现，那是要杀头的！匆匆一面，而且还隔着宫廷里的帏幔。</p>
+<p>回来后好长时间放不下，他思念表妹的心情谁又能了解呢？所以，他经常一个人在黄昏时小立，望着宫廷的方向凝神。</p>
+<p>可是，初恋是彻底没有希望了，这辈子也别再想了，心事变成了灰一样。</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>昏鸦：黄昏时分，昏暗不明的乌鸦群 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>香阁：青年女子所居之内室 <a href="#fnref2" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>胆瓶：长颈大腹，形如悬胆之花瓶 <a href="#fnref3" class="footnote-backref">↩︎</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>心字：即心字香，一种炉香名。明杨慎《词品·心字香》:“范石湖《骖鸾录》云:‘番禺人作心字香，用素馨茉莉半开者着净器中，以沉香薄劈层层相间，密封之，日一易，不待花蔫，花过香成。’所谓心字香者，以香末萦篆成心字也。” <a href="#fnref4" class="footnote-backref">↩︎</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[《JS权威指南》第二章]]></title>
-        <id>http://localhost:4000/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-er-zhang-ci-fa-jie-gou/</id>
-        <link href="http://localhost:4000/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-er-zhang-ci-fa-jie-gou/">
+        <id>https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-er-zhang-ci-fa-jie-gou/</id>
+        <link href="https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-er-zhang-ci-fa-jie-gou/">
         </link>
         <updated>2020-09-14T14:09:56.000Z</updated>
         <summary type="html"><![CDATA[<h1 id="️词法结构">✍️词法结构</h1>
@@ -67,7 +100,7 @@
 <blockquote>
 <p>标识符：就是一个名字</p>
 </blockquote>
-<p>必须以字母、下划线、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">开</mi><mi mathvariant="normal">始</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">后</mi><mi mathvariant="normal">续</mi><mi mathvariant="normal">可</mi><mi mathvariant="normal">以</mi><mi mathvariant="normal">是</mi><mi mathvariant="normal">字</mi><mi mathvariant="normal">母</mi><mi mathvariant="normal">、</mi><mi mathvariant="normal">数</mi><mi mathvariant="normal">字</mi><mi mathvariant="normal">、</mi><mi mathvariant="normal">下</mi><mi mathvariant="normal">划</mi><mi mathvariant="normal">线</mi><mi mathvariant="normal">、</mi></mrow><annotation encoding="application/x-tex">开始，后续可以是字母、数字、下划线、</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mord cjk_fallback">开</span><span class="mord cjk_fallback">始</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">后</span><span class="mord cjk_fallback">续</span><span class="mord cjk_fallback">可</span><span class="mord cjk_fallback">以</span><span class="mord cjk_fallback">是</span><span class="mord cjk_fallback">字</span><span class="mord cjk_fallback">母</span><span class="mord cjk_fallback">、</span><span class="mord cjk_fallback">数</span><span class="mord cjk_fallback">字</span><span class="mord cjk_fallback">、</span><span class="mord cjk_fallback">下</span><span class="mord cjk_fallback">划</span><span class="mord cjk_fallback">线</span><span class="mord cjk_fallback">、</span></span></span></span>（数字不允许打头）</p>
+<p>必须以字母、下划线、$开始，后续可以是字母、数字、下划线、$（数字不允许打头）</p>
 <p>JS允许标识符中出现Unicode字符全集中的字母和数字，但是为了可移植性与便于书写的考虑，通常只使用ASCII字母和数字书写标识符</p>
 <h3 id="22-保留字">2.2 保留字</h3>
 <p>这种一般写多了都知道别拿保留字取名作死。详细可看：<a href="https://www.runoob.com/js/js-reserved.html">JS保留字一览</a></p>
@@ -102,8 +135,8 @@ x; ++y;
     </entry>
     <entry>
         <title type="html"><![CDATA[SVG学习系列3-滤镜、模糊效果、渐变]]></title>
-        <id>http://localhost:4000/post/svg-xue-xi-xi-lie-3-lu-jing-mo-hu-xiao-guo-jian-bian/</id>
-        <link href="http://localhost:4000/post/svg-xue-xi-xi-lie-3-lu-jing-mo-hu-xiao-guo-jian-bian/">
+        <id>https://giriawsh.github.io/post/svg-xue-xi-xi-lie-3-lu-jing-mo-hu-xiao-guo-jian-bian/</id>
+        <link href="https://giriawsh.github.io/post/svg-xue-xi-xi-lie-3-lu-jing-mo-hu-xiao-guo-jian-bian/">
         </link>
         <updated>2020-09-11T05:46:47.000Z</updated>
         <summary type="html"><![CDATA[<h1 id="前言">🎨前言</h1>
@@ -321,8 +354,8 @@ feSpotLight - 用于照明过滤
     </entry>
     <entry>
         <title type="html"><![CDATA[SVG学习系列2-路径、文本、stroke属性]]></title>
-        <id>http://localhost:4000/post/svg-xue-xi-xi-lie-2-lu-jing-wen-ben-stroke-shu-xing/</id>
-        <link href="http://localhost:4000/post/svg-xue-xi-xi-lie-2-lu-jing-wen-ben-stroke-shu-xing/">
+        <id>https://giriawsh.github.io/post/svg-xue-xi-xi-lie-2-lu-jing-wen-ben-stroke-shu-xing/</id>
+        <link href="https://giriawsh.github.io/post/svg-xue-xi-xi-lie-2-lu-jing-wen-ben-stroke-shu-xing/">
         </link>
         <updated>2020-09-11T05:45:29.000Z</updated>
         <summary type="html"><![CDATA[<h1 id="前言">🎨前言</h1>
@@ -599,8 +632,8 @@ xmlns:xlink="http://www.w3.org/1999/xlink"><br>
     </entry>
     <entry>
         <title type="html"><![CDATA[SVG学习系列1-简介、嵌入方式、基本形状]]></title>
-        <id>http://localhost:4000/post/svg-xue-xi-xi-lie-1-jian-jie-qian-ru-fang-shi-ji-ben-xing-zhuang/</id>
-        <link href="http://localhost:4000/post/svg-xue-xi-xi-lie-1-jian-jie-qian-ru-fang-shi-ji-ben-xing-zhuang/">
+        <id>https://giriawsh.github.io/post/svg-xue-xi-xi-lie-1-jian-jie-qian-ru-fang-shi-ji-ben-xing-zhuang/</id>
+        <link href="https://giriawsh.github.io/post/svg-xue-xi-xi-lie-1-jian-jie-qian-ru-fang-shi-ji-ben-xing-zhuang/">
         </link>
         <updated>2020-09-11T04:51:54.000Z</updated>
         <content type="html"><![CDATA[<h1 id="前言">🎨前言</h1>
@@ -778,8 +811,8 @@ xmlns:xlink="http://www.w3.org/1999/xlink"><br>
     </entry>
     <entry>
         <title type="html"><![CDATA[《剑指Offer》JS题解——JZ21~25]]></title>
-        <id>http://localhost:4000/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz21~25/</id>
-        <link href="http://localhost:4000/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz21~25/">
+        <id>https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz21~25/</id>
+        <link href="https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz21~25/">
         </link>
         <updated>2020-09-11T04:45:17.000Z</updated>
         <summary type="html"><![CDATA[<h1 id="jz21-栈的压入和弹出序列">JZ21 栈的压入和弹出序列</h1>
@@ -943,8 +976,8 @@ function calculatePath(node, expectNumber) {
     </entry>
     <entry>
         <title type="html"><![CDATA[《剑指Offer》JS题解——JZ16~20]]></title>
-        <id>http://localhost:4000/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz16~20/</id>
-        <link href="http://localhost:4000/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz16~20/">
+        <id>https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz16~20/</id>
+        <link href="https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz16~20/">
         </link>
         <updated>2020-09-11T04:44:33.000Z</updated>
         <summary type="html"><![CDATA[<h1 id="jz16-合并两个排序的链表">JZ16 合并两个排序的链表</h1>
@@ -1129,8 +1162,8 @@ function Mirror(root) {
     </entry>
     <entry>
         <title type="html"><![CDATA[《剑指Offer》JS题解——JZ11~15]]></title>
-        <id>http://localhost:4000/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz11~15/</id>
-        <link href="http://localhost:4000/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz11~15/">
+        <id>https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz11~15/</id>
+        <link href="https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz11~15/">
         </link>
         <updated>2020-09-11T04:42:05.000Z</updated>
         <summary type="html"><![CDATA[<h1 id="️前言">✍️前言</h1>
@@ -1292,8 +1325,8 @@ console.log(reOrderArray2([1,2,3,4,5,6]))
     </entry>
     <entry>
         <title type="html"><![CDATA[《剑指Offer》JS题解——JZ6~10]]></title>
-        <id>http://localhost:4000/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz6~10/</id>
-        <link href="http://localhost:4000/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz6~10/">
+        <id>https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz6~10/</id>
+        <link href="https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz6~10/">
         </link>
         <updated>2020-09-11T04:41:06.000Z</updated>
         <summary type="html"><![CDATA[<h1 id="️前言">✍️前言</h1>
@@ -1545,8 +1578,8 @@ F(n) = F(n-1) + F(n-2);
     </entry>
     <entry>
         <title type="html"><![CDATA[《剑指Offer》JS题解——JZ1~5]]></title>
-        <id>http://localhost:4000/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz1~5/</id>
-        <link href="http://localhost:4000/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz1~5/">
+        <id>https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz1~5/</id>
+        <link href="https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz1~5/">
         </link>
         <updated>2020-09-11T04:38:47.000Z</updated>
         <summary type="html"><![CDATA[<h1 id="️前言">✍️前言</h1>
@@ -1838,119 +1871,6 @@ function pop()
 </code></pre>
 <figure data-type="image" tabindex="6"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911123617.png" alt="运行结果" loading="lazy"></figure>
 <p>好像上算法课讲过一道更难的，忘了题目了，下次见到了补充进来吧。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Gridea+GithubPages+godaddy+gitalk个人博客配置]]></title>
-        <id>http://localhost:4000/post/grideagithubpagesgodaddygitalk-ge-ren-bo-ke-pei-zhi/</id>
-        <link href="http://localhost:4000/post/grideagithubpagesgodaddygitalk-ge-ren-bo-ke-pei-zhi/">
-        </link>
-        <updated>2020-09-11T04:26:04.000Z</updated>
-        <summary type="html"><![CDATA[<h1 id="前言">👨‍💻前言</h1>
-<p>最近重新思考了一下大层面上的东西，觉得在人世间活过一遭总归是要留下些什么，如果更好的是能够带去些什么。</p>
-]]></summary>
-        <content type="html"><![CDATA[<h1 id="前言">👨‍💻前言</h1>
-<p>最近重新思考了一下大层面上的东西，觉得在人世间活过一遭总归是要留下些什么，如果更好的是能够带去些什么。</p>
-<!-- more -->
-<p>之前有写过hexo建站，但是hexo的不稳定性以及频繁的hexo d hexo g手动命令操作使我厌烦。机缘巧合之中，在知乎上看到了一款快速建站软件。</p>
-<p>它体积量很小，也很年轻，除了主题外配置都是一个人在维护，但是现在看来总体运行情况十分稳定。我承蒙了该软件的好处，写下这篇新人向的快速建站手册，希望能够帮助到有同样想法的人。</p>
-<h1 id="简单介绍">简单介绍</h1>
-<p><a href="https://gridea.dev/">Gridea</a> 最早叫 Hve Notes ，开发者为了更易读和好记，重新命名为 Gridea ，支持 Windows 和 Mac 平台，它的基础界面非常地小清新。</p>
-<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911113005.png" alt="image-20200911113005316" loading="lazy"></figure>
-<p>只需要简单配置，便可图形化可交互地进行博文上传同步、主题更改等操作。这些后面都会详细介绍，包括一些踩坑向。</p>
-<h1 id="软件安装与配置">软件安装与配置</h1>
-<h2 id="git安装">Git安装</h2>
-<p>这块不用多说，写的比我详细的大有人去， <a href="https://zhuanlan.zhihu.com/p/71681116/Git">Git官网</a>下载平台对应的安装程序。安装没有特别的要求，一路下一步即可。</p>
-<p>如果遇到问题谷歌would help you</p>
-<h2 id="gridea安装">Gridea安装</h2>
-<p><a href="https://link.zhihu.com/?target=https%3A//gridea.dev/">Gridea官网</a>下载对应平台的安装程序进行安装。</p>
-<h1 id="初始配置">初始配置</h1>
-<p>这里搬出官网文档：https://gridea.dev/gridea-start/</p>
-<h2 id="github-pages仓库创建与开通">github pages仓库创建与开通</h2>
-<ol>
-<li>
-<p>首先，需要创建一个仓库，建议仓库为 <strong><a href="https://link.zhihu.com/?target=http%3A//username.github.io">http://username.github.io</a></strong>。根据[官方文档](https://zhuanlan.zhihu.com/p/71681116/GitHub 帮助)， GitHub 会默认将名称符合要求的仓库设置成 GitHub Pages 可访问类型。例如我的用户名是 giriawsh，仓库名便为giriawsh.github.io</p>
-</li>
-<li>
-<p>创建成功后来到项目仓库的settings</p>
-</li>
-<li>
-<p>找到 <strong>GitHub Pages</strong> 设置的地方 点击 <strong>Choose a theme</strong> 随意选择一个主题。因为后续我们使用 Gridea 设置主题，这边选择主题只是为了开启 GitHub Pages 可访问类型。（不然po不上去）</p>
-</li>
-</ol>
-<h2 id="创建访问token">创建访问token</h2>
-<p>这块官方文档里有：</p>
-<p>Gridea 管理 GitHub Pages 需要 token。登录 GitHub 后点击<a href="https://link.zhihu.com/?target=https%3A//github.com/settings/tokens/new">这里</a> 创建一个新的 token。</p>
-<p>勾选上 <strong>repo</strong> 相关权限即可。</p>
-<p>生成之后记得把 Token 复制到你的本地，因为一旦关闭网页将不能再看到它。</p>
-<figure data-type="image" tabindex="2"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911113404.png" alt="img" loading="lazy"></figure>
-<h2 id="gridea配置">Gridea配置</h2>
-<p><strong>进入 Gridea 进行远程设置</strong>。按照下图的示例进行设置，然后点击「<strong>检测远程链接</strong>」，进行配置检查。</p>
-<figure data-type="image" tabindex="3"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911113455.png" alt="img" loading="lazy"></figure>
-<ul>
-<li>域名：Github Pages 对应的域名</li>
-<li>仓库：你的静态文件存放的仓库</li>
-<li>分支：你的 Github Pages 对应的分支（例如：master）</li>
-<li>用户名：仓库所属用户的用户名（通常就是你的 Github 账号的昵称）</li>
-<li>邮箱：Git 推送时使用的邮箱（通常就是你的 Github 账号的邮箱）</li>
-<li>Token: Git 推送时需要的 Token，用来向 Github 提交构建后的文件 <a href="https://github.com/settings/tokens">Github personal access tokens</a></li>
-<li>CNAME: 可通过这个选项配置你自己的域名</li>
-</ul>
-<p>出现错误可能原因：</p>
-<ol>
-<li>域名未填对，如果https的域名不行改用http</li>
-<li>仓库名错误</li>
-<li>Token在开头多加了一个空格（复制的锅）</li>
-</ol>
-<p><strong>同步</strong>。点击 Gridea 中的 同步按钮即可。初次部署等待几分钟之后就可以去浏览器访问了（也有可能是半小时），默认地址为你在第 3 步所填写的域名。</p>
-<h1 id="godaddy域名配置">Godaddy域名配置</h1>
-<p>如果想要拥有自己独一无二又好记的域名，可以到<a href="https://sg.godaddy.com/zh/offers/domains/godaddy-b?isc=gennlcn08&amp;countryview=1&amp;currencyType=CNY&amp;gclid=CjwKCAjwnef6BRAgEiwAgv8mQc7yfrZ59mrhuZLX7P0MkksaGjI8_FbM_8qeG7lLv6MkMCFBDK2OeBoCFoAQAvD_BwE&amp;gclsrc=aw.ds">godaddy</a>网站上进行域名购买。如果在国内购买需要去登记下。</p>
-<p>选择自己喜欢的（注意一下续费年费），用支付宝买下就OK</p>
-<p>然后在“我的产品”中找到购买的域名：</p>
-<figure data-type="image" tabindex="4"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911114053.png" alt="image-20200911114052942" loading="lazy"></figure>
-<p>点击DNS，进入配置界面</p>
-<p>在记录中增加两条记录：</p>
-<figure data-type="image" tabindex="5"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911114140.png" alt="image-20200911114140274" loading="lazy"></figure>
-<p>（注意把giriawsh替换成自己的用户名）</p>
-<p>A类型的值可以通过</p>
-<pre><code>ping &lt;your username&gt;.github.io
-</code></pre>
-<p>获得。</p>
-<p>接着打开gridea，将CNAME设置为你的域名。</p>
-<figure data-type="image" tabindex="6"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911114258.png" alt="image-20200911114257991" loading="lazy"></figure>
-<p>同步后github仓库中便可以看到CNAME已经做了同步修改，同时也出现了网站已被同步po到新域名的样式。再等全球服务器缓冲一会儿，你的域名就可以被访问了。等待一段时间后，可开启Enforce HTTPS选项。</p>
-<figure data-type="image" tabindex="7"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911114432.png" alt="image-20200911114432397" loading="lazy"></figure>
-<h1 id="gitalk评论配置">Gitalk评论配置</h1>
-<p>Gridea 支持 <a href="https://zhuanlan.zhihu.com/p/71681116/gitalk/gitalk">Gitalk</a> 和 Disqus 两种评论系统，这里我使用 Gitalk 评论系统。</p>
-<p>首先你需要有一个 <strong>GitHub OAuth Applicatio</strong> ，点击<a href="https://link.zhihu.com/?target=https%3A//github.com/settings/applications/new">这里</a>创建。这里我用到另一个博主的图片：</p>
-<figure data-type="image" tabindex="8"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911114617.jpeg" alt="img" loading="lazy"></figure>
-<p>创建完成后可将 <strong>Client ID</strong> 和 <strong>Client Secret</strong> 复制保存到本地。</p>
-<figure data-type="image" tabindex="9"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911114631.jpeg" alt="img" loading="lazy"></figure>
-<p>打开Gridea-远程-评论配置，粘贴</p>
-<figure data-type="image" tabindex="10"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911114708.jpeg" alt="img" loading="lazy"></figure>
-<p>设置、保存并同步后评论模块就可用了。</p>
-<h2 id="踩坑">踩坑</h2>
-<p>开始配置完成后，虽然文章末尾已经显示评论界面，但是只要我一点击登录评论，就会跳转到首页。这个情况常常发生在有自己域名的博主身上，我把Authorization callback URL中的www去掉就可以正常登陆了（原理不知）如下图所示：<br>
-<img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911173848.png" alt="image-comment" loading="lazy"><br>
-效果如下：<br>
-<img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911152812.png" alt="image-20200911152811984" loading="lazy"></p>
-<h1 id="主题配置">主题配置</h1>
-<p>本站使用的是由<a href="https://github.com/qyxtim/bitcron-pro">SERENCE</a>改版的pro版。</p>
-<p>在此基础上做了一些个人向的修改。再次感谢大佬的卓越贡献，已star。</p>
-<p>从网站下载zip包后，把 bitcron-pro 文件夹放入 <code>~/Gridea/themes</code> 【默认文件夹】或者手动修改过的网站源文件文件夹中，解压缩，重启Gridea即可。</p>
-<p>更多主题可查看官方给出的主题超市：https://gridea.dev/themes/</p>
-<h1 id="踩坑-2">踩坑</h1>
-<ul>
-<li>如果创建了新标签，记得及时给文章引用上，不然会无法po文</li>
-<li>gridea中无category的概念，如果需要，可以在菜单栏中链接到某个网页或者某个标签</li>
-<li>一次性po文太多可能导致一些奇怪bug</li>
-<li>不要在标题中使用~等特殊符号</li>
-</ul>
-<h1 id="参考致谢">参考致谢</h1>
-<p><a href="https://zhuanlan.zhihu.com/p/71681116">Gridea 上手教程——小白也可以用的 GitHub Pages 搭建工具</a></p>
-<p><a href="https://sspai.com/post/54212">Gridea 让你更方便地管理 Github Pages</a></p>
-<p><a href="https://wherelse.cc/post/config-gitalk-in-the-gridea/">在Gridea中配置Gitalk评论系统</a>   -&gt; 这个博主的主题很好看，不知是源于什么自改的？</p>
-<p><a href="https://gridea.dev/docs/">Gridea官方文档</a></p>
 ]]></content>
     </entry>
 </feed>
