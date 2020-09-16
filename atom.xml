@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-16T16:26:10.580Z</updated>
+    <updated>2020-09-16T16:29:10.281Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -66,7 +66,7 @@ undefined：用 −2^30 整数来表示</p>
 <li>null和undefined区别和联系</li>
 </ul>
 <p>他们都表示“值的空缺”，两者往往可以互换。</p>
-<p>判断相等运算符“<mark>”认为他们是相等的(是<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-11.9.3">规范第2条规定的结果</a>规定的结果)，“</mark>=”认为他们是不等的。</p>
+<p>判断相等运算符“<code>==</code>”认为他们是相等的(是<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-11.9.3">规范第2条规定的结果</a>规定的结果)，“<code>===</code>”认为他们是不等的。</p>
 <figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916181522.png" alt="image-20200916181522355" loading="lazy"></figure>
 <figure data-type="image" tabindex="2"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916181701.png" alt="image-20200916181701453" loading="lazy"></figure>
 <p>两者的布尔值都为false</p>
@@ -84,8 +84,8 @@ undefined：用 −2^30 整数来表示</p>
 <p><strong>Global Object （全局对象, global对象）</strong></p>
 <p>①JavaScript 中有一个特殊的对象，称为全局对象（Global Object），它及其所有属性都可以在程序的任何地方访问，即全局变量。</p>
 <p>② 全局对象是预定义的对象，作为 JavaScript 的全局函数和全局属性的占位符。通过使用全局对象，可以访问所有其他所有预定义的对象、函数和属性。全局对象不是任何对象的属性，所以它没有名称。</p>
-<p>**③ 在顶层 JavaScript 代码中，可以用关键字 this 引用全局对象。**但通常不必用这种方式引用全局对象，因为全局对象是作用域链的头，这意味着所有非限定性的变量和函数名都会作为该对象的属性来查询。例如，当JavaScript 代码引用 parseInt() 函数时，它引用的是全局对象的 parseInt 属性。全局对象是作用域链的头，<strong>还意味着在顶层 JavaScript 代码中声明的所有变量，都将成为全局对象的属性。</strong></p>
-<p><strong>④ 全局对象只是一个对象，而不是类。既没有构造函数，也无法用new实例化一个新的全局对象。</strong></p>
+<p>③ **在顶层 JavaScript 代码中，可以用关键字 this 引用全局对象。**但通常不必用这种方式引用全局对象，因为全局对象是作用域链的头，这意味着所有非限定性的变量和函数名都会作为该对象的属性来查询。例如，当JavaScript 代码引用 parseInt() 函数时，它引用的是全局对象的 parseInt 属性。全局对象是作用域链的头，<strong>还意味着在顶层 JavaScript 代码中声明的所有变量，都将成为全局对象的属性。</strong></p>
+<p>④ <strong>全局对象只是一个对象，而不是类。既没有构造函数，也无法用new实例化一个新的全局对象。</strong></p>
 <p>⑤ 实际上，ECMAScript 标准没有规定全局对象的类型，<strong>而在客户端 JavaScript 中，全局对象就是 Window 对象，表示允许 JavaScript 代码的 Web 浏览器窗口。浏览器把全局对象作为window对象的一部分实现了，因此，所有的全局属性和函数都是window对象的属性和方法。</strong></p>
 <p><strong>通俗化理解：</strong></p>
 <p>⑥ 《JavaScript高级程序设计》中谈到，global对象可以说是ECMAScript中最特别的一个对象了，因为不管你从什么角度上看，这个对象都是不存在的。从某种意义上讲，它是一个终极的“兜底儿对象”，换句话说呢，**就是不属于任何其他对象的属性和方法，最终都是它的属性和方法。**我理解为，这个global对象呢，就是整个JS的“老祖宗”，找不到归属的那些“子子孙孙”都可以到它这里来认祖归宗。所有在全局作用域中定义的属性和函数，都是global对象的属性和方法，比如isNaN()、parseInt()以及parseFloat()等，实际都是它的方法；还有就是常见的一些特殊值，如：NaN、undefined等都是它的属性，以及一些构造函数Object、Array等也都是它的方法。</p>
@@ -126,7 +126,7 @@ console.log(s.len);// =&gt; undefined
 </blockquote>
 <p>需要注意的是，我们可以通过String() Number() Boolean()构造函数来<strong>显示创建包装对象</strong>，他们的值和属性可以被添加和保存。（因为无自动销毁过程）</p>
 <figure data-type="image" tabindex="4"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916192643.png" alt="image-20200916192643128" loading="lazy"></figure>
-<p>&quot;<mark>&quot;运算符将原始值和其包装对象视为相等，“</mark>=”将他们视为不等，使用typeof也可以看出区别；</p>
+<p>&quot;<code>==</code>&quot;运算符将原始值和其包装对象视为相等，“<code>===</code>”将他们视为不等，使用typeof也可以看出区别；</p>
 <pre><code class="language-js">var s = &quot;giria&quot;;
 var a = new String(s);
 console.log(a==s);// =&gt; true
