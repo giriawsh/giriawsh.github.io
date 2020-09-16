@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>《JS权威指南》第三章2 | Giria&#39;s Blog</title>
+<link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+
+<link rel="canonical" href="https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-san-zhang-2/" />
+</head>
+<body>
+<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
+<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://giriawsh.github.io/"><img alt="logo" style="display:inline-block;" src="https://giriawsh.github.io//images/avatar.png"/></a><h1 title="Giria&#39;s Blog" class="weaklink"><a  href="/">Giria&#39;s Blog</a></h1>
+
+<div class="navbar weaklink">
+<div class="normal_nav">
+<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/IMEC1slRP/" class="selected active current nav__item" >前端</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/d3SOBOYxM/" class="selected active current nav__item" >算法题解</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/7Xal1JEGf/" class="selected active current nav__item" >个人学习系列</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li></ul></nav>
+<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
+<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/IMEC1slRP/" class="selected active current nav__item" >前端</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/d3SOBOYxM/" class="selected active current nav__item" >算法题解</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/7Xal1JEGf/" class="selected active current nav__item" >个人学习系列</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1600273562960" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+</div></div>
+<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
+
+
+<div class="main"><div class="main-inner"><div class="content">
+<article class="post">
+<h2 class="post_title sm_margin"><a>《JS权威指南》第三章2</a></h2>
+<script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-09-17</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/CQVRCVtqn/" class="tag">JavaScript权威指南学习系列</a> | 	<a href="https://giriawsh.github.io/tag/7Xal1JEGf/" class="tag">学习系列</a> | 	<a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="tag">前端</a> | 	<a href="https://giriawsh.github.io/tag/2G-O1ZTp4/" class="tag">JavaScript</a> | 	<a href="https://giriawsh.github.io/tag/mwArQWtwB/" class="tag">JS学习系列</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">3241字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">12 min read</span>
+</section>
+
+<div style="display:flex">
+<div class="md_block" id="md_block">
+<div class="round-shape-one"></div>
+<h2 id="️前言">✍️前言</h2>
+<p>《JS权威指南》学习笔记第三章第二部分，涉及布尔值、null和undefined、全局对象、包装对象、原始值和引用值、类型转换等。</p>
+<!-- more -->
+<h2 id="1-布尔值">1. 布尔值</h2>
+<p>任意JS的值都可以转换为布尔值，以下这些值会被转换成false：</p>
+<ul>
+<li>undefined</li>
+<li>null</li>
+<li>0</li>
+<li>-0</li>
+<li>NaN</li>
+<li>&quot;&quot;</li>
+</ul>
+<p>所有其他值，包括所有对象（数组）都会被转成true</p>
+<p>还有诸如$$ || not等逻辑运算符，我就不再多做介绍了</p>
+<h2 id="2-null和undefined重点">2. null和undefined（重点）</h2>
+<p>老生常谈了，这里记录一下权威指南中对这两个值的看法吧。</p>
+<ul>
+<li>null</li>
+</ul>
+<p>常用来描述“空值”。<strong>对null进行typeof运算，返回字符串&quot;object&quot;，也就是说可以将null认为是一个特殊的对象值，含义是“非对象”。</strong></p>
+<p>但实际上，<strong>通常认为null是它自有类型的唯一一个成员</strong>（孤儿类型哈哈哈），<strong>它可以表示数字、字符串和对象是“无值”的。</strong></p>
+<blockquote>
+<p>我还看到过关于<code>typeof(null) === &quot;object&quot;</code>的解释：</p>
+<p>这是一个存在很久了 的 Bug。</p>
+<p>typeof 实现原理<br>
+js 在底层存储数据类型的方式</p>
+<p>000：对象<br>
+010：浮点数<br>
+100：字符串<br>
+110：布尔<br>
+1：整数<br>
+null：所有机器码均为0<br>
+undefined：用 −2^30 整数来表示</p>
+<p>对比一下权威指南中的设计上的想法，这种底层实现也有了依据。</p>
+</blockquote>
+<ul>
+<li>undefined</li>
+</ul>
+<p>用未定义的值表示更深层次的“空值”。<strong>它是变量的一种取值，表明变量没有初始化。</strong></p>
+<p><strong>如果要查询的值返回undefined说明这个属性或元素不存在;如果函数返回undefined，则表示没有任何返回值。引用没有提供实参的函数形参值也只会得到undefined。</strong></p>
+<p>undefined是预定义的全局变量（它和null不一样，<strong>它不是关键字</strong>），它的值就是“未定义”</p>
+<p>在ES5中undefined是只读的，用typeof会返回“undefined”，<strong>标明这个值是这个类型的唯一成员。</strong></p>
+<ul>
+<li>null和undefined区别和联系</li>
+</ul>
+<p>他们都表示“值的空缺”，两者往往可以互换。</p>
+<p>判断相等运算符“<mark>”认为他们是相等的(是<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-11.9.3">规范第2条规定的结果</a>规定的结果)，“</mark>=”认为他们是不等的。</p>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916181522.png" alt="image-20200916181522355" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916181701.png" alt="image-20200916181701453" loading="lazy"></figure>
+<p>两者的布尔值都为false</p>
+<p>都不包含任何属性和方法，使用“.”和“[]”来存取两个值的成员或方法都会产生一个类型错误。</p>
+<p>原书中有这样一段话（不清楚是否代表作者本人的立场）：</p>
+<figure data-type="image" tabindex="3"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916181906.png" alt="image-20200916181906059" loading="lazy"></figure>
+<p><strong>因此在赋值上更倾向于选择null。</strong></p>
+<blockquote>
+<p>其他历史原因上的设计和区别可以查看：<a href="https://www.ruanyifeng.com/blog/2014/03/undefined-vs-null.html">阮一峰——undefined与null的区别</a></p>
+<p>提到了首先，null像在Java里一样，被当成一个对象。Brendan Eich觉得表示&quot;无&quot;的值最好不是对象。需要引入一个单独的值。</p>
+<p>其次，在早期JavaScript的最初版本没有包括错误处理机制，发生数据类型不匹配时，往往是自动转换类型或者默默地失败。Brendan Eich觉得，如果null自动转为0，很不容易发现错误。</p>
+<p>因此，Brendan Eich又设计了一个undefined。</p>
+</blockquote>
+<h2 id="3-全局对象">3. 全局对象</h2>
+<p><strong>Global Object （全局对象, global对象）</strong></p>
+<p>①JavaScript 中有一个特殊的对象，称为全局对象（Global Object），它及其所有属性都可以在程序的任何地方访问，即全局变量。</p>
+<p>② 全局对象是预定义的对象，作为 JavaScript 的全局函数和全局属性的占位符。通过使用全局对象，可以访问所有其他所有预定义的对象、函数和属性。全局对象不是任何对象的属性，所以它没有名称。</p>
+<p>**③ 在顶层 JavaScript 代码中，可以用关键字 this 引用全局对象。**但通常不必用这种方式引用全局对象，因为全局对象是作用域链的头，这意味着所有非限定性的变量和函数名都会作为该对象的属性来查询。例如，当JavaScript 代码引用 parseInt() 函数时，它引用的是全局对象的 parseInt 属性。全局对象是作用域链的头，<strong>还意味着在顶层 JavaScript 代码中声明的所有变量，都将成为全局对象的属性。</strong></p>
+<p><strong>④ 全局对象只是一个对象，而不是类。既没有构造函数，也无法用new实例化一个新的全局对象。</strong></p>
+<p>⑤ 实际上，ECMAScript 标准没有规定全局对象的类型，<strong>而在客户端 JavaScript 中，全局对象就是 Window 对象，表示允许 JavaScript 代码的 Web 浏览器窗口。浏览器把全局对象作为window对象的一部分实现了，因此，所有的全局属性和函数都是window对象的属性和方法。</strong></p>
+<p><strong>通俗化理解：</strong></p>
+<p>⑥ 《JavaScript高级程序设计》中谈到，global对象可以说是ECMAScript中最特别的一个对象了，因为不管你从什么角度上看，这个对象都是不存在的。从某种意义上讲，它是一个终极的“兜底儿对象”，换句话说呢，**就是不属于任何其他对象的属性和方法，最终都是它的属性和方法。**我理解为，这个global对象呢，就是整个JS的“老祖宗”，找不到归属的那些“子子孙孙”都可以到它这里来认祖归宗。所有在全局作用域中定义的属性和函数，都是global对象的属性和方法，比如isNaN()、parseInt()以及parseFloat()等，实际都是它的方法；还有就是常见的一些特殊值，如：NaN、undefined等都是它的属性，以及一些构造函数Object、Array等也都是它的方法。</p>
+<p>总之，记住一点：global对象就是“老祖宗”，所有找不到归属的就都是它的。</p>
+<p>当JS解释器启动（或者任何Web浏览器加载新页面的时候），它将创建一个新的全局对象，并给它一组定义的初始属性：</p>
+<ul>
+<li>全局属性：比如undefined,Inifinity, NaN</li>
+<li>全局函数：比如isNaN(),parseInt(),eval()</li>
+<li>构造函数：比如Date(),RegExp(),String(),Object(),Array()</li>
+<li>全局对象：比如Math和JSON</li>
+</ul>
+<p>从程序员角度考虑，正是因为全局对象的存在，使得特殊方法、属性初始化透明化了，完全不需要我们操心。而且也归属了所有的方法和对象。</p>
+<p>全局对象的初始属性不是保留字，但是应该当做保留字（别取一些奇怪的名字就OK）</p>
+<p>如第三点所提，可以使用this来使用全局对象。在客户端JS中，在其表示的浏览器窗口中的所有JS代码中，Window对象充当了全局对象。这个全局Window对象有一个window引用其自身，可以代替this来引用全局对象。</p>
+<p>可以说，当初次创建的时候，全局对象定义了JS中所有的预定义的全局值（即上面列出的基本属性）。这个特殊对象同样包含了为程序定义的全局值。如果一个代码生命了一个全局变量，这个全局变量就是全局对象的一个属性。</p>
+<pre><code>var a = 0;//a其实就是挂靠在我们看不见的全局对象global下的一个属性
+var global = this;
+this.a // =&gt; 0
+</code></pre>
+<h2 id="4-包装对象临时对象">4. 包装对象（临时对象）</h2>
+<p>JS对象是一种复合值：它是属性或已命名值的集合。通过“.”来引用属性值。</p>
+<p>当属性是一个函数时，称其为<strong>方法</strong>，通过o.m()来调用o中的方法</p>
+<p>在字符串中可以看到字符串也同样具有属性（.length）和方法（.substring()等），这是为什么？</p>
+<ul>
+<li>因为只要引用了s的属性，<strong>JS就会将字符串值通过调用new String(s)的方式转换成对象</strong>，这个对象继承了字符串的方法，并用来处理属性的引用。</li>
+<li>一旦属性引用结束，这个新创建的对象就会销毁（虽然表面上没有这层实现）</li>
+</ul>
+<p>同理，数字和布尔值也有各自的方法（<strong>利用Number()和Boolean()构造函数创建一个临时对象</strong>），这些方法的调用都是来自于临时对象。</p>
+<p>null和undefined没有包装对象，访问它们的属性会造成一个类型错误。</p>
+<pre><code class="language-js">var s = &quot;giria&quot;;
+s.len = 5;//创建了一个临时字符串对象，并给len属性赋值，随即销毁
+console.log(s.len);// =&gt; undefined
+</code></pre>
+<p>说明，在读取字符串、数字、布尔值的属性或方法时，表现地像对象一样（可以访问一些属性调用一些方法）。但是如果试图给属性赋值，则会被忽略。<strong>修改知识发生在临时对象身上，而这个临时对象并未继续保存下来。</strong></p>
+<blockquote>
+<p>包装对象：存取字符串、数字、布尔值的属性时创建的临时对象</p>
+<p>由于字符串、数字、布尔值的属性都是只读的，不能给他们新属性，需要明白它们是有别于对象的。</p>
+</blockquote>
+<p>需要注意的是，我们可以通过String() Number() Boolean()构造函数来<strong>显示创建包装对象</strong>，他们的值和属性可以被添加和保存。（因为无自动销毁过程）</p>
+<figure data-type="image" tabindex="4"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916192643.png" alt="image-20200916192643128" loading="lazy"></figure>
+<p>&quot;<mark>&quot;运算符将原始值和其包装对象视为相等，“</mark>=”将他们视为不等，使用typeof也可以看出区别；</p>
+<pre><code class="language-js">var s = &quot;giria&quot;;
+var a = new String(s);
+console.log(a==s);// =&gt; true
+console.log(a===s);// =&gt; false
+console.log(typeof(s));// =&gt; string
+console.log(typeof(a));// =&gt; object
+</code></pre>
+<h2 id="5-不可变的原始值和可变的对象引用">5. 不可变的原始值和可变的对象引用</h2>
+<blockquote>
+<p>原始值（即原始类型）：包括数字、字符串、布尔值、null、undefined</p>
+<p>对象：包括数组和函数</p>
+</blockquote>
+<h3 id="原始值">原始值</h3>
+<ul>
+<li>
+<p><strong>原始值是不可改变的，任何方法都无法改变一个原始值。</strong>（字符串方法实际返回的是一个新的字符串值）</p>
+</li>
+<li>
+<p>原始值的比较是<strong>值的比较</strong>：只有它们的值相等时才相等</p>
+<ul>
+<li>没有方法比较null和undefined</li>
+<li>如果比较两个单独的字符串，当且仅当它们的长度相等并且每个索引值的字符都相等时，JS才认为它们相等</li>
+</ul>
+</li>
+</ul>
+<h3 id="对象">对象</h3>
+<ul>
+<li>对象是可变的，它们的值可以被修改</li>
+<li>对象的比较并非值的比较
+<ul>
+<li>两个对象包含同样的属性以及相同的值，它们也是不相等的。</li>
+<li>对象值都是引用，它们的比较均是引用的比较：当且仅当它们引用同一个基对象时它们才相等</li>
+</ul>
+</li>
+</ul>
+<figure data-type="image" tabindex="5"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916193642.png" alt="image-20200916193642148" loading="lazy"></figure>
+<p>如果想要得到一个对象或数组的副本，必须进行显式复制对象的每个属性或者数组的每个元素（浅拷贝，如果涉及复杂复制则需要深拷贝）</p>
+<p>同样地，如果想要比较两个单独的对象或者数组，则必须比较它们的属性或元素。</p>
+<h2 id="6-类型转换重要">6. 类型转换（重要）</h2>
+<figure data-type="image" tabindex="6"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916235551.png" alt="image-20200916235551517" loading="lazy"></figure>
+<p>所有原始值转换成字符串很好理解（对象转换后面会提到），转换为数字比较微妙。</p>
+<ul>
+<li>以数字表示的字符串可以直接转换成数字，也允许开始和结尾处带有空格</li>
+<li>在开始和结尾处的任意非空格字符都不会被当成数字直接量的一部分，进而造成字符串转换数字的结果为NaN</li>
+<li>true =&gt; 1   false =&gt; 0  &quot;&quot;  =&gt; 0</li>
+</ul>
+<figure data-type="image" tabindex="7"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200917000033.png" alt="image-20200917000033034" loading="lazy"></figure>
+<p>原始值到对象的转换：调用String(), Number(), Boolean()构造函数，转换为各自的包装对象</p>
+<p>null和undefined用在期望是一个对象的地方都会造成一个类型错误(TypeError)，但是使用Object()函数，则会简单地返回一个新创建的空对象。</p>
+<figure data-type="image" tabindex="8"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200917001628.png" alt="image-20200917001628502" loading="lazy"></figure>
+<h3 id="61-转换和相等性">6.1 转换和相等性</h3>
+<p>一个值转为另一个值不意味着两个值相等。if语句会将 undefined转为false，但“==”运算符从不试图将操作数转换为布尔值。</p>
+<figure data-type="image" tabindex="9"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200917000344.png" alt="image-20200917000344299" loading="lazy"></figure>
+<h3 id="62-显式类型转换">6.2 显式类型转换</h3>
+<p>做显示类型转换最简单的方法就是使用Boolean(),Number(),String(),Object()函数。（当不使用new调用时，它们会作为类型转换函数，按照上表进行转换）</p>
+<p>注意！！除了null或undefined外任何值都有toString()方法（执行结果通常和String()一致）</p>
+<h4 id="隐式类型转换">隐式类型转换</h4>
+<ul>
+<li>
+<p>+的一个操作数是字符串，会把另一个操作数转换为字符串</p>
+</li>
+<li>
+<p>一元运算符+将操作数转换为数字。</p>
+</li>
+<li>
+<p>！将其运算数转换为布尔值并取反</p>
+</li>
+</ul>
+<p>所以会经常遇到这样的用法：</p>
+<figure data-type="image" tabindex="10"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200917001812.png" alt="image-20200917001811957" loading="lazy"></figure>
+<figure data-type="image" tabindex="11"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200917001822.png" alt="image-20200917001822151" loading="lazy"></figure>
+<h4 id="tostring">toString</h4>
+<ul>
+<li>Number类定义的toString（）可接受表示转换基数的可选参数，默认为十进制</li>
+</ul>
+<figure data-type="image" tabindex="12"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200917002225.png" alt="image-20200917002225186" loading="lazy"></figure>
+<p>经过实践，带参数转换只有数字类可以正确使用，其他都只会返回它的toString()无参数结果。</p>
+<p>//睡觉了，明天再写。</p>
+<h2 id="参考网站">参考网站</h2>
+<p><a href="https://blog.csdn.net/chenchunlin526/article/details/78908592">JS/JavaScript中的概念区分：global对象、window对象、document对象</a></p>
+
+<span id="footnote"></span>
+<div id = "warn"></div>
+</div>
+<div class="toc-container"><ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%EF%B8%8F%E5%89%8D%E8%A8%80">✍️前言</a></li>
+<li><a href="#1-%E5%B8%83%E5%B0%94%E5%80%BC">1. 布尔值</a></li>
+<li><a href="#2-null%E5%92%8Cundefined%E9%87%8D%E7%82%B9">2. null和undefined（重点）</a></li>
+<li><a href="#3-%E5%85%A8%E5%B1%80%E5%AF%B9%E8%B1%A1">3. 全局对象</a></li>
+<li><a href="#4-%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1%E4%B8%B4%E6%97%B6%E5%AF%B9%E8%B1%A1">4. 包装对象（临时对象）</a></li>
+<li><a href="#5-%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%9A%84%E5%8E%9F%E5%A7%8B%E5%80%BC%E5%92%8C%E5%8F%AF%E5%8F%98%E7%9A%84%E5%AF%B9%E8%B1%A1%E5%BC%95%E7%94%A8">5. 不可变的原始值和可变的对象引用</a>
+<ul>
+<li><a href="#%E5%8E%9F%E5%A7%8B%E5%80%BC">原始值</a></li>
+<li><a href="#%E5%AF%B9%E8%B1%A1">对象</a></li>
+</ul>
+</li>
+<li><a href="#6-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E9%87%8D%E8%A6%81">6. 类型转换（重要）</a>
+<ul>
+<li><a href="#61-%E8%BD%AC%E6%8D%A2%E5%92%8C%E7%9B%B8%E7%AD%89%E6%80%A7">6.1 转换和相等性</a></li>
+<li><a href="#62-%E6%98%BE%E5%BC%8F%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">6.2 显式类型转换</a>
+<ul>
+<li><a href="#%E9%9A%90%E5%BC%8F%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">隐式类型转换</a></li>
+<li><a href="#tostring">toString</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E5%8F%82%E8%80%83%E7%BD%91%E7%AB%99">参考网站</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="fullPage"><canvas id="canvas"></canvas></div>
+</article>
+<div id="eof"><span>EOF</span></div><div class="round-shape-one"></div>
+<section>
+<div class="doc_comments">
+
+	  
+		<div id="gitalk-container"></div>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/qyxtim/Static@3.8/gitalk.min.js"></script><link href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.css"rel="stylesheet"><script>var gitalk=new Gitalk({clientID:"ee7c215043d62409bb53",clientSecret:"455d2f4a532bbe073ca25fdf9111932f00bbc624",repo:"giriawsh.github.io",owner:"giriawsh",admin:["giriawsh"],id:(location.pathname).substring(0, 49),distractionFreeMode:false});gitalk.render("gitalk-container");</script>
+	  
+
+	  
+
+</div></section>
+</div></div></div><script>
+"use strict";!function(){for(var n=document.getElementsByTagName("pre"),e=n.length,s=0;s<e;s++){n[s].innerHTML='<span class="line-number"></span>'+n[s].innerHTML+'<span class="cl"></span>';for(var a=n[s].innerHTML.split(/\n/).length,r=0;r<a-1;r++){n[s].getElementsByTagName("span")[0].innerHTML+="<span>"+(r+1)+"</span>"}}}();
+let mainNavLinks=document.querySelectorAll(".markdownIt-TOC a");window.addEventListener("scroll",event=>{let fromTop=window.scrollY;mainNavLinks.forEach((link,index)=>{let section=document.getElementById(decodeURI(link.hash).substring(1));let nextSection=null
+if(mainNavLinks[index+1]){nextSection=document.getElementById(decodeURI(mainNavLinks[index+1].hash).substring(1));}
+if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop){link.classList.add("currentToc");}else{link.classList.remove("currentToc");}}else{link.classList.add("currentToc");}}else{link.classList.remove("currentToc");}});});
+var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
+var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
+var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
+content="本文最后更新于2020-09-17，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-09-17 00:23:40";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+</script>
+<style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
+<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"><a href="https://github.com/giriawsh"title="github"><i class="iconfont icon-github"></i></a></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
+<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>38</strong> posts</span></div></div>
+<script>
+console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;", );
+</script>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+<script type="text/javascript" async src="https://giriawsh.github.io//media/js/prism.js"></script>
+</body>
+
+</html>
