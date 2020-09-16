@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-16T09:58:33.236Z</updated>
+    <updated>2020-09-16T14:08:16.820Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -11,7 +11,7 @@
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
     <entry>
-        <title type="html"><![CDATA[《JS权威指南》第三章——数据类型、数字、文本]]></title>
+        <title type="html"><![CDATA[《JS权威指南》第三章1——数据类型、数字、文本]]></title>
         <id>https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-san-zhang-shu-ju-lei-xing-shu-zi-wen-ben/</id>
         <link href="https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-san-zhang-shu-ju-lei-xing-shu-zi-wen-ben/">
         </link>
