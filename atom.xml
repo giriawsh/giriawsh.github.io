@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-17T07:28:43.285Z</updated>
+    <updated>2020-09-17T07:38:56.637Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -343,7 +343,8 @@ typeof(now / 1);// =&gt; &quot;number&quot;
 now == now.valueOf()// =&gt; false
 now == now.toString()// =&gt; true
 
-// -号优先转换为数字，再进行数字比较
+//-号优先转换为数字，再进行数字比较
+//书上说“&gt;”将日期转换为数字，指的是在比较时now被转换成了数字（因为now-1因为减号已经是数字了），也是没有毛病的。
 now &gt; (now - 1) // =&gt; true
 
 //+号优先转换为字符串，调用toString()方法
