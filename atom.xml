@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-17T07:38:56.637Z</updated>
+    <updated>2020-09-22T17:21:29.519Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -10,6 +10,108 @@
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[《JS权威指南》第三章3——变量声明、变量作用域]]></title>
+        <id>https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-san-zhang-3-bian-liang-sheng-ming-bian-liang-zuo-yong-yu/</id>
+        <link href="https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-san-zhang-3-bian-liang-sheng-ming-bian-liang-zuo-yong-yu/">
+        </link>
+        <updated>2020-09-22T17:19:50.000Z</updated>
+        <summary type="html"><![CDATA[<h2 id="️前言">✍️前言</h2>
+<p>《JS权威指南》学习笔记第三章第三部分，涉及变量声明、变量作用域、作用域链等内容</p>
+]]></summary>
+        <content type="html"><![CDATA[<h2 id="️前言">✍️前言</h2>
+<p>《JS权威指南》学习笔记第三章第三部分，涉及变量声明、变量作用域、作用域链等内容</p>
+<!-- more -->
+<h2 id="1-变量声明">1. 变量声明</h2>
+<p>在JS中，使用一个变量之前应用var来声明，也可以将初始赋值和变量声明合写一起。</p>
+<pre><code>var i = 0, j = 0;
+</code></pre>
+<p>如果未指定初始值，它的初始值为undefined</p>
+<p>JS变量可以是任意数据类型（轻量级的优点基础）</p>
+<h3 id="重复声明和遗漏声明">重复声明和遗漏声明</h3>
+<ul>
+<li>
+<p>使用var语句重复声明变量是合法且无害的。</p>
+</li>
+<li>
+<p>如果试图读取一个没有声明的变量的值，JS会报错。</p>
+</li>
+<li>
+<p>ES5严格模式下，给一个没有声明的变量赋值也会报错</p>
+</li>
+<li>
+<p>非严格模式下，给一个没有声明的变量赋值，实际上会给全局对象创建一个同名属性，使它工作起来像一个正确声明的全局变量（后文会看到区别）</p>
+</li>
+</ul>
+<p>总之别有什么坏习惯，该声明声明。</p>
+<h2 id="2-变量作用域">2. 变量作用域</h2>
+<blockquote>
+<p>一个变量的作用域：程序源代码中定义这个变量的区域</p>
+</blockquote>
+<p>全局变量拥有全局作用域，函数内声明的变量只在函数体内有定义（局部变量，作用域是局部性的），函数参数也是局部变量。</p>
+<p>在函数体内，<strong>局部变量的优先级高于同名的全局变量</strong>。如果同名，全局变量被局部变量所覆盖</p>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200922222448.png" alt="image-20200922222440903" loading="lazy"></figure>
+<p>尽管在全局作用域编写代码时可以不写var语句，但生命局部变量时必须使用var语句（不然可能带有泄漏局部变量的风险）</p>
+<figure data-type="image" tabindex="2"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200922223529.png" alt="image-20200922223529787" loading="lazy"></figure>
+<p>可以看到如果没有在函数作用域内用var重新声明，内部的局部变量值泄漏到了全局。</p>
+<p>函数定义也可以嵌套，每个函数都有自己的作用域。</p>
+<h3 id="21-函数作用域和声明提前">2.1 函数作用域和声明提前</h3>
+<blockquote>
+<p>块级作用域：在类似C语言的编程语言中，花括号内的每一段代码都具有各自的作用域，并且变量在声明它们的代码段之外是不可见的</p>
+</blockquote>
+<p>JS中没有块级作用域，取而代之地使用了函数作用域。</p>
+<blockquote>
+<p>函数作用域：变量在声明它们的函数体以及这个函数体嵌套的任意函数体内都是有定义的。</p>
+</blockquote>
+<p>在函数内声明的所有变量在函数体内始终是可见的。</p>
+<p>这意味着，变量在声明之前甚至已经可用。JS的这个特性被非正式地成为<strong>声明提前</strong>(代码运行开始之前完成，预编译阶段)</p>
+<blockquote>
+<p>声明提前：JS函数里声明的所有变量（但不涉及赋值）都被“提前”至函数体的顶部</p>
+</blockquote>
+<figure data-type="image" tabindex="3"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200922230319.png" alt="image-20200922230319362" loading="lazy"></figure>
+<figure data-type="image" tabindex="4"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200922230232.png" alt="image-20200922230232712" loading="lazy"></figure>
+<p>一开始觉得有点惊讶，实际试验以后发现的却是这样。如果函数体内重新声明了变量，它的声明会被提前，赋值不会。</p>
+<p>由于函数作用域的特性，局部变量在整个函数体始终是有定义的。但是只有执行到var语句的时候，局部变量才会被真正赋值。它的等价表现如下（声明提前，赋值保留原始位置）：</p>
+<figure data-type="image" tabindex="5"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200922230514.png" alt="image-20200922230514238" loading="lazy"></figure>
+<p>在JS中没有块级作用域，一些程序员特意将变量声明放在函数体顶部，可以使得源代码更加清晰地反映真实的变量作用域。</p>
+<h3 id="22-作为属性的变量">2.2 作为属性的变量</h3>
+<p>之前我们提到过全局对象，当声明一个JS全局变量时，实际上是定义了全局对象的一个属性。</p>
+<p>如果使用了var声明变量，创建的这个属性时不可配置的，无法通过delete运算符删除。</p>
+<p>如果在非严格模式下，并给未声明的变量赋值，JS会自动创建一个全局变量，这种方式创建的全局变量时可配置属性，并且可以通过delete删除。</p>
+<figure data-type="image" tabindex="6"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200922230803.png" alt="image-20200922230803723" loading="lazy"></figure>
+<p>但是对于局部变量，没有这个规定。局部变量当做跟函数调用相关的某个对象的属性。</p>
+<p>ES5中称为“<strong>声明上下文对象</strong>”。</p>
+<p>JS允许使用this来引用全局对象，this.xxx引用全局对象的某个属性（或者说某个全局变量），却没有方法可以引用局部变量中存放的对象。</p>
+<p>这种存放局部变量的对象的特有性质，是一种我们不可见的内部实现。</p>
+<h3 id="23-作用域链重点">2.3 作用域链（重点）</h3>
+<p>根据上面可以知道，全局变量在程序中始终都是有定义的。局部变量在声明它的函数体内以及其所嵌套的函数内始终是有定义的。</p>
+<p>根据2.2的性质，我们类似地可以把一个局部变量看做是自定义实现的对象的属性（就像全局变量是全局对象的属性一样）。</p>
+<p>每一段JS代码都有一个与之关联的作用域链。这个作用域链是一个对象列表或者链表，这组对象定义了这段代码“作用域”中的变量。</p>
+<blockquote>
+<p>变量解析：JS查找变量x的过程</p>
+</blockquote>
+<p>进行变量解析时，会从链中的第一个对象开始查找。如果有x属性，就会直接使用这个。如果不存在，会继续查找链上的下一个对象（相当于从函数内部往外找）。如果没有任何一个对象含有x属性，那么认为这段代码作用域链上不存在x，抛出引用错误异常。</p>
+<ul>
+<li>在最顶层代码中，作用域链由一个全局对象组成（很好理解，所有变量都是全局对象的属性）。</li>
+<li>在不包含嵌套的函数体内，作用域链上有两个对象
+<ul>
+<li>第一个是定义函数参数和局部变量的对象</li>
+<li>第二个是全局对象（也很好理解，如果要找x，先找函数体内再找外面的全局对象内）</li>
+</ul>
+</li>
+<li>在一个嵌套的函数体内，作用域上至少有三个对象</li>
+</ul>
+<p>这里可以参考：<a href="https://juejin.im/post/6844903797135769614">深入理解JavaScript作用域和作用域链</a></p>
+<p><strong>对象链的创建规则：</strong></p>
+<p>当定义一个函数时，它实际上保存一个作用域链。当调用这个函数时，它创建一个新的对象来存储它的局部变量，并将这个对象添加至保存的那个作用域链上，同时创建一个新的更长的表示函数调用作用域的“链”。</p>
+<p>对于嵌套函数来说，<strong>每次调用外部函数时，内部函数又会重新定义一遍</strong>。因为<strong>每次调用外部函数的时候作用域链都是不同的</strong>，内部函数在每次定义的时候都会有微妙的差别。</p>
+<p>总结来说：<strong>在每次调用外部函数时，内部函数的代码都是相同的，但是关联这段代码的作用域链将会是不相同的，因此内部函数在每次定义时都会有微妙的不同。</strong></p>
+<p>PS：不得不吐槽下中文书翻译，这里建议看原版。</p>
+<figure data-type="image" tabindex="7"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200923011322.png" alt="image-20200923011322623" loading="lazy"></figure>
+<figure data-type="image" tabindex="8"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200923011414.png" alt="image-20200923011414788" loading="lazy"></figure>
+<p>我吐啦这翻译，我来回看了好几遍……</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[《遐方怨》赏析]]></title>
         <id>https://giriawsh.github.io/post/lesslessxia-fang-yuan-greatergreater-shang-xi/</id>
@@ -1612,192 +1714,6 @@ function calculatePath(node, expectNumber) {
     }
     return retNode;
 }
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[《剑指Offer》JS题解——JZ16~20]]></title>
-        <id>https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz16~20/</id>
-        <link href="https://giriawsh.github.io/post/lesslessjian-zhi-offergreatergreater-js-ti-jie-jz16~20/">
-        </link>
-        <updated>2020-09-11T04:44:33.000Z</updated>
-        <summary type="html"><![CDATA[<h1 id="jz16-合并两个排序的链表">JZ16 合并两个排序的链表</h1>
-<h2 id="题目描述">题目描述</h2>
-<p>输入两个单调递增的链表，输出两个链表合成后的链表，当然我们需要合成后的链表满足单调不减规则。</p>
-]]></summary>
-        <content type="html"><![CDATA[<h1 id="jz16-合并两个排序的链表">JZ16 合并两个排序的链表</h1>
-<h2 id="题目描述">题目描述</h2>
-<p>输入两个单调递增的链表，输出两个链表合成后的链表，当然我们需要合成后的链表满足单调不减规则。</p>
-<!-- more -->
-<h2 id="解法一">解法一</h2>
-<p>无递归。构造一个链表头，指向每次比较中较小的那个。如果最后某串链表还有多余，则指向剩下的那串链表。</p>
-<pre><code class="language-js">function Merge(pHead1, pHead2)
-{
-    var head = new ListNode(0);
-    var pHead = head;
-    while(pHead1 != null &amp;&amp; pHead2!= null)
-    {
-        if(pHead1.val &lt; pHead2.val)
-        {
-            head.next = pHead1;
-            pHead1 = pHead1.next;
-        }else{
-            head.next = pHead2;
-            pHead2 = pHead2.next;
-        }
-        head = head.next;
-    }
-    if(pHead1 === null)
-    {
-        head.next = pHead2;
-    }
-    if(pHead2 === null)
-    {
-        head.next = pHead1;
-    }
-    return pHead.next;
-}
-</code></pre>
-<h2 id="解法二">解法二</h2>
-<p>递归法，很好理解。每次要得到下一个位置就进行递归计算</p>
-<pre><code class="language-js">function Merge(pHead1, pHead2) {
-    let p = null;
-    if(!pHead1) return pHead2;//pHead1已经遍历完毕
-    if(!pHead2) return pHead1;
-    if(pHead1.val &lt; pHead2.val)
-    {
-        p = pHead1;
-        p.next = Merge(pHead1.next, pHead2);//本次选取phead1，phead1前进
-    }else{
-        p = pHead2;
-        p.next = Merge(pHead1, pHead2.next);
-    }
-    return p;
-}
-</code></pre>
-<h1 id="jz17-树的子结构">JZ17 树的子结构</h1>
-<h2 id="题目描述-2">题目描述</h2>
-<p>输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）</p>
-<h2 id="解法">解法</h2>
-<p>子结构定义：树A和树B的根结点相等，并且树A的左子树和树B的左子树相等，树A的右子树和树B的右子树相等</p>
-<p>主要是进行每个节点的匹配，首先找基准点，看以当前为根节点向下匹配是否能成功，不能的话就以左子树为基准点，再不能，以右子树为基准点</p>
-<pre><code class="language-js">/**
- * @return {boolean}
- */
-function HasSubtree(pRoot1, pRoot2)
-{
-    // write code here
-    var result = false;
-    if(pRoot1 != null &amp;&amp; pRoot2 != null)//如果root为零，直接返回false
-    {
-        //看以当前根节点作为基准是否和root2一致，如果不一致找左子树，再找右子树
-        return (doeTreeHaveSubTree(pRoot1, pRoot2) || HasSubtree(pRoot1.left, pRoot2) || HasSubtree(pRoot1.right, pRoot2));
-    }
-    return result;
-}
-function doeTreeHaveSubTree(node1, node2) {
-    if(node2 === null)
-    {
-        return true;//要找的树已经遍历完了，ok
-    }
-    if(node1 === null)
-    {
-        return false;
-    }
-    if(node1.val !== node2.val)
-    {
-        return false;//没匹配上
-    }
-    return doeTreeHaveSubTree(node1.left, node2.left) &amp;&amp; doeTreeHaveSubTree(node1.right, node2.right);//分别匹配左右子树
-}
-</code></pre>
-<h1 id="jz18-二叉树的镜像">JZ18 二叉树的镜像</h1>
-<h2 id="题目描述-3">题目描述</h2>
-<p>操作给定的二叉树，将其变换为源二叉树的镜像。</p>
-<h2 id="解法-2">解法</h2>
-<p>记住每次递归都是你想要的值，那么你只要把左子树定义为右边递归的值，右子树赋值为左边递归的值即可。</p>
-<pre><code class="language-js">function TreeNode(x) {
-    this.val = x;
-    this.left = null;
-    this.right = null;
-}
-
-function Mirror(root) {
-    if (!root) return null;
-    var temp = root.left;
-    root.left = Mirror(root.right);
-    root.right = Mirror(temp);
-    return root;
-}
-</code></pre>
-<h1 id="jz19-顺时针打印矩阵">JZ19 顺时针打印矩阵</h1>
-<h2 id="题目描述-4">题目描述</h2>
-<p>输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，例如，如果输入如下4 X 4矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10.</p>
-<h2 id="解法-3">解法</h2>
-<p>可以定义左右上下边界，每次递归以后把边界往里收，注意边界情况。</p>
-<pre><code class="language-js">function printMatrix(matrix)
-{
-    // write code here
-    var low = 0;
-    var high = matrix.length-1;
-    var left = 0;
-    var right = matrix[0].length-1;
-    var ret = [];
-    while(low &lt;= high &amp;&amp; left &lt;= right)
-    {
-        for(let i = left; i &lt;= right; i++)
-        {
-            ret.push(matrix[low][i]);//从左到右
-        }
-        if(low === high){break;}//只有一行，默认执行完从左到右后就不再执行了
-        for(let j = low+1; j &lt;= high; j++)
-        {
-            ret.push(matrix[j][right]);//从上到下
-        }
-        if(left === right){break;}//只有一列，默认执行完从上到下后就不再执行了
-        for(let m = right-1; m &gt;= left; m--)
-        {
-            ret.push(matrix[high][m]);//从右到左
-        }
-        for(let n = high-1; n &gt;= low+1; n--)
-        {
-            ret.push(matrix[n][left]);//从下到上
-        }
-        low++;
-        high--;
-        left++;
-        right--;
-    }
-    return ret;
-}
-</code></pre>
-<h1 id="jz20-包含min函数的栈">JZ20 包含min函数的栈</h1>
-<h2 id="题目描述-5">题目描述</h2>
-<p>定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））</p>
-<h2 id="解法-4">解法</h2>
-<p>这个好像没什么好说，求最小值可以用math库的函数</p>
-<pre><code class="language-js">    let stack = [];
-    function push(node)
-    {
-        // write code here
-        return stack.push(node);
-    }
-    function pop()
-    {
-        // write code here
-        return stack.pop();
-    }
-    function top()
-    {
-        // write code here
-        return stack.pop();
-    }
-    function min()
-    {
-        // write code here
-        return Math.min(...stack);
-        //也可以return Math.min.apply(this, stack)
-    }
 </code></pre>
 ]]></content>
     </entry>
