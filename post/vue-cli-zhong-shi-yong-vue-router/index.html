@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>Hello Gridea | Giria&#39;s Blog</title>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>vue-cli中使用vue-router | Giria&#39;s Blog</title>
 <link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
 <script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
 
-<link rel="canonical" href="https://giriawsh.github.io/post/hello-gridea/" />
+<link rel="canonical" href="https://giriawsh.github.io/post/vue-cli-zhong-shi-yong-vue-router/" />
 </head>
 <body>
 <div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
@@ -24,37 +24,83 @@
 
 <div class="main"><div class="main-inner"><div class="content">
 <article class="post">
-<h2 class="post_title sm_margin"><a>Hello Gridea</a></h2>
+<h2 class="post_title sm_margin"><a>vue-cli中使用vue-router</a></h2>
 <script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
-<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2018-12-12</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="tag">前端</a> | 	<a href="https://giriawsh.github.io/tag/9OedYhieZ/" class="tag">随笔</a> | 	<a href="https://giriawsh.github.io/tag/yklmR1Lly/" class="tag">Nuxt.js</a> | 	<a href="https://giriawsh.github.io/tag/P-LvHoQha/" class="tag">Vue.js</a> | 	<a href="https://giriawsh.github.io/tag/m5zWIbBTf/" class="tag">日记</a> | 	<a href="https://giriawsh.github.io/tag/RTYD43Ant/" class="tag">书摘</a> | 	<a href="https://giriawsh.github.io/tag/2G-O1ZTp4/" class="tag">JavaScript</a> | 	<a href="https://giriawsh.github.io/tag/mwArQWtwB/" class="tag">JS学习系列</a> | 	<a href="https://giriawsh.github.io/tag/Z0ATkY09H/" class="tag">ES6学习系列</a> | 	<a href="https://giriawsh.github.io/tag/xRMTqhBD2/" class="tag">Gridea</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">298字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">2 min read</span>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-09-23</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="tag">前端</a> | 	<a href="https://giriawsh.github.io/tag/P-LvHoQha/" class="tag">Vue.js</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">497字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">3 min read</span>
 </section>
-
-<img class="featureImg" alt="featureimg" src="https://giriawsh.github.io//post-images/hello-gridea.png" referrerpolicy="no-referrer">
 
 <div style="display:flex">
 <div class="md_block" id="md_block">
 <div class="round-shape-one"></div>
-<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+<h2 id="前言">前言</h2>
+<p>最近开始从Nuxt跳回基础的vue-cli，进行重新学习。集成性框架的便捷性可以使项目快速搭建，但当下对底层的东西也更需要积累才是。算是日常对vue学习进度的总结跟进。</p>
+<p>vue-cli是官方所推的一个脚手架，它的优越性在于图形化、便捷性，更鼓励像插槽一样添加自己所需要的组件，这带来了更好的延展性。</p>
+<p>本文记录了如何在vue-cli中使用vue-router。</p>
+<h2 id="步骤记录">步骤记录</h2>
+<p>前置条件：已经使用创建命令搭建好基础框架</p>
+<pre><code>vue create vue-cli-test
+</code></pre>
+<h3 id="1-添加vue-router">1. 添加vue-router</h3>
+<p>参照<a href="https://router.vuejs.org/installation.html#npm">官方文档</a>，使用add加入router插件（顺便说只有英文版才有vue-cli的专门说明，害）</p>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200923214325.png" alt="image-20200923214318588" loading="lazy"></figure>
+<p>安装前会提醒你记得commit，因为它将会覆盖掉（如果没有将会新生成）app.vue和router/index.js文件。</p>
+<h3 id="2-vue-router的使用">2. vue-router的使用</h3>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b3cb282a329643caa8137c4a5779909f~tplv-k3u1fbpfcp-zoom-1.image" alt="" loading="lazy"><br>
+安装完成，将会自动生成Home和About两个page，同时更新App.vue，并且在router目录下生成index.js文件。默认运行效果如下：</p>
+<figure data-type="image" tabindex="2"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200923214451.png" alt="image-20200923214451577" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200923214458.png" alt="image-20200923214458324" loading="lazy"></figure>
+<p>如果要新增，可以参照官方默认方式，通过创建新的view，插入新的组件。</p>
+<pre><code class="language-js">//App.vue
+&lt;template&gt;
+  &lt;div id=&quot;nav&quot;&gt;
+    &lt;router-link to=&quot;/&quot;&gt;Home&lt;/router-link&gt; |
+    &lt;router-link to=&quot;/about&quot;&gt;About&lt;/router-link&gt; |
+    &lt;router-link to=&quot;/test&quot;&gt;Test&lt;/router-link&gt;
+  &lt;/div&gt;
+  &lt;router-view/&gt;
+&lt;/template&gt;
+</code></pre>
+<pre><code class="language-js">//Test.vue
+&lt;template&gt;
+    &lt;div class=&quot;about&quot;&gt;
+        &lt;h1&gt;This is an test page&lt;/h1&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<pre><code class="language-js">//index.js
+import { createRouter, createWebHistory } from 'vue-router'
+import Home from '../views/Home.vue'
+
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/about',
+    name: 'About',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =&gt; import(/* webpackChunkName: &quot;about&quot; */ '../views/About.vue')
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: () =&gt; import(/* webpackChunkName: &quot;about&quot; */ '../views/Test.vue')
+  },
+
+]
+
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes
+})
+
+export default router
+</code></pre>
+<p>即可实现简单的页面路由效果。</p>
 
 <span id="footnote"></span>
 <div id = "warn"></div>
@@ -62,7 +108,13 @@
 <div class="toc-container"><ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#%E7%89%B9%E6%80%A7">特性👇</a></li>
+<li><a href="#%E5%89%8D%E8%A8%80">前言</a></li>
+<li><a href="#%E6%AD%A5%E9%AA%A4%E8%AE%B0%E5%BD%95">步骤记录</a>
+<ul>
+<li><a href="#1-%E6%B7%BB%E5%8A%A0vue-router">1. 添加vue-router</a></li>
+<li><a href="#2-vue-router%E7%9A%84%E4%BD%BF%E7%94%A8">2. vue-router的使用</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -90,7 +142,7 @@ if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop)
 var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
 var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
 var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
-content="本文最后更新于2018-12-12，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2018-12-12 00:00:00";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+content="本文最后更新于2020-09-23，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-09-23 21:47:14";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
 </script>
 <style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
 <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"><a href="https://github.com/giriawsh"title="github"><i class="iconfont icon-github"></i></a></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
