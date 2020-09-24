@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-23T16:00:35.433Z</updated>
+    <updated>2020-09-24T16:01:41.571Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -10,6 +10,219 @@
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[element源码学习-Layout组件]]></title>
+        <id>https://giriawsh.github.io/post/element-yuan-ma-xue-xi-layout-zu-jian/</id>
+        <link href="https://giriawsh.github.io/post/element-yuan-ma-xue-xi-layout-zu-jian/">
+        </link>
+        <updated>2020-09-24T15:58:41.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="前言">前言</h2>
+<p>Layout布局尝试：</p>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200924002254.png" alt="image-20200924002254419" loading="lazy"></figure>
+<p>大致由两个重要组件构成，el-row与el-col</p>
+<h2 id="row函数">row函数</h2>
+<p><code>row</code>用来作为<code>col</code>的容器，通过render函数创建，上面有一些动态的<code>class</code>、<code>style</code>，以及一个<code>slot</code>用来放置<code>col</code>，相对较为简单。</p>
+<h3 id="render函数">*render函数</h3>
+<p><a href="https://cn.vuejs.org/v2/guide/render-function.html">参考官方手册</a></p>
+<p>实际上提供了js操作渲染组件的能力（类似于React的思想），给予了组件更高的灵活性。使用JS可以完全代替模板功能（用 JavaScript 的 <code>if</code>/<code>else</code> 和 <code>map</code> 来重写），以下两段代码等价：</p>
+<pre><code class="language-html">&lt;h1&gt;{{ blogTitle }}&lt;/h1&gt;
+</code></pre>
+<pre><code class="language-js">render: function (createElement) {
+  return createElement('h1', this.blogTitle)
+}
+</code></pre>
+<p>在这两种情况下，Vue 都会自动保持页面的更新，即便 <code>blogTitle</code> 发生了改变。</p>
+<p>Vue 的模板实际上被编译成了渲染函数。</p>
+<h3 id="indexjs">index.js</h3>
+<figure data-type="image" tabindex="2"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200924002451.png" alt="image-20200924002451523" loading="lazy"></figure>
+<p>这一块是按常规的组件注册和封装。</p>
+<p>打开<code>index.js</code>,这里最后一句导出<code>Row</code>供我们<code>import</code>。</p>
+<p>中间的<code>install</code>方法则是把这个组件当成一个Vue的插件来使用，通过<code>Vue.use()</code>来使用该组件,install方法传递一个Vue的构造器，Element的所有组件都是一个对象{...}。</p>
+<p>之后会看到里面有个<code>render</code>函数来创建组件的html结构，<code>render</code>方法的好处很大，使得创建html模板的代码更加简洁高效，而不是冗长的各种div标签堆叠，更类似于一种配置形式来创建html。</p>
+<p>最后通过<code>export default</code>导出,而不是常用的单文件组件形式，因此必须提供install方法。</p>
+<p>之前讲到过<code>/* istanbul ignore next */</code>，这个是一个npm代码覆盖率的工具istanbul，在写测试的时候，有些不必要的文件，在计算覆盖率时会被计算到，所以加上这句注释就可以忽略下面的代码。</p>
+<h3 id="rowjs">row.js</h3>
+<pre><code class="language-js">  render(h) {
+    return h(this.tag, {
+      class: [
+        'el-row',
+        this.justify !== 'start' ? `is-justify-${this.justify}` : '',
+        this.align !== 'top' ? `is-align-${this.align}` : '',
+        { 'el-row--flex': this.type === 'flex' }
+      ],
+      style: this.style
+    }, this.$slots.default);
+  }
+</code></pre>
+<p>它的style是一个计算属性，会根据<code>gutter</code>这一<code>prop</code>来改变，栏目之间的间隔，用来抵消<code>col</code>造成的两边的<code>padding</code>。</p>
+<pre><code class="language-js">  computed: {
+    style() {
+      const ret = {};
+
+      if (this.gutter) {
+        ret.marginLeft = `-${this.gutter / 2}px`;
+        ret.marginRight = ret.marginLeft;
+      }
+
+      return ret;
+    }
+  },
+</code></pre>
+<p>这里margin为负值的详细解释可看：<a href="https://juejin.im/post/6844903657431891975">element-layout分析</a></p>
+<figure data-type="image" tabindex="3"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200924233307.webp" alt="img" loading="lazy"></figure>
+<p>大概就是为了消除图中最左侧和最右侧的间隔。</p>
+<p><code>class</code>中的justify/align/type属性都是props，由用户选择性提供</p>
+<pre><code class="language-js">    type: String,//是否采用flex布局
+    justify: {//flex 布局下的水平排列方式
+      type: String,
+      default: 'start'
+    },
+    align: {// flex 布局下的垂直排列方式
+      type: String,
+      default: 'top'
+    }
+</code></pre>
+<h2 id="col函数">col函数</h2>
+<h3 id="coljs">col.js</h3>
+<p>首先来看gutter这一style，与row中类似，是通过一个计算属性进行调整。</p>
+<pre><code class="language-js">    if (this.gutter) {
+      style.paddingLeft = this.gutter / 2 + 'px';
+      style.paddingRight = style.paddingLeft;
+    }
+</code></pre>
+<p>它的计算过程，涉及父实例。如果父实例不是el-row而是直接使用了el-col将以自身为准返回0，否则返回父组件已有的gutter，然后在此基础上增加padding。</p>
+<blockquote>
+<p>一般的想法是col之间用margin来间隔，其实是不行的，而用padding来间隔就很简单，width按百分比来分配就行(box-sizing要设置为border-box)</p>
+</blockquote>
+<pre><code class="language-js">  computed: {
+    gutter() {
+      let parent = this.$parent;
+      while (parent &amp;&amp; parent.$options.componentName !== 'ElRow') {//这里的componentName在row.js中有定义
+        parent = parent.$parent;//如果没有被el-row包裹，继续向上查找有无el-row，直到找到el-row父组件为止。
+      }
+      return parent ? parent.gutter : 0;
+    }
+  },
+</code></pre>
+<h4 id="栅格系统">*栅格系统</h4>
+<p>这里最完备也是最早最具有启发性的是<a href="https://v3.bootcss.com/css/">boostrap提出的栅格系统</a>。</p>
+<p>栅格系统用于通过一系列的行（row）与列（column）的组合来创建页面布局，你的内容就可以放入这些创建好的布局中。</p>
+<blockquote>
+<ul>
+<li>“行（row）”必须包含在 <code>.container</code> （固定宽度）或 <code>.container-fluid</code> （100% 宽度）中，以便为其赋予合适的排列（aligment）和内补（padding）。</li>
+<li>通过“行（row）”在水平方向创建一组“列（column）”。</li>
+<li>你的内容应当放置于“列（column）”内，并且，只有“列（column）”可以作为行（row）”的直接子元素。</li>
+<li>类似 <code>.row</code> 和 <code>.col-xs-4</code> 这种预定义的类，可以用来快速创建栅格布局。Bootstrap 源码中定义的 mixin 也可以用来创建语义化的布局。</li>
+<li>通过为“列（column）”设置 <code>padding</code> 属性，从而创建列与列之间的间隔（gutter）。通过为 <code>.row</code> 元素设置负值 <code>margin</code> 从而抵消掉为 <code>.container</code> 元素设置的 <code>padding</code>，也就间接为“行（row）”所包含的“列（column）”抵消掉了<code>padding</code>。</li>
+<li>负值的 margin就是下面的示例为什么是向外突出的原因。在栅格列中的内容排成一行。</li>
+<li>栅格系统中的列是通过指定1到12的值来表示其跨越的范围。例如，三个等宽的列可以使用三个 <code>.col-xs-4</code> 来创建。</li>
+<li>如果一“行（row）”中包含了的“列（column）”大于 12，多余的“列（column）”所在的元素将被作为一个整体另起一行排列。</li>
+<li>栅格类适用于与屏幕宽度大于或等于分界点大小的设备 ， 并且针对小屏幕设备覆盖栅格类。 因此，在元素上应用任何 <code>.col-md-*</code> 栅格类适用于与屏幕宽度大于或等于分界点大小的设备 ， 并且针对小屏幕设备覆盖栅格类。 因此，在元素上应用任何 <code>.col-lg-*</code> 不存在， 也影响大屏幕设备。</li>
+</ul>
+</blockquote>
+<figure data-type="image" tabindex="4"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200924231845.png" alt="image-20200924231838614" loading="lazy"></figure>
+<h4 id="render函数部分">render函数部分</h4>
+<p>看下官网中属性的定义和效果</p>
+<figure data-type="image" tabindex="5"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200924233832.png" alt="image-20200924233832568" loading="lazy"></figure>
+<p>再来看源代码</p>
+<pre><code class="language-js">render(h) {
+    let classList = [];
+    let style = {};
+
+    if (this.gutter) {
+      style.paddingLeft = this.gutter / 2 + 'px';
+      style.paddingRight = style.paddingLeft;
+    }
+// span 栅格占据的列数，通过 width 来实现
+  // offset 栅格左侧的间隔格数，通过 margin-left 实现
+  // push 栅格向右移动格数，通过 left 实现
+  // pull 栅格向左移动格数，通过 right 实现
+    ['span', 'offset', 'pull', 'push'].forEach(prop =&gt; {
+      if (this[prop] || this[prop] === 0) {
+        classList.push(
+          prop !== 'span'
+            ? `el-col-${prop}-${this[prop]}`
+            : `el-col-${this[prop]}`
+        );
+      }
+    });
+ // 不同屏幕大小下的适配，传入数字的话只会影响 span，还可以通过传入对象进行更多的控制
+  // xs &lt;768px 响应式栅格数或者栅格属性对象
+  // sm ≥768px 响应式栅格数或者栅格属性对象
+  // md ≥992px 响应式栅格数或者栅格属性对象
+  // lg ≥1200px 响应式栅格数或者栅格属性对象
+    ['xs', 'sm', 'md', 'lg', 'xl'].forEach(size =&gt; {
+      if (typeof this[size] === 'number') {
+        classList.push(`el-col-${size}-${this[size]}`);
+      } else if (typeof this[size] === 'object') {
+        let props = this[size];
+        Object.keys(props).forEach(prop =&gt; {
+          classList.push(
+            prop !== 'span'
+              ? `el-col-${size}-${prop}-${props[prop]}`
+              : `el-col-${size}-${props[prop]}`
+          );
+        });
+      }
+    });
+
+    return h(this.tag, {
+      class: ['el-col', classList],
+      style
+    }, this.$slots.default);
+  }
+</code></pre>
+<p>下面解释下<code>['span', 'offset', 'pull', 'push']</code>这几个的作用，span很好理解，占父容器的列数，对应scss代码如下：</p>
+<pre><code class="language-js">[class*=&quot;el-col-&quot;] {
+  float: left;
+  box-sizing: border-box;
+}
+
+.el-col-0 {
+  display: none;
+}
+
+@for $i from 0 through 24 {
+    //el-col-数字类型的类的宽度就是百分比
+  .el-col-#{$i} {
+    width: (1 / 24 * $i * 100) * 1%;
+  }
+
+  .el-col-offset-#{$i} {
+    margin-left: (1 / 24 * $i * 100) * 1%;
+  }
+
+  .el-col-pull-#{$i} {
+    position: relative;
+    right: (1 / 24 * $i * 100) * 1%;
+  }
+
+  .el-col-push-#{$i} {
+    position: relative;
+    left: (1 / 24 * $i * 100) * 1%;
+  }
+}
+
+</code></pre>
+<ul>
+<li>
+<p>[attribute*=value] 选择器，它选择了所有类名以<code>el-col-</code>开头的类.</p>
+</li>
+<li>
+<p><code>offset</code>实际上是<code>margin-left</code>(很好理解，相对左移就是偏移了),这可能会导致一行排列不下所有的col，会导致换行出现</p>
+</li>
+<li>
+<p><code>el-col-pull</code>则不同，仅仅只是相对原来的位置移动，不会造成挤下去换行的情况，而会造成不同col互相覆盖</p>
+</li>
+</ul>
+<p>js部分大量使用模板字符串而不是字符串拼接，达到简化代码的目的。</p>
+<h2 id="参考网站">参考网站</h2>
+<p><a href="https://www.jianshu.com/p/52ae9ad78f80">Element分析（组件篇）——Layout</a></p>
+<p><a href="https://juejin.im/post/6844903657431891975">Element源码分析系列1一Layout(布局)</a></p>
+<p><a href="https://v3.bootcss.com/css/#grid-options">Bootstrap 栅格参数</a></p>
+<p><a href="https://element.eleme.io/#/zh-CN/component/layout">Element.io - layout</a></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[vue-cli中使用vue-router]]></title>
         <id>https://giriawsh.github.io/post/vue-cli-zhong-shi-yong-vue-router/</id>
@@ -1448,185 +1661,6 @@ xmlns:xlink="http://www.w3.org/1999/xlink"><br>
     <path stroke-dasharray="10,10" d="M5 40 l215 0" />
     <path stroke-dasharray="20,10,5,5,5,10" d="M5 60 l215 0" />
   </g>
-</svg>]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[SVG学习系列1-简介、嵌入方式、基本形状]]></title>
-        <id>https://giriawsh.github.io/post/svg-xue-xi-xi-lie-1-jian-jie-qian-ru-fang-shi-ji-ben-xing-zhuang/</id>
-        <link href="https://giriawsh.github.io/post/svg-xue-xi-xi-lie-1-jian-jie-qian-ru-fang-shi-ji-ben-xing-zhuang/">
-        </link>
-        <updated>2020-09-11T04:51:54.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="前言">🎨前言</h1>
-<p>WebGL学习系列，结合菜鸟教程、CSDN、MDN等多平台进行学习总结。</p>
-<p><a href="https://www.runoob.com/svg/svg-reference.html">SVG 实用参考手册</a></p>
-<h1 id="svg简介">SVG简介</h1>
-<p>SVG 意为可缩放矢量图形（Scalable Vector Graphics）。使用 XML 格式定义图像。</p>
-<p>一个标准SVG创建声明：</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
-&lt;!DOCTYPE svg PUBLIC &quot;-//W3C//DTD SVG 1.1//EN&quot;
-&quot;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&quot;&gt;
-
-&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;circle cx=&quot;100&quot; cy=&quot;50&quot; r=&quot;40&quot; stroke=&quot;black&quot;
-  stroke-width=&quot;2&quot; fill=&quot;red&quot; /&gt;
-&lt;/svg&gt;
-</code></pre>
-<p>第一行包含了 XML 声明。请注意 standalone 属性！该属性规定此 SVG 文件是否是&quot;独立的&quot;，或含有对外部文件的引用。</p>
-<p>standalone=&quot;no&quot; 意味着 SVG 文档会引用一个外部文件 - 在这里，是 DTD 文件。</p>
-<p>第二和第三行引用了这个外部的 SVG DTD。该 DTD 位于 &quot;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&quot;。该 DTD 位于 W3C，含有所有允许的 SVG 元素。</p>
-<p>SVG 代码以 <code>&lt;svg&gt;</code>元素开始，包括开启标签 <code>&lt;svg&gt;</code> 和关闭标签<code>&lt;/svg&gt;</code> 。这是根元素。width 和 height 属性可设置此 SVG 文档的宽度和高度。version 属性可定义所使用的 SVG 版本，xmlns 属性可定义 SVG 命名空间。</p>
-<p>SVG 的 <circle> 用来创建一个圆。cx 和 cy 属性定义圆中心的 x 和 y 坐标。如果忽略这两个属性，那么圆点会被设置为 (0, 0)。r 属性定义圆的半径。</p>
-<p>stroke 和 stroke-width 属性控制如何显示形状的轮廓。我们把圆的轮廓设置为 2px 宽，黑边框。</p>
-<p>fill 属性设置形状内的颜色。我们把填充颜色设置为红色。</p>
-<p>关闭标签的作用是关闭 SVG 元素和文档本身。</p>
-<h2 id="svg网格">SVG网格</h2>
-<p>对于所有元素，SVG使用的坐标系统或者说网格系统，和Canvas用的差不多（所有计算机绘图都差不多）。这种坐标系统是：以页面的左上角为(0,0)坐标点，坐标以像素为单位，x轴正方向是向右，y轴正方向是向下。注意，这和你小时候所教的绘图方式是相反的。但是在HTML文档中，元素都是用这种方式定位的。</p>
-<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911125217.png" alt="" loading="lazy"></figure>
-<h1 id="svg如何嵌入html">SVG如何嵌入HTML</h1>
-<p>SVG 文件可通过以下标签嵌入 HTML 文档：<embed>、<object> 或者 <iframe>。</p>
-<p>SVG的代码可以直接嵌入到HTML页面中，或您可以直接链接到SVG文件。</p>
-<h2 id="使用embed-标签">使用<code>&lt;embed&gt;</code> 标签</h2>
-<p>优势：所有主要浏览器都支持，并允许使用脚本</p>
-<p>缺点：不推荐在HTML4和XHTML中使用（但在HTML5允许）</p>
-<pre><code>&lt;embed src=&quot;circle1.svg&quot; type=&quot;image/svg+xml&quot; /&gt;
-</code></pre>
-<h2 id="使用-object-标签">使用 <code>&lt;object&gt;</code> 标签</h2>
-<p>优势：所有主要浏览器都支持，并支持HTML4，XHTML和HTML5标准</p>
-<p>缺点：不允许使用脚本。</p>
-<pre><code>&lt;object data=&quot;circle1.svg&quot; type=&quot;image/svg+xml&quot;&gt;&lt;/object&gt;
-</code></pre>
-<h2 id="使用-iframe-标签">使用 <code>&lt;iframe&gt;</code> 标签</h2>
-<p>优势：所有主要浏览器都支持，并允许使用脚本</p>
-<p>缺点：不推荐在HTML4和XHTML中使用（但在HTML5允许）</p>
-<pre><code>&lt;iframe src=&quot;circle1.svg&quot;&gt;&lt;/iframe&gt;
-</code></pre>
-<h2 id="直接嵌入">直接嵌入</h2>
-<p>在Firefox、Internet Explorer9、谷歌Chrome和Safari中，你可以直接在HTML嵌入SVG代码。</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-   &lt;circle cx=&quot;100&quot; cy=&quot;50&quot; r=&quot;40&quot; stroke=&quot;black&quot; stroke-width=&quot;2&quot; fill=&quot;red&quot; /&gt;
-&lt;/svg&gt;
-</code></pre>
-<h2 id="链接文件">链接文件</h2>
-<p>还可以用<code>&lt;a&gt;</code>标签链接到一个SVG文件</p>
-<pre><code>&lt;a href=&quot;circle1.svg&quot;&gt;View SVG file&lt;/a&gt;
-</code></pre>
-<h1 id="svg基本形状">SVG基本形状</h1>
-<h2 id="1矩形">1.矩形</h2>
-<p><code>&lt;rect&gt;</code> 标签可用来创建矩形，以及矩形的变种</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;rect width=&quot;300&quot; height=&quot;100&quot;
-  style=&quot;fill:rgb(0,0,255);stroke-width:1;stroke:rgb(0,0,0)&quot;/&gt;
-&lt;/svg&gt;
-</code></pre>
-<ul>
-<li>rect 元素的 width 和 height 属性可定义矩形的高度和宽度</li>
-<li>style 属性用来定义 CSS 属性</li>
-<li>CSS 的 fill 属性定义矩形的填充颜色（rgb 值、颜色名或者十六进制值）</li>
-<li>CSS 的 stroke-width 属性定义矩形边框的宽度</li>
-<li>CSS 的 stroke 属性定义矩形边框的颜色</li>
-</ul>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;rect x=&quot;50&quot; y=&quot;20&quot; width=&quot;150&quot; height=&quot;150&quot;
-  style=&quot;fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;
-  stroke-opacity:0.9;opacity:0.5&quot;/&gt;
-&lt;/svg&gt;
-</code></pre>
-<ul>
-<li>x 属性定义矩形的左侧位置（例如，x=&quot;0&quot; 定义矩形到浏览器窗口左侧的距离是 0px）</li>
-<li>y 属性定义矩形的顶端位置（例如，y=&quot;0&quot; 定义矩形到浏览器窗口顶端的距离是 0px）</li>
-<li>CSS 的 fill-opacity 属性定义填充颜色透明度（合法的范围是：0 - 1）</li>
-<li>CSS 的 stroke-opacity 属性定义轮廓颜色的透明度（合法的范围是：0 - 1）</li>
-<li>CSS opacity 属性用于定义了元素的透明值 (范围: 0 到 1)。</li>
-</ul>
-<p>圆角矩形：</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;rect x=&quot;50&quot; y=&quot;20&quot; rx=&quot;20&quot; ry=&quot;20&quot; width=&quot;150&quot; height=&quot;150&quot;
-  style=&quot;fill:red;stroke:black;stroke-width:5;opacity:0.5&quot;/&gt;
-&lt;/svg&gt;
-</code></pre>
-<p>rx 和 ry 属性可使矩形产生圆角。</p>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-  <rect x="50" y="20" rx="20" ry="20" width="150" height="150"
-  style="fill:red;stroke:black;stroke-width:5;opacity:0.5"/>
-</svg>
-<h2 id="2-圆形">2. 圆形</h2>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;circle cx=&quot;100&quot; cy=&quot;50&quot; r=&quot;40&quot; stroke=&quot;black&quot;
-  stroke-width=&quot;2&quot; fill=&quot;red&quot;/&gt;
-&lt;/svg&gt;
-</code></pre>
-<ul>
-<li>cx和cy属性定义圆点的x和y坐标。如果省略cx和cy，圆的中心会被设置为(0, 0)</li>
-<li>r属性定义圆的半径</li>
-</ul>
-<h2 id="3-椭圆">3. 椭圆</h2>
-<p><code>&lt;ellipse&gt;</code> 元素是用来创建一个椭圆：</p>
-<p>椭圆与圆很相似。不同之处在于椭圆有不同的x和y半径，而圆的x和y半径是相同的：</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;ellipse cx=&quot;300&quot; cy=&quot;80&quot; rx=&quot;100&quot; ry=&quot;50&quot;
-  style=&quot;fill:yellow;stroke:purple;stroke-width:2&quot;/&gt;
-&lt;/svg&gt;
-</code></pre>
-<ul>
-<li>RX属性定义的水平半径</li>
-<li>RY属性定义的垂直半径</li>
-</ul>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-  <ellipse cx="300" cy="80" rx="100" ry="50"
-  style="fill:yellow;stroke:purple;stroke-width:2"/>
-</svg>
-<h2 id="4-直线">4. 直线</h2>
-<p><code>&lt;line&gt;</code> 元素是用来创建一个直线</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;line x1=&quot;0&quot; y1=&quot;0&quot; x2=&quot;200&quot; y2=&quot;200&quot;
-  style=&quot;stroke:rgb(255,0,0);stroke-width:2&quot;/&gt;
-&lt;/svg&gt;
-</code></pre>
-<ul>
-<li>x1 属性在 x 轴定义线条的开始</li>
-<li>y1 属性在 y 轴定义线条的开始</li>
-<li>x2 属性在 x 轴定义线条的结束</li>
-<li>y2 属性在 y 轴定义线条的结束</li>
-</ul>
-<h2 id="5-多边形">5. 多边形</h2>
-<p><code>&lt;polygon&gt;</code> 标签用来创建含有不少于三个边的图形。</p>
-<pre><code>&lt;svg  height=&quot;210&quot; width=&quot;500&quot;&gt;
-  &lt;polygon points=&quot;200,10 250,190 160,210&quot;
-  style=&quot;fill:lime;stroke:purple;stroke-width:1&quot;/&gt;
-&lt;/svg&gt;
-</code></pre>
-<p>points 属性定义多边形每个角的 x 和 y 坐标</p>
-<svg  height="210" width="500">
-  <polygon points="200,10 250,190 160,210"
-  style="fill:lime;stroke:purple;stroke-width:1"/>
-</svg>
-<p>星型：</p>
-<pre><code>&lt;svg height=&quot;210&quot; width=&quot;500&quot;&gt;
-  &lt;polygon points=&quot;100,10 40,198 190,78 10,78 160,198&quot;
-  style=&quot;fill:lime;stroke:purple;stroke-width:5;fill-rule:nonzero;&quot; /&gt;
-&lt;/svg&gt;
-</code></pre>
-<svg height="210" width="500">
-  <polygon points="100,10 40,198 190,78 10,78 160,198"
-  style="fill:lime;stroke:purple;stroke-width:5;fill-rule:nonzero;" />
-</svg>
-<pre><code>&lt;svg height=&quot;210&quot; width=&quot;500&quot;&gt;
-  &lt;polygon points=&quot;100,10 40,198 190,78 10,78 160,198&quot;
-  style=&quot;fill:lime;stroke:purple;stroke-width:5;fill-rule:evenodd;&quot; /&gt;
-&lt;/svg&gt;
-</code></pre>
-<svg height="210" width="500">
-  <polygon points="100,10 40,198 190,78 10,78 160,198"
-  style="fill:lime;stroke:purple;stroke-width:5;fill-rule:evenodd;" />
-</svg>
-<h2 id="6-曲线">6. 曲线</h2>
-<p><code>&lt;polyline&gt;</code> 元素是用于创建任何只有直线的形状：</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;polyline points=&quot;0,40 40,40 40,80 80,80 80,120 120,120 120,160&quot; style=&quot;fill:white;stroke:red;stroke-width:4&quot; /&gt;
-&lt;/svg&gt;
-</code></pre>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-  <polyline points="0,40 40,40 40,80 80,80 80,120 120,120 120,160" style="fill:white;stroke:red;stroke-width:4" />
 </svg>]]></content>
     </entry>
 </feed>
