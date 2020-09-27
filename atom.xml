@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-25T03:21:40.660Z</updated>
+    <updated>2020-09-27T15:17:47.033Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -10,6 +10,158 @@
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[《JS权威指南》第四章1]]></title>
+        <id>https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-si-zhang-1/</id>
+        <link href="https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-si-zhang-1/">
+        </link>
+        <updated>2020-09-27T15:16:47.000Z</updated>
+        <summary type="html"><![CDATA[<h2 id="前言">前言</h2>
+<p>《JS权威指南》的第四章第一部分，包括原始表达式、对象数组表达式、函数定义表达式、属性访问表达式、调用表达式、对象创建表达式等内容。</p>
+]]></summary>
+        <content type="html"><![CDATA[<h2 id="前言">前言</h2>
+<p>《JS权威指南》的第四章第一部分，包括原始表达式、对象数组表达式、函数定义表达式、属性访问表达式、调用表达式、对象创建表达式等内容。</p>
+<!-- more -->
+<blockquote>
+<p>表达式：JS解释器会将其计算出一个结果</p>
+</blockquote>
+<ul>
+<li><strong>常量</strong>是最简单的一类表达式。<strong>变量名</strong>也是一种简单的表达式，它的值就是赋给变量的值。</li>
+<li>复杂表达式是由简单表达式组成的。
+<ul>
+<li>最常用的方法是使用运算符</li>
+</ul>
+</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200927010128.png" alt="image-20200927010120328" loading="lazy"></figure>
+<p>今天的电脑桌面也很漂亮……顺手存一下</p>
+<h2 id="1-原始表达式">1. 原始表达式</h2>
+<p><strong>最简单的表达式是原始表达式</strong>。是表达式的最小单位（不再包含其他表达式）</p>
+<p>JS中的原始表达式：</p>
+<ul>
+<li>常量</li>
+<li>直接量（直接在程序中出现的常数值，例如字符直接量、正则表达式直接量等）</li>
+<li>部分关键字（true false this null等）
+<ul>
+<li>this并不是一个常量，在一个方法体内this返回调用这个方法的对象。</li>
+</ul>
+</li>
+<li>变量</li>
+</ul>
+<h2 id="2-对象和数组的初始化表达式">2. 对象和数组的初始化表达式</h2>
+<blockquote>
+<p>对象直接量、数组直接量：实际上是一个新创建的对象和数组</p>
+</blockquote>
+<p>他们不是原始表达式，因为它们所包含的成员或者元素都是子表达式（例如a[1]等）</p>
+<pre><code class="language-js">var a = [1];
+</code></pre>
+<p>数组可以嵌套，数组初始化表达式中的元素表达式也都会各自计算一次。</p>
+<pre><code>var martrix = [[1,2,3],[4,5,6]];
+</code></pre>
+<p>也就是说，数组初始化表达式每次计算的值有可能是不同的。</p>
+<figure data-type="image" tabindex="2"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200927174852.png" alt="image-20200927174845777" loading="lazy"></figure>
+<p>数组直接量中的列表逗号之间的元素可以省略，会自动填充undefined，结尾处可以留下单个逗号而不会填充。</p>
+<pre><code>var s = {
+	&quot;yes&quot;: 0,
+	&quot;no&quot;: 1
+}
+</code></pre>
+<p>对象直接量也可以嵌套，也都会各自计算一次并且它们可以是任意JS表达式。</p>
+<p>对象直接量中的属性名称可以是字符串而不是标识符。</p>
+<h2 id="3-函数定义表达式">3. 函数定义表达式</h2>
+<blockquote>
+<p>函数直接量：函数定义表达式定义为一个JS函数，表达式的值是这个新定义的函数。</p>
+</blockquote>
+<pre><code class="language-js">var f = function(x){return x;}
+</code></pre>
+<p>函数定义表达式同样可以包含函数的名字，也可以通过函数语句来定义。</p>
+<h2 id="4-属性访问表达式">4. 属性访问表达式</h2>
+<p>属性访问表达式运算得到一个对象属性或一个数组元素的值。拥有两种语法：</p>
+<pre><code>expression.identifier
+expression[expression]
+</code></pre>
+<p>第二个表达式指定要访问的属性的名称或者代表要访问数组元素的索引。</p>
+<p>计算顺序：</p>
+<ol>
+<li>在“.”和“[”之前的表达式总会首先计算，如果expression计算的结果是null或undefined，抛出一个类型错误异常</li>
+<li>如果运算结果不是对象或者数组，JS会将其转换成对象（参照第三章JS类型转换）</li>
+<li>如果跟随句点和标识符（第一种写法），会查找由这个标识符所指定的属性的值，并将其作为整个表达式的值返回</li>
+<li>如果跟随方括号，会计算方括号内表达式的值<strong>并将它转换为字符串</strong>。</li>
+<li>如果命名的属性不存在，整个属性访问表达式的值是undefined</li>
+</ol>
+<h3 id="注意">注意</h3>
+<p>如果属性名称是一个保留字或者包含空格和标点符号，或是一个数字（对于数组来说），或当属性名是通过运算得出而不是固定的值时，则必须使用方括号的写法。</p>
+<figure data-type="image" tabindex="3"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200927180412.png" alt="image-20200927180412330" loading="lazy"></figure>
+<p>PS:亲测浏览器调试台中保留字可以，但是看起来非常不具有语义化</p>
+<h2 id="5-调用表达式">5. 调用表达式</h2>
+<blockquote>
+<p>调用表达式：一种调用（或者执行）函数或方法的语法表示</p>
+</blockquote>
+<p>以一个函数表达式开始，指代了要调用的函数，跟随一对圆括号，括号内是以逗号隔开的参数列表</p>
+<pre><code class="language-js">f(0);
+Math.max(x, y, z);
+a.sort();
+</code></pre>
+<p>计算顺序：</p>
+<ol>
+<li>函数表达式</li>
+<li>参数表达式=&gt;得到参数值</li>
+<li>如果函数表达式不是一个可调用对象，抛出类型错误异常（所有的函数都是可调用的，即使宿主对象不是函数它也有可能被调用）</li>
+<li>实参的值依次赋值给形参</li>
+<li>执行函数体</li>
+<li>返回（若无return 返回undefined）</li>
+</ol>
+<blockquote>
+<ul>
+<li>宿主对象就是执行JS脚本的环境提供的对象。对于嵌入到网页中的JS来说，其宿主对象就是浏览器提供的对象，所以又称为浏览器对象，如IE、Firefox等浏览器提供的对象。不同的浏览器提供的宿主对象可能不同，即使提供的对象相同，其实现方式也大相径庭！这会带来浏览器兼容问题，增加开发难度。</li>
+<li>浏览器对象有很多，如Window和Document等等。</li>
+</ul>
+</blockquote>
+<h4 id="方法调用翻译垃圾还得重翻原版">方法调用（翻译垃圾，还得重翻原版）</h4>
+<blockquote>
+<p>方法调用：如果表达式是属性访问表达式（例如a.f(x)），那么这个调用被称为方法调用</p>
+</blockquote>
+<p>在方法调用中，作为属性访问主体的对象和数组，便是其调用方法内this的指向（看下面的例子就明白了）</p>
+<pre><code class="language-js">Object.prototype.callThis = function(){
+    return this;
+}
+var b = [1, 2, 3];
+var c = {x:1};
+var d = 1;
+console.log(b.callThis());//=&gt; [1, 2, 3]
+console.log(c.callThis());//=&gt; {x: 1}
+</code></pre>
+<p>this的指向便是调用者本身。</p>
+<p>这种特性使得在面向对象编程范例中，函数可以调用其宿主对象。</p>
+<p>来看后面这个重点的话：</p>
+<figure data-type="image" tabindex="4"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200927230259.png" alt="image-20200927230259821" loading="lazy"></figure>
+<p>那些不是方法调用的调用表达式，通常使用全局对象作为this的指向值。</p>
+<figure data-type="image" tabindex="5"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200927230532.png" alt="image-20200927230532043" loading="lazy"></figure>
+<p>在ES5的严格模式下，函数在调用时将使用undefined作为this的值。</p>
+<p>总结来说，this的指向在本篇中提到了三种情况（当然实际上会比这要复杂）</p>
+<ul>
+<li>方法调用，this指向调用的主体</li>
+<li>不是方法调用，通常使用全局对象作为this的指向值</li>
+<li>ES5的严格模式下，使用undefined作为this的值</li>
+</ul>
+<h2 id="6-对象创建表达式">6. 对象创建表达式</h2>
+<blockquote>
+<p>对象创建表达式：创建一个对象并使用一个函数（构造函数）初始化新对象的属性</p>
+</blockquote>
+<pre><code class="language-js">new Object() // == new Object
+new Point(2, 3);
+</code></pre>
+<p>如果一个对象创建表达式不需要传入任何参数给构造函数，空圆括号可以省略。</p>
+<p>计算对象创建表达式：</p>
+<ol>
+<li>JS创建一个新的空对象</li>
+<li>JS通过传入指定的参数，并<strong>将新参数当做this的值来调用一个指定的函数</strong></li>
+<li><strong>函数可以使用this来初始化这个新创建对象的属性</strong></li>
+<li>被当成构造函数的函数不会返回一个值，并且这个新创建并被初始化后的对象就是整个对象创建表达式的值（总之就是返回个对象）</li>
+<li>如果一个构造函数确实<strong>返回了一个对象</strong>，那么这个对象就作为整个对象创建表达式的值，新创建的对象被废弃。</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[element源码学习-Layout组件]]></title>
         <id>https://giriawsh.github.io/post/element-yuan-ma-xue-xi-layout-zu-jian/</id>
@@ -1384,284 +1536,6 @@ feSpotLight - 用于照明过滤
     </radialGradient>
   </defs>
   <ellipse cx="200" cy="70" rx="85" ry="55" fill="url(#grad1)" />
-</svg>]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[SVG学习系列2-路径、文本、stroke属性]]></title>
-        <id>https://giriawsh.github.io/post/svg-xue-xi-xi-lie-2-lu-jing-wen-ben-stroke-shu-xing/</id>
-        <link href="https://giriawsh.github.io/post/svg-xue-xi-xi-lie-2-lu-jing-wen-ben-stroke-shu-xing/">
-        </link>
-        <updated>2020-09-11T05:45:29.000Z</updated>
-        <summary type="html"><![CDATA[<h1 id="前言">🎨前言</h1>
-<p>WebGL学习系列，结合菜鸟教程、CSDN、MDN等多平台进行学习总结。</p>
-]]></summary>
-        <content type="html"><![CDATA[<h1 id="前言">🎨前言</h1>
-<p>WebGL学习系列，结合菜鸟教程、CSDN、MDN等多平台进行学习总结。</p>
-<!-- more -->
-<h1 id="svg路径">SVG路径</h1>
-<p><path> 元素用于定义一个路径。</p>
-<p>下面的命令可用于路径数据：</p>
-<pre><code>M = moveto
-L = lineto
-H = horizontal lineto//绘制水平线
-V = vertical lineto//绘制垂直线
-C = curveto
-S = smooth curveto
-Q = quadratic Bézier curve
-T = smooth quadratic Bézier curveto
-A = elliptical Arc
-Z = closepath
-</code></pre>
-<p>注意：以上所有命令均允许小写字母。大写表示绝对定位，小写表示相对定位。</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-    &lt;path d=&quot;M150 0 L75 200 L225 200 Z&quot; /&gt;
-&lt;/svg&gt;
-</code></pre>
-<p>定义了一条路径，它开始于位置150 0，到达位置75 200，然后从那里开始到225 200，最后在150 0关闭路径。</p>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-    <path d="M150 0 L75 200 L225 200 Z" />
-</svg>
-<h2 id="曲线">曲线</h2>
-<p>在path元素里，只存在两种贝塞尔曲线：三次贝塞尔曲线C，和二次贝塞尔曲线Q。</p>
-<h2 id="二次方贝赛尔曲线">二次方贝赛尔曲线</h2>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;path id=&quot;lineAB&quot; d=&quot;M 100 350 l 150 -300&quot; stroke=&quot;red&quot;
-  stroke-width=&quot;3&quot; fill=&quot;none&quot; /&gt;
-  &lt;path id=&quot;lineBC&quot; d=&quot;M 250 50 l 150 300&quot; stroke=&quot;red&quot;
-  stroke-width=&quot;3&quot; fill=&quot;none&quot; /&gt;
-  &lt;path d=&quot;M 175 200 l 150 0&quot; stroke=&quot;green&quot; stroke-width=&quot;3&quot;
-  fill=&quot;none&quot; /&gt;
-  &lt;path d=&quot;M 100 350 q 150 -300 300 0&quot; stroke=&quot;blue&quot;
-  stroke-width=&quot;5&quot; fill=&quot;none&quot; /&gt;
-  &lt;!-- Mark relevant points --&gt;
-  &lt;g stroke=&quot;black&quot; stroke-width=&quot;3&quot; fill=&quot;black&quot;&gt;
-    &lt;circle id=&quot;pointA&quot; cx=&quot;100&quot; cy=&quot;350&quot; r=&quot;3&quot; /&gt;
-    &lt;circle id=&quot;pointB&quot; cx=&quot;250&quot; cy=&quot;50&quot; r=&quot;3&quot; /&gt;
-    &lt;circle id=&quot;pointC&quot; cx=&quot;400&quot; cy=&quot;350&quot; r=&quot;3&quot; /&gt;
-  &lt;/g&gt;
-  &lt;!-- Label the points --&gt;
-  &lt;g font-size=&quot;30&quot; font=&quot;sans-serif&quot; fill=&quot;black&quot; stroke=&quot;none&quot;
-  text-anchor=&quot;middle&quot;&gt;
-    &lt;text x=&quot;100&quot; y=&quot;350&quot; dx=&quot;-30&quot;&gt;A&lt;/text&gt;
-    &lt;text x=&quot;250&quot; y=&quot;50&quot; dy=&quot;-10&quot;&gt;B&lt;/text&gt;
-    &lt;text x=&quot;400&quot; y=&quot;350&quot; dx=&quot;30&quot;&gt;C&lt;/text&gt;
-  &lt;/g&gt;
-&lt;/svg&gt;
-</code></pre>
-<p><code>&lt;g&gt;</code>	用于把相关元素进行组合的容器元素	id=&quot;该组的名称&quot;<br>
-fill=&quot;该组填充颜色&quot;<br>
-opacity=&quot;该组不透明度&quot;</p>
-<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911125246.png" alt="" loading="lazy"></figure>
-<h2 id="三次方贝赛尔曲线">三次方贝赛尔曲线</h2>
-<p>三次贝塞尔曲线需要定义一个点和两个控制点，所以用C命令创建三次贝塞尔曲线，需要设置三组坐标参数：</p>
-<pre><code> C x1 y1, x2 y2, x y (or c dx1 dy1, dx2 dy2, dx dy)
-</code></pre>
-<p>这里的最后一个坐标(x,y)表示的是曲线的终点，另外两个坐标是控制点，(x1,y1)是起点的控制点，(x2,y2)是终点的控制点。如果你熟悉代数或者微积分的话，会更容易理解控制点，控制点描述的是曲线起始点的斜率，曲线上各个点的斜率，是从起点斜率到终点斜率的渐变过程。</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
-
-&lt;svg width=&quot;190px&quot; height=&quot;160px&quot; version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
-
-  &lt;path d=&quot;M10 10 C 20 20, 40 20, 50 10&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
-  &lt;path d=&quot;M70 10 C 70 20, 120 20, 120 10&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
-  &lt;path d=&quot;M130 10 C 120 20, 180 20, 170 10&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
-  &lt;path d=&quot;M10 60 C 20 80, 40 80, 50 60&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
-  &lt;path d=&quot;M70 60 C 70 80, 110 80, 110 60&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
-  &lt;path d=&quot;M130 60 C 120 80, 180 80, 170 60&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
-  &lt;path d=&quot;M10 110 C 20 140, 40 140, 50 110&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
-  &lt;path d=&quot;M70 110 C 70 140, 110 140, 110 110&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
-  &lt;path d=&quot;M130 110 C 120 140, 180 140, 170 110&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
-
-&lt;/svg&gt;
-</code></pre>
-<?xml version="1.0" standalone="no"?>
-<svg width="190px" height="160px" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M10 10 C 20 20, 40 20, 50 10" stroke="black" fill="transparent"/>
-  <path d="M70 10 C 70 20, 120 20, 120 10" stroke="black" fill="transparent"/>
-  <path d="M130 10 C 120 20, 180 20, 170 10" stroke="black" fill="transparent"/>
-  <path d="M10 60 C 20 80, 40 80, 50 60" stroke="black" fill="transparent"/>
-  <path d="M70 60 C 70 80, 110 80, 110 60" stroke="black" fill="transparent"/>
-  <path d="M130 60 C 120 80, 180 80, 170 60" stroke="black" fill="transparent"/>
-  <path d="M10 110 C 20 140, 40 140, 50 110" stroke="black" fill="transparent"/>
-  <path d="M70 110 C 70 140, 110 140, 110 110" stroke="black" fill="transparent"/>
-  <path d="M130 110 C 120 140, 180 140, 170 110" stroke="black" fill="transparent"/>
-</svg>
-<p>S命令可以用来创建与前面一样的贝塞尔曲线，但是，如果S命令跟在一个C或S命令后面，则它的第一个控制点会被假设成前一个命令曲线的第二个控制点的中心对称点。</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
-&lt;svg width=&quot;190px&quot; height=&quot;160px&quot; version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
-  &lt;path d=&quot;M10 80 C 40 10, 65 10, 95 80 S 150 150, 180 80&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
-&lt;/svg&gt;
-</code></pre>
-<?xml version="1.0" standalone="no"?>
-<svg width="190px" height="160px" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M10 80 C 40 10, 65 10, 95 80 S 150 150, 180 80" stroke="black" fill="transparent"/>
-</svg>
-<p>二次贝塞尔曲线有一个差不多的T命令，可以通过更简短的参数，延长二次贝塞尔曲线。</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
-&lt;svg width=&quot;190px&quot; height=&quot;160px&quot; version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
-  &lt;path d=&quot;M10 80 Q 52.5 10, 95 80 T 180 80&quot; stroke=&quot;black&quot; fill=&quot;transparent&quot;/&gt;
-&lt;/svg&gt;
-</code></pre>
-<?xml version="1.0" standalone="no"?>
-<svg width="190px" height="160px" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M10 80 Q 52.5 10, 95 80 T 180 80" stroke="black" fill="transparent"/>
-</svg>
-<h2 id="弧形">弧形</h2>
-<p>假设，已知椭圆形的长轴半径和短轴半径，并且已知两个点（在椭圆上），根据半径和两点，可以画出两个椭圆，在每个椭圆上根据两点都可以画出两种弧形。所以，仅仅根据半径和两点，可以画出四种弧形。为了保证创建的弧形唯一，A命令需要用到比较多的参数：</p>
-<pre><code> A rx ry x-axis-rotation large-arc-flag sweep-flag x y
- //x轴半径,y轴半径,弧形的旋转情况,角度大小,弧线的方向,x坐标点,y坐标点
- a rx ry x-axis-rotation large-arc-flag sweep-flag dx dy
- 
- 例子：
- &lt;?xml version=&quot;1.0&quot; standalone=&quot;no&quot;?&gt;
-&lt;svg width=&quot;320px&quot; height=&quot;320px&quot; version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
-  &lt;path d=&quot;M10 315
-           L 110 215
-           A 30 50 0 0 1 162.55 162.45
-           L 172.55 152.45
-           A 30 50 -45 0 1 215.1 109.9
-           L 315 10&quot; stroke=&quot;black&quot; fill=&quot;green&quot; stroke-width=&quot;2&quot; fill-opacity=&quot;0.5&quot;/&gt;
-&lt;/svg&gt;
-</code></pre>
-<?xml version="1.0" standalone="no"?>
-<svg width="320px" height="320px" version="1.1" xmlns="http://www.w3.org/2000/svg">
-  <path d="M10 315
-           L 110 215
-           A 30 50 0 0 1 162.55 162.45
-           L 172.55 152.45
-           A 30 50 -45 0 1 215.1 109.9
-           L 315 10" stroke="black" fill="green" stroke-width="2" fill-opacity="0.5"/>
-</svg>
-<h1 id="文本">文本</h1>
-<p><code>&lt;text&gt;</code>元素用于定义文本。</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;text x=&quot;0&quot; y=&quot;15&quot; fill=&quot;red&quot;&gt;I love SVG&lt;/text&gt;
-&lt;/svg&gt;
-</code></pre>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-  <text x="0" y="15" fill="red">I love SVG</text>
-</svg>
-<p>文字旋转：</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;text x=&quot;0&quot; y=&quot;15&quot; fill=&quot;red&quot; transform=&quot;rotate(30 20,40)&quot;&gt;I love SVG&lt;/text&gt;
-&lt;/svg&gt;
-</code></pre>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-  <text x="0" y="15" fill="red" transform="rotate(30 20,40)">I love SVG</text>
-</svg>
-<p>文字与路径依附<code>&lt;textPath&gt;</code></p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot;&gt;
-  &lt;defs&gt;
-    &lt;path id=&quot;path1&quot; d=&quot;M75,20 a1,1 0 0,0 100,0&quot; /&gt;
-  &lt;/defs&gt;
-  &lt;text x=&quot;10&quot; y=&quot;100&quot; style=&quot;fill:red;&quot;&gt;
-    &lt;textPath xlink:href=&quot;#path1&quot;&gt;I love SVG I love SVG&lt;/textPath&gt;
-  &lt;/text&gt;
-&lt;/svg&gt;
-</code></pre>
-<ul>
-<li><code>&lt;defs&gt;</code>引用的元素容器</li>
-</ul>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <defs>
-    <path id="path1" d="M75,20 a1,1 0 0,0 100,0" />
-  </defs>
-  <text x="10" y="100" style="fill:red;">
-    <textPath xlink:href="#path1">I love SVG I love SVG</textPath>
-  </text>
-</svg>
-<p>元素可以安排任何分小组与<code>&lt;tspan&gt;</code>元素的数量。每个<code>&lt;tspan&gt;</code> 元素可以包含不同的格式和位置</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;text x=&quot;10&quot; y=&quot;20&quot; style=&quot;fill:red;&quot;&gt;Several lines:
-    &lt;tspan x=&quot;10&quot; y=&quot;45&quot;&gt;First line&lt;/tspan&gt;
-    &lt;tspan x=&quot;10&quot; y=&quot;70&quot;&gt;Second line&lt;/tspan&gt;
-  &lt;/text&gt;
-&lt;/svg&gt;
-</code></pre>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-  <text x="10" y="20" style="fill:red;">Several lines:
-    <tspan x="10" y="45">First line</tspan>
-    <tspan x="10" y="70">Second line</tspan>
-  </text>
-</svg>
-<p>添加链接属性：</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;
-xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot;&gt;
-  &lt;a xlink:href=&quot;http://www.w3schools.com/svg/&quot; target=&quot;_blank&quot;&gt;
-    &lt;text x=&quot;0&quot; y=&quot;15&quot; fill=&quot;red&quot;&gt;I love SVG&lt;/text&gt;
-  &lt;/a&gt;
-&lt;/svg&gt;
-</code></pre>
-<p><svg xmlns="http://www.w3.org/2000/svg" version="1.1"
-xmlns:xlink="http://www.w3.org/1999/xlink"><br>
-<a xlink:href="http://www.w3schools.com/svg/" target="_blank"><br>
-<text x="0" y="15" fill="red">I love SVG</text><br>
-</a><br>
-</svg></p>
-<h1 id="stroke属性">Stroke属性</h1>
-<p>所有stroke属性，可应用于任何种类的线条，文字和元素就像一个圆的轮廓。</p>
-<p>Stroke属性定义一条线，文本或元素轮廓颜色：</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;g fill=&quot;none&quot;&gt;
-    &lt;path stroke=&quot;red&quot; d=&quot;M5 20 l215 0&quot; /&gt;
-    &lt;path stroke=&quot;blue&quot; d=&quot;M5 40 l215 0&quot; /&gt;
-    &lt;path stroke=&quot;black&quot; d=&quot;M5 60 l215 0&quot; /&gt;
-  &lt;/g&gt;
-&lt;/svg&gt;
-</code></pre>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-  <g fill="none">
-    <path stroke="red" d="M5 20 l215 0" />
-    <path stroke="blue" d="M5 40 l215 0" />
-    <path stroke="black" d="M5 60 l215 0" />
-  </g>
-</svg>
-<p>stroke- width属性定义了一条线，文本或元素轮廓厚度：</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;g fill=&quot;none&quot; stroke=&quot;black&quot;&gt;
-    &lt;path stroke-width=&quot;2&quot; d=&quot;M5 20 l215 0&quot; /&gt;
-    &lt;path stroke-width=&quot;4&quot; d=&quot;M5 40 l215 0&quot; /&gt;
-    &lt;path stroke-width=&quot;6&quot; d=&quot;M5 60 l215 0&quot; /&gt;
-  &lt;/g&gt;
-&lt;/svg&gt;
-</code></pre>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-  <g fill="none" stroke="black">
-    <path stroke-width="2" d="M5 20 l215 0" />
-    <path stroke-width="4" d="M5 40 l215 0" />
-    <path stroke-width="6" d="M5 60 l215 0" />
-  </g>
-</svg>
-<p>stroke-linecap属性定义不同类型的开放路径的终结（看端口）</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;g fill=&quot;none&quot; stroke=&quot;black&quot; stroke-width=&quot;6&quot;&gt;
-    &lt;path stroke-linecap=&quot;butt&quot; d=&quot;M5 20 l215 0&quot; /&gt;
-    &lt;path stroke-linecap=&quot;round&quot; d=&quot;M5 40 l215 0&quot; /&gt;
-    &lt;path stroke-linecap=&quot;square&quot; d=&quot;M5 60 l215 0&quot; /&gt;
-  &lt;/g&gt;
-&lt;/svg&gt;
-</code></pre>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-  <g fill="none" stroke="black" stroke-width="6">
-    <path stroke-linecap="butt" d="M5 20 l215 0" />
-    <path stroke-linecap="round" d="M5 40 l215 0" />
-    <path stroke-linecap="square" d="M5 60 l215 0" />
-  </g>
-</svg>
-<p>stroke-dasharray属性用于创建虚线：</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;g fill=&quot;none&quot; stroke=&quot;black&quot; stroke-width=&quot;4&quot;&gt;
-    &lt;path stroke-dasharray=&quot;5,5&quot; d=&quot;M5 20 l215 0&quot; /&gt;
-    &lt;path stroke-dasharray=&quot;10,10&quot; d=&quot;M5 40 l215 0&quot; /&gt;
-    &lt;path stroke-dasharray=&quot;20,10,5,5,5,10&quot; d=&quot;M5 60 l215 0&quot; /&gt;
-  &lt;/g&gt;
-&lt;/svg&gt;
-</code></pre>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-  <g fill="none" stroke="black" stroke-width="4">
-    <path stroke-dasharray="5,5" d="M5 20 l215 0" />
-    <path stroke-dasharray="10,10" d="M5 40 l215 0" />
-    <path stroke-dasharray="20,10,5,5,5,10" d="M5 60 l215 0" />
-  </g>
 </svg>]]></content>
     </entry>
 </feed>
