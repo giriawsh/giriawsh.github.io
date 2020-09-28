@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-27T15:19:26.849Z</updated>
+    <updated>2020-09-28T08:57:17.909Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -10,6 +10,185 @@
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[NodeJS初学系列——回调函数、事件循环、EventEmitter]]></title>
+        <id>https://giriawsh.github.io/post/nodejs-chu-xue-xi-lie-hui-diao-han-shu-shi-jian-xun-huan-eventemitter/</id>
+        <link href="https://giriawsh.github.io/post/nodejs-chu-xue-xi-lie-hui-diao-han-shu-shi-jian-xun-huan-eventemitter/">
+        </link>
+        <updated>2020-09-28T08:54:55.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="前言">前言</h1>
+<p>Giria开始踏入Nodejs的坑了，今天学习了回调函数、事件循环、EventEmitter等内容。以下是一些记录。</p>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="前言">前言</h1>
+<p>Giria开始踏入Nodejs的坑了，今天学习了回调函数、事件循环、EventEmitter等内容。以下是一些记录。</p>
+<!-- more -->
+<h1 id="回调函数">回调函数</h1>
+<h2 id="阻塞代码">阻塞代码</h2>
+<p>阻塞代码示例：</p>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+
+var data = fs.readFileSync('input.txt');
+
+console.log(data.toString());
+console.log(&quot;程序执行结束!&quot;);
+</code></pre>
+<p>执行结果：</p>
+<pre><code>$ node main.js
+菜鸟教程官网地址：www.runoob.com
+
+程序执行结束!
+</code></pre>
+<h2 id="非阻塞代码">非阻塞代码</h2>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+
+fs.readFile('input.txt', function (err, data) {
+    if (err) return console.error(err);
+    console.log(data.toString());
+});
+
+console.log(&quot;程序执行结束!&quot;);
+</code></pre>
+<p>执行结果：</p>
+<pre><code>$ node main.js
+程序执行结束!
+菜鸟教程官网地址：www.runoob.com
+</code></pre>
+<p>第一个实例在文件读取完后才执行程序。 第二个实例我们不需要等待文件读取完，这样就可以在读取文件时同时执行接下来的代码，大大提高了程序的性能。</p>
+<p>因此，阻塞是按顺序执行的，而非阻塞是不需要按顺序的，所以如果需要处理回调函数的参数，我们就需要写在回调函数内。</p>
+<h1 id="事件循环">事件循环</h1>
+<p>Node.js 单线程类似进入一个while(true)的事件循环，直到没有事件观察者退出，每个异步事件都生成一个事件观察者，如果有事件发生就调用该回调函数.</p>
+<h2 id="事件驱动程序">事件驱动程序</h2>
+<p>Node.js 使用事件驱动模型，当web server接收到请求，就把它关闭然后进行处理，然后去服务下一个web请求。</p>
+<p>当这个请求完成，它被放回处理队列，当到达队列开头，这个结果被返回给用户。</p>
+<p>这个模型非常高效可扩展性非常强，因为 webserver 一直接受请求而不等待任何读写操作。（这也称之为非阻塞式IO或者事件驱动IO）</p>
+<p>在事件驱动模型中，<strong>会生成一个主循环来监听事件，当检测到事件时触发回调函数</strong>。</p>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200928154841.jpeg" alt="img" loading="lazy"></figure>
+<p>Node.js 有多个内置的事件，我们可以通过引入 events 模块，并通过实例化 EventEmitter 类来绑定和监听事件。</p>
+<pre><code class="language-js">// 引入 events 模块
+var events = require('events');
+// 创建 eventEmitter 对象
+var eventEmitter = new events.EventEmitter();
+ 
+// 创建事件处理程序
+var connectHandler = function connected() {
+   console.log('连接成功。');
+  
+   // 触发 data_received 事件 
+   eventEmitter.emit('data_received');
+}
+ 
+// 绑定 connection 事件处理程序
+eventEmitter.on('connection', connectHandler);
+ 
+// 使用匿名函数绑定 data_received 事件
+eventEmitter.on('data_received', function(){
+   console.log('数据接收成功。');
+});
+ 
+// 触发 connection 事件 
+eventEmitter.emit('connection');
+ 
+console.log(&quot;程序执行完毕。&quot;);
+</code></pre>
+<p>在 Node 应用程序中，执行异步操作的函数将回调函数作为最后一个参数， 回调函数接收错误对象作为第一个参数。</p>
+<h1 id="eventemitter">EventEmitter</h1>
+<p>Node.js 所有的异步 I/O 操作在完成时都会发送一个事件到事件队列。</p>
+<p>Node.js 里面的许多对象都会分发事件， 所有产生事件的对象都是 events.EventEmitter 的实例。</p>
+<h2 id="eventemitter类">EventEmitter类</h2>
+<p>events 模块只提供了一个对象： events.EventEmitter。EventEmitter 的核心就是事件触发与事件监听器功能的封装。</p>
+<pre><code class="language-js">// 引入 events 模块
+var events = require('events');
+// 创建 eventEmitter 对象
+var eventEmitter = new events.EventEmitter();
+</code></pre>
+<p>EventEmitter 对象如果在实例化时发生错误，会触发 error 事件。当添加新的监听器时，newListener 事件会触发，当监听器被移除时，removeListener 事件被触发。</p>
+<p>也可以这样写：</p>
+<pre><code class="language-js">var EventEmitter = require('events').EventEmitter; 
+var event = new EventEmitter(); 
+</code></pre>
+<p>EventEmitter 的每个事件由一个事件名和若干个参数组成，事件名是一个字符串，通常表达一定的语义。对于每个事件，EventEmitter 支持 若干个事件监听器。</p>
+<p>当事件触发时，注册到这个事件的事件监听器被依次调用，事件参数作为回调函数参数传递。</p>
+<p>多个事件的例子：</p>
+<pre><code>//event.js 文件
+var events = require('events'); 
+var emitter = new events.EventEmitter(); 
+emitter.on('someEvent', function(arg1, arg2) { 
+    console.log('listener1', arg1, arg2); 
+}); 
+emitter.on('someEvent', function(arg1, arg2) { 
+    console.log('listener2', arg1, arg2); 
+}); 
+emitter.emit('someEvent', 'arg1 参数', 'arg2 参数'); 
+</code></pre>
+<p>执行结果：</p>
+<pre><code>listener1 arg1 参数 arg2 参数
+listener2 arg1 参数 arg2 参数
+</code></pre>
+<p>可以看到两个事件监听器回调函数被先后调用。 这就是EventEmitter最简单的用法。</p>
+<p>一个实例：</p>
+<pre><code class="language-js">var events = require('events');
+var eventEmitter = new events.EventEmitter();
+
+// 监听器 #1
+var listener1 = function listener1() {
+   console.log('监听器 listener1 执行。');
+}
+
+// 监听器 #2
+var listener2 = function listener2() {
+  console.log('监听器 listener2 执行。');
+}
+
+// 绑定 connection 事件，处理函数为 listener1 
+eventEmitter.addListener('connection', listener1);
+
+// 绑定 connection 事件，处理函数为 listener2
+eventEmitter.on('connection', listener2);
+
+var eventListeners = eventEmitter.listenerCount('connection');
+console.log(eventListeners + &quot; 个监听器监听连接事件。&quot;);
+
+// 处理 connection 事件 
+eventEmitter.emit('connection');
+
+// 移除监绑定的 listener1 函数
+eventEmitter.removeListener('connection', listener1);
+console.log(&quot;listener1 不再受监听。&quot;);
+
+// 触发连接事件
+eventEmitter.emit('connection');
+
+eventListeners = eventEmitter.listenerCount('connection');
+console.log(eventListeners + &quot; 个监听器监听连接事件。&quot;);
+
+console.log(&quot;程序执行完毕。&quot;);
+</code></pre>
+<p>执行结果：</p>
+<pre><code>2 个监听器监听连接事件。
+监听器 listener1 执行。
+监听器 listener2 执行。
+listener1 不再受监听。
+监听器 listener2 执行。
+1 个监听器监听连接事件。
+程序执行完毕。
+</code></pre>
+<h2 id="error事件">error事件</h2>
+<p>EventEmitter 定义了一个特殊的事件 error，它包含了错误的语义，我们在遇到 异常的时候通常会触发 error 事件。</p>
+<p>当 error 被触发时，EventEmitter 规定如果没有响 应的监听器，Node.js 会把它当作异常，退出程序并输出错误信息。</p>
+<p>我们一般要为会触发 error 事件的对象设置监听器，避免遇到错误后整个程序崩溃。</p>
+<h2 id="继承eventemitter">继承EventEmitter</h2>
+<p>大多数时候我们不会直接使用 EventEmitter，而是在对象中继承它。包括 fs、net、 http 在内的，只要是支持事件响应的核心模块都是 EventEmitter 的子类。</p>
+<p>原因有两点：</p>
+<ul>
+<li>
+<p>首先，具有某个实体功能的对象实现事件符合语义， 事件的监听和发生应该是一个对象的方法。</p>
+</li>
+<li>
+<p>其次 JavaScript 的对象机制是基于原型的，支持部分多重继承，继承 EventEmitter 不会打乱对象原有的继承关系。</p>
+</li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[《JS权威指南》第四章1]]></title>
         <id>https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-si-zhang-1/</id>
@@ -1318,224 +1497,5 @@ x; ++y;
 <p><a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html">阮一峰——字符编码笔记：ASCII，Unicode 和 UTF-8</a></p>
 <p><a href="http://www.shouce.ren/api/html/html4/appendix-iso_latin1.html">ISO Latin-1字符集</a></p>
 ]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[SVG学习系列3-滤镜、模糊效果、渐变]]></title>
-        <id>https://giriawsh.github.io/post/svg-xue-xi-xi-lie-3-lu-jing-mo-hu-xiao-guo-jian-bian/</id>
-        <link href="https://giriawsh.github.io/post/svg-xue-xi-xi-lie-3-lu-jing-mo-hu-xiao-guo-jian-bian/">
-        </link>
-        <updated>2020-09-11T05:46:47.000Z</updated>
-        <summary type="html"><![CDATA[<h1 id="前言">🎨前言</h1>
-<p>WebGL学习系列，结合菜鸟教程、CSDN、MDN等多平台进行学习总结。</p>
-]]></summary>
-        <content type="html"><![CDATA[<h1 id="前言">🎨前言</h1>
-<p>WebGL学习系列，结合菜鸟教程、CSDN、MDN等多平台进行学习总结。</p>
-<!-- more -->
-<h1 id="svg滤镜">SVG滤镜</h1>
-<p>SVG可用的滤镜是：</p>
-<pre><code>feBlend - 与图像相结合的滤镜
-feColorMatrix - 用于彩色滤光片转换
-feComponentTransfer
-feComposite
-feConvolveMatrix
-feDiffuseLighting
-feDisplacementMap
-feFlood
-feGaussianBlur - 高斯模糊
-feImage
-feMerge
-feMorphology
-feOffset - 过滤阴影
-feSpecularLighting
-feTile
-feTurbulence
-feDistantLight - 用于照明过滤
-fePointLight - 用于照明过滤
-feSpotLight - 用于照明过滤
-</code></pre>
-<h1 id="svg模糊效果">SVG模糊效果</h1>
-<p>所有互联网的SVG滤镜定义在<code>&lt;defs&gt;</code>元素中。<code>&lt;defs&gt;</code>元素定义短并含有特殊元素（如滤镜）定义。</p>
-<p><code>&lt;filter&gt;</code>标签用来定义SVG滤镜。<code>&lt;filter&gt;</code>标签使用必需的id属性来定义向图形应用哪个滤镜</p>
-<p><code>&lt;feGaussianBlur&gt;</code> 元素是用于创建模糊效果：</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;defs&gt;
-    &lt;filter id=&quot;f1&quot; x=&quot;0&quot; y=&quot;0&quot;&gt;
-      &lt;feGaussianBlur in=&quot;SourceGraphic&quot; stdDeviation=&quot;15&quot; /&gt;
-    &lt;/filter&gt;
-  &lt;/defs&gt;
-  &lt;rect width=&quot;90&quot; height=&quot;90&quot; stroke=&quot;green&quot; stroke-width=&quot;3&quot; fill=&quot;yellow&quot; filter=&quot;url(#f1)&quot; /&gt;
-&lt;/svg&gt;
-</code></pre>
-<ul>
-<li>filter	滤镜效果的容器</li>
-<li>feGaussianBlur	SVG滤镜。执行高斯模糊图像</li>
-<li>sourceGraphic该关键词表示图形元素自身将作为<filter>原语的原始输入.</li>
-<li>stdDeviation属性定义模糊量</li>
-<li><rect>元素的滤镜属性用来把元素链接到&quot;f1&quot;滤镜</li>
-</ul>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-  <defs>
-    <filter id="f1" x="0" y="0">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="15" />
-    </filter>
-  </defs>
-  <rect width="90" height="90" stroke="green" stroke-width="3" fill="yellow" filter="url(#f1)" />
-</svg>
-<h1 id="阴影">阴影</h1>
-<p><code>&lt;feOffset&gt;</code>元素是用于创建阴影效果。我们的想法是采取一个SVG图形（图像或元素）并移动它在xy平面上一点儿。</p>
-<p>第一个例子偏移一个矩形（带<code>&lt;feOffset&gt;</code>），然后混合偏移图像顶部（含<code>&lt;feBlend&gt;</code>）：</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;defs&gt;
-    &lt;filter id=&quot;f1&quot; x=&quot;0&quot; y=&quot;0&quot; width=&quot;200%&quot; height=&quot;200%&quot;&gt;
-      &lt;feOffset result=&quot;offOut&quot; in=&quot;SourceGraphic&quot; dx=&quot;20&quot; dy=&quot;20&quot; /&gt;
-      &lt;feBlend in=&quot;SourceGraphic&quot; in2=&quot;offOut&quot; mode=&quot;normal&quot; /&gt;
-    &lt;/filter&gt;
-  &lt;/defs&gt;
-  &lt;rect width=&quot;90&quot; height=&quot;90&quot; stroke=&quot;green&quot; stroke-width=&quot;3&quot;
-  fill=&quot;yellow&quot; filter=&quot;url(#f1)&quot; /&gt;
-&lt;/svg&gt;
-</code></pre>
-<ul>
-<li><code>&lt;feBlend&gt;</code>	使用不同的混合模式把两个对象合成在一起</li>
-</ul>
-<p>偏移图像变的模糊（含 <feGaussianBlur>）</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;defs&gt;
-    &lt;filter id=&quot;f1&quot; x=&quot;0&quot; y=&quot;0&quot; width=&quot;200%&quot; height=&quot;200%&quot;&gt;
-      &lt;feOffset result=&quot;offOut&quot; in=&quot;SourceGraphic&quot; dx=&quot;20&quot; dy=&quot;20&quot; /&gt;
-      &lt;feGaussianBlur result=&quot;blurOut&quot; in=&quot;offOut&quot; stdDeviation=&quot;10&quot; /&gt;
-      &lt;feBlend in=&quot;SourceGraphic&quot; in2=&quot;blurOut&quot; mode=&quot;normal&quot; /&gt;
-    &lt;/filter&gt;
-  &lt;/defs&gt;
-  &lt;rect width=&quot;90&quot; height=&quot;90&quot; stroke=&quot;green&quot; stroke-width=&quot;3&quot;
-  fill=&quot;yellow&quot; filter=&quot;url(#f1)&quot; /&gt;
-&lt;/svg&gt;
-</code></pre>
-<p>制作一个黑色的阴影：</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;defs&gt;
-    &lt;filter id=&quot;f1&quot; x=&quot;0&quot; y=&quot;0&quot; width=&quot;200%&quot; height=&quot;200%&quot;&gt;
-      &lt;feOffset result=&quot;offOut&quot; in=&quot;SourceAlpha&quot; dx=&quot;20&quot; dy=&quot;20&quot; /&gt;
-      &lt;feGaussianBlur result=&quot;blurOut&quot; in=&quot;offOut&quot; stdDeviation=&quot;10&quot; /&gt;
-      &lt;feBlend in=&quot;SourceGraphic&quot; in2=&quot;blurOut&quot; mode=&quot;normal&quot; /&gt;
-    &lt;/filter&gt;
-  &lt;/defs&gt;
-  &lt;rect width=&quot;90&quot; height=&quot;90&quot; stroke=&quot;green&quot; stroke-width=&quot;3&quot;
-  fill=&quot;yellow&quot; filter=&quot;url(#f1)&quot; /&gt;
-&lt;/svg&gt;
-</code></pre>
-<ul>
-<li><code>&lt;feOffset&gt;</code>元素的属性改为&quot;SourceAlpha&quot;在Alpha通道使用残影，而不是整个RGBA像素。</li>
-</ul>
-<p>再为阴影涂上一层颜色</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;defs&gt;
-    &lt;filter id=&quot;f1&quot; x=&quot;0&quot; y=&quot;0&quot; width=&quot;200%&quot; height=&quot;200%&quot;&gt;
-      &lt;feOffset result=&quot;offOut&quot; in=&quot;SourceGraphic&quot; dx=&quot;20&quot; dy=&quot;20&quot; /&gt;
-      &lt;feColorMatrix result=&quot;matrixOut&quot; in=&quot;offOut&quot; type=&quot;matrix&quot;
-      values=&quot;0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0&quot; /&gt;
-      &lt;feGaussianBlur result=&quot;blurOut&quot; in=&quot;matrixOut&quot; stdDeviation=&quot;10&quot; /&gt;
-      &lt;feBlend in=&quot;SourceGraphic&quot; in2=&quot;blurOut&quot; mode=&quot;normal&quot; /&gt;
-    &lt;/filter&gt;
-  &lt;/defs&gt;
-  &lt;rect width=&quot;90&quot; height=&quot;90&quot; stroke=&quot;green&quot; stroke-width=&quot;3&quot;
-  fill=&quot;yellow&quot; filter=&quot;url(#f1)&quot; /&gt;
-&lt;/svg&gt;
-</code></pre>
-<ul>
-<li><code>&lt;feColorMatrix&gt;</code>过滤器是用来转换偏移的图像使之更接近黑色的颜色。 '0.2'矩阵的三个值都获取乘以红色，绿色和蓝色通道。降低其值带来的颜色至黑色（黑色为0）</li>
-</ul>
-<p>最终效果：</p>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-  <defs>
-    <filter id="f1" x="0" y="0" width="200%" height="200%">
-      <feOffset result="offOut" in="SourceGraphic" dx="20" dy="20" />
-      <feColorMatrix result="matrixOut" in="offOut" type="matrix"
-      values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0" />
-      <feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="10" />
-      <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
-    </filter>
-  </defs>
-  <rect width="90" height="90" stroke="green" stroke-width="3"
-  fill="yellow" filter="url(#f1)" />
-</svg>
-<h1 id="渐变-线性">渐变-线性</h1>
-<p><code>&lt;linearGradient&gt;</code>元素用于定义线性渐变。</p>
-<p><code>&lt;linearGradient&gt;</code>标签必须嵌套在<code>&lt;defs&gt;</code>的内部。<code>&lt;defs&gt;</code>标签是definitions的缩写，它可对诸如渐变之类的特殊元素进行定义。</p>
-<p>线性渐变可以定义为水平，垂直或角渐变：</p>
-<ul>
-<li>当y1和y2相等，而x1和x2不同时，可创建水平渐变</li>
-<li>当x1和x2相等，而y1和y2不同时，可创建垂直渐变</li>
-<li>当x1和x2不同，且y1和y2不同时，可创建角形渐变</li>
-</ul>
-<p>水平渐变：</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;defs&gt;
-    &lt;linearGradient id=&quot;grad1&quot; x1=&quot;0%&quot; y1=&quot;0%&quot; x2=&quot;100%&quot; y2=&quot;0%&quot;&gt;
-      &lt;stop offset=&quot;0%&quot; style=&quot;stop-color:rgb(255,255,0);stop-opacity:1&quot; /&gt;
-      &lt;stop offset=&quot;100%&quot; style=&quot;stop-color:rgb(255,0,0);stop-opacity:1&quot; /&gt;
-    &lt;/linearGradient&gt;
-  &lt;/defs&gt;
-  &lt;ellipse cx=&quot;200&quot; cy=&quot;70&quot; rx=&quot;85&quot; ry=&quot;55&quot; fill=&quot;url(#grad1)&quot; /&gt;
-&lt;/svg&gt;
-</code></pre>
-<ul>
-<li><code>&lt;linearGradient&gt;</code>标签的id属性可为渐变定义一个唯一的名称</li>
-<li><code>&lt;linearGradient&gt;</code>标签的X1，X2，Y1，Y2属性定义渐变开始和结束位置</li>
-<li>渐变的颜色范围可由两种或多种颜色组成。每种颜色通过一个<stop>标签来规定。offset属性用来定义渐变的开始和结束位置。</li>
-<li>填充属性把 ellipse 元素链接到此渐变</li>
-</ul>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-  <defs>
-    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:rgb(255,255,0);stop-opacity:1" />
-      <stop offset="100%" style="stop-color:rgb(255,0,0);stop-opacity:1" />
-    </linearGradient>
-  </defs>
-  <ellipse cx="200" cy="70" rx="85" ry="55" fill="url(#grad1)" />
-</svg>
-<p>垂直线性渐变</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;defs&gt;
-    &lt;linearGradient id=&quot;grad1&quot; x1=&quot;0%&quot; y1=&quot;0%&quot; x2=&quot;0%&quot; y2=&quot;100%&quot;&gt;
-      &lt;stop offset=&quot;0%&quot; style=&quot;stop-color:rgb(255,255,0);stop-opacity:1&quot; /&gt;
-      &lt;stop offset=&quot;100%&quot; style=&quot;stop-color:rgb(255,0,0);stop-opacity:1&quot; /&gt;
-    &lt;/linearGradient&gt;
-  &lt;/defs&gt;
-  &lt;ellipse cx=&quot;200&quot; cy=&quot;70&quot; rx=&quot;85&quot; ry=&quot;55&quot; fill=&quot;url(#grad1)&quot; /&gt;
-&lt;/svg&gt;
-
-</code></pre>
-<h1 id="渐变-放射性">渐变-放射性</h1>
-<p><code>&lt;radialGradient&gt;</code>元素用于定义放射性渐变。</p>
-<p><code>&lt;radialGradient&gt;</code>标签必须嵌套在<defs>的内部。</p>
-<p>放射性渐变从白色到蓝色椭圆：</p>
-<pre><code>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;&gt;
-  &lt;defs&gt;
-    &lt;radialGradient id=&quot;grad1&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; r=&quot;50%&quot; fx=&quot;50%&quot; fy=&quot;50%&quot;&gt;
-      &lt;stop offset=&quot;0%&quot; style=&quot;stop-color:rgb(255,255,255);
-      stop-opacity:0&quot; /&gt;
-      &lt;stop offset=&quot;100%&quot; style=&quot;stop-color:rgb(0,0,255);stop-opacity:1&quot; /&gt;
-    &lt;/radialGradient&gt;
-  &lt;/defs&gt;
-  &lt;ellipse cx=&quot;200&quot; cy=&quot;70&quot; rx=&quot;85&quot; ry=&quot;55&quot; fill=&quot;url(#grad1)&quot; /&gt;
-&lt;/svg&gt;
-</code></pre>
-<ul>
-<li><code>&lt;radialGradient&gt;</code>标签的 id 属性可为渐变定义一个唯一的名称</li>
-<li>CX，CY和r属性定义的最外层圆和Fx和Fy定义的最内层圆<br>
-= 渐变颜色范围可以由两个或两个以上的颜色组成。每种颜色用一个<code>&lt;stop&gt;</code>标签指定。offset属性用来定义渐变色开始和结束</li>
-<li>填充属性把ellipse元素链接到此渐变</li>
-</ul>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-  <defs>
-    <radialGradient id="grad1" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-      <stop offset="0%" style="stop-color:rgb(255,255,255);
-      stop-opacity:0" />
-      <stop offset="100%" style="stop-color:rgb(0,0,255);stop-opacity:1" />
-    </radialGradient>
-  </defs>
-  <ellipse cx="200" cy="70" rx="85" ry="55" fill="url(#grad1)" />
-</svg>]]></content>
     </entry>
 </feed>
