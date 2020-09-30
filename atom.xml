@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-28T09:01:51.441Z</updated>
+    <updated>2020-09-30T10:26:15.728Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -10,6 +10,410 @@
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[NodeJS初学系列2——Buffer、Stream、模块系统]]></title>
+        <id>https://giriawsh.github.io/post/nodejs-chu-xue-xi-lie-2-bufferstreammo-kuai-xi-tong/</id>
+        <link href="https://giriawsh.github.io/post/nodejs-chu-xue-xi-lie-2-bufferstreammo-kuai-xi-tong/">
+        </link>
+        <updated>2020-09-30T10:24:18.000Z</updated>
+        <summary type="html"><![CDATA[<h1 id="前言">前言</h1>
+<p>今天是学习Node的第二天，今天学习了有Buffer、Stream、模块系统等（wait怎么越来越有c++那味儿了）</p>
+]]></summary>
+        <content type="html"><![CDATA[<h1 id="前言">前言</h1>
+<p>今天是学习Node的第二天，今天学习了有Buffer、Stream、模块系统等（wait怎么越来越有c++那味儿了）</p>
+<!-- more -->
+<h1 id="buffer">Buffer</h1>
+<p>JavaScript 语言自身只有字符串数据类型，没有二进制数据类型。</p>
+<p>但在处理像TCP流或文件流时，必须使用到二进制数据。因此在 Node.js中，定义了一个 Buffer 类，该类用来创建一个专门存放二进制数据的缓存区。</p>
+<p>在 Node.js 中，Buffer 类是随 Node 内核一起发布的核心库。Buffer 库为 Node.js 带来了一种存储原始数据的方法，可以让 Node.js 处理二进制数据，每当需要在 Node.js 中处理I/O操作中移动的数据时，就有可能使用 Buffer 库。</p>
+<p>原始数据存储在 Buffer 类的实例中。一个 Buffer 类似于一个整数数组，但它对应于 V8 堆内存之外的一块原始内存。</p>
+<h2 id="buffer与字符编码">Buffer与字符编码</h2>
+<p>Buffer 实例一般用于表示编码字符的序列，比如 UTF-8 、 UCS2 、 Base64 、或十六进制编码的数据。</p>
+<p>Buffer 实例与普通的 JavaScript 字符串之间进行相互转换：</p>
+<pre><code>const buf = Buffer.from('runoob', 'ascii');
+
+// 输出 72756e6f6f62
+console.log(buf.toString('hex'));
+
+// 输出 cnVub29i
+console.log(buf.toString('base64'));
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200929170751.png" alt="image-20200929170744188" loading="lazy"></figure>
+<h2 id="buffer类">Buffer类</h2>
+<p>Buffer 提供了以下 API 来创建 Buffer 类：</p>
+<ul>
+<li><strong>Buffer.alloc(size[, fill[, encoding]])：</strong> 返回一个指定大小的 Buffer 实例，如果没有设置 fill，则默认填满 0</li>
+<li><strong>Buffer.allocUnsafe(size)：</strong> 返回一个指定大小的 Buffer 实例，但是它不会被初始化，所以它可能包含敏感的数据</li>
+<li><strong>Buffer.allocUnsafeSlow(size)</strong></li>
+<li><strong>Buffer.from(array)：</strong> 返回一个被 array 的值初始化的新的 Buffer 实例（传入的 array 的元素只能是数字，不然就会自动被 0 覆盖）</li>
+<li><strong>Buffer.from(arrayBuffer[, byteOffset[, length]])：</strong> 返回一个新建的与给定的 ArrayBuffer 共享同一内存的 Buffer。</li>
+<li><strong>Buffer.from(buffer)：</strong> 复制传入的 Buffer 实例的数据，并返回一个新的 Buffer 实例</li>
+<li><strong>Buffer.from(string[, encoding])：</strong> 返回一个被 string 的值初始化的新的 Buffer 实例</li>
+</ul>
+<pre><code class="language-js">// 创建一个长度为 10、且用 0 填充的 Buffer。
+const buf1 = Buffer.alloc(10);
+
+// 创建一个长度为 10、且用 0x1 填充的 Buffer。 
+const buf2 = Buffer.alloc(10, 1);
+
+// 创建一个长度为 10、且未初始化的 Buffer。
+// 这个方法比调用 Buffer.alloc() 更快，
+// 但返回的 Buffer 实例可能包含旧数据，
+// 因此需要使用 fill() 或 write() 重写。
+const buf3 = Buffer.allocUnsafe(10);
+
+// 创建一个包含 [0x1, 0x2, 0x3] 的 Buffer。
+const buf4 = Buffer.from([1, 2, 3]);
+
+// 创建一个包含 UTF-8 字节 [0x74, 0xc3, 0xa9, 0x73, 0x74] 的 Buffer。
+const buf5 = Buffer.from('tést');
+
+// 创建一个包含 Latin-1 字节 [0x74, 0xe9, 0x73, 0x74] 的 Buffer。
+const buf6 = Buffer.from('tést', 'latin1');
+</code></pre>
+<h2 id="写入缓冲区">写入缓冲区</h2>
+<pre><code class="language-js">buf.write(string[, offset[, length]][, encoding])
+</code></pre>
+<ul>
+<li><strong>string</strong> - 写入缓冲区的字符串。</li>
+<li><strong>offset</strong> - 缓冲区开始写入的索引值，默认为 0 。</li>
+<li><strong>length</strong> - 写入的字节数，默认为 buffer.length</li>
+<li><strong>encoding</strong> - 使用的编码。默认为 'utf8' 。</li>
+</ul>
+<p>返回实际写入的大小。如果 buffer 空间不足， 则只会写入部分字符串。</p>
+<pre><code>buf = Buffer.alloc(256);
+len = buf.write(&quot;www.runoob.com&quot;);
+
+console.log(&quot;写入字节数 : &quot;+  len);
+</code></pre>
+<p>执行结果：</p>
+<pre><code>$node main.js
+写入字节数 : 14
+</code></pre>
+<h2 id="读取缓冲区">读取缓冲区</h2>
+<pre><code>buf.toString([encoding[, start[, end]]])
+</code></pre>
+<ul>
+<li><strong>encoding</strong> - 使用的编码。默认为 'utf8' 。</li>
+<li><strong>start</strong> - 指定开始读取的索引位置，默认为 0。</li>
+<li><strong>end</strong> - 结束位置，默认为缓冲区的末尾。</li>
+</ul>
+<p>解码缓冲区数据并使用指定的编码返回字符串。</p>
+<pre><code>buf = Buffer.alloc(26);
+for (var i = 0 ; i &lt; 26 ; i++) {
+  buf[i] = i + 97;
+}
+
+console.log( buf.toString('ascii'));       // 输出: abcdefghijklmnopqrstuvwxyz
+console.log( buf.toString('ascii',0,5));   //使用 'ascii' 编码, 并输出: abcde
+console.log( buf.toString('utf8',0,5));    // 使用 'utf8' 编码, 并输出: abcde
+console.log( buf.toString(undefined,0,5)); // 使用默认的 'utf8' 编码, 并输出: abcde
+</code></pre>
+<h2 id="buffer转换为json对象">Buffer转换为JSON对象</h2>
+<pre><code class="language-js">buf.toJSON()
+</code></pre>
+<p>当字符串化一个 Buffer 实例时，JSON.stringify() 会隐式地调用该 <strong>toJSON()</strong>。</p>
+<p>返回 JSON 对象。</p>
+<pre><code class="language-js">const buf = Buffer.from([0x1, 0x2, 0x3, 0x4, 0x5]);
+const json = JSON.stringify(buf);
+
+// 输出: {&quot;type&quot;:&quot;Buffer&quot;,&quot;data&quot;:[1,2,3,4,5]}
+console.log(json);
+
+const copy = JSON.parse(json, (key, value) =&gt; {
+  return value &amp;&amp; value.type === 'Buffer' ?
+    Buffer.from(value.data) :
+    value;
+});
+
+// 输出: &lt;Buffer 01 02 03 04 05&gt;
+console.log(copy);
+</code></pre>
+<h2 id="缓冲区合并">缓冲区合并</h2>
+<pre><code class="language-js">Buffer.concat(list[, totalLength])
+</code></pre>
+<ul>
+<li><strong>list</strong> - 用于合并的 Buffer 对象数组列表。</li>
+<li><strong>totalLength</strong> - 指定合并后Buffer对象的总长度。</li>
+</ul>
+<p>返回一个多个成员合并的新 Buffer 对象。</p>
+<pre><code>var buffer1 = Buffer.from(('菜鸟教程'));
+var buffer2 = Buffer.from(('www.runoob.com'));
+var buffer3 = Buffer.concat([buffer1,buffer2]);
+console.log(&quot;buffer3 内容: &quot; + buffer3.toString());
+</code></pre>
+<p>执行结果：</p>
+<pre><code>buffer3 内容: 菜鸟教程www.runoob.com
+</code></pre>
+<h2 id="缓冲区比较">缓冲区比较</h2>
+<pre><code>buf.compare(otherBuffer);
+</code></pre>
+<p><strong>otherBuffer</strong> - 与 <strong>buf</strong> 对象比较的另外一个 Buffer 对象。</p>
+<p>返回一个数字，表示 <strong>buf</strong> 在 <strong>otherBuffer</strong> 之前，之后或相同。</p>
+<pre><code class="language-js">var buffer1 = Buffer.from('ABC');
+var buffer2 = Buffer.from('ABCD');
+var result = buffer1.compare(buffer2);
+
+if(result &lt; 0) {
+   console.log(buffer1 + &quot; 在 &quot; + buffer2 + &quot;之前&quot;);
+}else if(result == 0){
+   console.log(buffer1 + &quot; 与 &quot; + buffer2 + &quot;相同&quot;);
+}else {
+   console.log(buffer1 + &quot; 在 &quot; + buffer2 + &quot;之后&quot;);
+}
+</code></pre>
+<p>执行结果：</p>
+<pre><code>ABC在ABCD之前
+</code></pre>
+<h2 id="拷贝缓冲区">拷贝缓冲区</h2>
+<pre><code>buf.copy(targetBuffer[, targetStart[, sourceStart[, sourceEnd]]])
+</code></pre>
+<ul>
+<li><strong>targetBuffer</strong> - 要拷贝的 Buffer 对象。</li>
+<li><strong>targetStart</strong> - 数字, 可选, 默认: 0</li>
+<li><strong>sourceStart</strong> - 数字, 可选, 默认: 0</li>
+<li><strong>sourceEnd</strong> - 数字, 可选, 默认: buffer.length</li>
+</ul>
+<p>没有返回值</p>
+<pre><code class="language-js">var buf1 = Buffer.from('abcdefghijkl');
+var buf2 = Buffer.from('RUNOOB');
+
+//将 buf2 插入到 buf1 指定位置上
+buf2.copy(buf1, 2);
+
+console.log(buf1.toString());
+</code></pre>
+<p>执行结果：</p>
+<pre><code>abRUNOOBijkl
+</code></pre>
+<h2 id="缓冲区裁剪">缓冲区裁剪</h2>
+<pre><code>buf.slice([start[, end]])
+</code></pre>
+<ul>
+<li><strong>start</strong> - 数字, 可选, 默认: 0</li>
+<li><strong>end</strong> - 数字, 可选, 默认: buffer.length</li>
+</ul>
+<p>返回一个新的缓冲区，它和旧缓冲区指向同一块内存，但是从索引 start 到 end 的位置剪切。</p>
+<pre><code class="language-js">var buffer1 = Buffer.from('runoob');
+// 剪切缓冲区
+var buffer2 = buffer1.slice(0,2);
+console.log(&quot;buffer2 content: &quot; + buffer2.toString());
+</code></pre>
+<p>执行结果：</p>
+<pre><code>buffer2 content: ru
+</code></pre>
+<h2 id="缓冲区长度">缓冲区长度</h2>
+<pre><code>buf.length;
+</code></pre>
+<p>返回 Buffer 对象所占据的内存长度。</p>
+<h1 id="stream">Stream</h1>
+<p>Stream 有四种流类型：</p>
+<ul>
+<li><strong>Readable</strong> - 可读操作。</li>
+<li><strong>Writable</strong> - 可写操作。</li>
+<li><strong>Duplex</strong> - 可读可写操作.</li>
+<li><strong>Transform</strong> - 操作被写入数据，然后读出结果。</li>
+</ul>
+<p>所有的 Stream 对象都是 EventEmitter 的实例。常用的事件有：</p>
+<ul>
+<li><strong>data</strong> - 当有数据可读时触发。</li>
+<li><strong>end</strong> - 没有更多的数据可读时触发。</li>
+<li><strong>error</strong> - 在接收和写入过程中发生错误时触发。</li>
+<li><strong>finish</strong> - 所有数据已被写入到底层系统时触发。</li>
+</ul>
+<h2 id="从流中读取数据">从流中读取数据</h2>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+var data = '';
+
+// 创建可读流
+var readerStream = fs.createReadStream('input.txt');
+
+// 设置编码为 utf8。
+readerStream.setEncoding('UTF8');
+
+// 处理流事件 --&gt; data, end, and error
+readerStream.on('data', function(chunk) {
+   data += chunk;
+});
+
+readerStream.on('end',function(){
+   console.log(data);
+});
+
+readerStream.on('error', function(err){
+   console.log(err.stack);
+});
+
+console.log(&quot;程序执行完毕&quot;);
+</code></pre>
+<p>执行结果：</p>
+<pre><code>程序执行完毕
+菜鸟教程官网地址：www.runoob.com
+</code></pre>
+<h2 id="写入流">写入流</h2>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+var data = '菜鸟教程官网地址：www.runoob.com';
+
+// 创建一个可以写入的流，写入到文件 output.txt 中
+var writerStream = fs.createWriteStream('output.txt');
+
+// 使用 utf8 编码写入数据
+writerStream.write(data,'UTF8');
+
+// 标记文件末尾
+writerStream.end();
+
+// 处理流事件 --&gt; finish、error
+writerStream.on('finish', function() {
+    console.log(&quot;写入完成。&quot;);
+});
+
+writerStream.on('error', function(err){
+   console.log(err.stack);
+});
+
+console.log(&quot;程序执行完毕&quot;);
+</code></pre>
+<p>执行结果：</p>
+<pre><code>$ node main.js 
+程序执行完毕
+写入完成。
+</code></pre>
+<h2 id="管道流">管道流</h2>
+<p>管道提供了一个输出流到输入流的机制。通常我们用于从一个流中获取数据并将数据传递到另外一个流中。</p>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+
+// 创建一个可读流
+var readerStream = fs.createReadStream('input.txt');
+
+// 创建一个可写流
+var writerStream = fs.createWriteStream('output.txt');
+
+// 管道读写操作
+// 读取 input.txt 文件内容，并将内容写入到 output.txt 文件中
+readerStream.pipe(writerStream);
+
+console.log(&quot;程序执行完毕&quot;);
+</code></pre>
+<p>代码执行结果如下：</p>
+<pre><code>$ node main.js 
+程序执行完毕
+</code></pre>
+<p>查看 output.txt 文件的内容：</p>
+<pre><code>$ cat output.txt 
+菜鸟教程官网地址：www.runoob.com
+管道流操作实例
+</code></pre>
+<h2 id="链式流">链式流</h2>
+<p><strong>链式是通过连接输出流到另外一个流并创建多个流操作链的机制</strong>。链式流一般用于管道操作。</p>
+<p>接下来我们就是用管道和链式来压缩和解压文件。</p>
+<p>压缩文件实例，创建 compress.js 文件：</p>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+var zlib = require('zlib');
+
+// 压缩 input.txt 文件为 input.txt.gz
+fs.createReadStream('input.txt')
+  .pipe(zlib.createGzip())
+  .pipe(fs.createWriteStream('input.txt.gz'));
+  
+console.log(&quot;文件压缩完成。&quot;);
+</code></pre>
+<p>执行完以上操作后，我们可以看到当前目录下生成了 input.txt 的压缩文件 input.txt.gz。</p>
+<p>接下来，让我们来解压该文件，创建 decompress.js 文件：</p>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+var zlib = require('zlib');
+
+// 解压 input.txt.gz 文件为 input.txt
+fs.createReadStream('input.txt.gz')
+  .pipe(zlib.createGunzip())
+  .pipe(fs.createWriteStream('input.txt'));
+  
+console.log(&quot;文件解压完成。&quot;);
+</code></pre>
+<h1 id="模块系统">模块系统</h1>
+<p>为了让Node.js的文件可以相互调用，Node.js提供了一个简单的模块系统。</p>
+<p>模块是Node.js 应用程序的基本组成部分，文件和模块是一一对应的。换言之，一个 Node.js 文件就是一个模块，这个文件可能是JavaScript 代码、JSON 或者编译过的C/C++ 扩展。</p>
+<h2 id="创建模块">创建模块</h2>
+<p>Node.js 提供了 exports 和 require 两个对象，其中 exports 是模块公开的接口，require 用于从外部获取一个模块的接口，即所获取模块的 exports 对象。</p>
+<p>简单使用：</p>
+<pre><code class="language-js">//main.js
+var hello = require('./hello');
+hello.world();
+
+//hello.js
+exports.world = function() {
+  console.log('Hello World');
+}
+</code></pre>
+<p>有时候我们只是想把一个对象封装到模块中</p>
+<pre><code class="language-js">//hello.js 
+function Hello() { 
+    var name; 
+    this.setName = function(thyName) { 
+        name = thyName; 
+    }; 
+    this.sayHello = function() { 
+        console.log('Hello ' + name); 
+    }; 
+}; 
+module.exports = Hello;
+</code></pre>
+<p>这样就可以直接获得这个对象了：</p>
+<pre><code class="language-js">//main.js 
+var Hello = require('./hello'); 
+hello = new Hello(); 
+hello.setName('BYVoid'); 
+hello.sayHello(); 
+</code></pre>
+<p>使用 module.exports = Hello 代替了exports.world = function(){}。 在外部引用该模块时，其接口对象就是要输出的 <strong>Hello 对象本身</strong>，而不是原先的 exports。</p>
+<h2 id="服务端的模块">服务端的模块</h2>
+<pre><code>var http = require(&quot;http&quot;);
+
+...
+
+http.createServer(...);
+</code></pre>
+<p>Node.js 中自带了一个叫做 <strong>http</strong> 的模块，我们在我们的代码中请求它并把返回值赋给一个本地变量。</p>
+<p>这把我们的本地变量变成了一个拥有所有 http 模块所提供的公共方法的对象。</p>
+<h3 id="require-方法中的文件查找策略">require 方法中的文件查找策略</h3>
+<p>由于 Node.js 中存在 4 类模块（原生模块和3种文件模块），尽管 require 方法极其简单，但是内部的加载却是十分复杂的，其加载优先级也各自不同。</p>
+<figure data-type="image" tabindex="2"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200929183520.jpeg" alt="img" loading="lazy"></figure>
+<h4 id="从文件模块缓存中加载">从文件模块缓存中加载</h4>
+<p>尽管原生模块与文件模块的优先级不同，但是都会优先从文件模块的缓存中加载已经存在的模块。</p>
+<h4 id="从原生模块加载">从原生模块加载</h4>
+<p>原生模块的优先级仅次于文件模块缓存的优先级。require 方法在解析文件名之后，优先检查模块是否在原生模块列表中。以http模块为例，尽管在目录下存在一个 http/http.js/http.node/http.json 文件，require(&quot;http&quot;) 都不会从这些文件中加载，而是<strong>从原生模块中加载</strong>。</p>
+<p>原生模块也有一个缓存区，同样也是优先从缓存区加载。如果缓存区没有被加载过，则调用原生模块的加载方式进行加载和执行。</p>
+<h4 id="从文件加载">从文件加载</h4>
+<p>当文件模块缓存中不存在，而且不是原生模块的时候，Node.js 会解析 require 方法传入的参数，并从文件系统中加载实际的文件。</p>
+<p>require方法接受以下几种参数的传递：</p>
+<ul>
+<li>http、fs、path等，原生模块。</li>
+<li>./mod或../mod，相对路径的文件模块。</li>
+<li>/pathtomodule/mod，绝对路径的文件模块。</li>
+<li>mod，非原生模块的文件模块。</li>
+</ul>
+<h4 id="exports-和-moduleexports-的使用"><strong>exports 和 module.exports 的使用</strong></h4>
+<p>如果要对外暴露属性或方法，就用 <strong>exports</strong> 就行，要暴露对象(类似class，包含了很多属性和方法)，就用 <strong>module.exports</strong>。</p>
+<blockquote>
+<p>不建议同时使用 exports 和 module.exports。</p>
+<p>如果先使用 exports 对外暴露属性或方法，再使用 module.exports 暴露对象，会使得 exports 上暴露的属性或者方法失效。</p>
+<p>原因在于，exports 仅仅是 module.exports 的一个引用。</p>
+</blockquote>
+<p>在 nodejs 中，是这么设计 require 函数的：</p>
+<pre><code class="language-js">function require(...){
+  var module = {exports: {}};
+
+  ((module, exports) =&gt; {
+    function myfn () {}
+    // 这个myfn就是我们自己的代码
+    exports.myfn = myfn; // 这里是在原本的对象上添加了一个myfn方法。
+    module.exports = myfn;// 这个直接把当初的对象进行覆盖。
+  })(module,module.exports)
+  return module.exports;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[NodeJS初学系列1——回调函数、事件循环、EventEmitter]]></title>
         <id>https://giriawsh.github.io/post/nodejs-chu-xue-xi-lie-hui-diao-han-shu-shi-jian-xun-huan-eventemitter/</id>
@@ -1406,96 +1810,6 @@ s[s.length-1] // =&gt; &quot;o&quot;
 </li>
 </ol>
 </section>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[《JS权威指南》第二章]]></title>
-        <id>https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-er-zhang-ci-fa-jie-gou/</id>
-        <link href="https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-er-zhang-ci-fa-jie-gou/">
-        </link>
-        <updated>2020-09-14T14:09:56.000Z</updated>
-        <summary type="html"><![CDATA[<h1 id="️词法结构">✍️词法结构</h1>
-<p>对于每项编程语言，都有其作为基准的词法结构，包括字符集的设定、注释约定、变量命名规则、标识符和保留字、解析规则等。这里记录一下各个小节中我学习中认为比较重要的部分。</p>
-]]></summary>
-        <content type="html"><![CDATA[<h1 id="️词法结构">✍️词法结构</h1>
-<p>对于每项编程语言，都有其作为基准的词法结构，包括字符集的设定、注释约定、变量命名规则、标识符和保留字、解析规则等。这里记录一下各个小节中我学习中认为比较重要的部分。</p>
-<!-- more -->
-<h2 id="1-字符集">1. 字符集</h2>
-<p>JS使用的是Unicode字符集。Unicode是ASCII和Latin-1的超集（父集）</p>
-<h4 id="unicode是什么">👉Unicode是什么?</h4>
-<p>世界上存在着多种编码方式，同一个二进制数字可以被解释成不同的符号。因此，要想打开一个文本文件，就必须知道它的编码方式，否则用错误的编码方式解读，就会出现乱码。</p>
-<p>可以想象，如果有一种编码，将世界上所有的符号都纳入其中。每一个符号都给予一个独一无二的编码，那么乱码问题就会消失。这就是 Unicode，就像它的名字都表示的，<strong>这是一种所有符号的编码</strong>。</p>
-<p>Unicode 当然是一个很大的集合，现在的规模可以容纳100多万个符号。每个符号的编码都不一样，比如，<code>U+0639</code>表示阿拉伯字母<code>Ain</code>，<code>U+0041</code>表示英语的大写字母<code>A</code>，<code>U+4E25</code>表示汉字<code>严</code>。具体的符号对应表，可以查询<a href="http://www.unicode.org/">unicode.org</a>，或者专门的<a href="http://www.chi2ko.com/tool/CJK.htm">汉字对应表</a>。</p>
-<h4 id="ascii是什么">👉ASCII是什么？</h4>
-<p>如上所说，ASCII是unicode的一个子集。计算机内部，所有信息最终都是一个二进制值。每一个二进制位（bit）有<code>0</code>和<code>1</code>两种状态，因此八个二进制位就可以组合出256种状态，这被称为一个字节（byte）。也就是说，一个字节一共可以用来表示256种不同的状态，每一个状态对应一个符号，就是256个符号，从<code>00000000</code>到<code>11111111</code>。</p>
-<p>上个世纪60年代，美国制定了一套字符编码，对英语字符与二进制位之间的关系，做了统一规定。这被称为 ASCII 码，一直沿用至今。</p>
-<p>ASCII 码一共规定了128个字符的编码，比如空格<code>SPACE</code>是32（二进制<code>00100000</code>），大写的字母<code>A</code>是65（二进制<code>01000001</code>）。这128个符号（包括32个不能打印出来的控制符号），只占用了一个字节的后面7位，最前面的一位统一规定为<code>0</code>。</p>
-<p>这个符号表相信学过计算机导论都有见到过它的身影。</p>
-<p><strong>但是</strong>用来表示其他语言，128个符号是不够的。<strong>一些欧洲国家就决定，利用字节中闲置的最高位编入新的符号进行拓展，可以表示最多256个符号。</strong></p>
-<h4 id="latin-1字符集">👉Latin-1字符集</h4>
-<p>SO Latin-1字符集是Unicode字符集的一个子集，<strong>对应于Unicode字符指令表的前256个条目</strong>。其中Unicode字符为双字节16位，可以表示任何一种语言符号；而Latin-1字符集是单字节8位，<strong>只能够表示英文和西欧字符</strong>。</p>
-<p>因为ISO-8859-1编码范围<strong>使用了单字节内的所有空间</strong>，在支持ISO-8859-1的系统中传输和存储其他任何编码的字节流都不会被抛弃。**换言之，把其他任何编码的字节流当作ISO-8859-1编码看待都没有问题。**这是个很重要的特性，MySQL数据库默认编码是Latin1就是利用了这个特性。ASCII编码是一个7位的容器，ISO-8859-1编码是一个8位的容器。</p>
-<blockquote>
-<p>latin-1 这个字符集的牛逼之处、latin-1字符集是在ascii码上的一个扩展，它把ascii码没有用到过的字节码都给编上了对应的字符，所以它能表示的字符就更多了；针对单个字节来说就没有它不能解码的。</p>
-</blockquote>
-<h3 id="11-大小写区分">1.1 大小写区分</h3>
-<p><strong>JS是区分大小写的，但是HTML不区分大小写</strong>（尽管XHTML区分大小写）。</p>
-<p>例如：在HTML设置事件处理程序时 onclick = onClick</p>
-<p>但是在JS（或者XHTML中）必须使用onclick</p>
-<h3 id="12-空格-换行符和格式控制符">1.2 空格、换行符和格式控制符</h3>
-<p>JS会忽略程序中标识之间的空格。（标识的话学过编译原理应该都知道，是词法分析的解析出的单位，本人写过一个基于c++的词法分析器，仅作为校园课程作业参考：<a href="https://github.com/giriawsh/Clex">Clex词法分析器</a>）也是由于代码中可以随意使用空格和换行，实际开发中需要进行编码风格的统一，提高代码可读性。</p>
-<p>同等会被解析成空格的字符有：普通空格符（\u0020）、水平制表符（\u0009）、垂直制表符（\u0008）、换页符（\000C）等所有Unicode中的zs型字符（没有标志符号，也不用来控制或者格式表征的字符）</p>
-<p>会被解析成换行符的有：换行符（\u000A）、回车符(\u000D)、行分隔符（\u2028）、段分隔符（\u2029）。回车加换行会被解析成一个单行结束符</p>
-<p>格式控制符便是Unicode中的Cf类，控制文本的视觉显示（例如从左到右or从右到左）</p>
-<h3 id="13-unicode转义序列">1.3 Unicode转义序列</h3>
-<p>为了更好的兼容性，JS定义了一种特殊序列，使用6个ASCII字符来代表人已16位Unicode内码，以\u为前缀，其后跟随4个十六进制数。</p>
-<p>这种转移写法可以用在JS字符串直接量、正则表达式直接量、标识符（关键字除外）中。</p>
-<p>Unicode转义写法也可以出现在注释中，但是只被当做上下文中的ASCII字符处理，并不会被解析为其对应的Unicode字符。</p>
-<h3 id="14-标准化">1.4 标准化</h3>
-<p>Unicode标准为所有字符定义了一个首选的编码格式，并给出了一个标准化的处理方式，将文本转换为一种合适比较的标准格式。</p>
-<p>JS在处理时会认为它正在解析的程序代码已是这种标准格式，<strong>不会再做标准化处理。</strong></p>
-<h3 id="15-注释">1.5 注释</h3>
-<p>//和/**/你懂得</p>
-<h3 id="16-直接量">1.6 直接量</h3>
-<blockquote>
-<p>直接量：程序中直接使用的数据值</p>
-</blockquote>
-<h2 id="2-标识符和保留字">2. 标识符和保留字</h2>
-<h3 id="21-标识符">2.1 标识符</h3>
-<blockquote>
-<p>标识符：就是一个名字</p>
-</blockquote>
-<p>必须以字母、下划线、$开始，后续可以是字母、数字、下划线、$（数字不允许打头）</p>
-<p>JS允许标识符中出现Unicode字符全集中的字母和数字，但是为了可移植性与便于书写的考虑，通常只使用ASCII字母和数字书写标识符</p>
-<h3 id="22-保留字">2.2 保留字</h3>
-<p>这种一般写多了都知道别拿保留字取名作死。详细可看：<a href="https://www.runoob.com/js/js-reserved.html">JS保留字一览</a></p>
-<h2 id="3-可选的分号">3. 可选的分号</h2>
-<p>这一章介绍了许许多多奇奇怪怪的偷懒不加分号的解释法……</p>
-<p>大致规则如下：</p>
-<ul>
-<li>JS只有在缺少了分号就无法正确解析代码的时候，JS才会填补分号（像不像语法翻译里面的自动错误纠正，实在解析不动了才报错然后再弹出看不懂的，再继续解析）。但有两个例外。</li>
-<li>第一个例外是在涉及return、break、continue时，如果紧跟换行，则会在换行处填补分号。</li>
-</ul>
-<pre><code>return
-true;
- ==&gt;
-return; true;
-</code></pre>
-<ul>
-<li>第二个例外是++和--运算符时，将会作为下一行代码的前缀操作符与之一起解析（没想到吧老弟，我跟身后的友军一伙了）</li>
-</ul>
-<pre><code>x
-++
-y
-==&gt;
-x; ++y;
-</code></pre>
-<p>这可能和这俩运算符本身的结合性有关。</p>
-<p>这一章基本可以看出这个语言的定义规范，包括语言基本的字符集合、语言翻译解释方法、标识符保留字、语句分割方法。JS就在这样简短的一章中有了基本框架。</p>
-<h1 id="参考资料">参考资料</h1>
-<p><a href="https://baike.baidu.com/item/Latin1">latin1百度百科</a></p>
-<p><a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html">阮一峰——字符编码笔记：ASCII，Unicode 和 UTF-8</a></p>
-<p><a href="http://www.shouce.ren/api/html/html4/appendix-iso_latin1.html">ISO Latin-1字符集</a></p>
 ]]></content>
     </entry>
 </feed>
