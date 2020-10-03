@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>NodeJS初学系列4——util工具、文件系统、GET/POST请求 | Giria&#39;s Blog</title>
+<link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+
+<link rel="canonical" href="https://giriawsh.github.io/post/nodejs-chu-xue-xi-lie-4-util-gong-ju-wen-jian-xi-tong-getpost-qing-qiu/" />
+</head>
+<body>
+<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
+<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://giriawsh.github.io/"><img alt="logo" style="display:inline-block;" src="https://giriawsh.github.io//images/avatar.png"/></a><h1 title="Giria&#39;s Blog" class="weaklink"><a  href="/">Giria&#39;s Blog</a></h1>
+
+<div class="navbar weaklink">
+<div class="normal_nav">
+<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/IMEC1slRP/" class="selected active current nav__item" >前端</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/d3SOBOYxM/" class="selected active current nav__item" >算法题解</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/7Xal1JEGf/" class="selected active current nav__item" >个人学习系列</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li></ul></nav>
+<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
+<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/IMEC1slRP/" class="selected active current nav__item" >前端</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/d3SOBOYxM/" class="selected active current nav__item" >算法题解</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/7Xal1JEGf/" class="selected active current nav__item" >个人学习系列</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1601722644033" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+</div></div>
+<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
+
+
+<div class="main"><div class="main-inner"><div class="content">
+<article class="post">
+<h2 class="post_title sm_margin"><a>NodeJS初学系列4——util工具、文件系统、GET/POST请求</a></h2>
+<script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-10-03</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/YijAokidn/" class="tag">NodeJS学习系列</a> | 	<a href="https://giriawsh.github.io/tag/7Xal1JEGf/" class="tag">学习系列</a> | 	<a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="tag">前端</a> | 	<a href="https://giriawsh.github.io/tag/2G-O1ZTp4/" class="tag">JavaScript</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">4929字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">23 min read</span>
+</section>
+
+<div style="display:flex">
+<div class="md_block" id="md_block">
+<div class="round-shape-one"></div>
+<h1 id="前言">前言</h1>
+<p>Giria度过了海吃海喝的国庆两天，重拾NodeJS，这是第四天，学习了util模块、文件系统操作、GET/POST请求等。</p>
+<h1 id="常用工具">常用工具</h1>
+<p>util 是一个Node.js 核心模块，提供常用函数的集合，用于弥补核心 JavaScript 的功能 过于精简的不足。</p>
+<pre><code>const util = require('util');
+</code></pre>
+<h2 id="utilcallbackify">util.callbackify</h2>
+<p><strong>util.callbackify(original)</strong> 将 <code>async</code> 异步函数（或者一个返回值为 <code>Promise</code> 的函数）转换成遵循<strong>异常优先的回调风格的函数</strong>，例如将 <code>(err, value) =&gt; ...</code> 回调作为最后一个参数。 在回调函数中，第一个参数为拒绝的原因（如果 <code>Promise</code> 解决，则为 <code>null</code>），第二个参数则是解决的值。</p>
+<p>original 为 async 异步函数。该函数返回传统回调函数。</p>
+<pre><code class="language-js">const util = require('util');
+
+async function fn() {
+  return 'hello world';
+}
+const callbackFunction = util.callbackify(fn);
+
+callbackFunction((err, ret) =&gt; {
+  if (err) throw err;
+  console.log(ret);
+});
+</code></pre>
+<p>执行结果：</p>
+<pre><code>hello world
+</code></pre>
+<p>回调函数是异步执行的，并且有异常堆栈错误追踪。 如果回调函数抛出一个异常，进程会触发一个 'uncaughtException' 异常，如果没有被捕获，进程将会退出。</p>
+<p>null 在回调函数中作为一个参数有其特殊的意义，如果回调函数的首个参数为 Promise 拒绝的原因且带有返回值，且值可以转换成布尔值 false，这个值会被封装在 Error 对象里，可以通过属性 reason 获取。</p>
+<pre><code class="language-js">function fn() {
+  return Promise.reject(null);
+}
+const callbackFunction = util.callbackify(fn);
+
+callbackFunction((err, ret) =&gt; {
+  // 当 Promise 被以 `null` 拒绝时，它被包装为 Error 并且原始值存储在 `reason` 中。
+  err &amp;&amp; err.hasOwnProperty('reason') &amp;&amp; err.reason === null;  // true
+});
+</code></pre>
+<h2 id="utilinherits">util.inherits</h2>
+<p><strong>util.inherits(constructor, superConstructor)</strong> 是一个实现对象间原型继承的函数。</p>
+<pre><code class="language-js">var util = require('util');
+function Base() {
+    this.name = 'giria';
+    this.base = 1999;
+    this.sayHello = function() {
+        console.log('Hello ' + this.name);
+    };
+}
+Base.prototype.showName = function() {
+    console.log('My name is '+this.name);
+};
+function Sub() {
+    this.name = 'sub_giria';
+}
+util.inherits(Sub, Base);
+var objBase = new Base();
+objBase.showName();
+objBase.sayHello();
+console.log(objBase);
+var objSub = new Sub();
+objSub.showName();
+objSub.sayHello();
+console.log(objSub);
+</code></pre>
+<p>我们定义了一个基础对象 Base 和一个继承自 Base 的 Sub，Base 有三个在构造函数内定义的属性和一个原型中定义的函数，通过util.inherits 实现继承。</p>
+<p>执行结果：</p>
+<pre><code>My name is giria
+Hello giria
+Base { name: 'giria', base: 1999, sayHello: [Function] }
+My name is sub_giria
+K:\projects\node\first-test\util-demo\main.js:22
+objSub.sayHello();
+  	   ^
+
+TypeError: objSub.sayHello is not a function
+Sub { name: 'sub_giria' }
+</code></pre>
+<blockquote>
+<p>**注意：**Sub <strong>仅仅继承了Base 在原型中定义的函数</strong>，而构造函数内部创造的 base 属 性和 sayHello 函数都没有被 Sub 继承。</p>
+</blockquote>
+<h2 id="utilinspect">util.inspect</h2>
+<p><strong>util.inspect(object,[showHidden],[depth],[colors])</strong> 是一个将任意对象转换 为字符串的方法，通常用于调试和错误输出。它至少接受一个参数 object，即要转换的对象。</p>
+<ul>
+<li>
+<p>showHidden 是一个可选参数，如果值为 true，将会输出更多隐藏信息。</p>
+</li>
+<li>
+<p>depth 表示最大递归的层数，如果对象很复杂，你可以指定层数以控制输出信息的多 少。如果不指定depth，默认会递归 2 层，指定为 null 表示将不限递归层数完整遍历对象。</p>
+</li>
+<li>
+<p>如果 colors 值为 true，输出格式将会以 ANSI 颜色编码，通常用于在终端显示更漂亮 的效果。</p>
+</li>
+</ul>
+<p>特别要指出的是，util.inspect 并不会简单地直接把对象转换为字符串，即使该对 象定义了 toString 方法也不会调用。（意思是本质上并不是调用toString方法，而且转换的字符串和我们想要的toString形式不一样）</p>
+<pre><code class="language-js">var util = require('util');
+function Person() {
+    this.name = 'giria';
+    this.toString = function() {
+        return this.name;
+    };
+}
+var obj = new Person();
+console.log(util.inspect(obj));
+console.log(util.inspect(obj, true));
+console.log(util.inspect(obj, true, null));
+console.log(util.inspect(obj, true, null, true));
+</code></pre>
+<p>执行结果：</p>
+<pre><code class="language-js">Person { name: 'giria', toString: [Function] }
+Person {
+  name: 'giria',
+  toString: [Function] {
+    [length]: 0,
+    [name]: '',
+    [arguments]: null,
+    [caller]: null,
+    [prototype]: { [constructor]: [Circular] }
+  }
+}
+Person {
+  name: 'giria',
+  toString: [Function] {
+    [length]: 0,
+    [name]: '',
+    [arguments]: null,
+    [caller]: null,
+    [prototype]: { [constructor]: [Circular] }
+  }
+}
+Person {
+  name: 'giria',
+  toString: [Function] {
+    [length]: 0,
+    [name]: '',
+    [arguments]: null,
+    [caller]: null,
+    [prototype]: { [constructor]: [Circular] }
+  }
+}
+</code></pre>
+<h2 id="utilisarrayobject">util.isArray(object)</h2>
+<p>如果给定的参数 &quot;object&quot; 是一个数组返回 true，否则返回 false。</p>
+<pre><code class="language-js">var util = require('util');
+
+util.isArray([])
+  // true
+util.isArray(new Array)
+  // true
+util.isArray({})
+  // false
+</code></pre>
+<h2 id="utilisregexpobject">util.isRegExp(object)</h2>
+<p>如果给定的参数 &quot;object&quot; 是一个正则表达式返回true，否则返回false。</p>
+<pre><code class="language-js">var util = require('util');
+
+util.isRegExp(/some regexp/)
+  // true
+util.isRegExp(new RegExp('another regexp'))
+  // true
+util.isRegExp({})
+  // false
+</code></pre>
+<h2 id="utilisdateobject">util.isDate(object)</h2>
+<p>如果给定的参数 &quot;object&quot; 是一个日期返回true，否则返回false。</p>
+<pre><code class="language-js">var util = require('util');
+
+util.isDate(new Date())
+  // true
+util.isDate(Date())
+  // false (without 'new' returns a String) 有点意思
+util.isDate({})
+  // false
+</code></pre>
+<h1 id="文件系统">文件系统</h1>
+<p>Node.js 提供一组类似 UNIX（POSIX）标准的文件操作API。 Node 导入文件系统模块(fs)语法如下所示(我们前面在文件读写已经用到过了)：</p>
+<pre><code>var fs = require(&quot;fs&quot;)
+</code></pre>
+<h2 id="异步和同步">异步和同步</h2>
+<p>Node.js 文件系统（fs 模块）模块中的方法均有异步和同步版本，例如读取文件内容的函数有异步的 fs.readFile() 和同步的 fs.readFileSync()。</p>
+<p>异步的方法函数最后一个参数为回调函数，回调函数的第一个参数包含了错误信息(error)。</p>
+<p><strong>建议大家使用异步方法，比起同步，异步方法性能更高，速度更快，而且没有阻塞。</strong></p>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+
+// 异步读取
+fs.readFile('input.txt', function (err, data) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log(&quot;异步读取: &quot; + data.toString());
+});
+
+// 同步读取
+var data = fs.readFileSync('input.txt');
+console.log(&quot;同步读取: &quot; + data.toString());
+
+console.log(&quot;程序执行完毕。&quot;);
+</code></pre>
+<p>执行结果</p>
+<pre><code>$ node file.js 
+同步读取: 菜鸟教程官网地址：www.runoob.com
+文件读取实例
+
+程序执行完毕。
+异步读取: 菜鸟教程官网地址：www.runoob.com
+文件读取实例
+</code></pre>
+<h2 id="打开文件">打开文件</h2>
+<p>以下为在异步模式下打开文件的语法格式：</p>
+<pre><code>fs.open(path, flags[, mode], callback)
+</code></pre>
+<ul>
+<li><strong>path</strong> - 文件的路径。</li>
+<li><strong>flags</strong> - 文件打开的行为。具体值详见下文。</li>
+<li><strong>mode</strong> - 设置文件模式(权限)，文件创建默认权限为 0666(可读，可写)。</li>
+<li><strong>callback</strong> - 回调函数，带有两个参数如：callback(err, fd)。</li>
+</ul>
+<p>flags 参数可以是以下值：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Flag</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">r</td>
+<td style="text-align:left">以读取模式打开文件。如果文件不存在抛出异常。</td>
+</tr>
+<tr>
+<td style="text-align:left">r+</td>
+<td style="text-align:left">以读写模式打开文件。如果文件不存在抛出异常。</td>
+</tr>
+<tr>
+<td style="text-align:left">rs</td>
+<td style="text-align:left">以同步的方式读取文件。</td>
+</tr>
+<tr>
+<td style="text-align:left">rs+</td>
+<td style="text-align:left">以同步的方式读取和写入文件。</td>
+</tr>
+<tr>
+<td style="text-align:left">w</td>
+<td style="text-align:left">以写入模式打开文件，如果文件不存在则创建。</td>
+</tr>
+<tr>
+<td style="text-align:left">wx</td>
+<td style="text-align:left">类似 'w'，但是如果文件路径存在，则文件写入失败。</td>
+</tr>
+<tr>
+<td style="text-align:left">w+</td>
+<td style="text-align:left">以读写模式打开文件，如果文件不存在则创建。</td>
+</tr>
+<tr>
+<td style="text-align:left">wx+</td>
+<td style="text-align:left">类似 'w+'， 但是如果文件路径存在，则文件读写失败。</td>
+</tr>
+<tr>
+<td style="text-align:left">a</td>
+<td style="text-align:left">以追加模式打开文件，如果文件不存在则创建。</td>
+</tr>
+<tr>
+<td style="text-align:left">ax</td>
+<td style="text-align:left">类似 'a'， 但是如果文件路径存在，则文件追加失败。</td>
+</tr>
+<tr>
+<td style="text-align:left">a+</td>
+<td style="text-align:left">以读取追加模式打开文件，如果文件不存在则创建。</td>
+</tr>
+<tr>
+<td style="text-align:left">ax+</td>
+<td style="text-align:left">类似 'a+'， 但是如果文件路径存在，则文件读取追加失败。</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+
+// 异步打开文件
+console.log(&quot;准备打开文件！&quot;);
+fs.open('input.txt', 'r+', function(err, fd) {
+    if (err) {
+        return console.error(err);
+    }
+    console.log(&quot;文件打开成功！&quot;);
+});
+console.log(&quot;打开文件完成！&quot;);
+</code></pre>
+<p>执行结果：</p>
+<pre><code>准备打开文件！
+打开文件完成！
+文件打开成功！
+</code></pre>
+<h2 id="获取文件信息">获取文件信息</h2>
+<p>以下为通过异步模式获取文件信息的语法格式：</p>
+<pre><code>fs.stat(path, callback)
+</code></pre>
+<ul>
+<li><strong>path</strong> - 文件路径。</li>
+<li><strong>callback</strong> - 回调函数，带有两个参数如：(err, stats), <strong>stats</strong> 是 fs.Stats 对象。</li>
+</ul>
+<p>fs.stat(path)执行后，会将stats类的实例返回给其回调函数。可以通过stats类中的提供方法判断文件的相关属性。</p>
+<pre><code class="language-js">var fs = require('fs');
+
+fs.stat('/Users/liuht/code/itbilu/demo/fs.js', function (err, stats) {
+    console.log(stats.isFile());         //true
+})
+</code></pre>
+<p>stats类中的方法有：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">方法</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">stats.isFile()</td>
+<td style="text-align:left">如果是文件返回 true，否则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">stats.isDirectory()</td>
+<td style="text-align:left">如果是目录返回 true，否则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">stats.isBlockDevice()</td>
+<td style="text-align:left">如果是块设备返回 true，否则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">stats.isCharacterDevice()</td>
+<td style="text-align:left">如果是字符设备返回 true，否则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">stats.isSymbolicLink()</td>
+<td style="text-align:left">如果是软链接返回 true，否则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">stats.isFIFO()</td>
+<td style="text-align:left">如果是FIFO，返回true，否则返回 false。FIFO是UNIX中的一种特殊类型的命令管道。</td>
+</tr>
+<tr>
+<td style="text-align:left">stats.isSocket()</td>
+<td style="text-align:left">如果是 Socket 返回 true，否则返回 false。</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+
+console.log(&quot;准备打开文件！&quot;);
+fs.stat('input.txt', function (err, stats) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log(stats);
+   console.log(&quot;读取文件信息成功！&quot;);
+   
+   // 检测文件类型
+   console.log(&quot;是否为文件(isFile) ? &quot; + stats.isFile());
+   console.log(&quot;是否为目录(isDirectory) ? &quot; + stats.isDirectory());    
+});
+</code></pre>
+<pre><code>准备打开文件！
+Stats {
+  dev: 611366247,
+  mode: 33206,
+  nlink: 1,
+  uid: 0,
+  gid: 0,
+  rdev: 0,
+  blksize: 4096,
+  ino: 1407374884218279,
+  size: 43,
+  blocks: 0,
+  atimeMs: 1601623852273.1826,
+  mtimeMs: 1601278302892,
+  ctimeMs: 1601623852273.1826,
+  birthtimeMs: 1601623852272.183,
+  atime: 2020-10-02T07:30:52.273Z,
+  mtime: 2020-09-28T07:31:42.892Z,
+  ctime: 2020-10-02T07:30:52.273Z,
+  birthtime: 2020-10-02T07:30:52.272Z
+}
+读取文件信息成功！
+是否为文件(isFile) ? true
+是否为目录(isDirectory) ? false
+</code></pre>
+<h2 id="写入文件">写入文件</h2>
+<p>以下为异步模式下写入文件的语法格式：</p>
+<pre><code>fs.writeFile(file, data[, options], callback)
+</code></pre>
+<ul>
+<li><strong>file</strong> - 文件名或文件描述符。</li>
+<li><strong>data</strong> - 要写入文件的数据，可以是 String(字符串) 或 Buffer(缓冲) 对象。</li>
+<li><strong>options</strong> - 该参数是一个对象，包含 {encoding, mode, flag}。默认编码为 utf8, 模式为 0666 ， flag 为 'w'</li>
+<li><strong>callback</strong> - 回调函数，回调函数只包含错误信息参数(err)，在写入失败时返回。</li>
+</ul>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+
+console.log(&quot;准备写入文件&quot;);
+fs.writeFile('input.txt', '我是通 过fs.writeFile 写入文件的内容',  function(err) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log(&quot;数据写入成功！&quot;);
+   console.log(&quot;--------我是分割线-------------&quot;)
+   console.log(&quot;读取写入的数据！&quot;);
+   fs.readFile('input.txt', function (err, data) {
+      if (err) {
+         return console.error(err);
+      }
+      console.log(&quot;异步读取文件数据: &quot; + data.toString());
+   });
+});
+</code></pre>
+<pre><code>准备写入文件
+数据写入成功！
+--------我是分割线-------------
+读取写入的数据！
+异步读取文件数据: 我是通 过fs.writeFile 写入文件的内容
+</code></pre>
+<h2 id="读取文件">读取文件</h2>
+<p>以下为异步模式下读取文件的语法格式：</p>
+<pre><code class="language-js">fs.read(fd, buffer, offset, length, position, callback)
+</code></pre>
+<ul>
+<li><strong>fd</strong> - 通过 fs.open() 方法返回的文件描述符。</li>
+<li><strong>buffer</strong> - 数据写入的缓冲区。</li>
+<li><strong>offset</strong> - 缓冲区写入的写入偏移量。</li>
+<li><strong>length</strong> - 要从文件中读取的字节数。</li>
+<li><strong>position</strong> - 文件读取的起始位置，如果 position 的值为 null，则会从当前文件指针的位置读取。</li>
+<li><strong>callback</strong> - 回调函数，有三个参数err, bytesRead, buffer，err 为错误信息， bytesRead 表示读取的字节数，buffer 为缓冲区对象。</li>
+</ul>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+var buf = new Buffer.alloc(1024);
+
+console.log(&quot;准备打开已存在的文件！&quot;);
+fs.open('input.txt', 'r+', function(err, fd) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log(&quot;文件打开成功！&quot;);
+   console.log(&quot;准备读取文件：&quot;);
+   fs.read(fd, buf, 0, buf.length, 0, function(err, bytes){
+      if (err){
+         console.log(err);
+      }
+      console.log(bytes + &quot;  字节被读取&quot;);
+      
+      // 仅输出读取的字节
+      if(bytes &gt; 0){
+         console.log(buf.slice(0, bytes).toString());
+      }
+   });
+});
+</code></pre>
+<p>执行结果：</p>
+<pre><code>准备打开已存在的文件！
+文件打开成功！
+准备读取文件：
+42  字节被读取
+菜鸟教程官网地址：www.runoob.com
+</code></pre>
+<h2 id="关闭文件">关闭文件</h2>
+<p>以下为异步模式下关闭文件的语法格式：</p>
+<pre><code>fs.close(fd, callback)
+</code></pre>
+<ul>
+<li><strong>fd</strong> - 通过 fs.open() 方法返回的文件描述符。</li>
+<li><strong>callback</strong> - 回调函数，没有参数。</li>
+</ul>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+var buf = new Buffer.alloc(1024);
+
+console.log(&quot;准备打开文件！&quot;);
+fs.open('input.txt', 'r+', function(err, fd) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log(&quot;文件打开成功！&quot;);
+   console.log(&quot;准备读取文件！&quot;);
+   fs.read(fd, buf, 0, buf.length, 0, function(err, bytes){
+      if (err){
+         console.log(err);
+      }
+
+      // 仅输出读取的字节
+      if(bytes &gt; 0){
+         console.log(buf.slice(0, bytes).toString());
+      }
+
+      // 关闭文件
+      fs.close(fd, function(err){
+         if (err){
+            console.log(err);
+         } 
+         console.log(&quot;文件关闭成功&quot;);
+      });
+   });
+});
+</code></pre>
+<p>执行结果：</p>
+<pre><code>准备打开文件！
+文件打开成功！
+准备读取文件！
+菜鸟教程官网地址：www.runoob.com
+文件关闭成功
+</code></pre>
+<h2 id="截取文件">截取文件</h2>
+<p>以下为异步模式下截取文件的语法格式：</p>
+<pre><code>fs.ftruncate(fd, len, callback)
+</code></pre>
+<ul>
+<li><strong>fd</strong> - 通过 fs.open() 方法返回的文件描述符。</li>
+<li><strong>len</strong> - 文件内容截取的长度。</li>
+<li><strong>callback</strong> - 回调函数，没有参数。</li>
+</ul>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+var buf = new Buffer.alloc(1024);
+
+console.log(&quot;ready to open the file&quot;);
+fs.open('input.txt', 'r+', function (err, fd) {
+    if (err) {
+        return console.error(err);
+    }
+    console.log(&quot;open file successfully&quot;);
+    fs.read(fd, buf, 0, buf.length, 0, function (err, bytes) {
+        if (err){
+            console.log(err);
+        }
+
+        // 仅输出读取的字节
+        if(bytes &gt; 0){
+            console.log(buf.slice(0, bytes).toString()+&quot;before&quot;);
+        }
+        console.log(&quot;---------------------&quot;);
+    });
+    console.log(&quot;ready to ftruncate&quot;);
+    fs.ftruncate(fd, 10, function (err) {
+        if (err) {
+            console.error(err);
+        }
+        fs.read(fd, buf, 0, buf.length, 0, function (err, bytes) {
+            if (err){
+                console.log(err);
+            }
+
+            // 仅输出读取的字节
+            if(bytes &gt; 0){
+                console.log(buf.slice(0, bytes).toString());
+            }
+
+            console.log(&quot;---------------------&quot;);
+        });
+    });
+
+    fs.read(fd, buf, 0, buf.length, 0, function (err, bytes) {
+        if (err){
+            console.log(err);
+        }
+
+        // 仅输出读取的字节
+        if(bytes &gt; 0){
+            console.log(buf.slice(0, bytes).toString()+&quot;after&quot;);
+        }
+
+        // 关闭文件
+        fs.close(fd, function(err){
+            if (err){
+                console.log(err);
+            }
+            console.log(&quot;文件关闭成功！&quot;);
+        });
+    });
+});
+</code></pre>
+<p>执行结果：</p>
+<pre><code>➜  file-demo node ftruncate.js
+ready to open the file
+open file successfully
+ready to ftruncate
+abcdefg:wwbefore
+---------------------
+abcdefg:wwafter
+abcdefg:ww
+---------------------
+文件关闭成功！
+</code></pre>
+<p>奇怪的执行顺序，无论什么时候读，返回的都是截取后的结果。可能和异步执行有关。</p>
+<h2 id="删除文件">删除文件</h2>
+<p>以下为删除文件的语法格式：</p>
+<pre><code>fs.unlink(path, callback)
+</code></pre>
+<ul>
+<li><strong>path</strong> - 文件路径。</li>
+<li><strong>callback</strong> - 回调函数，没有参数。</li>
+</ul>
+<pre><code>var fs = require(&quot;fs&quot;);
+
+console.log(&quot;准备删除文件！&quot;);
+fs.unlink('input.txt', function(err) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log(&quot;文件删除成功！&quot;);
+});
+</code></pre>
+<p>执行结果：</p>
+<pre><code>准备删除文件！
+文件删除成功！
+</code></pre>
+<h2 id="创建目录">创建目录</h2>
+<p>以下为创建目录的语法格式：</p>
+<pre><code>fs.mkdir(path[, options], callback)
+</code></pre>
+<ul>
+<li><strong>path</strong> - 文件路径。</li>
+<li>options 参数可以是：
+<ul>
+<li><strong>recursive</strong> - 是否以递归的方式创建目录，默认为 false。</li>
+<li><strong>mode</strong> - 设置目录权限，默认为 0777。</li>
+</ul>
+</li>
+<li><strong>callback</strong> - 回调函数，没有参数。</li>
+</ul>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+// tmp 目录必须存在
+console.log(&quot;创建目录 /tmp/test/&quot;);
+fs.mkdir(&quot;/tmp/test/&quot;,function(err){
+   if (err) {
+       return console.error(err);
+   }
+   console.log(&quot;目录创建成功。&quot;);
+});
+</code></pre>
+<p>可以添加 recursive: true 参数，不管创建的目录 /tmp 和 /tmp/a 是否存在：</p>
+<pre><code class="language-js">fs.mkdir('/tmp/a/apple', { recursive: true }, (err) =&gt; {
+  if (err) throw err;
+});
+</code></pre>
+<h2 id="读取目录">读取目录</h2>
+<p>以下为读取目录的语法格式：</p>
+<pre><code>fs.readdir(path, callback)
+</code></pre>
+<ul>
+<li><strong>path</strong> - 文件路径。</li>
+<li><strong>callback</strong> - 回调函数，回调函数带有两个参数err, files，err 为错误信息，files 为 目录下的文件数组列表。</li>
+</ul>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+console.log(&quot;查看当前目录&quot;);
+fs.readdir(&quot;../file-demo/&quot;, function (err, files) {
+    if (err) {
+        return console.error(err);
+    }
+    files.forEach(function (file) {
+        console.log(file);
+    });
+});
+</code></pre>
+<p>执行结果：</p>
+<pre><code>➜  file-demo node readdir.js
+查看当前目录
+ftruncate.js
+input.txt
+main.js
+read.js
+readdir.js
+stat.js
+</code></pre>
+<h2 id="删除目录">删除目录</h2>
+<p>以下为删除目录的语法格式：</p>
+<pre><code>fs.rmdir(path, callback)
+</code></pre>
+<ul>
+<li><strong>path</strong> - 文件路径。</li>
+<li><strong>callback</strong> - 回调函数，没有参数。</li>
+</ul>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+// 执行前创建一个空的 /tmp/test 目录
+console.log(&quot;准备删除目录 /tmp/test&quot;);
+fs.rmdir(&quot;/tmp/test&quot;,function(err){
+   if (err) {
+       return console.error(err);
+   }
+   console.log(&quot;读取 /tmp 目录&quot;);
+   fs.readdir(&quot;/tmp/&quot;,function(err, files){
+      if (err) {
+          return console.error(err);
+      }
+      files.forEach( function (file){
+          console.log( file );
+      });
+   });
+});
+</code></pre>
+<p>还有其他文件模块API可详见<a href="https://nodejs.org/api/fs.html#fs_fs_rename_oldpath_newpath_callback">官方文档</a></p>
+<h1 id="getpost请求">GET/POST请求</h1>
+<p>表单提交到服务器一般都使用 GET/POST 请求。</p>
+<h2 id="获取get请求内容">获取GET请求内容</h2>
+<p>由于GET请求直接被嵌入在路径中，URL是完整的请求路径，包括了?后面的部分，因此你可以手动解析后面的内容作为GET请求的参数。</p>
+<p>node.js 中 url 模块中的 parse 函数提供了这个功能。</p>
+<p>我们之前有用过：</p>
+<pre><code>                   url.parse(string).query
+                                           |
+           url.parse(string).pathname      |
+                       |                   |
+                       |                   |
+                     ------ -------------------
+http://localhost:8888/start?foo=bar&amp;hello=world
+                                ---       -----
+                                 |          |
+                                 |          |
+              querystring.parse(queryString)[&quot;foo&quot;]    |
+                                            |
+                         querystring.parse(queryString)[&quot;hello&quot;]
+</code></pre>
+<p>可以在下面一个例子中看到和上面图中一样的结果</p>
+<pre><code class="language-js">var http = require('http');
+var url = require('url');
+var util = require('util');
+ 
+http.createServer(function(req, res){
+    res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
+    res.end(util.inspect(url.parse(req.url, true)));
+}).listen(3000);
+</code></pre>
+<p>在浏览器中访问 <strong>http://localhost:3000/user?name=菜鸟教程&amp;url=www.runoob.com</strong> 然后查看返回结果:</p>
+<pre><code>Url {
+  protocol: null,
+  slashes: null,
+  auth: null,
+  host: null,
+  port: null,
+  hostname: null,
+  hash: null,
+  search: '?name=%E8%8F%9C%E9%B8%9F%E6%95%99%E7%A8%8B&amp;url=www.runoob.com',
+  query: [Object: null prototype] { name: '菜鸟教程', url: 'www.runoob.com' },
+  pathname: '/user',
+  path: '/user?name=%E8%8F%9C%E9%B8%9F%E6%95%99%E7%A8%8B&amp;url=www.runoob.com',
+  href: '/user?name=%E8%8F%9C%E9%B8%9F%E6%95%99%E7%A8%8B&amp;url=www.runoob.com'
+}
+</code></pre>
+<h3 id="获取-url-的参数">获取 URL 的参数</h3>
+<p>我们可以使用 url.parse 方法来解析 URL 中的参数，代码如下：</p>
+<pre><code class="language-js">var http = require('http');
+var url = require('url');
+var util = require('util');
+ 
+http.createServer(function(req, res){
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+ 
+    // 解析 url 参数
+    var params = url.parse(req.url, true).query;//拿到问号后面的参数
+    res.write(&quot;网站名：&quot; + params.name);
+    res.write(&quot;\n&quot;);
+    res.write(&quot;网站 URL：&quot; + params.url);
+    res.end();
+ 
+}).listen(3000);
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201003180539.jpeg" alt="img" loading="lazy"></figure>
+<h2 id="获取-post-请求内容">获取 POST 请求内容</h2>
+<p>POST 请求的内容全部的都在请求体中，http.ServerRequest 并没有一个属性内容为请求体，原因是等待请求体传输可能是一件耗时的工作。</p>
+<p>比如上传文件，而很多时候我们可能并不需要理会请求体的内容，恶意的POST请求会大大消耗服务器的资源，所以 node.js 默认是不会解析请求体的，当你需要的时候，需要手动来做。</p>
+<p>请求结构如下：</p>
+<pre><code class="language-js">var http = require('http');
+var querystring = require('querystring');
+var util = require('util');
+ 
+http.createServer(function(req, res){
+    // 定义了一个post变量，用于暂存请求体的信息
+    var post = '';     
+ 
+    // 通过req的data事件监听函数，每当接受到请求体的数据，就累加到post变量中
+    req.on('data', function(chunk){    
+        post += chunk;
+    });
+ 
+    // 在end事件触发后，通过querystring.parse将post解析为真正的POST请求格式，然后向客户端返回。
+    req.on('end', function(){    
+        post = querystring.parse(post);
+        res.end(util.inspect(post));
+    });
+}).listen(3000);
+</code></pre>
+<p><code>querystring</code>模块是node.js解析和格式化URL查询字符串的工具。在node.js中，<code>querystring</code>代表<strong>查询字符串</strong>，说白了就是HTTP GET方法请求服务器的查询参数：</p>
+<figure data-type="image" tabindex="2"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201003184228.webp" alt="img" loading="lazy"></figure>
+<p>（黄色的框内就是查询字符串）</p>
+<blockquote>
+<ul>
+<li>
+<p>使用安全的字符表示不安全的字符，如中文，某些特殊的字符等。这样的话不管是浏览器环境，或者服务器环境，传输的数据都是安全的，可以正确地使用，不会出现数据的丢失或显示错误的情况</p>
+</li>
+<li>
+<p>消除一些有歧义的字符，举个例子，你想通过一个参数<code>data</code>传输<code>'&amp;a=1&amp;b=1&amp;c=1'</code>这几个字符，如果这样写</p>
+</li>
+</ul>
+</blockquote>
+<p>以下实例表单通过 POST 提交并输出数据：</p>
+<pre><code class="language-js">var http = require('http');
+var querystring = require('querystring');
+ 
+var postHTML = 
+  '&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;title&gt;菜鸟教程 Node.js 实例&lt;/title&gt;&lt;/head&gt;' +
+  '&lt;body&gt;' +
+  '&lt;form method=&quot;post&quot;&gt;' +
+  '网站名： &lt;input name=&quot;name&quot;&gt;&lt;br&gt;' +
+  '网站 URL： &lt;input name=&quot;url&quot;&gt;&lt;br&gt;' +
+  '&lt;input type=&quot;submit&quot;&gt;' +
+  '&lt;/form&gt;' +
+  '&lt;/body&gt;&lt;/html&gt;';
+ 
+http.createServer(function (req, res) {
+    var body = &quot;&quot;;
+    req.on('data', function (chunk) {
+        console.log(&quot;chunk=&quot;+chunk);
+        body += chunk;
+        console.log(&quot;body=&quot;+body);
+    });
+    req.on('end', function () {
+        console.log(body);
+        console.log(&quot;------------&quot;);
+         // 解析参数
+        body = querystring.parse(body);
+        console.log(body);
+        // 设置响应头部信息及编码
+        res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
+        if (body.name &amp;&amp; body.url) {// 输出提交的数据
+            res.write(&quot;site name:&quot; +
+                body.name);
+            res.write(&quot;&lt;br&gt;&quot;);
+            res.write(&quot;url:&quot; + body.url);
+        } else {// 输出表单
+            res.write(postHTML);
+        }
+        res.end();
+    });
+}).listen(3000);
+</code></pre>
+<p>执行结果：</p>
+<pre><code>➜  getpost-demo node post.js
+chunk=name=444&amp;url=555
+body=name=444&amp;url=555
+name=444&amp;url=555
+------------
+[Object: null prototype] { name: '444', url: '555' }
+
+------------
+[Object: null prototype] {}
+</code></pre>
+
+<span id="footnote"></span>
+<div id = "warn"></div>
+</div>
+<div class="toc-container"><ul class="markdownIt-TOC">
+<li><a href="#%E5%89%8D%E8%A8%80">前言</a></li>
+<li><a href="#%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7">常用工具</a>
+<ul>
+<li><a href="#utilcallbackify">util.callbackify</a></li>
+<li><a href="#utilinherits">util.inherits</a></li>
+<li><a href="#utilinspect">util.inspect</a></li>
+<li><a href="#utilisarrayobject">util.isArray(object)</a></li>
+<li><a href="#utilisregexpobject">util.isRegExp(object)</a></li>
+<li><a href="#utilisdateobject">util.isDate(object)</a></li>
+</ul>
+</li>
+<li><a href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F">文件系统</a>
+<ul>
+<li><a href="#%E5%BC%82%E6%AD%A5%E5%92%8C%E5%90%8C%E6%AD%A5">异步和同步</a></li>
+<li><a href="#%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6">打开文件</a></li>
+<li><a href="#%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF">获取文件信息</a></li>
+<li><a href="#%E5%86%99%E5%85%A5%E6%96%87%E4%BB%B6">写入文件</a></li>
+<li><a href="#%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6">读取文件</a></li>
+<li><a href="#%E5%85%B3%E9%97%AD%E6%96%87%E4%BB%B6">关闭文件</a></li>
+<li><a href="#%E6%88%AA%E5%8F%96%E6%96%87%E4%BB%B6">截取文件</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6">删除文件</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95">创建目录</a></li>
+<li><a href="#%E8%AF%BB%E5%8F%96%E7%9B%AE%E5%BD%95">读取目录</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E7%9B%AE%E5%BD%95">删除目录</a></li>
+</ul>
+</li>
+<li><a href="#getpost%E8%AF%B7%E6%B1%82">GET/POST请求</a>
+<ul>
+<li><a href="#%E8%8E%B7%E5%8F%96get%E8%AF%B7%E6%B1%82%E5%86%85%E5%AE%B9">获取GET请求内容</a>
+<ul>
+<li><a href="#%E8%8E%B7%E5%8F%96-url-%E7%9A%84%E5%8F%82%E6%95%B0">获取 URL 的参数</a></li>
+</ul>
+</li>
+<li><a href="#%E8%8E%B7%E5%8F%96-post-%E8%AF%B7%E6%B1%82%E5%86%85%E5%AE%B9">获取 POST 请求内容</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="fullPage"><canvas id="canvas"></canvas></div>
+</article>
+<div id="eof"><span>EOF</span></div><div class="round-shape-one"></div>
+<section>
+<div class="doc_comments">
+
+	  
+		<div id="gitalk-container"></div>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/qyxtim/Static@3.8/gitalk.min.js"></script><link href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.css"rel="stylesheet"><script>var gitalk=new Gitalk({clientID:"ee7c215043d62409bb53",clientSecret:"455d2f4a532bbe073ca25fdf9111932f00bbc624",repo:"giriawsh.github.io",owner:"giriawsh",admin:["giriawsh"],id:(location.pathname).substring(0, 49),distractionFreeMode:false});gitalk.render("gitalk-container");</script>
+	  
+
+	  
+
+</div></section>
+</div></div></div><script>
+"use strict";!function(){for(var n=document.getElementsByTagName("pre"),e=n.length,s=0;s<e;s++){n[s].innerHTML='<span class="line-number"></span>'+n[s].innerHTML+'<span class="cl"></span>';for(var a=n[s].innerHTML.split(/\n/).length,r=0;r<a-1;r++){n[s].getElementsByTagName("span")[0].innerHTML+="<span>"+(r+1)+"</span>"}}}();
+let mainNavLinks=document.querySelectorAll(".markdownIt-TOC a");window.addEventListener("scroll",event=>{let fromTop=window.scrollY;mainNavLinks.forEach((link,index)=>{let section=document.getElementById(decodeURI(link.hash).substring(1));let nextSection=null
+if(mainNavLinks[index+1]){nextSection=document.getElementById(decodeURI(mainNavLinks[index+1].hash).substring(1));}
+if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop){link.classList.add("currentToc");}else{link.classList.remove("currentToc");}}else{link.classList.add("currentToc");}}else{link.classList.remove("currentToc");}});});
+var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
+var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
+var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
+content="本文最后更新于2020-10-03，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-10-03 18:55:45";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+</script>
+<style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
+<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"><a href="https://github.com/giriawsh"title="github"><i class="iconfont icon-github"></i></a></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
+<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>49</strong> posts</span></div></div>
+<script>
+console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;", );
+</script>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+<script type="text/javascript" async src="https://giriawsh.github.io//media/js/prism.js"></script>
+</body>
+
+</html>

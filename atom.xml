@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-09-30T14:12:16.576Z</updated>
+    <updated>2020-10-03T10:57:28.942Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -10,6 +10,861 @@
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[NodeJS初学系列4——util工具、文件系统、GET/POST请求]]></title>
+        <id>https://giriawsh.github.io/post/nodejs-chu-xue-xi-lie-4-util-gong-ju-wen-jian-xi-tong-getpost-qing-qiu/</id>
+        <link href="https://giriawsh.github.io/post/nodejs-chu-xue-xi-lie-4-util-gong-ju-wen-jian-xi-tong-getpost-qing-qiu/">
+        </link>
+        <updated>2020-10-03T10:55:45.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="前言">前言</h1>
+<p>Giria度过了海吃海喝的国庆两天，重拾NodeJS，这是第四天，学习了util模块、文件系统操作、GET/POST请求等。</p>
+<h1 id="常用工具">常用工具</h1>
+<p>util 是一个Node.js 核心模块，提供常用函数的集合，用于弥补核心 JavaScript 的功能 过于精简的不足。</p>
+<pre><code>const util = require('util');
+</code></pre>
+<h2 id="utilcallbackify">util.callbackify</h2>
+<p><strong>util.callbackify(original)</strong> 将 <code>async</code> 异步函数（或者一个返回值为 <code>Promise</code> 的函数）转换成遵循<strong>异常优先的回调风格的函数</strong>，例如将 <code>(err, value) =&gt; ...</code> 回调作为最后一个参数。 在回调函数中，第一个参数为拒绝的原因（如果 <code>Promise</code> 解决，则为 <code>null</code>），第二个参数则是解决的值。</p>
+<p>original 为 async 异步函数。该函数返回传统回调函数。</p>
+<pre><code class="language-js">const util = require('util');
+
+async function fn() {
+  return 'hello world';
+}
+const callbackFunction = util.callbackify(fn);
+
+callbackFunction((err, ret) =&gt; {
+  if (err) throw err;
+  console.log(ret);
+});
+</code></pre>
+<p>执行结果：</p>
+<pre><code>hello world
+</code></pre>
+<p>回调函数是异步执行的，并且有异常堆栈错误追踪。 如果回调函数抛出一个异常，进程会触发一个 'uncaughtException' 异常，如果没有被捕获，进程将会退出。</p>
+<p>null 在回调函数中作为一个参数有其特殊的意义，如果回调函数的首个参数为 Promise 拒绝的原因且带有返回值，且值可以转换成布尔值 false，这个值会被封装在 Error 对象里，可以通过属性 reason 获取。</p>
+<pre><code class="language-js">function fn() {
+  return Promise.reject(null);
+}
+const callbackFunction = util.callbackify(fn);
+
+callbackFunction((err, ret) =&gt; {
+  // 当 Promise 被以 `null` 拒绝时，它被包装为 Error 并且原始值存储在 `reason` 中。
+  err &amp;&amp; err.hasOwnProperty('reason') &amp;&amp; err.reason === null;  // true
+});
+</code></pre>
+<h2 id="utilinherits">util.inherits</h2>
+<p><strong>util.inherits(constructor, superConstructor)</strong> 是一个实现对象间原型继承的函数。</p>
+<pre><code class="language-js">var util = require('util');
+function Base() {
+    this.name = 'giria';
+    this.base = 1999;
+    this.sayHello = function() {
+        console.log('Hello ' + this.name);
+    };
+}
+Base.prototype.showName = function() {
+    console.log('My name is '+this.name);
+};
+function Sub() {
+    this.name = 'sub_giria';
+}
+util.inherits(Sub, Base);
+var objBase = new Base();
+objBase.showName();
+objBase.sayHello();
+console.log(objBase);
+var objSub = new Sub();
+objSub.showName();
+objSub.sayHello();
+console.log(objSub);
+</code></pre>
+<p>我们定义了一个基础对象 Base 和一个继承自 Base 的 Sub，Base 有三个在构造函数内定义的属性和一个原型中定义的函数，通过util.inherits 实现继承。</p>
+<p>执行结果：</p>
+<pre><code>My name is giria
+Hello giria
+Base { name: 'giria', base: 1999, sayHello: [Function] }
+My name is sub_giria
+K:\projects\node\first-test\util-demo\main.js:22
+objSub.sayHello();
+  	   ^
+
+TypeError: objSub.sayHello is not a function
+Sub { name: 'sub_giria' }
+</code></pre>
+<blockquote>
+<p>**注意：**Sub <strong>仅仅继承了Base 在原型中定义的函数</strong>，而构造函数内部创造的 base 属 性和 sayHello 函数都没有被 Sub 继承。</p>
+</blockquote>
+<h2 id="utilinspect">util.inspect</h2>
+<p><strong>util.inspect(object,[showHidden],[depth],[colors])</strong> 是一个将任意对象转换 为字符串的方法，通常用于调试和错误输出。它至少接受一个参数 object，即要转换的对象。</p>
+<ul>
+<li>
+<p>showHidden 是一个可选参数，如果值为 true，将会输出更多隐藏信息。</p>
+</li>
+<li>
+<p>depth 表示最大递归的层数，如果对象很复杂，你可以指定层数以控制输出信息的多 少。如果不指定depth，默认会递归 2 层，指定为 null 表示将不限递归层数完整遍历对象。</p>
+</li>
+<li>
+<p>如果 colors 值为 true，输出格式将会以 ANSI 颜色编码，通常用于在终端显示更漂亮 的效果。</p>
+</li>
+</ul>
+<p>特别要指出的是，util.inspect 并不会简单地直接把对象转换为字符串，即使该对 象定义了 toString 方法也不会调用。（意思是本质上并不是调用toString方法，而且转换的字符串和我们想要的toString形式不一样）</p>
+<pre><code class="language-js">var util = require('util');
+function Person() {
+    this.name = 'giria';
+    this.toString = function() {
+        return this.name;
+    };
+}
+var obj = new Person();
+console.log(util.inspect(obj));
+console.log(util.inspect(obj, true));
+console.log(util.inspect(obj, true, null));
+console.log(util.inspect(obj, true, null, true));
+</code></pre>
+<p>执行结果：</p>
+<pre><code class="language-js">Person { name: 'giria', toString: [Function] }
+Person {
+  name: 'giria',
+  toString: [Function] {
+    [length]: 0,
+    [name]: '',
+    [arguments]: null,
+    [caller]: null,
+    [prototype]: { [constructor]: [Circular] }
+  }
+}
+Person {
+  name: 'giria',
+  toString: [Function] {
+    [length]: 0,
+    [name]: '',
+    [arguments]: null,
+    [caller]: null,
+    [prototype]: { [constructor]: [Circular] }
+  }
+}
+Person {
+  name: 'giria',
+  toString: [Function] {
+    [length]: 0,
+    [name]: '',
+    [arguments]: null,
+    [caller]: null,
+    [prototype]: { [constructor]: [Circular] }
+  }
+}
+</code></pre>
+<h2 id="utilisarrayobject">util.isArray(object)</h2>
+<p>如果给定的参数 &quot;object&quot; 是一个数组返回 true，否则返回 false。</p>
+<pre><code class="language-js">var util = require('util');
+
+util.isArray([])
+  // true
+util.isArray(new Array)
+  // true
+util.isArray({})
+  // false
+</code></pre>
+<h2 id="utilisregexpobject">util.isRegExp(object)</h2>
+<p>如果给定的参数 &quot;object&quot; 是一个正则表达式返回true，否则返回false。</p>
+<pre><code class="language-js">var util = require('util');
+
+util.isRegExp(/some regexp/)
+  // true
+util.isRegExp(new RegExp('another regexp'))
+  // true
+util.isRegExp({})
+  // false
+</code></pre>
+<h2 id="utilisdateobject">util.isDate(object)</h2>
+<p>如果给定的参数 &quot;object&quot; 是一个日期返回true，否则返回false。</p>
+<pre><code class="language-js">var util = require('util');
+
+util.isDate(new Date())
+  // true
+util.isDate(Date())
+  // false (without 'new' returns a String) 有点意思
+util.isDate({})
+  // false
+</code></pre>
+<h1 id="文件系统">文件系统</h1>
+<p>Node.js 提供一组类似 UNIX（POSIX）标准的文件操作API。 Node 导入文件系统模块(fs)语法如下所示(我们前面在文件读写已经用到过了)：</p>
+<pre><code>var fs = require(&quot;fs&quot;)
+</code></pre>
+<h2 id="异步和同步">异步和同步</h2>
+<p>Node.js 文件系统（fs 模块）模块中的方法均有异步和同步版本，例如读取文件内容的函数有异步的 fs.readFile() 和同步的 fs.readFileSync()。</p>
+<p>异步的方法函数最后一个参数为回调函数，回调函数的第一个参数包含了错误信息(error)。</p>
+<p><strong>建议大家使用异步方法，比起同步，异步方法性能更高，速度更快，而且没有阻塞。</strong></p>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+
+// 异步读取
+fs.readFile('input.txt', function (err, data) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log(&quot;异步读取: &quot; + data.toString());
+});
+
+// 同步读取
+var data = fs.readFileSync('input.txt');
+console.log(&quot;同步读取: &quot; + data.toString());
+
+console.log(&quot;程序执行完毕。&quot;);
+</code></pre>
+<p>执行结果</p>
+<pre><code>$ node file.js 
+同步读取: 菜鸟教程官网地址：www.runoob.com
+文件读取实例
+
+程序执行完毕。
+异步读取: 菜鸟教程官网地址：www.runoob.com
+文件读取实例
+</code></pre>
+<h2 id="打开文件">打开文件</h2>
+<p>以下为在异步模式下打开文件的语法格式：</p>
+<pre><code>fs.open(path, flags[, mode], callback)
+</code></pre>
+<ul>
+<li><strong>path</strong> - 文件的路径。</li>
+<li><strong>flags</strong> - 文件打开的行为。具体值详见下文。</li>
+<li><strong>mode</strong> - 设置文件模式(权限)，文件创建默认权限为 0666(可读，可写)。</li>
+<li><strong>callback</strong> - 回调函数，带有两个参数如：callback(err, fd)。</li>
+</ul>
+<p>flags 参数可以是以下值：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Flag</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">r</td>
+<td style="text-align:left">以读取模式打开文件。如果文件不存在抛出异常。</td>
+</tr>
+<tr>
+<td style="text-align:left">r+</td>
+<td style="text-align:left">以读写模式打开文件。如果文件不存在抛出异常。</td>
+</tr>
+<tr>
+<td style="text-align:left">rs</td>
+<td style="text-align:left">以同步的方式读取文件。</td>
+</tr>
+<tr>
+<td style="text-align:left">rs+</td>
+<td style="text-align:left">以同步的方式读取和写入文件。</td>
+</tr>
+<tr>
+<td style="text-align:left">w</td>
+<td style="text-align:left">以写入模式打开文件，如果文件不存在则创建。</td>
+</tr>
+<tr>
+<td style="text-align:left">wx</td>
+<td style="text-align:left">类似 'w'，但是如果文件路径存在，则文件写入失败。</td>
+</tr>
+<tr>
+<td style="text-align:left">w+</td>
+<td style="text-align:left">以读写模式打开文件，如果文件不存在则创建。</td>
+</tr>
+<tr>
+<td style="text-align:left">wx+</td>
+<td style="text-align:left">类似 'w+'， 但是如果文件路径存在，则文件读写失败。</td>
+</tr>
+<tr>
+<td style="text-align:left">a</td>
+<td style="text-align:left">以追加模式打开文件，如果文件不存在则创建。</td>
+</tr>
+<tr>
+<td style="text-align:left">ax</td>
+<td style="text-align:left">类似 'a'， 但是如果文件路径存在，则文件追加失败。</td>
+</tr>
+<tr>
+<td style="text-align:left">a+</td>
+<td style="text-align:left">以读取追加模式打开文件，如果文件不存在则创建。</td>
+</tr>
+<tr>
+<td style="text-align:left">ax+</td>
+<td style="text-align:left">类似 'a+'， 但是如果文件路径存在，则文件读取追加失败。</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+
+// 异步打开文件
+console.log(&quot;准备打开文件！&quot;);
+fs.open('input.txt', 'r+', function(err, fd) {
+    if (err) {
+        return console.error(err);
+    }
+    console.log(&quot;文件打开成功！&quot;);
+});
+console.log(&quot;打开文件完成！&quot;);
+</code></pre>
+<p>执行结果：</p>
+<pre><code>准备打开文件！
+打开文件完成！
+文件打开成功！
+</code></pre>
+<h2 id="获取文件信息">获取文件信息</h2>
+<p>以下为通过异步模式获取文件信息的语法格式：</p>
+<pre><code>fs.stat(path, callback)
+</code></pre>
+<ul>
+<li><strong>path</strong> - 文件路径。</li>
+<li><strong>callback</strong> - 回调函数，带有两个参数如：(err, stats), <strong>stats</strong> 是 fs.Stats 对象。</li>
+</ul>
+<p>fs.stat(path)执行后，会将stats类的实例返回给其回调函数。可以通过stats类中的提供方法判断文件的相关属性。</p>
+<pre><code class="language-js">var fs = require('fs');
+
+fs.stat('/Users/liuht/code/itbilu/demo/fs.js', function (err, stats) {
+    console.log(stats.isFile());         //true
+})
+</code></pre>
+<p>stats类中的方法有：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">方法</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">stats.isFile()</td>
+<td style="text-align:left">如果是文件返回 true，否则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">stats.isDirectory()</td>
+<td style="text-align:left">如果是目录返回 true，否则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">stats.isBlockDevice()</td>
+<td style="text-align:left">如果是块设备返回 true，否则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">stats.isCharacterDevice()</td>
+<td style="text-align:left">如果是字符设备返回 true，否则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">stats.isSymbolicLink()</td>
+<td style="text-align:left">如果是软链接返回 true，否则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">stats.isFIFO()</td>
+<td style="text-align:left">如果是FIFO，返回true，否则返回 false。FIFO是UNIX中的一种特殊类型的命令管道。</td>
+</tr>
+<tr>
+<td style="text-align:left">stats.isSocket()</td>
+<td style="text-align:left">如果是 Socket 返回 true，否则返回 false。</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+
+console.log(&quot;准备打开文件！&quot;);
+fs.stat('input.txt', function (err, stats) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log(stats);
+   console.log(&quot;读取文件信息成功！&quot;);
+   
+   // 检测文件类型
+   console.log(&quot;是否为文件(isFile) ? &quot; + stats.isFile());
+   console.log(&quot;是否为目录(isDirectory) ? &quot; + stats.isDirectory());    
+});
+</code></pre>
+<pre><code>准备打开文件！
+Stats {
+  dev: 611366247,
+  mode: 33206,
+  nlink: 1,
+  uid: 0,
+  gid: 0,
+  rdev: 0,
+  blksize: 4096,
+  ino: 1407374884218279,
+  size: 43,
+  blocks: 0,
+  atimeMs: 1601623852273.1826,
+  mtimeMs: 1601278302892,
+  ctimeMs: 1601623852273.1826,
+  birthtimeMs: 1601623852272.183,
+  atime: 2020-10-02T07:30:52.273Z,
+  mtime: 2020-09-28T07:31:42.892Z,
+  ctime: 2020-10-02T07:30:52.273Z,
+  birthtime: 2020-10-02T07:30:52.272Z
+}
+读取文件信息成功！
+是否为文件(isFile) ? true
+是否为目录(isDirectory) ? false
+</code></pre>
+<h2 id="写入文件">写入文件</h2>
+<p>以下为异步模式下写入文件的语法格式：</p>
+<pre><code>fs.writeFile(file, data[, options], callback)
+</code></pre>
+<ul>
+<li><strong>file</strong> - 文件名或文件描述符。</li>
+<li><strong>data</strong> - 要写入文件的数据，可以是 String(字符串) 或 Buffer(缓冲) 对象。</li>
+<li><strong>options</strong> - 该参数是一个对象，包含 {encoding, mode, flag}。默认编码为 utf8, 模式为 0666 ， flag 为 'w'</li>
+<li><strong>callback</strong> - 回调函数，回调函数只包含错误信息参数(err)，在写入失败时返回。</li>
+</ul>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+
+console.log(&quot;准备写入文件&quot;);
+fs.writeFile('input.txt', '我是通 过fs.writeFile 写入文件的内容',  function(err) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log(&quot;数据写入成功！&quot;);
+   console.log(&quot;--------我是分割线-------------&quot;)
+   console.log(&quot;读取写入的数据！&quot;);
+   fs.readFile('input.txt', function (err, data) {
+      if (err) {
+         return console.error(err);
+      }
+      console.log(&quot;异步读取文件数据: &quot; + data.toString());
+   });
+});
+</code></pre>
+<pre><code>准备写入文件
+数据写入成功！
+--------我是分割线-------------
+读取写入的数据！
+异步读取文件数据: 我是通 过fs.writeFile 写入文件的内容
+</code></pre>
+<h2 id="读取文件">读取文件</h2>
+<p>以下为异步模式下读取文件的语法格式：</p>
+<pre><code class="language-js">fs.read(fd, buffer, offset, length, position, callback)
+</code></pre>
+<ul>
+<li><strong>fd</strong> - 通过 fs.open() 方法返回的文件描述符。</li>
+<li><strong>buffer</strong> - 数据写入的缓冲区。</li>
+<li><strong>offset</strong> - 缓冲区写入的写入偏移量。</li>
+<li><strong>length</strong> - 要从文件中读取的字节数。</li>
+<li><strong>position</strong> - 文件读取的起始位置，如果 position 的值为 null，则会从当前文件指针的位置读取。</li>
+<li><strong>callback</strong> - 回调函数，有三个参数err, bytesRead, buffer，err 为错误信息， bytesRead 表示读取的字节数，buffer 为缓冲区对象。</li>
+</ul>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+var buf = new Buffer.alloc(1024);
+
+console.log(&quot;准备打开已存在的文件！&quot;);
+fs.open('input.txt', 'r+', function(err, fd) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log(&quot;文件打开成功！&quot;);
+   console.log(&quot;准备读取文件：&quot;);
+   fs.read(fd, buf, 0, buf.length, 0, function(err, bytes){
+      if (err){
+         console.log(err);
+      }
+      console.log(bytes + &quot;  字节被读取&quot;);
+      
+      // 仅输出读取的字节
+      if(bytes &gt; 0){
+         console.log(buf.slice(0, bytes).toString());
+      }
+   });
+});
+</code></pre>
+<p>执行结果：</p>
+<pre><code>准备打开已存在的文件！
+文件打开成功！
+准备读取文件：
+42  字节被读取
+菜鸟教程官网地址：www.runoob.com
+</code></pre>
+<h2 id="关闭文件">关闭文件</h2>
+<p>以下为异步模式下关闭文件的语法格式：</p>
+<pre><code>fs.close(fd, callback)
+</code></pre>
+<ul>
+<li><strong>fd</strong> - 通过 fs.open() 方法返回的文件描述符。</li>
+<li><strong>callback</strong> - 回调函数，没有参数。</li>
+</ul>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+var buf = new Buffer.alloc(1024);
+
+console.log(&quot;准备打开文件！&quot;);
+fs.open('input.txt', 'r+', function(err, fd) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log(&quot;文件打开成功！&quot;);
+   console.log(&quot;准备读取文件！&quot;);
+   fs.read(fd, buf, 0, buf.length, 0, function(err, bytes){
+      if (err){
+         console.log(err);
+      }
+
+      // 仅输出读取的字节
+      if(bytes &gt; 0){
+         console.log(buf.slice(0, bytes).toString());
+      }
+
+      // 关闭文件
+      fs.close(fd, function(err){
+         if (err){
+            console.log(err);
+         } 
+         console.log(&quot;文件关闭成功&quot;);
+      });
+   });
+});
+</code></pre>
+<p>执行结果：</p>
+<pre><code>准备打开文件！
+文件打开成功！
+准备读取文件！
+菜鸟教程官网地址：www.runoob.com
+文件关闭成功
+</code></pre>
+<h2 id="截取文件">截取文件</h2>
+<p>以下为异步模式下截取文件的语法格式：</p>
+<pre><code>fs.ftruncate(fd, len, callback)
+</code></pre>
+<ul>
+<li><strong>fd</strong> - 通过 fs.open() 方法返回的文件描述符。</li>
+<li><strong>len</strong> - 文件内容截取的长度。</li>
+<li><strong>callback</strong> - 回调函数，没有参数。</li>
+</ul>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+var buf = new Buffer.alloc(1024);
+
+console.log(&quot;ready to open the file&quot;);
+fs.open('input.txt', 'r+', function (err, fd) {
+    if (err) {
+        return console.error(err);
+    }
+    console.log(&quot;open file successfully&quot;);
+    fs.read(fd, buf, 0, buf.length, 0, function (err, bytes) {
+        if (err){
+            console.log(err);
+        }
+
+        // 仅输出读取的字节
+        if(bytes &gt; 0){
+            console.log(buf.slice(0, bytes).toString()+&quot;before&quot;);
+        }
+        console.log(&quot;---------------------&quot;);
+    });
+    console.log(&quot;ready to ftruncate&quot;);
+    fs.ftruncate(fd, 10, function (err) {
+        if (err) {
+            console.error(err);
+        }
+        fs.read(fd, buf, 0, buf.length, 0, function (err, bytes) {
+            if (err){
+                console.log(err);
+            }
+
+            // 仅输出读取的字节
+            if(bytes &gt; 0){
+                console.log(buf.slice(0, bytes).toString());
+            }
+
+            console.log(&quot;---------------------&quot;);
+        });
+    });
+
+    fs.read(fd, buf, 0, buf.length, 0, function (err, bytes) {
+        if (err){
+            console.log(err);
+        }
+
+        // 仅输出读取的字节
+        if(bytes &gt; 0){
+            console.log(buf.slice(0, bytes).toString()+&quot;after&quot;);
+        }
+
+        // 关闭文件
+        fs.close(fd, function(err){
+            if (err){
+                console.log(err);
+            }
+            console.log(&quot;文件关闭成功！&quot;);
+        });
+    });
+});
+</code></pre>
+<p>执行结果：</p>
+<pre><code>➜  file-demo node ftruncate.js
+ready to open the file
+open file successfully
+ready to ftruncate
+abcdefg:wwbefore
+---------------------
+abcdefg:wwafter
+abcdefg:ww
+---------------------
+文件关闭成功！
+</code></pre>
+<p>奇怪的执行顺序，无论什么时候读，返回的都是截取后的结果。可能和异步执行有关。</p>
+<h2 id="删除文件">删除文件</h2>
+<p>以下为删除文件的语法格式：</p>
+<pre><code>fs.unlink(path, callback)
+</code></pre>
+<ul>
+<li><strong>path</strong> - 文件路径。</li>
+<li><strong>callback</strong> - 回调函数，没有参数。</li>
+</ul>
+<pre><code>var fs = require(&quot;fs&quot;);
+
+console.log(&quot;准备删除文件！&quot;);
+fs.unlink('input.txt', function(err) {
+   if (err) {
+       return console.error(err);
+   }
+   console.log(&quot;文件删除成功！&quot;);
+});
+</code></pre>
+<p>执行结果：</p>
+<pre><code>准备删除文件！
+文件删除成功！
+</code></pre>
+<h2 id="创建目录">创建目录</h2>
+<p>以下为创建目录的语法格式：</p>
+<pre><code>fs.mkdir(path[, options], callback)
+</code></pre>
+<ul>
+<li><strong>path</strong> - 文件路径。</li>
+<li>options 参数可以是：
+<ul>
+<li><strong>recursive</strong> - 是否以递归的方式创建目录，默认为 false。</li>
+<li><strong>mode</strong> - 设置目录权限，默认为 0777。</li>
+</ul>
+</li>
+<li><strong>callback</strong> - 回调函数，没有参数。</li>
+</ul>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+// tmp 目录必须存在
+console.log(&quot;创建目录 /tmp/test/&quot;);
+fs.mkdir(&quot;/tmp/test/&quot;,function(err){
+   if (err) {
+       return console.error(err);
+   }
+   console.log(&quot;目录创建成功。&quot;);
+});
+</code></pre>
+<p>可以添加 recursive: true 参数，不管创建的目录 /tmp 和 /tmp/a 是否存在：</p>
+<pre><code class="language-js">fs.mkdir('/tmp/a/apple', { recursive: true }, (err) =&gt; {
+  if (err) throw err;
+});
+</code></pre>
+<h2 id="读取目录">读取目录</h2>
+<p>以下为读取目录的语法格式：</p>
+<pre><code>fs.readdir(path, callback)
+</code></pre>
+<ul>
+<li><strong>path</strong> - 文件路径。</li>
+<li><strong>callback</strong> - 回调函数，回调函数带有两个参数err, files，err 为错误信息，files 为 目录下的文件数组列表。</li>
+</ul>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+console.log(&quot;查看当前目录&quot;);
+fs.readdir(&quot;../file-demo/&quot;, function (err, files) {
+    if (err) {
+        return console.error(err);
+    }
+    files.forEach(function (file) {
+        console.log(file);
+    });
+});
+</code></pre>
+<p>执行结果：</p>
+<pre><code>➜  file-demo node readdir.js
+查看当前目录
+ftruncate.js
+input.txt
+main.js
+read.js
+readdir.js
+stat.js
+</code></pre>
+<h2 id="删除目录">删除目录</h2>
+<p>以下为删除目录的语法格式：</p>
+<pre><code>fs.rmdir(path, callback)
+</code></pre>
+<ul>
+<li><strong>path</strong> - 文件路径。</li>
+<li><strong>callback</strong> - 回调函数，没有参数。</li>
+</ul>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+// 执行前创建一个空的 /tmp/test 目录
+console.log(&quot;准备删除目录 /tmp/test&quot;);
+fs.rmdir(&quot;/tmp/test&quot;,function(err){
+   if (err) {
+       return console.error(err);
+   }
+   console.log(&quot;读取 /tmp 目录&quot;);
+   fs.readdir(&quot;/tmp/&quot;,function(err, files){
+      if (err) {
+          return console.error(err);
+      }
+      files.forEach( function (file){
+          console.log( file );
+      });
+   });
+});
+</code></pre>
+<p>还有其他文件模块API可详见<a href="https://nodejs.org/api/fs.html#fs_fs_rename_oldpath_newpath_callback">官方文档</a></p>
+<h1 id="getpost请求">GET/POST请求</h1>
+<p>表单提交到服务器一般都使用 GET/POST 请求。</p>
+<h2 id="获取get请求内容">获取GET请求内容</h2>
+<p>由于GET请求直接被嵌入在路径中，URL是完整的请求路径，包括了?后面的部分，因此你可以手动解析后面的内容作为GET请求的参数。</p>
+<p>node.js 中 url 模块中的 parse 函数提供了这个功能。</p>
+<p>我们之前有用过：</p>
+<pre><code>                   url.parse(string).query
+                                           |
+           url.parse(string).pathname      |
+                       |                   |
+                       |                   |
+                     ------ -------------------
+http://localhost:8888/start?foo=bar&amp;hello=world
+                                ---       -----
+                                 |          |
+                                 |          |
+              querystring.parse(queryString)[&quot;foo&quot;]    |
+                                            |
+                         querystring.parse(queryString)[&quot;hello&quot;]
+</code></pre>
+<p>可以在下面一个例子中看到和上面图中一样的结果</p>
+<pre><code class="language-js">var http = require('http');
+var url = require('url');
+var util = require('util');
+ 
+http.createServer(function(req, res){
+    res.writeHead(200, {'Content-Type': 'text/plain; charset=utf-8'});
+    res.end(util.inspect(url.parse(req.url, true)));
+}).listen(3000);
+</code></pre>
+<p>在浏览器中访问 <strong>http://localhost:3000/user?name=菜鸟教程&amp;url=www.runoob.com</strong> 然后查看返回结果:</p>
+<pre><code>Url {
+  protocol: null,
+  slashes: null,
+  auth: null,
+  host: null,
+  port: null,
+  hostname: null,
+  hash: null,
+  search: '?name=%E8%8F%9C%E9%B8%9F%E6%95%99%E7%A8%8B&amp;url=www.runoob.com',
+  query: [Object: null prototype] { name: '菜鸟教程', url: 'www.runoob.com' },
+  pathname: '/user',
+  path: '/user?name=%E8%8F%9C%E9%B8%9F%E6%95%99%E7%A8%8B&amp;url=www.runoob.com',
+  href: '/user?name=%E8%8F%9C%E9%B8%9F%E6%95%99%E7%A8%8B&amp;url=www.runoob.com'
+}
+</code></pre>
+<h3 id="获取-url-的参数">获取 URL 的参数</h3>
+<p>我们可以使用 url.parse 方法来解析 URL 中的参数，代码如下：</p>
+<pre><code class="language-js">var http = require('http');
+var url = require('url');
+var util = require('util');
+ 
+http.createServer(function(req, res){
+    res.writeHead(200, {'Content-Type': 'text/plain'});
+ 
+    // 解析 url 参数
+    var params = url.parse(req.url, true).query;//拿到问号后面的参数
+    res.write(&quot;网站名：&quot; + params.name);
+    res.write(&quot;\n&quot;);
+    res.write(&quot;网站 URL：&quot; + params.url);
+    res.end();
+ 
+}).listen(3000);
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201003180539.jpeg" alt="img" loading="lazy"></figure>
+<h2 id="获取-post-请求内容">获取 POST 请求内容</h2>
+<p>POST 请求的内容全部的都在请求体中，http.ServerRequest 并没有一个属性内容为请求体，原因是等待请求体传输可能是一件耗时的工作。</p>
+<p>比如上传文件，而很多时候我们可能并不需要理会请求体的内容，恶意的POST请求会大大消耗服务器的资源，所以 node.js 默认是不会解析请求体的，当你需要的时候，需要手动来做。</p>
+<p>请求结构如下：</p>
+<pre><code class="language-js">var http = require('http');
+var querystring = require('querystring');
+var util = require('util');
+ 
+http.createServer(function(req, res){
+    // 定义了一个post变量，用于暂存请求体的信息
+    var post = '';     
+ 
+    // 通过req的data事件监听函数，每当接受到请求体的数据，就累加到post变量中
+    req.on('data', function(chunk){    
+        post += chunk;
+    });
+ 
+    // 在end事件触发后，通过querystring.parse将post解析为真正的POST请求格式，然后向客户端返回。
+    req.on('end', function(){    
+        post = querystring.parse(post);
+        res.end(util.inspect(post));
+    });
+}).listen(3000);
+</code></pre>
+<p><code>querystring</code>模块是node.js解析和格式化URL查询字符串的工具。在node.js中，<code>querystring</code>代表<strong>查询字符串</strong>，说白了就是HTTP GET方法请求服务器的查询参数：</p>
+<figure data-type="image" tabindex="2"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201003184228.webp" alt="img" loading="lazy"></figure>
+<p>（黄色的框内就是查询字符串）</p>
+<blockquote>
+<ul>
+<li>
+<p>使用安全的字符表示不安全的字符，如中文，某些特殊的字符等。这样的话不管是浏览器环境，或者服务器环境，传输的数据都是安全的，可以正确地使用，不会出现数据的丢失或显示错误的情况</p>
+</li>
+<li>
+<p>消除一些有歧义的字符，举个例子，你想通过一个参数<code>data</code>传输<code>'&amp;a=1&amp;b=1&amp;c=1'</code>这几个字符，如果这样写</p>
+</li>
+</ul>
+</blockquote>
+<p>以下实例表单通过 POST 提交并输出数据：</p>
+<pre><code class="language-js">var http = require('http');
+var querystring = require('querystring');
+ 
+var postHTML = 
+  '&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;title&gt;菜鸟教程 Node.js 实例&lt;/title&gt;&lt;/head&gt;' +
+  '&lt;body&gt;' +
+  '&lt;form method=&quot;post&quot;&gt;' +
+  '网站名： &lt;input name=&quot;name&quot;&gt;&lt;br&gt;' +
+  '网站 URL： &lt;input name=&quot;url&quot;&gt;&lt;br&gt;' +
+  '&lt;input type=&quot;submit&quot;&gt;' +
+  '&lt;/form&gt;' +
+  '&lt;/body&gt;&lt;/html&gt;';
+ 
+http.createServer(function (req, res) {
+    var body = &quot;&quot;;
+    req.on('data', function (chunk) {
+        console.log(&quot;chunk=&quot;+chunk);
+        body += chunk;
+        console.log(&quot;body=&quot;+body);
+    });
+    req.on('end', function () {
+        console.log(body);
+        console.log(&quot;------------&quot;);
+         // 解析参数
+        body = querystring.parse(body);
+        console.log(body);
+        // 设置响应头部信息及编码
+        res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'})
+        if (body.name &amp;&amp; body.url) {// 输出提交的数据
+            res.write(&quot;site name:&quot; +
+                body.name);
+            res.write(&quot;&lt;br&gt;&quot;);
+            res.write(&quot;url:&quot; + body.url);
+        } else {// 输出表单
+            res.write(postHTML);
+        }
+        res.end();
+    });
+}).listen(3000);
+</code></pre>
+<p>执行结果：</p>
+<pre><code>➜  getpost-demo node post.js
+chunk=name=444&amp;url=555
+body=name=444&amp;url=555
+name=444&amp;url=555
+------------
+[Object: null prototype] { name: '444', url: '555' }
+
+------------
+[Object: null prototype] {}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[NodeJS初学系列3——函数、路由、全局对象]]></title>
         <id>https://giriawsh.github.io/post/nodejs/</id>
@@ -2019,275 +2874,6 @@ false
 </ul>
 <h2 id="参考网站">参考网站</h2>
 <p><a href="https://blog.csdn.net/chenchunlin526/article/details/78908592">JS/JavaScript中的概念区分：global对象、window对象、document对象</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[《JS权威指南》第三章1——数据类型、数字、文本]]></title>
-        <id>https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-san-zhang-shu-ju-lei-xing-shu-zi-wen-ben/</id>
-        <link href="https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-san-zhang-shu-ju-lei-xing-shu-zi-wen-ben/">
-        </link>
-        <updated>2020-09-16T09:56:27.000Z</updated>
-        <summary type="html"><![CDATA[<h2 id="️前言">✍️前言</h2>
-<p>本章会分多篇介绍JS中的类型、值和变量，后续还会有相应的章节进行深入介绍。</p>
-]]></summary>
-        <content type="html"><![CDATA[<h2 id="️前言">✍️前言</h2>
-<p>本章会分多篇介绍JS中的类型、值和变量，后续还会有相应的章节进行深入介绍。</p>
-<!-- more -->
-<h2 id="1-基本概念">1. 基本概念</h2>
-<h3 id="11-数据类型">1.1 数据类型</h3>
-<blockquote>
-<p>数据类型：能够表示并操作的值的类型</p>
-</blockquote>
-<p>编程语言最基本的特性就是能够支持多种数据类型。</p>
-<blockquote>
-<p>变量：一个值的符号名称，可以通过名称来获得对值的引用</p>
-</blockquote>
-<p>JS的数据类型：</p>
-<ul>
-<li>原始类型：包括数字、字符串、布尔值、null、undefined，后面两个分别代表了各自特殊类型的唯一成员（孤儿确认）。</li>
-<li>对象类型：除上面以外的所有东西。
-<ul>
-<li>对象时属性的集合，每个属性都由“名/值对”构成。其中有一个比较特殊的对象——全局对象，后面会讲到。</li>
-<li>包括一般对象、数组、函数等</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>数组：普通的JS对象是“命名值”的无序集合。JS同样定义了一种特殊对象即数组，表示<strong>带编号的值的无序集合</strong>。</p>
-<p>JS为数组定义了专用的语法，使数组拥有一些和普通对象不同的特有行为特性。（数据类型中的上层阶级确认）</p>
-</blockquote>
-<blockquote>
-<p>函数：是具有与它相关联的可执行代码的对象。（爷有关联可执行代码）</p>
-<p>通过调用函数来运行可执行代码，并返回运算结果。和数组一样，函数的行为特征也与众不同，JS也为它定义了专用语法。（上层阶级+1）</p>
-</blockquote>
-<p>最重要的是，函数们都是真值（我永远是true理）。并且JS可以将它们当做普通对象来对待（皇帝不高兴，把你当下人也是可以的）。</p>
-<blockquote>
-<p>构造函数：当函数用来初始化（new）一个新建的对象</p>
-</blockquote>
-<p>每个构造函数定义了一<strong>类</strong>对象——由不同构造函数初始化的对象的集合。</p>
-<p>类可以看做是对象类型的子类型（毕竟是由对象类型的子集-&gt;函数-&gt;用来初始化对象-&gt;构造函数-&gt;定义了某类），包括：</p>
-<ul>
-<li>数组类</li>
-<li>函数类</li>
-<li>日期类</li>
-<li>正则类</li>
-<li>错误类</li>
-<li>自己定义的构造函数类</li>
-</ul>
-<h3 id="12-内存管理机制">1.2 内存管理机制</h3>
-<p>JS解释器有自己的内存管理机制，可以自动对内存进行垃圾回收。程序员只要按需创建对象，不用担心销毁和内存回收工作。</p>
-<p><strong>当不再有任何引用指向一个对象，解释器就会自动回收它所占用的内存资源。</strong></p>
-<h3 id="13-其他划分">1.3 其他划分</h3>
-<p>根据能不能拥有方法</p>
-<ul>
-<li>可变mutable类型
-<ul>
-<li>值可以修改</li>
-<li>对象、数组</li>
-</ul>
-</li>
-<li>不可变immutable类型
-<ul>
-<li>不可以修改</li>
-<li>数字、字符串（没错我也不行）、布尔值、null、undefined</li>
-</ul>
-</li>
-</ul>
-<h3 id="14-类型转换">1.4 类型转换</h3>
-<p>JS可以自由地进行数据类型转换，但是转换规则会对“判断相等”造成影响</p>
-<h3 id="15-类型定义">1.5 类型定义</h3>
-<p>JS变量是无类型的（untyped），变量可以被赋予任何类型的值（是一种很酷的设计，为自己的可移植性、灵活性奠定了基础），同样一个变量也可以被重新赋予不同类型的值。</p>
-<p>JS采用词法作用域。</p>
-<blockquote>
-<ul>
-<li>
-<p>作用域：是指程序源代码中定义变量的区域</p>
-</li>
-<li>
-<p>词法作用域：函数的作用域在函数定义的时候就决定了。</p>
-</li>
-<li>
-<p>动态作用域：函数的作用域是在函数调用的时候才决定的</p>
-</li>
-</ul>
-</blockquote>
-<blockquote>
-<p>全局变量：不在任何函数内声明的变量，它在JS程序中的任何地方都是可见的。</p>
-<p>函数作用域：在函数内声明的变量具有的作用域，只在函数内可见</p>
-</blockquote>
-<p>这些下文也会讲到。</p>
-<h2 id="2-数字">2. 数字</h2>
-<p><strong>JS不区分整数值和浮点数值，JS中所有数字均用浮点数值表示。</strong></p>
-<p>JS采用IEEE754标准定义的64位浮点格式表示数字。</p>
-<h3 id="ieee754标准">*IEEE754标准</h3>
-<p>在IEEE 754标准中浮点数由三部分组成：符号位（sign bit），有偏指数（biased exponent），小数（fraction）。浮点数分为两种，单精度浮点数（single precision）和双精度浮点数（double precision），它们两个所占的位数不同。</p>
-<ul>
-<li>单精度浮点数（共32位）：<br>
-1个符号位<br>
-8个指数位<br>
-23个小数位</li>
-</ul>
-<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200915181557.png" alt="img" loading="lazy"></figure>
-<ul>
-<li>双精度浮点数（共64位）-&gt; JS属于这一种<br>
-1个符号位<br>
-11个指数位<br>
-52个小数位</li>
-</ul>
-<figure data-type="image" tabindex="2"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200915181622.png" alt="img" loading="lazy"></figure>
-<h3 id="21-整数范围">2.1 整数范围</h3>
-<p>整数范围是从-2<sup>53</sup> ~2<sup>53</sup>（包含边界值）</p>
-<p>如果超过此范围的整数，则无法保证低位数字的精度。</p>
-<p>然而JS中实际操作（例如数组索引、位操作符）是基于32位整数</p>
-<blockquote>
-<p>数字直接量：当一个数字直接出现在JS程序中时</p>
-</blockquote>
-<h3 id="22-整型直接量">2.2 整型直接量</h3>
-<p>在JS程序中，用一个数字序列表示一个十进制整数。</p>
-<p>除了<strong>十进制</strong>，JS还能识别<strong>十六进制</strong>（以0x或0X为前缀），JS的某些实现<strong>可以允许采用八进制</strong>（以0开始）</p>
-<p>但是有些不支持八进制，因此最好不要使用以0位前缀的整型直接量。（ES6的严格模式下，八进制直接量是被禁止的）</p>
-<h3 id="23-浮点型直接量">2.3 浮点型直接量</h3>
-<p>支持传统实数写法：一个实数 = 整数部分 + 小数点 + 小数部分</p>
-<p>指数计数法： 实数后+e/E+(正号或负号)+整型的指数</p>
-<p>eg: 1.473821E-32 = 1.473821*10<sup>-32</sup></p>
-<h3 id="24-js中的算术运算">2.4 JS中的算术运算</h3>
-<p>基本运算符：+ - * / %</p>
-<p>复杂运算：由Math对象的属性定义的函数和常量来实现</p>
-<figure data-type="image" tabindex="3"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200915183159.png" alt="image-20200915183159573" loading="lazy"></figure>
-<h4 id="溢出和下溢">溢出和下溢</h4>
-<blockquote>
-<p>溢出：当数字运算结果超过了JS所能表示的数字上下限</p>
-</blockquote>
-<p>返回Infinity和-Infinity</p>
-<p>基于他们的加减乘除运算结果还是无穷大（保留正负号）</p>
-<blockquote>
-<p>下溢：当运算结果无限接近于零并比JS所能表示的最小值还小</p>
-</blockquote>
-<p>返回0.当一个负数下溢是会返回负零</p>
-<h4 id="特殊运算情况">特殊运算情况</h4>
-<ul>
-<li>被零整除：不报错，返回Infinity或-Infinity</li>
-<li>0/0：没有意义，返回NaN</li>
-<li>无穷大除以无穷大，给任意负数作开方运算，运算符与不是数字或无法转换为数字的操作数一起使用：返回NaN</li>
-</ul>
-<p>Inifity和NaN和Number对象定义的属性值在ES5中被定义为只读。</p>
-<figure data-type="image" tabindex="4"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200915183238.png" alt="image-20200915183238715" loading="lazy"></figure>
-<h4 id="非数字值">非数字值</h4>
-<p>非数字值：NaN、字符串、对象等不是数字的值</p>
-<p><strong>它和任何值都不相等，包括自身</strong>。</p>
-<p>所以不能通过x==NaN判断是否是NaN,应该通过x!=x来判断，也可以使用函数<strong>isNaN()</strong>：如果参数是NaN或者一个非数字值都返回true</p>
-<p>还有一个类似函数isFinite()：参数不是NaN、Infinity或-Infinity或非数字值的时候返回true</p>
-<figure data-type="image" tabindex="5"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200915184346.png" alt="image-20200915184346692" loading="lazy"></figure>
-<p>经过测试有两种很有意思的情况（图中的第二个和第三个红框）</p>
-<p>我们看下MDN中该函数的定义：</p>
-<blockquote>
-<p>isFinite (number)</p>
-<p>Returns false if the argument coerces to NaN, +∞, or −∞, and otherwise returns true.</p>
-<p>If ToNumber(number) is NaN, +∞, or −∞, return false.</p>
-<p>Otherwise, return true.</p>
-</blockquote>
-<p>实际上针对输入，该函数隐式调用了Number()转换函数，在内部实现中也可以看到：</p>
-<pre><code class="language-js">function isFinite(someInput) {
-  return !isNaN(someInput) &amp;&amp;
-    someInput != Number.POSITIVE_INFINITY &amp;&amp;
-    someInput != Number.NEGATIVE_INFINITY;
-}
-</code></pre>
-<p>注意使用的是!=包含了比较时的强制类型转换。再到浏览器里试验一下。</p>
-<figure data-type="image" tabindex="6"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200915185012.png" alt="image-20200915185012857" loading="lazy"></figure>
-<p>真相大白了，经过Number转换后，[]和[1]和null返回的都不是NaN或者Infinity。</p>
-<h4 id="负零值">负零值</h4>
-<p>它和正零值是相等的（甚至在严格相等测试下也是），这两个值几乎一模一样，除了作为除数。</p>
-<figure data-type="image" tabindex="7"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200915183553.png" alt="image-20200915183553328" loading="lazy"></figure>
-<h3 id="25-二进制浮点数和四舍五入错误">2.5 二进制浮点数和四舍五入错误</h3>
-<p>实数有无数个，但JS通过浮点数表示是有限的。当JS中使用实数的时候，常常知识真实值的一个近似表示。</p>
-<p>IEEE-754浮点数表示法可以准确地表示二幂次分数（1/2,1/8等），但并不能准确地表示类似0.1这样的简单数字</p>
-<p>由此带来0.1 + 0.2 !== 0.3的问题，原因如下：</p>
-<blockquote>
-<p>首先，计算机无法直接对十进制的数字进行运算，这是硬件物理特性已经决定的。这样运算就分成了两个部分：<strong>先按照IEEE 754转成相应的二进制，然后对阶运算</strong>。<strong>精度损失可能出现在进制转化和对阶运算过程中</strong>*</p>
-<ul>
-<li>进制转换</li>
-</ul>
-<p>0.1和0.2转换成二进制后会无限循环</p>
-<pre><code>0.1 -&gt; 0.0001100110011001...(无限循环)
-0.2 -&gt; 0.0011001100110011...(无限循环)
-</code></pre>
-<p>但是由于IEEE 754尾数位数限制，需要将后面多余的位截掉</p>
-<p>这样在进制之间的转换中精度已经损失</p>
-<ul>
-<li>对阶运算</li>
-</ul>
-<p>由于指数位数不相同，运算时需要对阶运算 这部分也可能产生精度损失，最后的结果是</p>
-<pre><code>0.0100110011001100110011001100110011001100110011001100 
-</code></pre>
-<p>结果转换成十进制之后就是0.30000000000000004</p>
-</blockquote>
-<p>因此在数值比较中，可以使用ES6中引入的极小的常量<code>Number.EPSILON</code>。它表示 1 与大于 1 的最小浮点数之间的差。</p>
-<p><code>Number.EPSILON</code>实际上是 JavaScript 能够表示的最小精度。误差如果小于这个值，就可以认为已经没有意义了，即不存在误差了。</p>
-<blockquote>
-<p><code>Number.EPSILON</code>可以用来设置“能够接受的误差范围”。比如，<strong>误差范围设为 2 的-50 次方（即<code>Number.EPSILON * Math.pow(2, 2)</code>），即如果两个浮点数的差小于这个值，我们就认为这两个浮点数相等。</strong></p>
-</blockquote>
-<pre><code class="language-js">0.1 + 0.2 - 0.3
-// 5.551115123125783e-17
-5.551115123125783e-17.toFixed(20)
-// '0.00000000000000005551'
-0.1 + 0.2 === 0.3 // false
-5.551115123125783e-17 &lt; Number.EPSILON * Math.pow(2, 2)
-// true
-</code></pre>
-<p>JS的未来版本或许会支持十进制数字类型以避免舍入问题，当前可以更经常地使用大整数进行重要金融计算（譬如用“分”来代替小数“元”等）</p>
-<h3 id="26-日期和时间">2.6 日期和时间</h3>
-<p>使用Date()构造函数，用来创建表示日期和时间的对象。提供了一些简单的API。</p>
-<figure data-type="image" tabindex="8"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916172609.png" alt="image-20200916172609267" loading="lazy"></figure>
-<h2 id="3-文本">3. 文本</h2>
-<blockquote>
-<p>字符串：一组由16位值组成的不可变的有序序列，每个字符通常来自于Unicode字符集。字符串的长度是所含16位值得个数。</p>
-<p>那些不能表示为16位的Unicode字符则遵循UTF-16编码规则——用两个16位值组成的一个序列表示。</p>
-<p>也就是说，<strong>一个长度为2的JS字符串有可能表示一个Unicode字符。</strong></p>
-</blockquote>
-<figure data-type="image" tabindex="9"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916172918.png" alt="image-20200916172918578" loading="lazy"></figure>
-<h3 id="31-字符串的索引">3.1 字符串的索引</h3>
-<p>从零开始。空字符串的长度为0.</p>
-<h3 id="32-字符串直接量">3.2 字符串直接量</h3>
-<p>单引号可以包含双引号，双引号也可包含单引号。</p>
-<p>字符串可以用反斜线来拆分数行。</p>
-<figure data-type="image" tabindex="10"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916173038.png" alt="image-20200916173038678" loading="lazy"></figure>
-<ul>
-<li>用单引号定界字符串：</li>
-</ul>
-<p>注意使用反斜线进行转义撇号</p>
-<ul>
-<li>JS代码与HTML代码混杂时：</li>
-</ul>
-<p>最好分开使用各自的引号风格。譬如在JS中用单引号，在HTML中使用双引号。</p>
-<pre><code class="language-js">&lt;button onclick=&quot;alert('Thank you')&quot;&gt;Click Me&lt;/button&gt;
-</code></pre>
-<h3 id="33-转义字符">3.3 转义字符</h3>
-<p>反斜线符号后加一个字符，就不再表示它们的字面含义了。</p>
-<figure data-type="image" tabindex="11"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916173648.png" alt="image-20200916173648588" loading="lazy"></figure>
-<figure data-type="image" tabindex="12"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916173659.png" alt="image-20200916173659316" loading="lazy"></figure>
-<p>比较有意思的是转义字符的英文——escape sequence，加上反斜线老子就逃跑不受你原本编译控制了。</p>
-<h3 id="34-字符串的使用">3.4 字符串的使用</h3>
-<p>+ 用于数字，表示两数相加，用于字符串表示字符串拼接</p>
-<p>length属性可以得到字符串的长度</p>
-<p>书中还提到了许多调用方法，不过也可以查看后面的大表（不愧是你万能工具书）</p>
-<figure data-type="image" tabindex="13"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916174222.png" alt="image-20200916174222732" loading="lazy"></figure>
-<figure data-type="image" tabindex="14"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916174230.png" alt="image-20200916174230449" loading="lazy"></figure>
-<p>记住！！在JS中字符串是固定不变的，这些方法实际上都返回了新的字符串，原字符串本身并没有发生改变。</p>
-<p>ES5中，字符串可以当做只读数组，除了使用charAt()，也可以用一般的括号方法访问</p>
-<pre><code>s = &quot;hello&quot;
-s[0] // =&gt; &quot;h&quot;
-s[s.length-1] // =&gt; &quot;o&quot;
-</code></pre>
-<h3 id="35-字符串中的模式匹配">3.5 字符串中的模式匹配</h3>
-<blockquote>
-<p>正则表达式：JS定义了RegExp()构造函数，用来创建表示文本匹配模式的对象。JS采用Perl的正则表达式语法。（除了Perl还有Posix标准，可自行搜索）</p>
-</blockquote>
-<p>RegExp和Date一样，只是一种具有使用API的特殊对象，两条斜线之间的文本构成了一个正则表达式直接量，详细在第十章会讲到。</p>
-<p>以下是部分使用方法：</p>
-<figure data-type="image" tabindex="15"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916175503.png" alt="image-20200916175503354" loading="lazy"></figure>
-<h2 id="参考网站">参考网站</h2>
-<p><a href="https://stackoverflow.com/questions/22489966/why-does-isfinitenull-true">Stackoverflow-why does isFinite(null)===true?</a></p>
 ]]></content>
     </entry>
 </feed>
