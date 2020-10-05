@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-10-05T12:09:11.632Z</updated>
+    <updated>2020-10-05T13:38:02.039Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -10,6 +10,349 @@
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[多个GithubPages+Vuepress+二级域名配置]]></title>
+        <id>https://giriawsh.github.io/post/duo-ge-githubpagesvuepresser-ji-yu-ming-pei-zhi/</id>
+        <link href="https://giriawsh.github.io/post/duo-ge-githubpagesvuepresser-ji-yu-ming-pei-zhi/">
+        </link>
+        <updated>2020-10-05T13:36:51.000Z</updated>
+        <summary type="html"><![CDATA[<h2 id="前言">前言</h2>
+<p>配置完这个小站以后嗅到了一丝不对。</p>
+]]></summary>
+        <content type="html"><![CDATA[<h2 id="前言">前言</h2>
+<p>配置完这个小站以后嗅到了一丝不对。</p>
+<!-- more -->
+<p>咦，我怎么学习记录的东西这么多，这样放一块儿实在不好看也不适合梳理。</p>
+<p>在语雀和Vuepress中选择了UI更简洁清爽，同时界面关键内容较为突出的Vuepress。</p>
+<p>此文记录了如何创建第二个GithubPages（多个也类似）+Vuepress基础配置学习+绑定二级域名（可以看到这个域名是record.giriawsh.com也是我主站域名的二级域名）</p>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201005200946.png" alt="image-20201005200945984" loading="lazy"></figure>
+<p>在我的blog中点击个人学习系列，即可跳转至用vuepress搭建的学习记录站点。</p>
+<figure data-type="image" tabindex="2"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201005201041.png" alt="image-20201005201041265" loading="lazy"></figure>
+<h2 id="创建githubpages部署">创建GithubPages+部署</h2>
+<p><strong>我们只能为每个 GitHub 帐户创建一个用户或组织站点；而项目站点没有限制</strong>。</p>
+<p>只能拥有一个的，是个人站点，也就是名为 <code>&lt;user&gt;.github.io</code> 的仓库。**想要创建更多的GitHub Pages页面，可以通过创建项目站点实现。**项目站点的数量没有限制。</p>
+<p>详情可见**<a href="https://link.zhihu.com/?target=https%3A//docs.github.com/cn/github/working-with-github-pages/about-github-pages%23">GitHub Pages 站点的类型</a>**——官方文档</p>
+<h3 id="1-创建项目">1. 创建项目</h3>
+<ol>
+<li>新建一个仓库，名称随意。</li>
+<li>进入仓库主页，点击右面的<code>Settings</code>，找到<strong>GitHub Pages</strong>部分，选择一个主题，之后可以再改，不选择的话页面可能会无法加载</li>
+<li>建议勾选 <code>Enforce HTTPS</code>，否则访问时会出现安全警告。</li>
+<li>没有出错的话，一个项目主页就建立完成了，可以通过<code>&lt;username&gt;.github.io/&lt;projectname&gt;</code>访问到了</li>
+</ol>
+<h3 id="2-创建vuepress项目">2. 创建Vuepress项目</h3>
+<p>参照<a href="https://vuepress.vuejs.org/zh/guide/getting-started.html">官方文档</a></p>
+<ol>
+<li>
+<p>创建并进入一个新目录</p>
+<pre><code class="language-bash">mkdir vuepress-starter &amp;&amp; cd vuepress-starter
+</code></pre>
+</li>
+<li>
+<p>使用你喜欢的包管理器进行初始化（听我的，用yarn，如果你不想出现奇怪的bug的话）</p>
+<pre><code class="language-bash">yarn init # npm init
+</code></pre>
+</li>
+<li>
+<p>将 VuePress 安装为本地依赖</p>
+<p>我们已经不再推荐全局安装 VuePress</p>
+<pre><code class="language-bash">yarn add -D vuepress # npm install -D vuepress
+</code></pre>
+</li>
+<li>
+<p>创建你的第一篇文档</p>
+<pre><code class="language-bash">mkdir docs &amp;&amp; echo '# Hello VuePress' &gt; docs/README.md
+</code></pre>
+</li>
+<li>
+<p>在 <code>package.json</code> 中添加一些 <a href="https://classic.yarnpkg.com/zh-Hans/docs/package-json#toc-scripts">scripts</a></p>
+<p>这一步骤是可选的，但我们推荐你完成它。在下文中，我们会默认这些 scripts 已经被添加。</p>
+<pre><code class="language-json">{
+  &quot;scripts&quot;: {
+    &quot;docs:dev&quot;: &quot;vuepress dev docs&quot;,
+    &quot;docs:build&quot;: &quot;vuepress build docs&quot;
+  }
+}
+</code></pre>
+</li>
+<li>
+<p>在本地启动服务器</p>
+<pre><code class="language-bash">yarn docs:dev # npm run docs:dev
+</code></pre>
+<p>VuePress 会在 <a href="http://localhost:8080/">http://localhost:8080</a> 启动一个热重载的开发服务器。</p>
+</li>
+</ol>
+<h2 id="vuepress配置">Vuepress配置</h2>
+<h3 id="首页">首页</h3>
+<p>这块可参考<a href="https://vuepress.vuejs.org/zh/theme/default-theme-config.html#%E9%A6%96%E9%A1%B5">官方文档主题模块</a>。</p>
+<p>在/docs文件夹下创建README.md文件，这是我的个人配置（把logo.jpg放在/docs/.vuepress/public 文件夹中）：</p>
+<pre><code class="language-md">---
+home: true
+heroImage: /logo.jpg
+heroText: Giria's learning record
+tagline: 个人前端学习记录
+actionText: 一起梳理 →
+actionLink: /source/element/
+sidebar: false
+features:
+- title: 源码学习
+  details: Element UI + Vue 源码
+- title: 书籍学习
+  details: 记录相关书籍的学习路径
+- title: 前端相关
+  details: 各代码库的学习，包括不限于NodeJS、NuxtJS、多种视图组件库等
+footer: MIT Licensed | Copyright © 2020-present Giria
+---
+::: tip 更多
+博客文章可移步[Giria's Blog](https://www.giriawsh.com)
+:::
+</code></pre>
+<h3 id="导航栏">导航栏</h3>
+<h4 id="基本配置">基本配置</h4>
+<p>修改/docs/config.js文件</p>
+<pre><code class="language-js">module.exports = {
+    themeConfig: {
+        sidebarDepth: 2, // e'b将同时提取markdown中h2 和 h3 标题，显示在侧边栏上。
+        lastUpdated: 'Last Updated',// 文档更新时间：每个文件git最后提交的时间
+        searchMaxSuggestions: 10,
+        nav: [
+            {text: '主页', link: '/'},
+            {
+                text: '源码学习',
+                items: [
+                    {text: &quot;Element UI&quot;, link: '/source/element/'},
+                    {text: &quot;Vue&quot;, link: '/source/vue/'}
+                ],
+            },
+            {
+                text: '书籍学习',
+                items: [
+                    {text: &quot;JavaScript权威指南&quot;, link: '/books/theDefinitiveGuideToJavaScript/'}
+                ],
+            },
+            {
+                text: '前端相关',
+                items: [
+                    {text: &quot;Node.js&quot;, link: '/fe/nodejs/'},
+                    {text: &quot;Vue.js&quot;, link: '/fe/vuejs/'},
+                    {text: &quot;SVG.js&quot;, link: '/fe/svgjs/'},
+                    {text: &quot;Nuxt框架&quot;, link: '/fe/nuxtjs/'},
+                ],
+            },
+            {text: '博客文章', link: 'https://www.giriawsh.com'},//外链，可进行跳转
+        ],
+	}
+}
+</code></pre>
+<p>目录组织结构如下：</p>
+<figure data-type="image" tabindex="3"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201005202734.png" alt="image-20201005202734817" loading="lazy"></figure>
+<p>产生效果如下：</p>
+<figure data-type="image" tabindex="4"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201005202800.png" alt="image-20201005202759976" loading="lazy"></figure>
+<h4 id="导航栏分组配置">导航栏分组配置</h4>
+<p>如果想要进行导航栏分组可这样写：</p>
+<pre><code class="language-js">// .vuepress/config.js
+module.exports = {
+  themeConfig: {
+    nav: [
+      {
+                text: '前端相关',
+                items: [
+                    {
+                        text: &quot;JS库相关&quot;, items: [
+                            {text: &quot;Node.js&quot;, link: '/fe/nodejs/'},
+                            {text: &quot;Vue.js&quot;, link: '/fe/vuejs/'},
+                            {text: &quot;SVG.js&quot;, link: '/fe/svgjs/'},
+                        ]
+                    },
+                    {
+                        text: &quot;框架相关&quot;, items: [
+                            {text: &quot;Nuxt框架&quot;, link: '/fe/nuxtjs/'},
+                        ]
+                    },
+                ],
+            },
+    ]
+  }
+}
+</code></pre>
+<p>效果如下：</p>
+<figure data-type="image" tabindex="5"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201005203415.png" alt="image-20201005203415682" loading="lazy"></figure>
+<h4 id="导航栏logo">导航栏LOGO</h4>
+<p>可以通过 <code>themeConfig.logo</code> 增加导航栏 Logo ，Logo 可以被放置在<a href="https://vuepress.vuejs.org/zh/guide/assets.html#public-files">公共文件目录</a>：</p>
+<pre><code class="language-js">// .vuepress/config.js
+module.exports = {
+  themeConfig: {
+    logo: '/assets/img/logo.png',
+  }
+}
+</code></pre>
+<h3 id="侧边栏">侧边栏</h3>
+<p>侧边栏这里我查了很久，很少有清楚的demo，我这里做个demo记录。</p>
+<p>目录结构如下：</p>
+<figure data-type="image" tabindex="6"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201005203923.png" alt="image-20201005203923592" loading="lazy"></figure>
+<p>在/docs/.vuepress/config.js中进行如下配置：</p>
+<pre><code class="language-js">module.exports = {
+    themeConfig: {
+        sidebarDepth: 2, // e'b将同时提取markdown中h2 和 h3 标题，显示在侧边栏上。
+        lastUpdated: 'Last Updated',// 文档更新时间：每个文件git最后提交的时间
+        sidebar: {
+            '/source/element/': [
+                {
+                    title: 'Element源码分析',
+                    collapsable: false,
+                    children: [
+                        '/source/element/1',
+                        '/source/element/2',]//这里的顺序决定了在侧边栏中从上到下显示的顺序
+                }
+            ],
+            '/source/vue/': [
+                {
+                    title: 'Vue源码分析',
+                    collapsable: false,
+                    children: []
+                }
+            ],
+            '/books/theDefinitiveGuideToJavaScript/': [
+                {
+                    title: 'JavaScript权威指南',
+                    collapsable: false,
+                    children: [
+                        '/books/theDefinitiveGuideToJavaScript/1',
+                        '/books/theDefinitiveGuideToJavaScript/2',
+                        '/books/theDefinitiveGuideToJavaScript/3',
+                        '/books/theDefinitiveGuideToJavaScript/4',
+                        '/books/theDefinitiveGuideToJavaScript/5',
+                    ],
+                }
+            ],
+            '/fe/nodejs/': [
+                {
+                    title: 'NodeJS初学',
+                    collapsable: false,
+                    children: [
+                        '/fe/nodejs/start/1',
+                        '/fe/nodejs/start/2',
+                        '/fe/nodejs/start/3',
+                        '/fe/nodejs/start/4',
+                    ]
+                },
+                {
+                    title: 'NodeJS深入学习',
+                    collapsable: false,
+                    children: [
+                        '/fe/nodejs/second/test'
+                    ]
+                }
+            ],
+            '/fe/svgjs/': [
+                {
+                    title: 'SVG学习记录',
+                    collapsable: false,
+                    children: [
+                        '/fe/svgjs/1',
+                        '/fe/svgjs/2',
+                        '/fe/svgjs/3',
+                    ]
+                },
+            ]
+        }
+    },
+
+};
+</code></pre>
+<p>如果想要达到如下多个分组的效果，可查看上面代码中的<code>'/fe/nodejs/'</code>部分，进行多个对象的配置。（上面代码为了直观省略了文件名）</p>
+<figure data-type="image" tabindex="7"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201005204000.png" alt="image-20201005204000559" loading="lazy"></figure>
+<h4 id="踩坑">踩坑</h4>
+<ol>
+<li>记得给每个新创建的文件夹下增加一个README.md随便写点啥，不然有一定概率会跳转到404</li>
+<li>文件名譬如1.md在路径中可以省略.md（.html也是可以的）</li>
+</ol>
+<h3 id="网页logo">网页LOGO</h3>
+<p>将logo文件放置到/docs/.vuepress/public文件夹下，然后在config.js文件中增加：</p>
+<pre><code class="language-js">module.exports = {
+    // 注入到当前页面的 HTML &lt;head&gt; 中的标签
+    head: [
+        ['link', {rel: 'icon', href: '/pencil.png'}], // 增加一个自定义的 favicon(网页标签的图标)
+    ],
+}
+</code></pre>
+<h3 id="样式修改">样式修改</h3>
+<p>在/docs/.vuepress文件夹中新建styles文件夹，创建palette.styl文件。</p>
+<pre><code class="language-js">$accentColor = #e6be00//默认主题颜色
+$textColor = red//默认字体颜色
+$borderColor = #eaecef//默认边框颜色
+$codeBgColor = #282c34//默认背景颜色
+
+示例修改相关样式f12找到需要修改的地方找到对应class类拿过来直接用就行了
+.sidebar-group.is-sub-group &gt; .sidebar-heading:not(.clickable){
+  opacity :1
+}
+</code></pre>
+<p>更多可参考：</p>
+<ul>
+<li><a href="https://juejin.im/post/6844903864227856392">vuepress主题改造-主题的继承(1)</a></li>
+<li><a href="https://artiely.github.io/blog/original/create-custom-VuePress-theme.html#%E8%AE%BE%E7%BD%AE-vuepress-%E9%A1%B9%E7%9B%AE">如何创建自定义 VuePress 主题</a></li>
+<li><a href="https://www.xerrors.fun/decorate-vuepress/">Vuepress 主题改造指南</a>   --》  追加了黑色模式，而且博客主题风格我很喜欢</li>
+<li><a href="https://vuepress-theme-reco.recoluan.com/">一款简洁而优雅的 vuepress 博客 &amp; 文档 主题</a></li>
+</ul>
+<h2 id="部署">部署</h2>
+<ol>
+<li>
+<p>在 <code>docs/.vuepress/config.js</code> 中设置正确的 <code>base</code>。</p>
+<p>如果你打算发布到 <code>https://&lt;USERNAME&gt;.github.io/</code>，则可以省略这一步，因为 <code>base</code> 默认即是 <code>&quot;/&quot;</code>。</p>
+<p>如果你打算发布到 <code>https://&lt;USERNAME&gt;.github.io/&lt;REPO&gt;/</code>（也就是说你的仓库在 <code>https://github.com/&lt;USERNAME&gt;/&lt;REPO&gt;</code>），则将 <code>base</code> 设置为 <code>&quot;/&lt;REPO&gt;/&quot;</code>。</p>
+<pre><code class="language-js">module.exports = {
+    title: &quot;Girecord&quot;,
+    description: 'Giria的学习记录',
+    base: '/&lt;REPO&gt;/',//如果要绑定子域名的话这里需要改成/
+ }
+</code></pre>
+</li>
+<li>
+<p>在你的项目中，创建一个如下的 <code>deploy.sh</code> 文件（请自行判断去掉高亮行的注释）放置到根目录中:</p>
+</li>
+</ol>
+<pre><code class="language-bash">#!/usr/bin/env sh
+
+# 确保脚本抛出遇到的错误
+set -e
+
+# 生成静态文件
+npm run docs:build
+
+# 进入生成的文件夹
+cd docs/.vuepress/dist
+
+# 如果是发布到自定义域名
+# echo 'www.example.com' &gt; CNAME
+# 后续这里我们会发布到二级域名，像我的就需要像下面这么写：
+echo 'record.giriawsh.com' &gt; CNAME
+
+git init
+git add -A
+git commit -m 'deploy'
+
+# 如果发布到 https://&lt;USERNAME&gt;.github.io
+# git push -f git@github.com:&lt;USERNAME&gt;/&lt;USERNAME&gt;.github.io.git master
+
+# 如果发布到 https://&lt;USERNAME&gt;.github.io/&lt;REPO&gt;
+# git push -f git@github.com:&lt;USERNAME&gt;/&lt;REPO&gt;.git master:gh-pages
+
+cd -
+</code></pre>
+<p>这样我们之后每次修改后只需要点击这个脚本进行运行即可部署。</p>
+<p>至此我们已经可以通过访问<code>https://&lt;USERNAME&gt;.github.io/&lt;REPO&gt;</code>访问到部署后的页面了</p>
+<h2 id="绑定子域名">绑定子域名</h2>
+<p>我是在Godaddy上购买的网址，来到DNS配置，添加一条CNAME记录</p>
+<figure data-type="image" tabindex="8"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201005213213.png" alt="image-20201005213213303" loading="lazy"></figure>
+<p>::: tip</p>
+<p>如果是参照了我之前的配置方案，这里不用写成record.giriawsh.com，因为它会自己映射添加，写二级子域名名称record即可</p>
+<p>:::</p>
+<h2 id="参考网站">参考网站</h2>
+<p><a href="https://zhuanlan.zhihu.com/p/183977963">如何拥有多个GitHub Pages</a></p>
+<p><a href="https://blog.csdn.net/zhang__ao/article/details/96144441">vuepress 使用与主题自定义样式修改</a></p>
+<p><a href="https://www.dazhuanlan.com/2019/10/18/5da96daa80de8/">配置GithubPage二级域名</a></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[NodeJS初学系列4——util工具、文件系统、GET/POST请求]]></title>
         <id>https://giriawsh.github.io/post/nodejs-chu-xue-xi-lie-4-util-gong-ju-wen-jian-xi-tong-getpost-qing-qiu/</id>
@@ -2543,341 +2886,6 @@ export default router
 </li>
 </ol>
 </section>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[《JS权威指南》第三章2]]></title>
-        <id>https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-san-zhang-2/</id>
-        <link href="https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-san-zhang-2/">
-        </link>
-        <updated>2020-09-16T16:23:40.000Z</updated>
-        <summary type="html"><![CDATA[<h2 id="️前言">✍️前言</h2>
-<p>《JS权威指南》学习笔记第三章第二部分，涉及布尔值、null和undefined、全局对象、包装对象、原始值和引用值、类型转换等。</p>
-]]></summary>
-        <content type="html"><![CDATA[<h2 id="️前言">✍️前言</h2>
-<p>《JS权威指南》学习笔记第三章第二部分，涉及布尔值、null和undefined、全局对象、包装对象、原始值和引用值、类型转换等。</p>
-<!-- more -->
-<h2 id="1-布尔值">1. 布尔值</h2>
-<p>任意JS的值都可以转换为布尔值，以下这些值会被转换成false：</p>
-<ul>
-<li>undefined</li>
-<li>null</li>
-<li>0</li>
-<li>-0</li>
-<li>NaN</li>
-<li>&quot;&quot;</li>
-</ul>
-<p>所有其他值，包括所有对象（数组）都会被转成true</p>
-<p>还有诸如$$ || not等逻辑运算符，我就不再多做介绍了</p>
-<h2 id="2-null和undefined重点">2. null和undefined（重点）</h2>
-<p>老生常谈了，这里记录一下权威指南中对这两个值的看法吧。</p>
-<ul>
-<li>null</li>
-</ul>
-<p>常用来描述“空值”。<strong>对null进行typeof运算，返回字符串&quot;object&quot;，也就是说可以将null认为是一个特殊的对象值，含义是“非对象”。</strong></p>
-<p>但实际上，<strong>通常认为null是它自有类型的唯一一个成员</strong>（孤儿类型哈哈哈），<strong>它可以表示数字、字符串和对象是“无值”的。</strong></p>
-<blockquote>
-<p>我还看到过关于<code>typeof(null) === &quot;object&quot;</code>的解释：</p>
-<p>这是一个存在很久了 的 Bug。</p>
-<p>typeof 实现原理<br>
-js 在底层存储数据类型的方式</p>
-<p>000：对象<br>
-010：浮点数<br>
-100：字符串<br>
-110：布尔<br>
-1：整数<br>
-null：所有机器码均为0<br>
-undefined：用 −2^30 整数来表示</p>
-<p>对比一下权威指南中的设计上的想法，这种底层实现也有了依据。</p>
-</blockquote>
-<ul>
-<li>undefined</li>
-</ul>
-<p>用未定义的值表示更深层次的“空值”。<strong>它是变量的一种取值，表明变量没有初始化。</strong></p>
-<p><strong>如果要查询的值返回undefined说明这个属性或元素不存在;如果函数返回undefined，则表示没有任何返回值。引用没有提供实参的函数形参值也只会得到undefined。</strong></p>
-<p>undefined是预定义的全局变量（它和null不一样，<strong>它不是关键字</strong>），它的值就是“未定义”</p>
-<p>在ES5中undefined是只读的，用typeof会返回“undefined”，<strong>标明这个值是这个类型的唯一成员。</strong></p>
-<ul>
-<li>null和undefined区别和联系</li>
-</ul>
-<p>他们都表示“值的空缺”，两者往往可以互换。</p>
-<p>判断相等运算符“<code>==</code>”认为他们是相等的(是<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-11.9.3">规范第2条规定的结果</a>规定的结果)，“<code>===</code>”认为他们是不等的。</p>
-<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916181522.png" alt="image-20200916181522355" loading="lazy"></figure>
-<figure data-type="image" tabindex="2"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916181701.png" alt="image-20200916181701453" loading="lazy"></figure>
-<p>两者的布尔值都为false</p>
-<p>都不包含任何属性和方法，使用“.”和“[]”来存取两个值的成员或方法都会产生一个类型错误。</p>
-<p>原书中有这样一段话（不清楚是否代表作者本人的立场）：</p>
-<figure data-type="image" tabindex="3"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916181906.png" alt="image-20200916181906059" loading="lazy"></figure>
-<p><strong>因此在赋值上更倾向于选择null。</strong></p>
-<blockquote>
-<p>其他历史原因上的设计和区别可以查看：<a href="https://www.ruanyifeng.com/blog/2014/03/undefined-vs-null.html">阮一峰——undefined与null的区别</a></p>
-<p>提到了首先，null像在Java里一样，被当成一个对象。Brendan Eich觉得表示&quot;无&quot;的值最好不是对象。需要引入一个单独的值。</p>
-<p>其次，在早期JavaScript的最初版本没有包括错误处理机制，发生数据类型不匹配时，往往是自动转换类型或者默默地失败。Brendan Eich觉得，如果null自动转为0，很不容易发现错误。</p>
-<p>因此，Brendan Eich又设计了一个undefined。</p>
-</blockquote>
-<h2 id="3-全局对象">3. 全局对象</h2>
-<p><strong>Global Object （全局对象, global对象）</strong></p>
-<p>①JavaScript 中有一个特殊的对象，称为全局对象（Global Object），它及其所有属性都可以在程序的任何地方访问，即全局变量。</p>
-<p>② 全局对象是预定义的对象，作为 JavaScript 的全局函数和全局属性的占位符。通过使用全局对象，可以访问所有其他所有预定义的对象、函数和属性。全局对象不是任何对象的属性，所以它没有名称。</p>
-<p>③ **在顶层 JavaScript 代码中，可以用关键字 this 引用全局对象。**但通常不必用这种方式引用全局对象，因为全局对象是作用域链的头，这意味着所有非限定性的变量和函数名都会作为该对象的属性来查询。例如，当JavaScript 代码引用 parseInt() 函数时，它引用的是全局对象的 parseInt 属性。全局对象是作用域链的头，<strong>还意味着在顶层 JavaScript 代码中声明的所有变量，都将成为全局对象的属性。</strong></p>
-<p>④ <strong>全局对象只是一个对象，而不是类。既没有构造函数，也无法用new实例化一个新的全局对象。</strong></p>
-<p>⑤ 实际上，ECMAScript 标准没有规定全局对象的类型，<strong>而在客户端 JavaScript 中，全局对象就是 Window 对象，表示允许 JavaScript 代码的 Web 浏览器窗口。浏览器把全局对象作为window对象的一部分实现了，因此，所有的全局属性和函数都是window对象的属性和方法。</strong></p>
-<p><strong>通俗化理解：</strong></p>
-<p>⑥ 《JavaScript高级程序设计》中谈到，global对象可以说是ECMAScript中最特别的一个对象了，因为不管你从什么角度上看，这个对象都是不存在的。从某种意义上讲，它是一个终极的“兜底儿对象”，换句话说呢，**就是不属于任何其他对象的属性和方法，最终都是它的属性和方法。**我理解为，这个global对象呢，就是整个JS的“老祖宗”，找不到归属的那些“子子孙孙”都可以到它这里来认祖归宗。所有在全局作用域中定义的属性和函数，都是global对象的属性和方法，比如isNaN()、parseInt()以及parseFloat()等，实际都是它的方法；还有就是常见的一些特殊值，如：NaN、undefined等都是它的属性，以及一些构造函数Object、Array等也都是它的方法。</p>
-<p>总之，记住一点：global对象就是“老祖宗”，所有找不到归属的就都是它的。</p>
-<p>当JS解释器启动（或者任何Web浏览器加载新页面的时候），它将创建一个新的全局对象，并给它一组定义的初始属性：</p>
-<ul>
-<li>全局属性：比如undefined,Inifinity, NaN</li>
-<li>全局函数：比如isNaN(),parseInt(),eval()</li>
-<li>构造函数：比如Date(),RegExp(),String(),Object(),Array()</li>
-<li>全局对象：比如Math和JSON</li>
-</ul>
-<p>从程序员角度考虑，正是因为全局对象的存在，使得特殊方法、属性初始化透明化了，完全不需要我们操心。而且也归属了所有的方法和对象。</p>
-<p>全局对象的初始属性不是保留字，但是应该当做保留字（别取一些奇怪的名字就OK）</p>
-<p>如第三点所提，可以使用this来使用全局对象。在客户端JS中，在其表示的浏览器窗口中的所有JS代码中，Window对象充当了全局对象。这个全局Window对象有一个window引用其自身，可以代替this来引用全局对象。</p>
-<p>可以说，当初次创建的时候，全局对象定义了JS中所有的预定义的全局值（即上面列出的基本属性）。这个特殊对象同样包含了为程序定义的全局值。如果一个代码生命了一个全局变量，这个全局变量就是全局对象的一个属性。</p>
-<pre><code>var a = 0;//a其实就是挂靠在我们看不见的全局对象global下的一个属性
-var global = this;
-this.a // =&gt; 0
-</code></pre>
-<h2 id="4-包装对象临时对象">4. 包装对象（临时对象）</h2>
-<p>JS对象是一种复合值：它是属性或已命名值的集合。通过“.”来引用属性值。</p>
-<p>当属性是一个函数时，称其为<strong>方法</strong>，通过o.m()来调用o中的方法</p>
-<p>在字符串中可以看到字符串也同样具有属性（.length）和方法（.substring()等），这是为什么？</p>
-<ul>
-<li>因为只要引用了s的属性，<strong>JS就会将字符串值通过调用new String(s)的方式转换成对象</strong>，这个对象继承了字符串的方法，并用来处理属性的引用。</li>
-<li>一旦属性引用结束，这个新创建的对象就会销毁（虽然表面上没有这层实现）</li>
-</ul>
-<p>同理，数字和布尔值也有各自的方法（<strong>利用Number()和Boolean()构造函数创建一个临时对象</strong>），这些方法的调用都是来自于临时对象。</p>
-<p>null和undefined没有包装对象，访问它们的属性会造成一个类型错误。</p>
-<pre><code class="language-js">var s = &quot;giria&quot;;
-s.len = 5;//创建了一个临时字符串对象，并给len属性赋值，随即销毁
-console.log(s.len);// =&gt; undefined
-</code></pre>
-<p>说明，在读取字符串、数字、布尔值的属性或方法时，表现地像对象一样（可以访问一些属性调用一些方法）。但是如果试图给属性赋值，则会被忽略。<strong>修改知识发生在临时对象身上，而这个临时对象并未继续保存下来。</strong></p>
-<blockquote>
-<p>包装对象：存取字符串、数字、布尔值的属性时创建的临时对象</p>
-<p>由于字符串、数字、布尔值的属性都是只读的，不能给他们新属性，需要明白它们是有别于对象的。</p>
-</blockquote>
-<p>需要注意的是，我们可以通过String() Number() Boolean()构造函数来<strong>显示创建包装对象</strong>，他们的值和属性可以被添加和保存。（因为无自动销毁过程）</p>
-<figure data-type="image" tabindex="4"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916192643.png" alt="image-20200916192643128" loading="lazy"></figure>
-<p>&quot;<code>==</code>&quot;运算符将原始值和其包装对象视为相等，“<code>===</code>”将他们视为不等，使用typeof也可以看出区别；</p>
-<pre><code class="language-js">var s = &quot;giria&quot;;
-var a = new String(s);
-console.log(a==s);// =&gt; true
-console.log(a===s);// =&gt; false
-console.log(typeof(s));// =&gt; string
-console.log(typeof(a));// =&gt; object
-</code></pre>
-<h2 id="5-不可变的原始值和可变的对象引用">5. 不可变的原始值和可变的对象引用</h2>
-<blockquote>
-<p>原始值（即原始类型）：包括数字、字符串、布尔值、null、undefined</p>
-<p>对象：包括数组和函数</p>
-</blockquote>
-<h3 id="原始值">原始值</h3>
-<ul>
-<li>
-<p><strong>原始值是不可改变的，任何方法都无法改变一个原始值。</strong>（字符串方法实际返回的是一个新的字符串值）</p>
-</li>
-<li>
-<p>原始值的比较是<strong>值的比较</strong>：只有它们的值相等时才相等</p>
-<ul>
-<li>没有方法比较null和undefined</li>
-<li>如果比较两个单独的字符串，当且仅当它们的长度相等并且每个索引值的字符都相等时，JS才认为它们相等</li>
-</ul>
-</li>
-</ul>
-<h3 id="对象">对象</h3>
-<ul>
-<li>对象是可变的，它们的值可以被修改</li>
-<li>对象的比较并非值的比较
-<ul>
-<li>两个对象包含同样的属性以及相同的值，它们也是不相等的。</li>
-<li>对象值都是引用，它们的比较均是引用的比较：当且仅当它们引用同一个基对象时它们才相等</li>
-</ul>
-</li>
-</ul>
-<figure data-type="image" tabindex="5"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916193642.png" alt="image-20200916193642148" loading="lazy"></figure>
-<p>如果想要得到一个对象或数组的副本，必须进行显式复制对象的每个属性或者数组的每个元素（浅拷贝，如果涉及复杂复制则需要深拷贝）</p>
-<p>同样地，如果想要比较两个单独的对象或者数组，则必须比较它们的属性或元素。</p>
-<h2 id="6-类型转换重要">6. 类型转换（重要）</h2>
-<figure data-type="image" tabindex="6"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200916235551.png" alt="image-20200916235551517" loading="lazy"></figure>
-<p>所有原始值转换成字符串很好理解（对象转换后面会提到），转换为数字比较微妙。</p>
-<ul>
-<li>以数字表示的字符串可以直接转换成数字，也允许开始和结尾处带有空格</li>
-<li>在开始和结尾处的任意非空格字符都不会被当成数字直接量的一部分，进而造成字符串转换数字的结果为NaN</li>
-<li>true =&gt; 1   false =&gt; 0  &quot;&quot;  =&gt; 0</li>
-</ul>
-<figure data-type="image" tabindex="7"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200917000033.png" alt="image-20200917000033034" loading="lazy"></figure>
-<p>原始值到对象的转换：调用String(), Number(), Boolean()构造函数，转换为各自的包装对象</p>
-<p>null和undefined用在期望是一个对象的地方都会造成一个类型错误(TypeError)，但是使用Object()函数，则会简单地返回一个新创建的空对象。</p>
-<figure data-type="image" tabindex="8"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200917001628.png" alt="image-20200917001628502" loading="lazy"></figure>
-<h3 id="61-转换和相等性">6.1 转换和相等性</h3>
-<p>一个值转为另一个值不意味着两个值相等。if语句会将 undefined转为false，但“==”运算符从不试图将操作数转换为布尔值。</p>
-<figure data-type="image" tabindex="9"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200917000344.png" alt="image-20200917000344299" loading="lazy"></figure>
-<h3 id="62-显式类型转换">6.2 显式类型转换</h3>
-<p>做显示类型转换最简单的方法就是使用Boolean(),Number(),String(),Object()函数。（当不使用new调用时，它们会作为类型转换函数，按照上表进行转换）</p>
-<p>注意！！除了null或undefined外任何值都有toString()方法（执行结果通常和String()一致）</p>
-<h4 id="隐式类型转换">隐式类型转换</h4>
-<ul>
-<li>
-<p>+的一个操作数是字符串，会把另一个操作数转换为字符串</p>
-</li>
-<li>
-<p>一元运算符+将操作数转换为数字。</p>
-</li>
-<li>
-<p>！将其运算数转换为布尔值并取反</p>
-</li>
-</ul>
-<p>所以会经常遇到这样的用法：</p>
-<figure data-type="image" tabindex="10"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200917001812.png" alt="image-20200917001811957" loading="lazy"></figure>
-<figure data-type="image" tabindex="11"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200917001822.png" alt="image-20200917001822151" loading="lazy"></figure>
-<h4 id="tostring">toString</h4>
-<p>Number类定义的toString（）可接受表示转换基数的可选参数，默认为十进制</p>
-<figure data-type="image" tabindex="12"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200917002225.png" alt="image-20200917002225186" loading="lazy"></figure>
-<p>经过实践，带参数转换只有数字类可以正确使用，其他都只会返回它的toString()无参数结果。</p>
-<h4 id="tofixed">toFixed()</h4>
-<p>Number类，根据小数点后的指定位数将数字转换成字符串，从不使用指数计数法。</p>
-<h4 id="toexponential">toExponential()</h4>
-<p>Number类，使用指数计数法将数字转为指数形式的字符串，其中小数点前只有一位，小数点后的位数由参数指定（有效位数=指定位数+1）</p>
-<h4 id="toprecision">toPrecision()</h4>
-<p>Number类，根据指定的有效数字位数将数字转换成字符串。如果有效数字位数少于数字整数部分的位数，则转换成指数形式。</p>
-<p>所有三个方法都会适当地进行四舍五入或填充0.</p>
-<figure data-type="image" tabindex="13"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200917135234.png" alt="image-20200917135227698" loading="lazy"></figure>
-<h4 id="number">Number()</h4>
-<p>传入一个字符串，它会试图将其转换成一个整数或者浮点数，但是只能基于十进制进行转换，且不能出现非法的尾随字符。</p>
-<h4 id="parseint">parseInt()</h4>
-<p>全局函数，不从属于任何类的方法。只解析整数。如果前缀是0x或0X，将其解析为十六进制数。可以接受第二个可选参数，指定数字转换的基数，合法的取值范围是2~36.</p>
-<figure data-type="image" tabindex="14"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200917135843.png" alt="image-20200917135843297" loading="lazy"></figure>
-<p>经过试验，如果非法（基数不在2~36范围内，或者转换基数小于所给转换值），将会返回NaN</p>
-<h4 id="parsefloat">parseFloat()</h4>
-<p>全局函数，不从属于任何类的方法。解析整数和浮点数。</p>
-<p>parseInt()和parseFloat()都会跳过任意数量的前导空格，并忽略后面非字符内容。</p>
-<p>但是如果第一个非空格字符是非法数字直接量(如字符串等)，将会返回NaN</p>
-<figure data-type="image" tabindex="15"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200917135709.png" alt="image-20200917135709884" loading="lazy"></figure>
-<h3 id="63-对象转换为原始值">6.3 对象转换为原始值</h3>
-<p>对象到布尔值：所有对象都转换成true，对于包装对象也是如此。</p>
-<p>对象到字符串，对象到数字是通过调用待转换对象的一个方法来完成的。</p>
-<p>下文提到的转换规则只适用于本地对象（native object），宿主对象（如由web浏览器定义的对象）根据各自的算法可以转换。</p>
-<h4 id="tostring-2">toString()</h4>
-<p>作用：返回一个反映这个对象的字符串。</p>
-<p>默认的toString()方法会返回一个一般的值：</p>
-<pre><code>({x:1, y:2}).toString()// =&gt; &quot;[object Object]&quot;
-</code></pre>
-<p>很多类定义了特定版本的toString()方法。</p>
-<ul>
-<li>数组类：将每个数组元素转换成一个字符串，并在元素之间添加逗号后合并结果字符串</li>
-</ul>
-<pre><code>[1,2,3].toString()// =&gt; &quot;1,2,3&quot;
-[&quot;aaa&quot;, 1, {x:1, y:2}, [1,2,3]].toString() // =&gt; &quot;aaa,1,[object Object],1,2,3&quot;
-</code></pre>
-<ul>
-<li>函数类:返回这个函数的实现定义的表示方式。（通常是将用户定义的函数转换为JS源代码字符串）</li>
-</ul>
-<figure data-type="image" tabindex="16"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200917143455.png" alt="image-20200917143455672" loading="lazy"></figure>
-<ul>
-<li>日期类：返回一个可读的（可被JS解析的）日期和时间字符串.注意下月份是从0开始的。</li>
-</ul>
-<pre><code>new Date(2020, 8, 7).toString() // =&gt; &quot;Mon Sep 07 2020 00:00:00 GMT+0800 (中国标准时间)&quot;
-</code></pre>
-<ul>
-<li>RegExp类：将RegExp对象转换为表示正则表达式直接量的字符串</li>
-</ul>
-<pre><code>/\d+/g.toString() // =&gt; &quot;/\d+/g&quot;
-</code></pre>
-<h4 id="valueof">valueOf()</h4>
-<ul>
-<li>如果存在任意原始值，默认将对象转换为表示它的原始值</li>
-</ul>
-<pre><code class="language-js">(111).valueOf() // =&gt; 111
-(&quot;aaaa&quot;).valueOf() // =&gt; &quot;aaaa&quot;
-</code></pre>
-<ul>
-<li>对象是复合值，而且大多数对象无法真正表示为一个原始值，这个方法简单地返回对象本身。（例如数组、函数和正则表达式）</li>
-</ul>
-<pre><code class="language-js">([1,2,3, &quot;aaa&quot;, {x: 1, y: 2}]).valueOf()
-// =&gt; [1, 2, 3, &quot;aaa&quot;, {…}]0: 11: 22: 33: &quot;aaa&quot;4: {x: 1, y: 2}length: 5__proto__: Array(0)
-
-(function(x){return x;}).valueOf()
-// =&gt; ƒ (x){return x;}
-
-(/\d+/g).valueOf()
-// =&gt; /\d+/g
-</code></pre>
-<ul>
-<li>日期类valueOf()方法会返回它的一个内部表示：1970年1月1日以来的毫秒数</li>
-</ul>
-<pre><code>(new Date(2020, 8, 17)).valueOf() // =&gt; 1600272000000
-</code></pre>
-<h4 id="对象到字符串的转换过程">对象到字符串的转换过程</h4>
-<figure data-type="image" tabindex="17"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200917144313.png" alt="image-20200917144313522" loading="lazy"></figure>
-<figure data-type="image" tabindex="18"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200917144339.png" alt="image-20200917144338919" loading="lazy"></figure>
-<h4 id="对象到数字的转换过程">对象到数字的转换过程</h4>
-<figure data-type="image" tabindex="19"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200917144356.png" alt="image-20200917144356358" loading="lazy"></figure>
-<h5 id="空数组转为数字">空数组转为数字</h5>
-<p>解释了为什么空数组转换为数字=0：数组具有valueOf方法，并且返回一个对象而不是原始值（数字、字符串、布尔值、null、undefined），所以实际上调用的是toString()方法，空数组转换成空字符串（是一个原始值），然后转换为数字。</p>
-<pre><code>Number(([]).toString()) // =&gt; 0
-</code></pre>
-<h5 id="和运算符">+和<code>==</code>运算符</h5>
-<p>可以进行数学加法和字符串连接操作。如果它的其中一个操作数是对象，则JS使用特殊的方法将对象转换为原始值。</p>
-<p>“==”相等运算符与此类似，如果将对象和一个原始值比较，则转换会遵照对象到原始值的转换方式进行</p>
-<p>+和<code>==</code>运算符包含对日期对象转换的一种特殊情形。</p>
-<p>**日期类是JS核心中唯一的预先定义类型。**它定义了有意义的向字符串和数字类型的转换。</p>
-<p><strong>对所有非日期的对象来说，对象到原始值的转换基本上是对象到数字的转换</strong>（首先会调用valueOf），**日期对象则使用对象到字符串的转换模式。**然而这里的转换有些特殊：通过valueOf或者toString返回的原始值将被直接使用，而不会被强制转换为数字或字符串。</p>
-<p>“&lt;”，“!=”等关系运算符，也是如此，对任何非日期对象都会首先尝试调用valueOf，然后调用toString。不管得到的原始值是否直接使用，都不会进一步被转换为数字或字符串。</p>
-<p>看起来很难理解，看实际的演示吧。</p>
-<pre><code class="language-js">var now = new Date();
-
-//+号将日期优先转换为字符串
-typeof(now + 1); // =&gt; &quot;string&quot;
-
-//-号将日期作为一般对象处理，优先调用valueOf转换为数字，其他符号亦复如是
-typeof(now - 1);// =&gt; &quot;number&quot;
-typeof(now * 1);// =&gt; &quot;number&quot;
-typeof(now / 1);// =&gt; &quot;number&quot;
-
-//==号对日期类优先转换为字符串调用toString
-now == now.valueOf()// =&gt; false
-now == now.toString()// =&gt; true
-
-//-号优先转换为数字，再进行数字比较
-//书上说“&gt;”将日期转换为数字，指的是在比较时now被转换成了数字（因为now-1因为减号已经是数字了），也是没有毛病的。
-now &gt; (now - 1) // =&gt; true
-
-//+号优先转换为字符串，调用toString()方法
-now &lt; (now + 1)// =&gt; false
-
-typeof(now+1)// =&gt; &quot;string&quot;
-console.log(now);// =&gt; VM453:1 Thu Sep 17 2020 15:15:54 GMT+0800 (中国标准时间)
-(now+1).toString()// =&gt; &quot;Thu Sep 17 2020 15:15:54 GMT+0800 (中国标准时间)1&quot;
-
-//&lt;号会将字符串进行valueof的数字比较.但是，now+1的原始值经过一次转换后，不会再进一步被转换为数字或字符串，他们永不相等。
-(now).valueOf()// =&gt; 1600326954798
-&quot;Thu Sep 17 2020 15:15:54 GMT+0800 (中国标准时间)1&quot; &lt; 1600326954798
-false
-&quot;Thu Sep 17 2020 15:15:54 GMT+0800 (中国标准时间)1&quot; &gt; 1600326954798
-false
-</code></pre>
-<p><strong>总结来说：</strong></p>
-<ul>
-<li>
-<p><code>+,==,&lt;,&gt;,!=</code>等关系运算符（注意加号是特别的）</p>
-<ul>
-<li>针对非日期对象：首先调用valueOf，然后调用toString</li>
-<li>针对日期对象：首先调用toString，然后调用valueOf</li>
-<li>且经过一次转换后，不会进一步转换为数字或字符串。</li>
-</ul>
-</li>
-<li>
-<p>其他运算符</p>
-<ul>
-<li>优先调用valueOf，然后调用toString。</li>
-</ul>
-</li>
-</ul>
-<h2 id="参考网站">参考网站</h2>
-<p><a href="https://blog.csdn.net/chenchunlin526/article/details/78908592">JS/JavaScript中的概念区分：global对象、window对象、document对象</a></p>
 ]]></content>
     </entry>
 </feed>

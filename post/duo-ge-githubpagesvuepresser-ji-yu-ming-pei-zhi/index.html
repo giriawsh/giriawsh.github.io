@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>多个GithubPages+Vuepress+二级域名配置 | Giria&#39;s Blog</title>
+<link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+
+<link rel="canonical" href="https://giriawsh.github.io/post/duo-ge-githubpagesvuepresser-ji-yu-ming-pei-zhi/" />
+</head>
+<body>
+<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
+<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://giriawsh.github.io/"><img alt="logo" style="display:inline-block;" src="https://giriawsh.github.io//images/avatar.png"/></a><h1 title="Giria&#39;s Blog" class="weaklink"><a  href="/">Giria&#39;s Blog</a></h1>
+
+<div class="navbar weaklink">
+<div class="normal_nav">
+<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul></nav>
+<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
+<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1601905072157" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+</div></div>
+<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
+
+
+<div class="main"><div class="main-inner"><div class="content">
+<article class="post">
+<h2 class="post_title sm_margin"><a>多个GithubPages+Vuepress+二级域名配置</a></h2>
+<script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-10-05</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="tag">前端</a> | 	<a href="https://giriawsh.github.io/tag/9OedYhieZ/" class="tag">随笔</a> | 	<a href="https://giriawsh.github.io/tag/P-LvHoQha/" class="tag">Vue.js</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">2107字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">9 min read</span>
+</section>
+
+<div style="display:flex">
+<div class="md_block" id="md_block">
+<div class="round-shape-one"></div>
+<h2 id="前言">前言</h2>
+<p>配置完这个小站以后嗅到了一丝不对。</p>
+<!-- more -->
+<p>咦，我怎么学习记录的东西这么多，这样放一块儿实在不好看也不适合梳理。</p>
+<p>在语雀和Vuepress中选择了UI更简洁清爽，同时界面关键内容较为突出的Vuepress。</p>
+<p>此文记录了如何创建第二个GithubPages（多个也类似）+Vuepress基础配置学习+绑定二级域名（可以看到这个域名是record.giriawsh.com也是我主站域名的二级域名）</p>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201005200946.png" alt="image-20201005200945984" loading="lazy"></figure>
+<p>在我的blog中点击个人学习系列，即可跳转至用vuepress搭建的学习记录站点。</p>
+<figure data-type="image" tabindex="2"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201005201041.png" alt="image-20201005201041265" loading="lazy"></figure>
+<h2 id="创建githubpages部署">创建GithubPages+部署</h2>
+<p><strong>我们只能为每个 GitHub 帐户创建一个用户或组织站点；而项目站点没有限制</strong>。</p>
+<p>只能拥有一个的，是个人站点，也就是名为 <code>&lt;user&gt;.github.io</code> 的仓库。**想要创建更多的GitHub Pages页面，可以通过创建项目站点实现。**项目站点的数量没有限制。</p>
+<p>详情可见**<a href="https://link.zhihu.com/?target=https%3A//docs.github.com/cn/github/working-with-github-pages/about-github-pages%23">GitHub Pages 站点的类型</a>**——官方文档</p>
+<h3 id="1-创建项目">1. 创建项目</h3>
+<ol>
+<li>新建一个仓库，名称随意。</li>
+<li>进入仓库主页，点击右面的<code>Settings</code>，找到<strong>GitHub Pages</strong>部分，选择一个主题，之后可以再改，不选择的话页面可能会无法加载</li>
+<li>建议勾选 <code>Enforce HTTPS</code>，否则访问时会出现安全警告。</li>
+<li>没有出错的话，一个项目主页就建立完成了，可以通过<code>&lt;username&gt;.github.io/&lt;projectname&gt;</code>访问到了</li>
+</ol>
+<h3 id="2-创建vuepress项目">2. 创建Vuepress项目</h3>
+<p>参照<a href="https://vuepress.vuejs.org/zh/guide/getting-started.html">官方文档</a></p>
+<ol>
+<li>
+<p>创建并进入一个新目录</p>
+<pre><code class="language-bash">mkdir vuepress-starter &amp;&amp; cd vuepress-starter
+</code></pre>
+</li>
+<li>
+<p>使用你喜欢的包管理器进行初始化（听我的，用yarn，如果你不想出现奇怪的bug的话）</p>
+<pre><code class="language-bash">yarn init # npm init
+</code></pre>
+</li>
+<li>
+<p>将 VuePress 安装为本地依赖</p>
+<p>我们已经不再推荐全局安装 VuePress</p>
+<pre><code class="language-bash">yarn add -D vuepress # npm install -D vuepress
+</code></pre>
+</li>
+<li>
+<p>创建你的第一篇文档</p>
+<pre><code class="language-bash">mkdir docs &amp;&amp; echo '# Hello VuePress' &gt; docs/README.md
+</code></pre>
+</li>
+<li>
+<p>在 <code>package.json</code> 中添加一些 <a href="https://classic.yarnpkg.com/zh-Hans/docs/package-json#toc-scripts">scripts</a></p>
+<p>这一步骤是可选的，但我们推荐你完成它。在下文中，我们会默认这些 scripts 已经被添加。</p>
+<pre><code class="language-json">{
+  &quot;scripts&quot;: {
+    &quot;docs:dev&quot;: &quot;vuepress dev docs&quot;,
+    &quot;docs:build&quot;: &quot;vuepress build docs&quot;
+  }
+}
+</code></pre>
+</li>
+<li>
+<p>在本地启动服务器</p>
+<pre><code class="language-bash">yarn docs:dev # npm run docs:dev
+</code></pre>
+<p>VuePress 会在 <a href="http://localhost:8080/">http://localhost:8080</a> 启动一个热重载的开发服务器。</p>
+</li>
+</ol>
+<h2 id="vuepress配置">Vuepress配置</h2>
+<h3 id="首页">首页</h3>
+<p>这块可参考<a href="https://vuepress.vuejs.org/zh/theme/default-theme-config.html#%E9%A6%96%E9%A1%B5">官方文档主题模块</a>。</p>
+<p>在/docs文件夹下创建README.md文件，这是我的个人配置（把logo.jpg放在/docs/.vuepress/public 文件夹中）：</p>
+<pre><code class="language-md">---
+home: true
+heroImage: /logo.jpg
+heroText: Giria's learning record
+tagline: 个人前端学习记录
+actionText: 一起梳理 →
+actionLink: /source/element/
+sidebar: false
+features:
+- title: 源码学习
+  details: Element UI + Vue 源码
+- title: 书籍学习
+  details: 记录相关书籍的学习路径
+- title: 前端相关
+  details: 各代码库的学习，包括不限于NodeJS、NuxtJS、多种视图组件库等
+footer: MIT Licensed | Copyright © 2020-present Giria
+---
+::: tip 更多
+博客文章可移步[Giria's Blog](https://www.giriawsh.com)
+:::
+</code></pre>
+<h3 id="导航栏">导航栏</h3>
+<h4 id="基本配置">基本配置</h4>
+<p>修改/docs/config.js文件</p>
+<pre><code class="language-js">module.exports = {
+    themeConfig: {
+        sidebarDepth: 2, // e'b将同时提取markdown中h2 和 h3 标题，显示在侧边栏上。
+        lastUpdated: 'Last Updated',// 文档更新时间：每个文件git最后提交的时间
+        searchMaxSuggestions: 10,
+        nav: [
+            {text: '主页', link: '/'},
+            {
+                text: '源码学习',
+                items: [
+                    {text: &quot;Element UI&quot;, link: '/source/element/'},
+                    {text: &quot;Vue&quot;, link: '/source/vue/'}
+                ],
+            },
+            {
+                text: '书籍学习',
+                items: [
+                    {text: &quot;JavaScript权威指南&quot;, link: '/books/theDefinitiveGuideToJavaScript/'}
+                ],
+            },
+            {
+                text: '前端相关',
+                items: [
+                    {text: &quot;Node.js&quot;, link: '/fe/nodejs/'},
+                    {text: &quot;Vue.js&quot;, link: '/fe/vuejs/'},
+                    {text: &quot;SVG.js&quot;, link: '/fe/svgjs/'},
+                    {text: &quot;Nuxt框架&quot;, link: '/fe/nuxtjs/'},
+                ],
+            },
+            {text: '博客文章', link: 'https://www.giriawsh.com'},//外链，可进行跳转
+        ],
+	}
+}
+</code></pre>
+<p>目录组织结构如下：</p>
+<figure data-type="image" tabindex="3"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201005202734.png" alt="image-20201005202734817" loading="lazy"></figure>
+<p>产生效果如下：</p>
+<figure data-type="image" tabindex="4"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201005202800.png" alt="image-20201005202759976" loading="lazy"></figure>
+<h4 id="导航栏分组配置">导航栏分组配置</h4>
+<p>如果想要进行导航栏分组可这样写：</p>
+<pre><code class="language-js">// .vuepress/config.js
+module.exports = {
+  themeConfig: {
+    nav: [
+      {
+                text: '前端相关',
+                items: [
+                    {
+                        text: &quot;JS库相关&quot;, items: [
+                            {text: &quot;Node.js&quot;, link: '/fe/nodejs/'},
+                            {text: &quot;Vue.js&quot;, link: '/fe/vuejs/'},
+                            {text: &quot;SVG.js&quot;, link: '/fe/svgjs/'},
+                        ]
+                    },
+                    {
+                        text: &quot;框架相关&quot;, items: [
+                            {text: &quot;Nuxt框架&quot;, link: '/fe/nuxtjs/'},
+                        ]
+                    },
+                ],
+            },
+    ]
+  }
+}
+</code></pre>
+<p>效果如下：</p>
+<figure data-type="image" tabindex="5"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201005203415.png" alt="image-20201005203415682" loading="lazy"></figure>
+<h4 id="导航栏logo">导航栏LOGO</h4>
+<p>可以通过 <code>themeConfig.logo</code> 增加导航栏 Logo ，Logo 可以被放置在<a href="https://vuepress.vuejs.org/zh/guide/assets.html#public-files">公共文件目录</a>：</p>
+<pre><code class="language-js">// .vuepress/config.js
+module.exports = {
+  themeConfig: {
+    logo: '/assets/img/logo.png',
+  }
+}
+</code></pre>
+<h3 id="侧边栏">侧边栏</h3>
+<p>侧边栏这里我查了很久，很少有清楚的demo，我这里做个demo记录。</p>
+<p>目录结构如下：</p>
+<figure data-type="image" tabindex="6"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201005203923.png" alt="image-20201005203923592" loading="lazy"></figure>
+<p>在/docs/.vuepress/config.js中进行如下配置：</p>
+<pre><code class="language-js">module.exports = {
+    themeConfig: {
+        sidebarDepth: 2, // e'b将同时提取markdown中h2 和 h3 标题，显示在侧边栏上。
+        lastUpdated: 'Last Updated',// 文档更新时间：每个文件git最后提交的时间
+        sidebar: {
+            '/source/element/': [
+                {
+                    title: 'Element源码分析',
+                    collapsable: false,
+                    children: [
+                        '/source/element/1',
+                        '/source/element/2',]//这里的顺序决定了在侧边栏中从上到下显示的顺序
+                }
+            ],
+            '/source/vue/': [
+                {
+                    title: 'Vue源码分析',
+                    collapsable: false,
+                    children: []
+                }
+            ],
+            '/books/theDefinitiveGuideToJavaScript/': [
+                {
+                    title: 'JavaScript权威指南',
+                    collapsable: false,
+                    children: [
+                        '/books/theDefinitiveGuideToJavaScript/1',
+                        '/books/theDefinitiveGuideToJavaScript/2',
+                        '/books/theDefinitiveGuideToJavaScript/3',
+                        '/books/theDefinitiveGuideToJavaScript/4',
+                        '/books/theDefinitiveGuideToJavaScript/5',
+                    ],
+                }
+            ],
+            '/fe/nodejs/': [
+                {
+                    title: 'NodeJS初学',
+                    collapsable: false,
+                    children: [
+                        '/fe/nodejs/start/1',
+                        '/fe/nodejs/start/2',
+                        '/fe/nodejs/start/3',
+                        '/fe/nodejs/start/4',
+                    ]
+                },
+                {
+                    title: 'NodeJS深入学习',
+                    collapsable: false,
+                    children: [
+                        '/fe/nodejs/second/test'
+                    ]
+                }
+            ],
+            '/fe/svgjs/': [
+                {
+                    title: 'SVG学习记录',
+                    collapsable: false,
+                    children: [
+                        '/fe/svgjs/1',
+                        '/fe/svgjs/2',
+                        '/fe/svgjs/3',
+                    ]
+                },
+            ]
+        }
+    },
+
+};
+</code></pre>
+<p>如果想要达到如下多个分组的效果，可查看上面代码中的<code>'/fe/nodejs/'</code>部分，进行多个对象的配置。（上面代码为了直观省略了文件名）</p>
+<figure data-type="image" tabindex="7"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201005204000.png" alt="image-20201005204000559" loading="lazy"></figure>
+<h4 id="踩坑">踩坑</h4>
+<ol>
+<li>记得给每个新创建的文件夹下增加一个README.md随便写点啥，不然有一定概率会跳转到404</li>
+<li>文件名譬如1.md在路径中可以省略.md（.html也是可以的）</li>
+</ol>
+<h3 id="网页logo">网页LOGO</h3>
+<p>将logo文件放置到/docs/.vuepress/public文件夹下，然后在config.js文件中增加：</p>
+<pre><code class="language-js">module.exports = {
+    // 注入到当前页面的 HTML &lt;head&gt; 中的标签
+    head: [
+        ['link', {rel: 'icon', href: '/pencil.png'}], // 增加一个自定义的 favicon(网页标签的图标)
+    ],
+}
+</code></pre>
+<h3 id="样式修改">样式修改</h3>
+<p>在/docs/.vuepress文件夹中新建styles文件夹，创建palette.styl文件。</p>
+<pre><code class="language-js">$accentColor = #e6be00//默认主题颜色
+$textColor = red//默认字体颜色
+$borderColor = #eaecef//默认边框颜色
+$codeBgColor = #282c34//默认背景颜色
+
+示例修改相关样式f12找到需要修改的地方找到对应class类拿过来直接用就行了
+.sidebar-group.is-sub-group &gt; .sidebar-heading:not(.clickable){
+  opacity :1
+}
+</code></pre>
+<p>更多可参考：</p>
+<ul>
+<li><a href="https://juejin.im/post/6844903864227856392">vuepress主题改造-主题的继承(1)</a></li>
+<li><a href="https://artiely.github.io/blog/original/create-custom-VuePress-theme.html#%E8%AE%BE%E7%BD%AE-vuepress-%E9%A1%B9%E7%9B%AE">如何创建自定义 VuePress 主题</a></li>
+<li><a href="https://www.xerrors.fun/decorate-vuepress/">Vuepress 主题改造指南</a>   --》  追加了黑色模式，而且博客主题风格我很喜欢</li>
+<li><a href="https://vuepress-theme-reco.recoluan.com/">一款简洁而优雅的 vuepress 博客 &amp; 文档 主题</a></li>
+</ul>
+<h2 id="部署">部署</h2>
+<ol>
+<li>
+<p>在 <code>docs/.vuepress/config.js</code> 中设置正确的 <code>base</code>。</p>
+<p>如果你打算发布到 <code>https://&lt;USERNAME&gt;.github.io/</code>，则可以省略这一步，因为 <code>base</code> 默认即是 <code>&quot;/&quot;</code>。</p>
+<p>如果你打算发布到 <code>https://&lt;USERNAME&gt;.github.io/&lt;REPO&gt;/</code>（也就是说你的仓库在 <code>https://github.com/&lt;USERNAME&gt;/&lt;REPO&gt;</code>），则将 <code>base</code> 设置为 <code>&quot;/&lt;REPO&gt;/&quot;</code>。</p>
+<pre><code class="language-js">module.exports = {
+    title: &quot;Girecord&quot;,
+    description: 'Giria的学习记录',
+    base: '/&lt;REPO&gt;/',//如果要绑定子域名的话这里需要改成/
+ }
+</code></pre>
+</li>
+<li>
+<p>在你的项目中，创建一个如下的 <code>deploy.sh</code> 文件（请自行判断去掉高亮行的注释）放置到根目录中:</p>
+</li>
+</ol>
+<pre><code class="language-bash">#!/usr/bin/env sh
+
+# 确保脚本抛出遇到的错误
+set -e
+
+# 生成静态文件
+npm run docs:build
+
+# 进入生成的文件夹
+cd docs/.vuepress/dist
+
+# 如果是发布到自定义域名
+# echo 'www.example.com' &gt; CNAME
+# 后续这里我们会发布到二级域名，像我的就需要像下面这么写：
+echo 'record.giriawsh.com' &gt; CNAME
+
+git init
+git add -A
+git commit -m 'deploy'
+
+# 如果发布到 https://&lt;USERNAME&gt;.github.io
+# git push -f git@github.com:&lt;USERNAME&gt;/&lt;USERNAME&gt;.github.io.git master
+
+# 如果发布到 https://&lt;USERNAME&gt;.github.io/&lt;REPO&gt;
+# git push -f git@github.com:&lt;USERNAME&gt;/&lt;REPO&gt;.git master:gh-pages
+
+cd -
+</code></pre>
+<p>这样我们之后每次修改后只需要点击这个脚本进行运行即可部署。</p>
+<p>至此我们已经可以通过访问<code>https://&lt;USERNAME&gt;.github.io/&lt;REPO&gt;</code>访问到部署后的页面了</p>
+<h2 id="绑定子域名">绑定子域名</h2>
+<p>我是在Godaddy上购买的网址，来到DNS配置，添加一条CNAME记录</p>
+<figure data-type="image" tabindex="8"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201005213213.png" alt="image-20201005213213303" loading="lazy"></figure>
+<p>::: tip</p>
+<p>如果是参照了我之前的配置方案，这里不用写成record.giriawsh.com，因为它会自己映射添加，写二级子域名名称record即可</p>
+<p>:::</p>
+<h2 id="参考网站">参考网站</h2>
+<p><a href="https://zhuanlan.zhihu.com/p/183977963">如何拥有多个GitHub Pages</a></p>
+<p><a href="https://blog.csdn.net/zhang__ao/article/details/96144441">vuepress 使用与主题自定义样式修改</a></p>
+<p><a href="https://www.dazhuanlan.com/2019/10/18/5da96daa80de8/">配置GithubPage二级域名</a></p>
+
+<span id="footnote"></span>
+<div id = "warn"></div>
+</div>
+<div class="toc-container"><ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E5%89%8D%E8%A8%80">前言</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BAgithubpages%E9%83%A8%E7%BD%B2">创建GithubPages+部署</a>
+<ul>
+<li><a href="#1-%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE">1. 创建项目</a></li>
+<li><a href="#2-%E5%88%9B%E5%BB%BAvuepress%E9%A1%B9%E7%9B%AE">2. 创建Vuepress项目</a></li>
+</ul>
+</li>
+<li><a href="#vuepress%E9%85%8D%E7%BD%AE">Vuepress配置</a>
+<ul>
+<li><a href="#%E9%A6%96%E9%A1%B5">首页</a></li>
+<li><a href="#%E5%AF%BC%E8%88%AA%E6%A0%8F">导航栏</a>
+<ul>
+<li><a href="#%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE">基本配置</a></li>
+<li><a href="#%E5%AF%BC%E8%88%AA%E6%A0%8F%E5%88%86%E7%BB%84%E9%85%8D%E7%BD%AE">导航栏分组配置</a></li>
+<li><a href="#%E5%AF%BC%E8%88%AA%E6%A0%8Flogo">导航栏LOGO</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BE%A7%E8%BE%B9%E6%A0%8F">侧边栏</a>
+<ul>
+<li><a href="#%E8%B8%A9%E5%9D%91">踩坑</a></li>
+</ul>
+</li>
+<li><a href="#%E7%BD%91%E9%A1%B5logo">网页LOGO</a></li>
+<li><a href="#%E6%A0%B7%E5%BC%8F%E4%BF%AE%E6%94%B9">样式修改</a></li>
+</ul>
+</li>
+<li><a href="#%E9%83%A8%E7%BD%B2">部署</a></li>
+<li><a href="#%E7%BB%91%E5%AE%9A%E5%AD%90%E5%9F%9F%E5%90%8D">绑定子域名</a></li>
+<li><a href="#%E5%8F%82%E8%80%83%E7%BD%91%E7%AB%99">参考网站</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="fullPage"><canvas id="canvas"></canvas></div>
+</article>
+<div id="eof"><span>EOF</span></div><div class="round-shape-one"></div>
+<section>
+<div class="doc_comments">
+
+	  
+		<div id="gitalk-container"></div>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/qyxtim/Static@3.8/gitalk.min.js"></script><link href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.css"rel="stylesheet"><script>var gitalk=new Gitalk({clientID:"ee7c215043d62409bb53",clientSecret:"455d2f4a532bbe073ca25fdf9111932f00bbc624",repo:"giriawsh.github.io",owner:"giriawsh",admin:["giriawsh"],id:(location.pathname).substring(0, 49),distractionFreeMode:false});gitalk.render("gitalk-container");</script>
+	  
+
+	  
+
+</div></section>
+</div></div></div><script>
+"use strict";!function(){for(var n=document.getElementsByTagName("pre"),e=n.length,s=0;s<e;s++){n[s].innerHTML='<span class="line-number"></span>'+n[s].innerHTML+'<span class="cl"></span>';for(var a=n[s].innerHTML.split(/\n/).length,r=0;r<a-1;r++){n[s].getElementsByTagName("span")[0].innerHTML+="<span>"+(r+1)+"</span>"}}}();
+let mainNavLinks=document.querySelectorAll(".markdownIt-TOC a");window.addEventListener("scroll",event=>{let fromTop=window.scrollY;mainNavLinks.forEach((link,index)=>{let section=document.getElementById(decodeURI(link.hash).substring(1));let nextSection=null
+if(mainNavLinks[index+1]){nextSection=document.getElementById(decodeURI(mainNavLinks[index+1].hash).substring(1));}
+if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop){link.classList.add("currentToc");}else{link.classList.remove("currentToc");}}else{link.classList.add("currentToc");}}else{link.classList.remove("currentToc");}});});
+var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
+var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
+var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
+content="本文最后更新于2020-10-05，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-10-05 21:36:51";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+</script>
+<style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
+<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"><a href="https://github.com/giriawsh"title="github"><i class="iconfont icon-github"></i></a></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
+<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>50</strong> posts</span></div></div>
+<script>
+console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;", );
+</script>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+<script type="text/javascript" async src="https://giriawsh.github.io//media/js/prism.js"></script>
+</body>
+
+</html>
