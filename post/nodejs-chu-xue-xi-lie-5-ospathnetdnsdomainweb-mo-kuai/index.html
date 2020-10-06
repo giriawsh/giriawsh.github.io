@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>NodeJS初学系列5——OS/Path/Net/DNS/Domain/Web模块 | Giria&#39;s Blog</title>
+<link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+
+<link rel="canonical" href="https://giriawsh.github.io/post/nodejs-chu-xue-xi-lie-5-ospathnetdnsdomainweb-mo-kuai/" />
+</head>
+<body>
+<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
+<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://giriawsh.github.io/"><img alt="logo" style="display:inline-block;" src="https://giriawsh.github.io//images/avatar.png"/></a><h1 title="Giria&#39;s Blog" class="weaklink"><a  href="/">Giria&#39;s Blog</a></h1>
+
+<div class="navbar weaklink">
+<div class="normal_nav">
+<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul></nav>
+<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
+<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1601994604625" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+</div></div>
+<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
+
+
+<div class="main"><div class="main-inner"><div class="content">
+<article class="post">
+<h2 class="post_title sm_margin"><a>NodeJS初学系列5——OS/Path/Net/DNS/Domain/Web模块</a></h2>
+<script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-10-06</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/YijAokidn/" class="tag">NodeJS学习系列</a> | 	<a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="tag">前端</a> | 	<a href="https://giriawsh.github.io/tag/2G-O1ZTp4/" class="tag">JavaScript</a> | 	<a href="https://giriawsh.github.io/tag/mwArQWtwB/" class="tag">JS学习系列</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">5794字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">25 min read</span>
+</section>
+
+<div style="display:flex">
+<div class="md_block" id="md_block">
+<div class="round-shape-one"></div>
+<h2 id="os模块">OS模块</h2>
+<p>Node.js os 模块提供了一些基本的系统操作函数。我们可以通过以下方式引入该模块：</p>
+<pre><code class="language-js">var os = require(&quot;os&quot;)
+</code></pre>
+<h3 id="方法">方法</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">序号</th>
+<th style="text-align:left">方法 &amp; 描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left"><strong>os.tmpdir()</strong> 返回操作系统的默认临时文件夹。</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left"><strong>os.endianness()</strong> 返回 CPU 的字节序，可能的是 &quot;BE&quot; 或 &quot;LE&quot;。</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left"><strong>os.hostname()</strong> 返回操作系统的主机名。</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left"><strong>os.type()</strong> 返回操作系统名</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left"><strong>os.platform()</strong> 返回编译时的操作系统名</td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:left"><strong>os.arch()</strong> 返回操作系统 CPU 架构，可能的值有 &quot;x64&quot;、&quot;arm&quot; 和 &quot;ia32&quot;。</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left"><strong>os.release()</strong> 返回操作系统的发行版本。</td>
+</tr>
+<tr>
+<td style="text-align:left">8</td>
+<td style="text-align:left"><strong>os.uptime()</strong> 返回操作系统运行的时间，以秒为单位。</td>
+</tr>
+<tr>
+<td style="text-align:left">9</td>
+<td style="text-align:left"><strong>os.loadavg()</strong> 返回一个包含 1、5、15 分钟平均负载的数组。</td>
+</tr>
+<tr>
+<td style="text-align:left">10</td>
+<td style="text-align:left"><strong>os.totalmem()</strong> 返回系统内存总量，单位为字节。</td>
+</tr>
+<tr>
+<td style="text-align:left">11</td>
+<td style="text-align:left"><strong>os.freemem()</strong> 返回操作系统空闲内存量，单位是字节。</td>
+</tr>
+<tr>
+<td style="text-align:left">12</td>
+<td style="text-align:left"><strong>os.cpus()</strong> 返回一个对象数组，包含所安装的每个 CPU/内核的信息：型号、速度（单位 MHz）、时间（一个包含 user、nice、sys、idle 和 irq 所使用 CPU/内核毫秒数的对象）。</td>
+</tr>
+<tr>
+<td style="text-align:left">13</td>
+<td style="text-align:left"><strong>os.networkInterfaces()</strong> 获得网络接口列表。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="属性">属性</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">序号</th>
+<th style="text-align:left">属性 &amp; 描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left"><strong>os.EOL</strong> 定义了操作系统的行尾符的常量。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="实例">实例</h3>
+<pre><code class="language-js">var os = require(&quot;os&quot;);
+
+// CPU 的字节序
+console.log('endianness : ' + os.endianness());
+
+// 操作系统名
+console.log('type : ' + os.type());
+
+// 编译时操作系统名
+console.log('platform : ' + os.platform());
+
+// 系统内存总量
+console.log('total memory : ' + os.totalmem() + &quot; bytes.&quot;);
+
+// 操作系统空闲内存量
+console.log('free memory : ' + os.freemem() + &quot; bytes.&quot;);
+</code></pre>
+<p>执行结果：</p>
+<pre><code>➜  os-demo node main.js
+endianness : LE
+type : Windows_NT
+platform : win32
+total memory : 8534626304 bytes.
+free memory : 2915053568 bytes.
+</code></pre>
+<h2 id="path模块">Path模块</h2>
+<p>Node.js path 模块提供了一些用于处理文件路径的小工具，我们可以通过以下方式引入该模块：</p>
+<pre><code class="language-js">var path = require(&quot;path&quot;)
+</code></pre>
+<h3 id="方法-2">方法</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">序号</th>
+<th style="text-align:left">方法 &amp; 描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left"><strong>path.normalize(p)</strong> 规范化路径，注意'..' 和 '.'。</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left"><strong>path.join([path1][, path2][, ...])</strong> 用于连接路径。该方法的主要用途在于，会正确使用当前系统的路径分隔符，Unix系统是&quot;/&quot;，Windows系统是&quot;&quot;。</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left"><strong>path.resolve([from ...], to)</strong> 将 <strong>to</strong> 参数解析为绝对路径，给定的路径的序列是从右往左被处理的，后面每个 path 被依次解析，直到构造完成一个绝对路径。 例如，给定的路径片段的序列为：/foo、/bar、baz，则调用 path.resolve('/foo', '/bar', 'baz') 会返回 /bar/baz。<code>path.resolve('/foo/bar', './baz'); // 返回: '/foo/bar/baz' path.resolve('/foo/bar', '/tmp/file/'); // 返回: '/tmp/file' path.resolve('wwwroot', 'static_files/png/', '../gif/image.gif'); // 如果当前工作目录为 /home/myself/node， // 则返回 '/home/myself/node/wwwroot/static_files/gif/image.gif'</code></td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left"><strong>path.isAbsolute(path)</strong> 判断参数 <strong>path</strong> 是否是绝对路径。</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left"><strong>path.relative(from, to)</strong> 用于将绝对路径转为相对路径，返回从 from 到 to 的相对路径（基于当前工作目录）。在 Linux 上：<code>path.relative('/data/orandea/test/aaa', '/data/orandea/impl/bbb'); // 返回: '../../impl/bbb'</code>在 Windows 上：<code>path.relative('C:\\orandea\\test\\aaa', 'C:\\orandea\\impl\\bbb'); // 返回: '..\\..\\impl\\bbb'</code></td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:left"><strong>path.dirname(p)</strong> 返回路径中代表文件夹的部分，同 Unix 的dirname 命令类似。</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left"><strong>path.basename(p[, ext])</strong> 返回路径中的最后一部分。同 Unix 命令 bashname 类似。</td>
+</tr>
+<tr>
+<td style="text-align:left">8</td>
+<td style="text-align:left"><strong>path.extname(p)</strong> 返回路径中文件的后缀名，即路径中最后一个'.'之后的部分。如果一个路径中并不包含'.'或该路径只包含一个'.' 且这个'.'为路径的第一个字符，则此命令返回空字符串。</td>
+</tr>
+<tr>
+<td style="text-align:left">9</td>
+<td style="text-align:left"><strong>path.parse(pathString)</strong> 返回路径字符串的对象。</td>
+</tr>
+<tr>
+<td style="text-align:left">10</td>
+<td style="text-align:left"><strong>path.format(pathObject)</strong> 从对象中返回路径字符串，和 path.parse 相反。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="属性-2">属性</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">序号</th>
+<th style="text-align:left">属性 &amp; 描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left"><strong>path.sep</strong> 平台的文件路径分隔符，'\' 或 '/'。</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left"><strong>path.delimiter</strong> 平台的分隔符, ; or ':'.</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left"><strong>path.posix</strong> 提供上述 path 的方法，不过总是以 posix 兼容的方式交互。</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left"><strong>path.win32</strong> 提供上述 path 的方法，不过总是以 win32 兼容的方式交互。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="实例-2">实例</h3>
+<pre><code class="language-js">var path = require(&quot;path&quot;);
+
+// 格式化路径
+console.log('normalization : ' + path.normalize('/test/test1//2slashes/1slash/tab/..'));
+
+// 连接路径
+console.log('joint path : ' + path.join('/test', 'test1', '2slashes/1slash', 'tab', '..', '.'));
+
+// 转换为绝对路径
+console.log('resolve : ' + path.resolve('main.js'));
+
+// 路径中文件的后缀名
+console.log('ext name : ' + path.extname('main.js'));
+</code></pre>
+<p>代码执行结果：</p>
+<pre><code>➜  path-demo node main.js
+normalization : \test\test1\2slashes\1slash
+joint path : \test\test1\2slashes\1slash
+resolve : K:\projects\node\first-test\path-demo\main.js
+ext name : .js
+</code></pre>
+<h2 id="net模块">Net模块</h2>
+<p>Node.js Net 模块提供了一些用于底层的网络通信的小工具，包含了创建服务器/客户端的方法，我们可以通过以下方式引入该模块：</p>
+<pre><code class="language-js">var net = require(&quot;net&quot;)
+</code></pre>
+<h3 id="方法-3">方法</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">序号</th>
+<th style="text-align:left">方法 &amp; 描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left"><strong>net.createServer([options][, connectionListener])</strong> 创建一个 TCP 服务器。参数 connectionListener 自动给 'connection' 事件创建监听器。</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left"><strong>net.connect(options[, connectionListener])</strong> 返回一个新的 'net.Socket'，并连接到指定的地址和端口。 当 socket 建立的时候，将会触发 'connect' 事件。</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left"><strong>net.createConnection(options[, connectionListener])</strong> 创建一个到端口 port 和 主机 host的 TCP 连接。 host 默认为 'localhost'。</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left"><strong>net.connect(port[, host][, connectListener])</strong> 创建一个端口为 port 和主机为 host的 TCP 连接 。host 默认为 'localhost'。参数 connectListener 将会作为监听器添加到 'connect' 事件。返回 'net.Socket'。</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left"><strong>net.createConnection(port[, host][, connectListener])</strong> 创建一个端口为 port 和主机为 host的 TCP 连接 。host 默认为 'localhost'。参数 connectListener 将会作为监听器添加到 'connect' 事件。返回 'net.Socket'。</td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:left"><strong>net.connect(path[, connectListener])</strong> 创建连接到 path 的 unix socket 。参数 connectListener 将会作为监听器添加到 'connect' 事件上。返回 'net.Socket'。</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left"><strong>net.createConnection(path[, connectListener])</strong> 创建连接到 path 的 unix socket 。参数 connectListener 将会作为监听器添加到 'connect' 事件。返回 'net.Socket'。</td>
+</tr>
+<tr>
+<td style="text-align:left">8</td>
+<td style="text-align:left"><strong>net.isIP(input)</strong> 检测输入的是否为 IP 地址。 IPV4 返回 4， IPV6 返回 6，其他情况返回 0。</td>
+</tr>
+<tr>
+<td style="text-align:left">9</td>
+<td style="text-align:left"><strong>net.isIPv4(input)</strong> 如果输入的地址为 IPV4， 返回 true，否则返回 false。</td>
+</tr>
+<tr>
+<td style="text-align:left">10</td>
+<td style="text-align:left"><strong>net.isIPv6(input)</strong> 如果输入的地址为 IPV6， 返回 true，否则返回 false。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="netserver">net.Server</h3>
+<p>net.Server通常用于创建一个 TCP 或本地服务器。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">序号</th>
+<th style="text-align:left">方法 &amp; 描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left"><strong>server.listen(port[, host][, backlog][, callback])</strong> 监听指定端口 port 和 主机 host ac连接。 默认情况下 host 接受任何 IPv4 地址(INADDR_ANY)的直接连接。端口 port 为 0 时，则会分配一个随机端口。</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left"><strong>server.listen(path[, callback])</strong> 通过指定 path 的连接，启动一个本地 socket 服务器。</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left"><strong>server.listen(handle[, callback])</strong> 通过指定句柄连接。</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left"><strong>server.listen(options[, callback])</strong> options 的属性：端口 port, 主机 host, 和 backlog, 以及可选参数 callback 函数, 他们在一起调用server.listen(port, [host], [backlog], [callback])。还有，参数 path 可以用来指定 UNIX socket。</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left"><strong>server.close([callback])</strong> 服务器停止接收新的连接，保持现有连接。这是异步函数，当所有连接结束的时候服务器会关闭，并会触发 'close' 事件。</td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:left"><strong>server.address()</strong> 操作系统返回绑定的地址，协议族名和服务器端口。</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left"><strong>server.unref()</strong> 如果这是事件系统中唯一一个活动的服务器，调用 unref 将允许程序退出。</td>
+</tr>
+<tr>
+<td style="text-align:left">8</td>
+<td style="text-align:left"><strong>server.ref()</strong> 与 unref 相反，如果这是唯一的服务器，在之前被 unref 了的服务器上调用 ref 将不会让程序退出（默认行为）。如果服务器已经被 ref，则再次调用 ref 并不会产生影响。</td>
+</tr>
+<tr>
+<td style="text-align:left">9</td>
+<td style="text-align:left"><strong>server.getConnections(callback)</strong> 异步获取服务器当前活跃连接的数量。当 socket 发送给子进程后才有效；回调函数有 2 个参数 err 和 count。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="事件">事件</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">序号</th>
+<th style="text-align:left">事件 &amp; 描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left"><strong>listening</strong> 当服务器调用 server.listen 绑定后会触发。</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left"><strong>connection</strong> 当新连接创建后会被触发。socket 是 net.Socket实例。</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left"><strong>close</strong> 服务器关闭时会触发。注意，如果存在连接，这个事件不会被触发直到所有的连接关闭。</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left"><strong>error</strong> 发生错误时触发。'close' 事件将被下列事件直接调用。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="netsocket">net.Socket</h3>
+<p>net.Socket 对象是 TCP 或 UNIX Socket 的抽象。net.Socket 实例实现了一个双工流接口。 他们可以在用户创建客户端(使用 connect())时使用, 或者由 Node 创建它们，并通过 connection 服务器事件传递给用户。</p>
+<h4 id="事件-2">事件</h4>
+<p>net.Socket 事件有：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">序号</th>
+<th style="text-align:left">事件 &amp; 描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left"><strong>lookup</strong> 在解析域名后，但在连接前，触发这个事件。对 UNIX sokcet 不适用。</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left"><strong>connect</strong> 成功建立 socket 连接时触发。</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left"><strong>data</strong> 当接收到数据时触发。</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left"><strong>end</strong> 当 socket 另一端发送 FIN 包时，触发该事件。</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left"><strong>timeout</strong> 当 socket 空闲超时时触发，仅是表明 socket 已经空闲。用户必须手动关闭连接。</td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:left"><strong>drain</strong> 当写缓存为空得时候触发。可用来控制上传。</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left"><strong>error</strong> 错误发生时触发。</td>
+</tr>
+<tr>
+<td style="text-align:left">8</td>
+<td style="text-align:left"><strong>close</strong> 当 socket 完全关闭时触发。参数 had_error 是布尔值，它表示是否因为传输错误导致 socket 关闭。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="属性-3">属性</h4>
+<p>net.Socket 提供了很多有用的属性，便于控制 socket 交互：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">序号</th>
+<th style="text-align:left">属性 &amp; 描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left"><strong>socket.bufferSize</strong> 该属性显示了要写入缓冲区的字节数。</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left"><strong>socket.remoteAddress</strong> 远程的 IP 地址字符串，例如：'74.125.127.100' or '2001:4860:a005::68'。</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left"><strong>socket.remoteFamily</strong> 远程IP协议族字符串，比如 'IPv4' or 'IPv6'。</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left"><strong>socket.remotePort</strong> 远程端口，数字表示，例如：80 or 21。</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left"><strong>socket.localAddress</strong> 网络连接绑定的本地接口 远程客户端正在连接的本地 IP 地址，字符串表示。例如，如果你在监听'0.0.0.0'而客户端连接在'192.168.1.1'，这个值就会是 '192.168.1.1'。</td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:left"><strong>socket.localPort</strong> 本地端口地址，数字表示。例如：80 or 21。</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left"><strong>socket.bytesRead</strong> 接收到得字节数。</td>
+</tr>
+<tr>
+<td style="text-align:left">8</td>
+<td style="text-align:left"><strong>socket.bytesWritten</strong> 发送的字节数。</td>
+</tr>
+</tbody>
+</table>
+<h4 id="方法-4">方法</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">序号</th>
+<th style="text-align:left">方法 &amp; 描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left"><strong>new net.Socket([options])</strong> 构造一个新的 socket 对象。</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left"><strong>socket.connect(port[, host][, connectListener])</strong> 指定端口 port 和 主机 host，创建 socket 连接 。参数 host 默认为 localhost。通常情况不需要使用 net.createConnection 打开 socket。只有你实现了自己的 socket 时才会用到。</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left"><strong>socket.connect(path[, connectListener])</strong> 打开指定路径的 unix socket。通常情况不需要使用 net.createConnection 打开 socket。只有你实现了自己的 socket 时才会用到。</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left"><strong>socket.setEncoding([encoding])</strong> 设置编码</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left"><strong>socket.write(data[, encoding][, callback])</strong> 在 socket 上发送数据。第二个参数指定了字符串的编码，默认是 UTF8 编码。</td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:left"><strong>socket.end([data][, encoding])</strong> 半关闭 socket。例如，它发送一个 FIN 包。可能服务器仍在发送数据。</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left"><strong>socket.destroy()</strong> 确保没有 I/O 活动在这个套接字上。只有在错误发生情况下才需要。（处理错误等等）。</td>
+</tr>
+<tr>
+<td style="text-align:left">8</td>
+<td style="text-align:left"><strong>socket.pause()</strong> 暂停读取数据。就是说，不会再触发 data 事件。对于控制上传非常有用。</td>
+</tr>
+<tr>
+<td style="text-align:left">9</td>
+<td style="text-align:left"><strong>socket.resume()</strong> 调用 pause() 后想恢复读取数据。</td>
+</tr>
+<tr>
+<td style="text-align:left">10</td>
+<td style="text-align:left"><strong>socket.setTimeout(timeout[, callback])</strong> socket 闲置时间超过 timeout 毫秒后 ，将 socket 设置为超时。</td>
+</tr>
+<tr>
+<td style="text-align:left">11</td>
+<td style="text-align:left"><strong>socket.setNoDelay([noDelay])</strong> 禁用纳格（Nagle）算法。默认情况下 TCP 连接使用纳格算法，在发送前他们会缓冲数据。将 noDelay 设置为 true 将会在调用 socket.write() 时立即发送数据。noDelay 默认值为 true。</td>
+</tr>
+<tr>
+<td style="text-align:left">12</td>
+<td style="text-align:left"><strong>socket.setKeepAlive([enable][, initialDelay])</strong> 禁用/启用长连接功能，并在发送第一个在闲置 socket 上的长连接 probe 之前，可选地设定初始延时。默认为 false。 设定 initialDelay （毫秒），来设定收到的最后一个数据包和第一个长连接probe之间的延时。将 initialDelay 设为0，将会保留默认（或者之前）的值。默认值为0.</td>
+</tr>
+<tr>
+<td style="text-align:left">13</td>
+<td style="text-align:left"><strong>socket.address()</strong> 操作系统返回绑定的地址，协议族名和服务器端口。返回的对象有 3 个属性，比如{ port: 12346, family: 'IPv4', address: '127.0.0.1' }。</td>
+</tr>
+<tr>
+<td style="text-align:left">14</td>
+<td style="text-align:left"><strong>socket.unref()</strong> 如果这是事件系统中唯一一个活动的服务器，调用 unref 将允许程序退出。如果服务器已被 unref，则再次调用 unref 并不会产生影响。</td>
+</tr>
+<tr>
+<td style="text-align:left">15</td>
+<td style="text-align:left"><strong>socket.ref()</strong> 与 unref 相反，如果这是唯一的服务器，在之前被 unref 了的服务器上调用 ref 将不会让程序退出（默认行为）。如果服务器已经被 ref，则再次调用 ref 并不会产生影响。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="实例-3">实例</h3>
+<p>创建 server.js 文件，代码如下所示：</p>
+<pre><code class="language-js">var net = require('net');
+var server = net.createServer(function(connection) { 
+   console.log('client connected');
+   connection.on('end', function() {
+      console.log('客户端关闭连接');
+   });
+   connection.write('Hello World!\r\n');
+   connection.pipe(connection);
+});
+server.listen(8080, function() { 
+  console.log('server is listening');
+});
+</code></pre>
+<p>执行以上服务端代码：</p>
+<pre><code>$ node server.js
+server is listening   # 服务已创建并监听 8080 端口
+</code></pre>
+<p>新开一个窗口，创建 client.js 文件，代码如下所示：</p>
+<pre><code class="language-js">var net = require('net');
+var client = net.connect({port: 8080}, function() {
+   console.log('连接到服务器！');  
+});
+client.on('data', function(data) {
+   console.log(data.toString());
+   client.end();
+});
+client.on('end', function() { 
+   console.log('断开与服务器的连接');
+});
+</code></pre>
+<p>执行以上客户端的代码：</p>
+<pre><code>连接到服务器！
+Hello World!
+
+断开与服务器的连接
+</code></pre>
+<h2 id="dns模块">DNS模块</h2>
+<p>Node.js <strong>DNS</strong> 模块用于解析域名。引入 DNS 模块语法格式如下：</p>
+<pre><code class="language-js">var dns = require(&quot;dns&quot;)
+</code></pre>
+<h3 id="方法-5">方法</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">序号</th>
+<th style="text-align:left">方法 &amp; 描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left"><strong>dns.lookup(hostname[, options], callback)</strong> 将域名（比如 'runoob.com'）解析为第一条找到的记录 A （IPV4）或 AAAA(IPV6)。参数 options可以是一个对象或整数。如果没有提供 options，IP v4 和 v6 地址都可以。如果 options 是整数，则必须是 4 或 6。</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left"><strong>dns.lookupService(address, port, callback)</strong> 使用 getnameinfo 解析传入的地址和端口为域名和服务。</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left"><strong>dns.resolve(hostname[, rrtype], callback)</strong> 将一个域名（如 'runoob.com'）解析为一个 rrtype 指定记录类型的数组。</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left"><strong>dns.resolve4(hostname, callback)</strong> 和 dns.resolve() 类似, 仅能查询 IPv4 (A 记录）。 addresses IPv4 地址数组 (比如，['74.125.79.104', '74.125.79.105', '74.125.79.106']）。</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left"><strong>dns.resolve6(hostname, callback)</strong> 和 dns.resolve4() 类似， 仅能查询 IPv6( AAAA 查询）</td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:left"><strong>dns.resolveMx(hostname, callback)</strong> 和 dns.resolve() 类似, 仅能查询邮件交换(MX 记录)。</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left"><strong>dns.resolveTxt(hostname, callback)</strong> 和 dns.resolve() 类似, 仅能进行文本查询 (TXT 记录）。 addresses 是 2-d 文本记录数组。(比如，[ ['v=spf1 ip4:0.0.0.0 ', '~all' ] ]）。 每个子数组包含一条记录的 TXT 块。根据使用情况可以连接在一起，也可单独使用。</td>
+</tr>
+<tr>
+<td style="text-align:left">8</td>
+<td style="text-align:left"><strong>dns.resolveSrv(hostname, callback)</strong> 和 dns.resolve() 类似, 仅能进行服务记录查询 (SRV 记录）。 addresses 是 hostname可用的 SRV 记录数组。 SRV 记录属性有优先级（priority），权重（weight）, 端口（port）, 和名字（name） (比如，[{'priority': 10, 'weight': 5, 'port': 21223, 'name': 'service.example.com'}, ...]）。</td>
+</tr>
+<tr>
+<td style="text-align:left">9</td>
+<td style="text-align:left"><strong>dns.resolveSoa(hostname, callback)</strong> 和 dns.resolve() 类似, 仅能查询权威记录(SOA 记录）。</td>
+</tr>
+<tr>
+<td style="text-align:left">10</td>
+<td style="text-align:left"><strong>dns.resolveNs(hostname, callback)</strong> 和 dns.resolve() 类似, 仅能进行域名服务器记录查询(NS 记录）。 addresses 是域名服务器记录数组（hostname 可以使用） (比如, ['ns1.example.com', 'ns2.example.com']）。</td>
+</tr>
+<tr>
+<td style="text-align:left">11</td>
+<td style="text-align:left"><strong>dns.resolveCname(hostname, callback)</strong> 和 dns.resolve() 类似, 仅能进行别名记录查询 (CNAME记录)。addresses 是对 hostname 可用的别名记录数组 (比如，, ['bar.example.com']）。</td>
+</tr>
+<tr>
+<td style="text-align:left">12</td>
+<td style="text-align:left"><strong>dns.reverse(ip, callback)</strong> 反向解析 IP 地址，指向该 IP 地址的域名数组。</td>
+</tr>
+<tr>
+<td style="text-align:left">13</td>
+<td style="text-align:left"><strong>dns.getServers()</strong> 返回一个用于当前解析的 IP 地址数组的字符串。</td>
+</tr>
+<tr>
+<td style="text-align:left">14</td>
+<td style="text-align:left"><strong>dns.setServers(servers)</strong> 指定一组 IP 地址作为解析服务器。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="rrtypes">rrtypes</h3>
+<p>以下列出了 dns.resolve() 方法中有效的 rrtypes值:</p>
+<ul>
+<li><code>'A'</code> IPV4 地址, 默认</li>
+<li><code>'AAAA'</code> IPV6 地址</li>
+<li><code>'MX'</code> 邮件交换记录</li>
+<li><code>'TXT'</code> text 记录</li>
+<li><code>'SRV'</code> SRV 记录</li>
+<li><code>'PTR'</code> 用来反向 IP 查找</li>
+<li><code>'NS'</code> 域名服务器记录</li>
+<li><code>'CNAME'</code> 别名记录</li>
+<li><code>'SOA'</code> 授权记录的初始值</li>
+</ul>
+<hr>
+<h3 id="错误码">错误码</h3>
+<p>每次 DNS 查询都可能返回以下错误码：</p>
+<ul>
+<li><code>dns.NODATA</code>: 无数据响应。</li>
+<li><code>dns.FORMERR</code>: 查询格式错误。</li>
+<li><code>dns.SERVFAIL</code>: 常规失败。</li>
+<li><code>dns.NOTFOUND</code>: 没有找到域名。</li>
+<li><code>dns.NOTIMP</code>: 未实现请求的操作。</li>
+<li><code>dns.REFUSED</code>: 拒绝查询。</li>
+<li><code>dns.BADQUERY</code>: 查询格式错误。</li>
+<li><code>dns.BADNAME</code>: 域名格式错误。</li>
+<li><code>dns.BADFAMILY</code>: 地址协议不支持。</li>
+<li><code>dns.BADRESP</code>: 回复格式错误。</li>
+<li><code>dns.CONNREFUSED</code>: 无法连接到 DNS 服务器。</li>
+<li><code>dns.TIMEOUT</code>: 连接 DNS 服务器超时。</li>
+<li><code>dns.EOF</code>: 文件末端。</li>
+<li><code>dns.FILE</code>: 读文件错误。</li>
+<li><code>dns.NOMEM</code>: 内存溢出。</li>
+<li><code>dns.DESTRUCTION</code>: 通道被摧毁。</li>
+<li><code>dns.BADSTR</code>: 字符串格式错误。</li>
+<li><code>dns.BADFLAGS</code>: 非法标识符。</li>
+<li><code>dns.NONAME</code>: 所给主机不是数字。</li>
+<li><code>dns.BADHINTS</code>: 非法HINTS标识符。</li>
+<li><code>dns.NOTINITIALIZED</code>: c c-ares 库尚未初始化。</li>
+<li><code>dns.LOADIPHLPAPI</code>: 加载 iphlpapi.dll 出错。</li>
+<li><code>dns.ADDRGETNETWORKPARAMS</code>: 无法找到 GetNetworkParams 函数。</li>
+<li><code>dns.CANCELLED</code>: 取消 DNS 查询。</li>
+</ul>
+<h3 id="实例-4">实例</h3>
+<p>创建 main.js 文件，代码如下所示：</p>
+<pre><code class="language-js">var dns = require('dns');
+
+dns.lookup('www.github.com', function onLookup(err, address, family) {
+   console.log('ip 地址:', address);
+   dns.reverse(address, function (err, hostnames) {
+   if (err) {
+      console.log(err.stack);
+   }
+
+   console.log('反向解析 ' + address + ': ' + JSON.stringify(hostnames));
+});  
+});
+</code></pre>
+<p>执行结果：</p>
+<pre><code>➜  dns-demo node main.js
+ip 地址: 52.69.186.44
+反向解析 52.69.186.44: [&quot;ec2-52-69-186-44.ap-northeast-1.compute.amazonaws.com&quot;]
+</code></pre>
+<h2 id="domain模块">Domain模块</h2>
+<p>Node.js <strong>Domain(域)</strong> 简化异步代码的异常处理，可以捕捉处理try catch无法捕捉的异常。引入 Domain 模块 语法格式如下：</p>
+<pre><code class="language-js">var domain = require(&quot;domain&quot;)
+</code></pre>
+<p>domain模块，把处理多个不同的IO的操作作为一个组。注册事件和回调到domain，<strong>当发生一个错误事件或抛出一个错误时，domain对象会被通知，不会丢失上下文环境，也不导致程序错误立即退出</strong>，与process.on('uncaughtException')不同。</p>
+<p>Domain 模块可分为隐式绑定和显式绑定：</p>
+<ul>
+<li>隐式绑定: 把在domain上下文中定义的变量，自动绑定到domain对象</li>
+<li>显式绑定: 把不是在domain上下文中定义的变量，以代码的方式绑定到domain对象</li>
+</ul>
+<h3 id="方法-6">方法</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">序号</th>
+<th style="text-align:left">方法 &amp; 描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left"><strong>domain.run(function)</strong> 在域的上下文运行提供的函数，隐式的绑定了所有的事件分发器，计时器和底层请求。</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left"><strong>domain.add(emitter)</strong> 显式的增加事件</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left"><strong>domain.remove(emitter)</strong> 删除事件。</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left"><strong>domain.bind(callback)</strong> 返回的函数是一个对于所提供的回调函数的包装函数。当调用这个返回的函数时，所有被抛出的错误都会被导向到这个域的 error 事件。</td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:left"><strong>domain.intercept(callback)</strong> 和 domain.bind(callback) 类似。除了捕捉被抛出的错误外，它还会拦截 Error 对象作为参数传递到这个函数。</td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:left"><strong>domain.enter()</strong> 进入一个异步调用的上下文，绑定到domain。</td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:left"><strong>domain.exit()</strong> 退出当前的domain，切换到不同的链的异步调用的上下文中。对应domain.enter()。</td>
+</tr>
+<tr>
+<td style="text-align:left">8</td>
+<td style="text-align:left"><strong>domain.dispose()</strong> 释放一个domain对象，让node进程回收这部分资源。</td>
+</tr>
+<tr>
+<td style="text-align:left">9</td>
+<td style="text-align:left"><strong>domain.create()</strong> 返回一个domain对象。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="属性-4">属性</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">序号</th>
+<th style="text-align:left">属性 &amp; 描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left"><strong>domain.members</strong> 已加入domain对象的域定时器和事件发射器的数组。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="实例-5">实例</h3>
+<pre><code class="language-js">var EventEmitter = require(&quot;events&quot;).EventEmitter;
+var domain = require(&quot;domain&quot;);
+
+var emitter1 = new EventEmitter();
+
+// 创建域
+var domain1 = domain.create();
+
+domain1.on('error', function(err){
+    console.log(&quot;domain1 处理这个错误 (&quot;+err.message+&quot;)&quot;);
+});
+
+// 显式绑定
+domain1.add(emitter1);
+
+emitter1.on('error',function(err){
+    console.log(&quot;监听器处理此错误 (&quot;+err.message+&quot;)&quot;);
+});
+
+emitter1.emit('error',new Error('通过监听器来处理'));
+
+emitter1.removeAllListeners('error');
+
+emitter1.emit('error',new Error('通过 domain1 处理'));
+
+var domain2 = domain.create();
+
+domain2.on('error', function(err){
+    console.log(&quot;domain2 处理这个错误 (&quot;+err.message+&quot;)&quot;);
+});
+
+// 隐式绑定
+domain2.run(function(){
+    var emitter2 = new EventEmitter();
+    emitter2.emit('error',new Error('通过 domain2 处理'));
+});
+
+
+domain1.remove(emitter1);
+emitter1.emit('error', new Error('转换为异常，系统将崩溃!'));//无处理器处理了
+</code></pre>
+<p>执行结果：</p>
+<pre><code>➜  domain-demo node main.js
+监听器处理此错误 (通过监听器来处理)
+domain1 处理这个错误 (通过 domain1 处理)
+domain2 处理这个错误 (通过 domain2 处理)
+events.js:187
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: 转换为异常，系统将崩溃!
+</code></pre>
+<h2 id="web模块">Web模块</h2>
+<h3 id="web-服务器">Web 服务器</h3>
+<p>Web服务器一般指网站服务器，是指驻留于因特网上某种类型计算机的程序，Web服务器的基本功能就是提供Web信息浏览服务。它只需支持HTTP协议、HTML文档格式及URL，与客户端的网络浏览器配合。</p>
+<p>大多数 web 服务器都支持服务端的脚本语言（php、python、ruby）等，并通过脚本语言从数据库获取数据，将结果返回给客户端浏览器。</p>
+<p>目前最主流的三个Web服务器是Apache、Nginx、IIS。</p>
+<h3 id="web-应用架构">Web 应用架构</h3>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201006180902.jpeg" alt="img" loading="lazy"></figure>
+<ul>
+<li><strong>Client</strong> - 客户端，一般指<strong>浏览器</strong>，浏览器可以通过 HTTP 协议向服务器请求数据。</li>
+<li><strong>Server</strong> - 服务端，一般指 <strong>Web 服务器</strong>，可以接收客户端请求，并向客户端发送响应数据。</li>
+<li><strong>Business</strong> - 业务层， 通过 <strong>Web 服务器处理应用程序</strong>，如与数据库交互，逻辑运算，调用外部程序等。</li>
+<li><strong>Data</strong> - 数据层，一般由<strong>数据库</strong>组成。</li>
+</ul>
+<h3 id="使用-node-创建-web-服务器">使用 Node 创建 Web 服务器</h3>
+<p>Node.js 提供了 http 模块，http 模块主要用于搭建 HTTP 服务端和客户端，使用 HTTP 服务器或客户端功能必须调用 http 模块，代码如下：</p>
+<pre><code class="language-js">var http = require('http');
+</code></pre>
+<p>演示一个最基本的 HTTP 服务器架构(使用 8080 端口)，创建 server.js 文件</p>
+<pre><code class="language-js">var http = require('http');
+var fs = require('fs');
+var url = require('url');
+ 
+ 
+// 创建服务器
+http.createServer( function (request, response) {  
+   // 解析请求，包括文件名
+   var pathname = url.parse(request.url).pathname;
+   
+   // 输出请求的文件名
+   console.log(&quot;Request for &quot; + pathname + &quot; received.&quot;);
+   
+   // 从文件系统中读取请求的文件内容
+   fs.readFile(pathname.substr(1), function (err, data) {
+      if (err) {
+         console.log(err);
+         // HTTP 状态码: 404 : NOT FOUND
+         // Content Type: text/html
+         response.writeHead(404, {'Content-Type': 'text/html'});
+      }else{             
+         // HTTP 状态码: 200 : OK
+         // Content Type: text/html
+         response.writeHead(200, {'Content-Type': 'text/html'});    
+         
+         // 响应文件内容
+         response.write(data.toString());        
+      }
+      //  发送响应数据
+      response.end();
+   });   
+}).listen(8080);
+ 
+// 控制台会输出以下信息
+console.log('Server running at http://127.0.0.1:8080/');
+</code></pre>
+<p>接下来在该目录下创建一个 index.html 文件，代码如下：</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;菜鸟教程(runoob.com)&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;我的第一个标题&lt;/h1&gt;
+    &lt;p&gt;我的第一个段落。&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>执行 server.js 文件：</p>
+<pre><code>$ node server.js
+Server running at http://127.0.0.1:8080/
+</code></pre>
+<p>接着我们在浏览器中打开地址：<strong>http://127.0.0.1:8080/index.html</strong>，显示如下图所示:</p>
+<figure data-type="image" tabindex="2"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201006222624.jpeg" alt="img" loading="lazy"></figure>
+<p>执行 server.js 的控制台输出信息如下：</p>
+<pre><code>Server running at http://127.0.0.1:8080/
+Request for /index.html received.     #  客户端请求信息
+</code></pre>
+<hr>
+<h3 id="使用-node-创建-web-客户端">使用 Node 创建 Web 客户端</h3>
+<p>Node 创建 Web 客户端需要引入 http 模块，创建 client.js 文件，代码如下所示：</p>
+<pre><code class="language-js">var http = require('http');
+ 
+// 用于请求的选项
+var options = {
+   host: 'localhost',
+   port: '8080',
+   path: '/index.html'  
+};
+ 
+// 处理响应的回调函数
+var callback = function(response){
+   // 不断更新数据
+   var body = '';
+   response.on('data', function(data) {
+      body += data;
+   });
+   
+   response.on('end', function() {
+      // 数据接收完成
+      console.log(body);
+   });
+}
+// 向服务端发送请求
+var req = http.request(options, callback);
+req.end();
+</code></pre>
+<p><strong>新开一个终端</strong>，执行 client.js 文件，输出结果如下：</p>
+<pre><code class="language-shell">$ node  client.js 
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;title&gt;菜鸟教程(runoob.com)&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;我的第一个标题&lt;/h1&gt;
+    &lt;p&gt;我的第一个段落。&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>执行 server.js 的控制台输出信息如下：</p>
+<pre><code>Server running at http://127.0.0.1:8080/
+Request for /index.html received.   # 客户端请求信息
+</code></pre>
+
+<span id="footnote"></span>
+<div id = "warn"></div>
+</div>
+<div class="toc-container"><ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#os%E6%A8%A1%E5%9D%97">OS模块</a>
+<ul>
+<li><a href="#%E6%96%B9%E6%B3%95">方法</a></li>
+<li><a href="#%E5%B1%9E%E6%80%A7">属性</a></li>
+<li><a href="#%E5%AE%9E%E4%BE%8B">实例</a></li>
+</ul>
+</li>
+<li><a href="#path%E6%A8%A1%E5%9D%97">Path模块</a>
+<ul>
+<li><a href="#%E6%96%B9%E6%B3%95-2">方法</a></li>
+<li><a href="#%E5%B1%9E%E6%80%A7-2">属性</a></li>
+<li><a href="#%E5%AE%9E%E4%BE%8B-2">实例</a></li>
+</ul>
+</li>
+<li><a href="#net%E6%A8%A1%E5%9D%97">Net模块</a>
+<ul>
+<li><a href="#%E6%96%B9%E6%B3%95-3">方法</a></li>
+<li><a href="#netserver">net.Server</a>
+<ul>
+<li><a href="#%E4%BA%8B%E4%BB%B6">事件</a></li>
+</ul>
+</li>
+<li><a href="#netsocket">net.Socket</a>
+<ul>
+<li><a href="#%E4%BA%8B%E4%BB%B6-2">事件</a></li>
+<li><a href="#%E5%B1%9E%E6%80%A7-3">属性</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95-4">方法</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AE%9E%E4%BE%8B-3">实例</a></li>
+</ul>
+</li>
+<li><a href="#dns%E6%A8%A1%E5%9D%97">DNS模块</a>
+<ul>
+<li><a href="#%E6%96%B9%E6%B3%95-5">方法</a></li>
+<li><a href="#rrtypes">rrtypes</a></li>
+<li><a href="#%E9%94%99%E8%AF%AF%E7%A0%81">错误码</a></li>
+<li><a href="#%E5%AE%9E%E4%BE%8B-4">实例</a></li>
+</ul>
+</li>
+<li><a href="#domain%E6%A8%A1%E5%9D%97">Domain模块</a>
+<ul>
+<li><a href="#%E6%96%B9%E6%B3%95-6">方法</a></li>
+<li><a href="#%E5%B1%9E%E6%80%A7-4">属性</a></li>
+<li><a href="#%E5%AE%9E%E4%BE%8B-5">实例</a></li>
+</ul>
+</li>
+<li><a href="#web%E6%A8%A1%E5%9D%97">Web模块</a>
+<ul>
+<li><a href="#web-%E6%9C%8D%E5%8A%A1%E5%99%A8">Web 服务器</a></li>
+<li><a href="#web-%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84">Web 应用架构</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8-node-%E5%88%9B%E5%BB%BA-web-%E6%9C%8D%E5%8A%A1%E5%99%A8">使用 Node 创建 Web 服务器</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8-node-%E5%88%9B%E5%BB%BA-web-%E5%AE%A2%E6%88%B7%E7%AB%AF">使用 Node 创建 Web 客户端</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="fullPage"><canvas id="canvas"></canvas></div>
+</article>
+<div id="eof"><span>EOF</span></div><div class="round-shape-one"></div>
+<section>
+<div class="doc_comments">
+
+	  
+		<div id="gitalk-container"></div>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/qyxtim/Static@3.8/gitalk.min.js"></script><link href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.css"rel="stylesheet"><script>var gitalk=new Gitalk({clientID:"ee7c215043d62409bb53",clientSecret:"455d2f4a532bbe073ca25fdf9111932f00bbc624",repo:"giriawsh.github.io",owner:"giriawsh",admin:["giriawsh"],id:(location.pathname).substring(0, 49),distractionFreeMode:false});gitalk.render("gitalk-container");</script>
+	  
+
+	  
+
+</div></section>
+</div></div></div><script>
+"use strict";!function(){for(var n=document.getElementsByTagName("pre"),e=n.length,s=0;s<e;s++){n[s].innerHTML='<span class="line-number"></span>'+n[s].innerHTML+'<span class="cl"></span>';for(var a=n[s].innerHTML.split(/\n/).length,r=0;r<a-1;r++){n[s].getElementsByTagName("span")[0].innerHTML+="<span>"+(r+1)+"</span>"}}}();
+let mainNavLinks=document.querySelectorAll(".markdownIt-TOC a");window.addEventListener("scroll",event=>{let fromTop=window.scrollY;mainNavLinks.forEach((link,index)=>{let section=document.getElementById(decodeURI(link.hash).substring(1));let nextSection=null
+if(mainNavLinks[index+1]){nextSection=document.getElementById(decodeURI(mainNavLinks[index+1].hash).substring(1));}
+if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop){link.classList.add("currentToc");}else{link.classList.remove("currentToc");}}else{link.classList.add("currentToc");}}else{link.classList.remove("currentToc");}});});
+var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
+var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
+var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
+content="本文最后更新于2020-10-06，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-10-06 22:28:44";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+</script>
+<style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
+<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"><a href="https://github.com/giriawsh"title="github"><i class="iconfont icon-github"></i></a></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
+<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>51</strong> posts</span></div></div>
+<script>
+console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;", );
+</script>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+<script type="text/javascript" async src="https://giriawsh.github.io//media/js/prism.js"></script>
+</body>
+
+</html>
