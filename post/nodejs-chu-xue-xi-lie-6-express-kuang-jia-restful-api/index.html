@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>NodeJS初学系列6——Express框架、RESTful API | Giria&#39;s Blog</title>
+<link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+
+<link rel="canonical" href="https://giriawsh.github.io/post/nodejs-chu-xue-xi-lie-6-express-kuang-jia-restful-api/" />
+</head>
+<body>
+<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
+<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://giriawsh.github.io/"><img alt="logo" style="display:inline-block;" src="https://giriawsh.github.io//images/avatar.png"/></a><h1 title="Giria&#39;s Blog" class="weaklink"><a  href="/">Giria&#39;s Blog</a></h1>
+
+<div class="navbar weaklink">
+<div class="normal_nav">
+<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul></nav>
+<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
+<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1602434728745" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+</div></div>
+<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
+
+
+<div class="main"><div class="main-inner"><div class="content">
+<article class="post">
+<h2 class="post_title sm_margin"><a>NodeJS初学系列6——Express框架、RESTful API</a></h2>
+<script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-10-12</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/YijAokidn/" class="tag">NodeJS学习系列</a> | 	<a href="https://giriawsh.github.io/tag/7Xal1JEGf/" class="tag">学习系列</a> | 	<a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="tag">前端</a> | 	<a href="https://giriawsh.github.io/tag/2G-O1ZTp4/" class="tag">JavaScript</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">4064字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">19 min read</span>
+</section>
+
+<div style="display:flex">
+<div class="md_block" id="md_block">
+<div class="round-shape-one"></div>
+<h2 id="express框架">Express框架</h2>
+<p>Express 是一个简洁而灵活的 node.js Web应用框架, 提供了一系列强大特性帮助你创建各种 Web 应用，和丰富的 HTTP 工具。</p>
+<p>Express 框架核心特性：</p>
+<ul>
+<li>可以设置中间件来响应 HTTP 请求。</li>
+<li>定义了路由表用于执行不同的 HTTP 请求动作。</li>
+<li>可以通过向模板传递参数来动态渲染 HTML 页面。</li>
+</ul>
+<h3 id="express安装">Express安装</h3>
+<p>安装 Express 并将其保存到依赖列表中：</p>
+<pre><code class="language-shell">$ npm install express --save
+</code></pre>
+<p>以上命令会将 Express 框架安装在当前目录的 <strong>node_modules</strong> 目录中， <strong>node_modules</strong> 目录下会自动创建 express 目录。以下几个重要的模块是需要与 express 框架一起安装的：</p>
+<ul>
+<li><strong>body-parser</strong> - node.js 中间件，用于处理 JSON, Raw, Text 和 URL 编码的数据。</li>
+<li><strong>cookie-parser</strong> - 这就是一个解析Cookie的工具。通过req.cookies可以取到传过来的cookie，并把它们转成对象。</li>
+<li><strong>multer</strong> - node.js 中间件，用于处理 enctype=&quot;multipart/form-data&quot;（设置表单的MIME编码）的表单数据。</li>
+</ul>
+<h4 id="第一个-express-框架实例">第一个 Express 框架实例</h4>
+<p>引入了 express 模块，并在客户端发起请求后，响应 &quot;Hello World&quot; 字符串。</p>
+<p>创建 express_demo.js 文件，代码如下所示：</p>
+<pre><code class="language-js">//express_demo.js 文件
+var express = require('express');
+var app = express();
+ 
+app.get('/', function (req, res) {
+   res.send('Hello World');
+})
+ 
+var server = app.listen(8081, function () {
+ 
+  var host = server.address().address
+  var port = server.address().port
+ 
+  console.log(&quot;应用实例，访问地址为 http://%s:%s&quot;, host, port)
+ 
+})
+</code></pre>
+<p>执行以上代码：</p>
+<pre><code class="language-shell">$ node express_demo.js 
+应用实例，访问地址为 http://0.0.0.0:8081
+</code></pre>
+<h3 id="请求和响应">请求和响应</h3>
+<p>Express 应用使用回调函数的参数： <strong>request</strong> 和 <strong>response</strong> 对象来处理请求和响应的数据。</p>
+<pre><code class="language-js">app.get('/', function (req, res) {
+   // --
+})
+</code></pre>
+<p><strong>request</strong> 和 <strong>response</strong> 对象的具体介绍：</p>
+<h4 id="request-对象"><strong>Request 对象</strong></h4>
+<p>request 对象表示 HTTP 请求，包含了请求查询字符串，参数，内容，HTTP 头部等属性。常见属性有：</p>
+<ol>
+<li>req.app：当callback为外部文件时，用req.app访问express的实例</li>
+<li>req.baseUrl：获取路由当前安装的URL路径</li>
+<li>req.body / req.cookies：获得「请求主体」/ Cookies</li>
+<li>req.fresh / req.stale：判断请求是否还「新鲜」</li>
+<li>req.hostname / req.ip：获取主机名和IP地址</li>
+<li>req.originalUrl：获取原始请求URL</li>
+<li>req.params：获取路由的parameters</li>
+<li>req.path：获取请求路径</li>
+<li>req.protocol：获取协议类型</li>
+<li>req.query：获取URL的查询参数串</li>
+<li>req.route：获取当前匹配的路由</li>
+<li>req.subdomains：获取子域名</li>
+<li>req.accepts()：检查可接受的请求的文档类型</li>
+<li>req.acceptsCharsets / req.acceptsEncodings / req.acceptsLanguages：返回指定字符集的第一个可接受字符编码</li>
+<li>req.get()：获取指定的HTTP请求头</li>
+<li>req.is()：判断请求头Content-Type的MIME类型</li>
+</ol>
+<h4 id="response-对象"><strong>Response 对象</strong></h4>
+<p>response 对象表示 HTTP 响应，即在<strong>接收到请求时向客户端发送的 HTTP 响应数据</strong>。常见属性有：</p>
+<ol>
+<li>res.app：同req.app一样</li>
+<li>res.append()：追加指定HTTP头</li>
+<li>res.set()在res.append()后将重置之前设置的头</li>
+<li>res.cookie(name，value [，option])：设置Cookie</li>
+<li>opition: domain / expires / httpOnly / maxAge / path / secure / signed</li>
+<li>res.clearCookie()：清除Cookie</li>
+<li>res.download()：传送指定路径的文件</li>
+<li>res.get()：返回指定的HTTP头</li>
+<li>res.json()：传送JSON响应</li>
+<li>res.jsonp()：传送JSONP响应</li>
+<li>res.location()：只设置响应的Location HTTP头，不设置状态码或者close response</li>
+<li>res.redirect()：设置响应的Location HTTP头，并且设置状态码302</li>
+<li>res.render(view,[locals],callback)：渲染一个view，同时向callback传递渲染后的字符串，如果在渲染过程中有错误发生next(err)将会被自动调用。callback将会被传入一个可能发生的错误以及渲染后的页面，这样就不会自动输出了。</li>
+<li>res.send()：传送HTTP响应</li>
+<li>res.sendFile(path [，options] [，fn])：传送指定路径的文件 -会自动根据文件extension设定Content-Type</li>
+<li>res.set()：设置HTTP头，传入object可以一次设置多个头</li>
+<li>res.status()：设置HTTP状态码</li>
+<li>res.type()：设置Content-Type的MIME类型</li>
+</ol>
+<h3 id="路由">路由</h3>
+<p>我们已经了解了 HTTP 请求的基本应用，而<strong>路由决定了由谁(指定脚本)去响应客户端请求</strong>。</p>
+<p>在HTTP请求中，我们可以通过路由提取出请求的URL以及GET/POST参数。</p>
+<p>接下来我们扩展 Hello World，添加一些功能来处理更多类型的 HTTP 请求。</p>
+<pre><code class="language-js">var express = require('express');
+var app = express();
+
+//  主页输出 &quot;Hello World&quot;
+app.get('/', function (req, res) {
+    console.log(&quot;主页 GET 请求&quot;);
+    res.send('Hello GET');
+})
+
+
+//  POST 请求
+app.post('/', function (req, res) {
+    console.log(&quot;主页 POST 请求&quot;);
+    res.send('Hello POST');
+})
+
+//  /del_user 页面响应
+app.get('/del_user', function (req, res) {
+    console.log(&quot;/del_user 响应 DELETE 请求&quot;);
+    res.send('删除页面');
+})
+
+//  /list_user 页面 GET 请求
+app.get('/list_user', function (req, res) {
+    console.log(&quot;/list_user GET 请求&quot;);
+    res.send('用户列表页面');
+})
+
+// 对页面 abcd, abxcd, ab123cd, 等响应 GET 请求
+app.get('/ab*cd', function(req, res) {
+    console.log(&quot;/ab*cd GET 请求&quot;);
+    res.send('正则匹配');
+})
+
+
+var server = app.listen(8081, function () {
+
+    var host = server.address().address
+    var port = server.address().port
+
+    console.log(&quot;应用实例，访问地址为 http://%s:%s&quot;, host, port)
+
+})
+</code></pre>
+<pre><code>$ node express_demo2.js 
+应用实例，访问地址为 http://0.0.0.0:8081
+</code></pre>
+<p>接着去访问 http://127.0.0.1:8081 不同的地址，可以查看效果。</p>
+<h3 id="静态文件">静态文件</h3>
+<p>Express 提供了内置的中间件 <strong>express.static</strong> 来设置静态文件如：图片， CSS, JavaScript 等。</p>
+<p>你可以使用 <strong>express.static</strong> 中间件来设置静态文件路径。例如，如果你将图片， CSS, JavaScript 文件放在 public 目录下，你可以这么写：</p>
+<pre><code class="language-js">app.use('/public', express.static('public'));
+</code></pre>
+<p>我们可以到 public/images 目录下放些图片,如下所示：</p>
+<pre><code>node_modules
+server.js
+public/
+public/images
+public/images/logo.png
+</code></pre>
+<pre><code class="language-js">var express = require('express');
+var app = express();
+ 
+app.use('/public', express.static('public'));//如果不写进可以解析的文件夹名将无法进行public及其子目录的访问
+ 
+app.get('/', function (req, res) {
+   res.send('Hello World');
+})
+ 
+var server = app.listen(8081, function () {
+ 
+  var host = server.address().address
+  var port = server.address().port
+ 
+  console.log(&quot;应用实例，访问地址为 http://%s:%s&quot;, host, port)
+ 
+})
+</code></pre>
+<h3 id="get-方法">GET 方法</h3>
+<p>在表单中通过 GET 方法提交两个参数，我们可以使用 server.js 文件内的 <strong>process_get</strong> 路由器来处理输入</p>
+<pre><code class="language-html">//index.html
+&lt;html&gt;
+&lt;body&gt;
+&lt;form action=&quot;http://127.0.0.1:8081/process_get&quot; method=&quot;GET&quot;&gt;
+First Name: &lt;input type=&quot;text&quot; name=&quot;first_name&quot;&gt;  &lt;br&gt;
+ 
+Last Name: &lt;input type=&quot;text&quot; name=&quot;last_name&quot;&gt;
+&lt;input type=&quot;submit&quot; value=&quot;Submit&quot;&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<pre><code class="language-js">//server.js
+var express = require('express');
+var app = express();
+ 
+app.use('/public', express.static('public'));
+ 
+app.get('/index.html', function (req, res) {
+   res.sendFile( __dirname + &quot;/&quot; + &quot;index.html&quot; );
+})
+ 
+app.get('/process_get', function (req, res) {
+ 
+   // 输出 JSON 格式
+   var response = {
+       &quot;first_name&quot;:req.query.first_name,
+       &quot;last_name&quot;:req.query.last_name
+   };
+   console.log(response);
+   res.end(JSON.stringify(response));
+})
+ 
+var server = app.listen(8081, function () {
+ 
+  var host = server.address().address
+  var port = server.address().port
+ 
+  console.log(&quot;应用实例，访问地址为 http://%s:%s&quot;, host, port)
+ 
+})
+</code></pre>
+<p>执行以上代码：</p>
+<pre><code>node server.js 
+应用实例，访问地址为 http://0.0.0.0:8081
+</code></pre>
+<p>浏览器访问 http://127.0.0.1:8081/index.html</p>
+<p>可以向表单输入数据，并提交.</p>
+<h3 id="post-方法">POST 方法</h3>
+<p>以下实例演示了在表单中通过 POST 方法提交两个参数，我们可以使用 server.js 文件内的 <strong>process_post</strong> 路由器来处理输入</p>
+<pre><code class="language-html">//index.html
+&lt;html&gt;
+&lt;body&gt;
+&lt;form action=&quot;http://127.0.0.1:8081/process_post&quot; method=&quot;POST&quot;&gt;
+First Name: &lt;input type=&quot;text&quot; name=&quot;first_name&quot;&gt;  &lt;br&gt;
+ 
+Last Name: &lt;input type=&quot;text&quot; name=&quot;last_name&quot;&gt;
+&lt;input type=&quot;submit&quot; value=&quot;Submit&quot;&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<pre><code class="language-js">//server.js
+var express = require('express');
+var app = express();
+var bodyParser = require('body-parser');
+ 
+// 创建 application/x-www-form-urlencoded 编码解析
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+ 
+app.use('/public', express.static('public'));
+ 
+app.get('/index.html', function (req, res) {
+   res.sendFile( __dirname + &quot;/&quot; + &quot;index.html&quot; );
+})
+ 
+app.post('/process_post', urlencodedParser, function (req, res) {
+ 
+   // 输出 JSON 格式
+   var response = {
+       &quot;first_name&quot;:req.body.first_name,
+       &quot;last_name&quot;:req.body.last_name
+   };
+   console.log(response);
+   res.end(JSON.stringify(response));
+})
+ 
+var server = app.listen(8081, function () {
+ 
+  var host = server.address().address
+  var port = server.address().port
+ 
+  console.log(&quot;应用实例，访问地址为 http://%s:%s&quot;, host, port)
+ 
+})
+</code></pre>
+<p>执行以上代码：</p>
+<pre><code class="language-shell">$ node server.js
+应用实例，访问地址为 http://0.0.0.0:8081
+</code></pre>
+<p>浏览器访问 http://127.0.0.1:8081/index.html.</p>
+<h3 id="文件上传">文件上传</h3>
+<p>以下我们创建一个用于上传文件的表单，使用 POST 方法，表单 enctype 属性设置为 multipart/form-data。</p>
+<pre><code class="language-html">&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;文件上传表单&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h3&gt;文件上传：&lt;/h3&gt;
+选择一个文件上传: &lt;br /&gt;
+&lt;form action=&quot;/file_upload&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;
+&lt;input type=&quot;file&quot; name=&quot;image&quot; size=&quot;50&quot; /&gt;
+&lt;br /&gt;
+&lt;input type=&quot;submit&quot; value=&quot;上传文件&quot; /&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<pre><code class="language-js">//server.js
+var express = require('express');
+var app = express();
+var fs = require(&quot;fs&quot;);
+ 
+var bodyParser = require('body-parser');
+var multer  = require('multer');
+ 
+app.use('/public', express.static('public'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(multer({ dest: '/tmp/'}).array('image'));//处理multipart/form-data文件（生成files），同时在dest路径下创建一个临时文件。windows在解释时会解释到当前盘
+ 
+app.get('/index.html', function (req, res) {
+   res.sendFile( __dirname + &quot;/&quot; + &quot;index.html&quot; );
+})
+ 
+app.post('/file_upload', function (req, res) {
+ 
+   console.log(req.files[0]);  // 上传的文件信息
+ 
+   var des_file = __dirname + &quot;/&quot; + req.files[0].originalname;
+   fs.readFile( req.files[0].path, function (err, data) {
+        fs.writeFile(des_file, data, function (err) {
+         if( err ){
+              console.log( err );
+         }else{
+               response = {
+                   message:'File uploaded successfully', 
+                   filename:req.files[0].originalname
+              };
+          }
+          console.log( response );
+          res.end( JSON.stringify( response ) );
+       });
+   });
+})
+ 
+var server = app.listen(8081, function () {
+ 
+  var host = server.address().address
+  var port = server.address().port
+ 
+  console.log(&quot;应用实例，访问地址为 http://%s:%s&quot;, host, port)
+ 
+})
+</code></pre>
+<p>所以实际上是执行了两次文件操作，一次是解析到/tmp（由dest决定）中，然后fs再将它写入当前的工作目录下（由des_file决定）。</p>
+<p>执行以上代码：</p>
+<pre><code>$ node server.js 
+应用实例，访问地址为 http://0.0.0.0:8081
+</code></pre>
+<p>浏览器访问 http://127.0.0.1:8081/index.html</p>
+<h3 id="cookie-管理">Cookie 管理</h3>
+<p>我们可以使用中间件向 Node.js 服务器发送 cookie 信息，以下代码输出了客户端发送的 cookie 信息：</p>
+<blockquote>
+<p><strong>util.inspect(object,[showHidden],[depth],[colors])</strong> 是一个将任意对象转换 为字符串的方法，通常用于调试和错误输出。它至少接受一个参数 object，即要转换的对象。</p>
+</blockquote>
+<pre><code class="language-js">// express_cookie.js 文件
+var express      = require('express')
+var cookieParser = require('cookie-parser')
+var util = require('util');
+ 
+var app = express()
+app.use(cookieParser())
+ 
+app.get('/', function(req, res) {
+    console.log(&quot;Cookies: &quot; + util.inspect(req.cookies));
+})
+ 
+app.listen(8081)
+</code></pre>
+<p>执行以上代码：</p>
+<pre><code>$ node express_cookie.js 
+</code></pre>
+<p>现在你可以访问 http://127.0.0.1:8081 并查看终端信息的输出:</p>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201011195429.png" alt="image-20201011195421936" loading="lazy"></figure>
+<h2 id="restful-api">RESTful API</h2>
+<h3 id="rest介绍">REST介绍</h3>
+<p>REST即表述性状态传递（英文：Representational State Transfer，简称REST）是Roy Fielding博士在2000年他的博士论文中提出来的一种软件架构风格。</p>
+<p>表述性状态转移是一组架构约束条件和原则。满足这些约束条件和原则的应用程序或设计就是RESTful。需要注意的是，REST是设计风格而不是标准。REST通常基于使用HTTP，URI，和XML（标准通用标记语言下的一个子集）以及HTML（标准通用标记语言下的一个应用）这些现有的广泛流行的协议和标准。REST 通常使用 JSON 数据格式。</p>
+<h4 id="http-方法">HTTP 方法</h4>
+<p>以下为 REST 基本架构的四个方法：</p>
+<ul>
+<li><strong>GET</strong> - 用于获取数据。</li>
+<li><strong>PUT</strong> - 用于更新或添加数据。</li>
+<li><strong>DELETE</strong> - 用于删除数据。</li>
+<li><strong>POST</strong> - 用于添加数据。</li>
+</ul>
+<h3 id="restful-web-services">RESTful Web Services</h3>
+<p>Web service是一个平台独立的，低耦合的，自包含的、基于可编程的web的应用程序，<strong>可使用开放的XML（标准通用标记语言下的一个子集）标准来描述、发布、发现、协调和配置这些应用程序</strong>，用于开发分布式的互操作的应用程序。</p>
+<p><strong>基于 REST 架构的 Web Services 即是 RESTful</strong>。</p>
+<p>由于轻量级以及通过 HTTP 直接传输数据的特性，Web 服务的 RESTful 方法已经成为最常见的替代方法。可以使用各种语言（比如 Java 程序、Perl、Ruby、Python、PHP 和 Javascript[包括 Ajax]）实现客户端。</p>
+<p>RESTful Web 服务通常可以通过自动客户端或代表用户的应用程序访问。但是，这种服务的简便性让用户能够与之直接交互，使用它们的 Web 浏览器构建一个 GET URL 并读取返回的内容。</p>
+<h3 id="创建-restful">创建 RESTful</h3>
+<p>首先，创建一个 json 数据资源文件 users.json，内容如下：</p>
+<pre><code class="language-json">{
+   &quot;user1&quot; : {
+      &quot;name&quot; : &quot;mahesh&quot;,
+      &quot;password&quot; : &quot;password1&quot;,
+      &quot;profession&quot; : &quot;teacher&quot;,
+      &quot;id&quot;: 1
+   },
+   &quot;user2&quot; : {
+      &quot;name&quot; : &quot;suresh&quot;,
+      &quot;password&quot; : &quot;password2&quot;,
+      &quot;profession&quot; : &quot;librarian&quot;,
+      &quot;id&quot;: 2
+   },
+   &quot;user3&quot; : {
+      &quot;name&quot; : &quot;ramesh&quot;,
+      &quot;password&quot; : &quot;password3&quot;,
+      &quot;profession&quot; : &quot;clerk&quot;,
+      &quot;id&quot;: 3
+   }
+}
+</code></pre>
+<p>基于以上数据，我们创建以下 RESTful API：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">序号</th>
+<th style="text-align:left">URI</th>
+<th style="text-align:left">HTTP 方法</th>
+<th style="text-align:left">发送内容</th>
+<th style="text-align:left">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">listUsers</td>
+<td style="text-align:left">GET</td>
+<td style="text-align:left">空</td>
+<td style="text-align:left">显示所有用户列表</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">addUser</td>
+<td style="text-align:left">POST</td>
+<td style="text-align:left">JSON 字符串</td>
+<td style="text-align:left">添加新用户</td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:left">deleteUser</td>
+<td style="text-align:left">DELETE</td>
+<td style="text-align:left">JSON 字符串</td>
+<td style="text-align:left">删除用户</td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:left">:id</td>
+<td style="text-align:left">GET</td>
+<td style="text-align:left">空</td>
+<td style="text-align:left">显示用户详细信息</td>
+</tr>
+</tbody>
+</table>
+<h3 id="获取用户列表">获取用户列表</h3>
+<p>以下代码，我们创建了 RESTful API <strong>listUsers</strong>，用于读取用户的信息列表， server.js 文件代码如下所示：</p>
+<pre><code class="language-js">var express = require('express');
+var app = express();
+var fs = require(&quot;fs&quot;);
+
+app.get('/listUsers', function (req, res) {
+   fs.readFile( __dirname + &quot;/&quot; + &quot;users.json&quot;, 'utf8', function (err, data) {
+       console.log( data );
+       res.end( data );
+   });
+})
+
+var server = app.listen(8081, function () {
+
+  var host = server.address().address
+  var port = server.address().port
+
+  console.log(&quot;应用实例，访问地址为 http://%s:%s&quot;, host, port)
+
+})
+</code></pre>
+<p>接下来执行以下命令：</p>
+<pre><code>$ node server.js 
+应用实例，访问地址为 http://0.0.0.0:8081
+</code></pre>
+<p>在浏览器中访问 http://127.0.0.1:8081/listUsers</p>
+<h4 id="添加用户">添加用户</h4>
+<p>以下代码，我们创建了 RESTful API <strong>addUser</strong>， 用于添加新的用户数据，server.js 文件代码如下所示：</p>
+<pre><code class="language-js">var express = require('express');
+var app = express();
+var fs = require(&quot;fs&quot;);
+
+//添加的新用户数据
+var user = {
+   &quot;user4&quot; : {
+      &quot;name&quot; : &quot;mohit&quot;,
+      &quot;password&quot; : &quot;password4&quot;,
+      &quot;profession&quot; : &quot;teacher&quot;,
+      &quot;id&quot;: 4
+   }
+}
+
+app.get('/addUser', function (req, res) {
+   // 读取已存在的数据
+   fs.readFile( __dirname + &quot;/&quot; + &quot;users.json&quot;, 'utf8', function (err, data) {
+       data = JSON.parse( data );
+       data[&quot;user4&quot;] = user[&quot;user4&quot;];
+       console.log( data );
+       res.end( JSON.stringify(data));
+   });
+})
+
+var server = app.listen(8081, function () {
+
+  var host = server.address().address
+  var port = server.address().port
+  console.log(&quot;应用实例，访问地址为 http://%s:%s&quot;, host, port)
+
+})
+</code></pre>
+<p>接下来执行以下命令：</p>
+<pre><code>$ node server.js 
+应用实例，访问地址为 http://0.0.0.0:8081
+</code></pre>
+<p>在浏览器中访问 http://127.0.0.1:8081/addUser</p>
+<h4 id="显示用户详情">显示用户详情</h4>
+<p>以下代码，我们创建了 RESTful API <strong>:id（用户id）</strong>， 用于读取指定用户的详细信息，server.js 文件代码如下所示：</p>
+<pre><code class="language-js">var express = require('express');
+var app = express();
+var fs = require(&quot;fs&quot;);
+
+app.get('/:id', function (req, res) {
+   // 首先我们读取已存在的用户
+   fs.readFile( __dirname + &quot;/&quot; + &quot;users.json&quot;, 'utf8', function (err, data) {
+       data = JSON.parse( data );
+       var user = data[&quot;user&quot; + req.params.id] 
+       console.log( user );
+       res.end( JSON.stringify(user));
+   });
+})
+
+var server = app.listen(8081, function () {
+
+  var host = server.address().address
+  var port = server.address().port
+  console.log(&quot;应用实例，访问地址为 http://%s:%s&quot;, host, port)
+
+})
+</code></pre>
+<p>接下来执行以下命令：</p>
+<pre><code>$ node server.js 
+应用实例，访问地址为 http://0.0.0.0:8081
+</code></pre>
+<p>在浏览器中访问 http://127.0.0.1:8081/2</p>
+<p>::: tip</p>
+<p>注意<code>:id</code>将会匹配所有其余不是listUser或者addUser的域名。</p>
+<p>如果想要实现只匹配单个数字，可以增加正则表达式：<code>'/:id([0-9]*)'</code></p>
+<p>:::</p>
+<h4 id="删除用户">删除用户</h4>
+<p>以下代码，我们创建了 RESTful API <strong>deleteUser</strong>， 用于删除指定用户的详细信息，以下实例中，用户 id 为 2，server.js 文件代码如下所示：</p>
+<pre><code class="language-js">var express = require('express');
+var app = express();
+var fs = require(&quot;fs&quot;);
+
+var id = 2;
+
+app.get('/deleteUser', function (req, res) {
+
+   // First read existing users.
+   fs.readFile( __dirname + &quot;/&quot; + &quot;users.json&quot;, 'utf8', function (err, data) {
+       data = JSON.parse( data );
+       delete data[&quot;user&quot; + id];
+       
+       console.log( data );
+       res.end( JSON.stringify(data));
+   });
+})
+
+var server = app.listen(8081, function () {
+
+  var host = server.address().address
+  var port = server.address().port
+  console.log(&quot;应用实例，访问地址为 http://%s:%s&quot;, host, port)
+
+})
+</code></pre>
+<p>接下来执行以下命令：</p>
+<pre><code>$ node server.js 
+应用实例，访问地址为 http://0.0.0.0:8081
+</code></pre>
+<p>在浏览器中访问 http://127.0.0.1:8081/deleteUser</p>
+<p>::: tip</p>
+<p>但是这里实际上并没有写回文件，所以再次访问listUser时会发现user2并没有被删掉。</p>
+<p>这里就是后端非常多涉及到的文件增删改查领域，如何提高效率同时保持一致性，比较多的是结合数据库，也可以设计新的增删改查方式。</p>
+<p>:::</p>
+
+<span id="footnote"></span>
+<div id = "warn"></div>
+</div>
+<div class="toc-container"><ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#express%E6%A1%86%E6%9E%B6">Express框架</a>
+<ul>
+<li><a href="#express%E5%AE%89%E8%A3%85">Express安装</a>
+<ul>
+<li><a href="#%E7%AC%AC%E4%B8%80%E4%B8%AA-express-%E6%A1%86%E6%9E%B6%E5%AE%9E%E4%BE%8B">第一个 Express 框架实例</a></li>
+</ul>
+</li>
+<li><a href="#%E8%AF%B7%E6%B1%82%E5%92%8C%E5%93%8D%E5%BA%94">请求和响应</a>
+<ul>
+<li><a href="#request-%E5%AF%B9%E8%B1%A1"><strong>Request 对象</strong></a></li>
+<li><a href="#response-%E5%AF%B9%E8%B1%A1"><strong>Response 对象</strong></a></li>
+</ul>
+</li>
+<li><a href="#%E8%B7%AF%E7%94%B1">路由</a></li>
+<li><a href="#%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6">静态文件</a></li>
+<li><a href="#get-%E6%96%B9%E6%B3%95">GET 方法</a></li>
+<li><a href="#post-%E6%96%B9%E6%B3%95">POST 方法</a></li>
+<li><a href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0">文件上传</a></li>
+<li><a href="#cookie-%E7%AE%A1%E7%90%86">Cookie 管理</a></li>
+</ul>
+</li>
+<li><a href="#restful-api">RESTful API</a>
+<ul>
+<li><a href="#rest%E4%BB%8B%E7%BB%8D">REST介绍</a>
+<ul>
+<li><a href="#http-%E6%96%B9%E6%B3%95">HTTP 方法</a></li>
+</ul>
+</li>
+<li><a href="#restful-web-services">RESTful Web Services</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA-restful">创建 RESTful</a></li>
+<li><a href="#%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7%E5%88%97%E8%A1%A8">获取用户列表</a>
+<ul>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E7%94%A8%E6%88%B7">添加用户</a></li>
+<li><a href="#%E6%98%BE%E7%A4%BA%E7%94%A8%E6%88%B7%E8%AF%A6%E6%83%85">显示用户详情</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7">删除用户</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="fullPage"><canvas id="canvas"></canvas></div>
+</article>
+<div id="eof"><span>EOF</span></div><div class="round-shape-one"></div>
+<section>
+<div class="doc_comments">
+
+	  
+		<div id="gitalk-container"></div>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/qyxtim/Static@3.8/gitalk.min.js"></script><link href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.css"rel="stylesheet"><script>var gitalk=new Gitalk({clientID:"ee7c215043d62409bb53",clientSecret:"455d2f4a532bbe073ca25fdf9111932f00bbc624",repo:"giriawsh.github.io",owner:"giriawsh",admin:["giriawsh"],id:(location.pathname).substring(0, 49),distractionFreeMode:false});gitalk.render("gitalk-container");</script>
+	  
+
+	  
+
+</div></section>
+</div></div></div><script>
+"use strict";!function(){for(var n=document.getElementsByTagName("pre"),e=n.length,s=0;s<e;s++){n[s].innerHTML='<span class="line-number"></span>'+n[s].innerHTML+'<span class="cl"></span>';for(var a=n[s].innerHTML.split(/\n/).length,r=0;r<a-1;r++){n[s].getElementsByTagName("span")[0].innerHTML+="<span>"+(r+1)+"</span>"}}}();
+let mainNavLinks=document.querySelectorAll(".markdownIt-TOC a");window.addEventListener("scroll",event=>{let fromTop=window.scrollY;mainNavLinks.forEach((link,index)=>{let section=document.getElementById(decodeURI(link.hash).substring(1));let nextSection=null
+if(mainNavLinks[index+1]){nextSection=document.getElementById(decodeURI(mainNavLinks[index+1].hash).substring(1));}
+if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop){link.classList.add("currentToc");}else{link.classList.remove("currentToc");}}else{link.classList.add("currentToc");}}else{link.classList.remove("currentToc");}});});
+var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
+var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
+var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
+content="本文最后更新于2020-10-12，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-10-12 00:44:55";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+</script>
+<style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
+<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"><a href="https://github.com/giriawsh"title="github"><i class="iconfont icon-github"></i></a></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
+<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>53</strong> posts</span></div></div>
+<script>
+console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;", );
+</script>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+<script type="text/javascript" async src="https://giriawsh.github.io//media/js/prism.js"></script>
+</body>
+
+</html>
