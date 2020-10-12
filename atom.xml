@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-10-11T17:01:04.480Z</updated>
+    <updated>2020-10-12T06:09:56.674Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -10,21 +10,6 @@
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
-    <entry>
-        <title type="html"><![CDATA[2020-10-12日记]]></title>
-        <id>https://giriawsh.github.io/post/2020-10-12-ri-ji/</id>
-        <link href="https://giriawsh.github.io/post/2020-10-12-ri-ji/">
-        </link>
-        <updated>2020-10-11T17:00:39.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="一半学习一半偷懒的周末">一半学习一半偷懒的周末</h2>
-<p>通关了雨中冒险2的季风难度，无数次开局暴毙，终于…………又在后面变成了爽游，泪流满面。</p>
-<p>今天学习了express框架（被解析方式坑了一小下）+RESTFUL api，非常有意思。</p>
-<p>它首次出现在2000年Roy Fielding的博士论文中，Roy Fielding是HTTP规范的主要编写者之一。 他在论文中提到：&quot;我这篇文章的写作目的，就是想在符合架构原理的前提下，理解和评估以网络为基础的应用软件的架构设计，得到一个功能强、性能好、适宜通信的架构。REST指的是一组架构约束条件和原则。&quot; 如果一个架构符合REST的约束条件和原则，我们就称它为RESTful架构。</p>
-<p>国内好像很少有这种博士方向了，硕士实验室都是清一色的AI AR 并行。害……</p>
-<p>这篇文章明天读读看：<a href="https://www.runoob.com/w3cnote/restful-architecture.html">RESTful 架构详解</a></p>
-<p>BTW，小魔女学院真好看。</p>
-]]></content>
-    </entry>
     <entry>
         <title type="html"><![CDATA[NodeJS初学系列6——Express框架、RESTful API]]></title>
         <id>https://giriawsh.github.io/post/nodejs-chu-xue-xi-lie-6-express-kuang-jia-restful-api/</id>
@@ -4211,6 +4196,83 @@ new Point(2, 3);
 <p><a href="https://v3.bootcss.com/css/#grid-options">Bootstrap 栅格参数</a></p>
 <p><a href="https://element.eleme.io/#/zh-CN/component/layout">Element.io - layout</a></p>
 <p><a href="https://learnku.com/articles/21215">图解bootstrap栅格系统</a>  --&gt; 这一篇讲得太清楚了。。忍不住点赞</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[vue-cli中使用vue-router]]></title>
+        <id>https://giriawsh.github.io/post/vue-cli-zhong-shi-yong-vue-router/</id>
+        <link href="https://giriawsh.github.io/post/vue-cli-zhong-shi-yong-vue-router/">
+        </link>
+        <updated>2020-09-23T13:47:14.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="前言">前言</h2>
+<p>最近开始从Nuxt跳回基础的vue-cli，进行重新学习。集成性框架的便捷性可以使项目快速搭建，但当下对底层的东西也更需要积累才是。算是日常对vue学习进度的总结跟进。</p>
+<p>vue-cli是官方所推的一个脚手架，它的优越性在于图形化、便捷性，更鼓励像插槽一样添加自己所需要的组件，这带来了更好的延展性。</p>
+<p>本文记录了如何在vue-cli中使用vue-router。</p>
+<h2 id="步骤记录">步骤记录</h2>
+<p>前置条件：已经使用创建命令搭建好基础框架</p>
+<pre><code>vue create vue-cli-test
+</code></pre>
+<h3 id="1-添加vue-router">1. 添加vue-router</h3>
+<p>参照<a href="https://router.vuejs.org/installation.html#npm">官方文档</a>，使用add加入router插件（顺便说只有英文版才有vue-cli的专门说明，害）</p>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200923214325.png" alt="image-20200923214318588" loading="lazy"></figure>
+<p>安装前会提醒你记得commit，因为它将会覆盖掉（如果没有将会新生成）app.vue和router/index.js文件。</p>
+<h3 id="2-vue-router的使用">2. vue-router的使用</h3>
+<p><img src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b3cb282a329643caa8137c4a5779909f~tplv-k3u1fbpfcp-zoom-1.image" alt="" loading="lazy"><br>
+安装完成，将会自动生成Home和About两个page，同时更新App.vue，并且在router目录下生成index.js文件。默认运行效果如下：</p>
+<figure data-type="image" tabindex="2"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200923214451.png" alt="image-20200923214451577" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200923214458.png" alt="image-20200923214458324" loading="lazy"></figure>
+<p>如果要新增，可以参照官方默认方式，通过创建新的view，插入新的组件。</p>
+<pre><code class="language-js">//App.vue
+&lt;template&gt;
+  &lt;div id=&quot;nav&quot;&gt;
+    &lt;router-link to=&quot;/&quot;&gt;Home&lt;/router-link&gt; |
+    &lt;router-link to=&quot;/about&quot;&gt;About&lt;/router-link&gt; |
+    &lt;router-link to=&quot;/test&quot;&gt;Test&lt;/router-link&gt;
+  &lt;/div&gt;
+  &lt;router-view/&gt;
+&lt;/template&gt;
+</code></pre>
+<pre><code class="language-js">//Test.vue
+&lt;template&gt;
+    &lt;div class=&quot;about&quot;&gt;
+        &lt;h1&gt;This is an test page&lt;/h1&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<pre><code class="language-js">//index.js
+import { createRouter, createWebHistory } from 'vue-router'
+import Home from '../views/Home.vue'
+
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/about',
+    name: 'About',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =&gt; import(/* webpackChunkName: &quot;about&quot; */ '../views/About.vue')
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: () =&gt; import(/* webpackChunkName: &quot;about&quot; */ '../views/Test.vue')
+  },
+
+]
+
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
+  routes
+})
+
+export default router
+</code></pre>
+<p>即可实现简单的页面路由效果。</p>
 ]]></content>
     </entry>
 </feed>
