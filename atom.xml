@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-10-12T09:30:10.190Z</updated>
+    <updated>2020-10-12T09:33:20.968Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -17,10 +17,10 @@
         </link>
         <updated>2020-10-12T09:02:25.000Z</updated>
         <summary type="html"><![CDATA[<h2 id="前言">前言</h2>
-<p>《JS权威指南》第四章第二部分，涉及运算符（优先级、结合性等）、算术表达式（基本运算符加减乘除等，位运算符）、关系表达式（<mark>和</mark>=，比较运算符，in和instanceof）</p>
+<p>《JS权威指南》第四章第二部分，涉及运算符（优先级、结合性等）、算术表达式（基本运算符加减乘除等，位运算符）、关系表达式（<code>==</code>和<code>===</code>，比较运算符，in和instanceof）</p>
 ]]></summary>
         <content type="html"><![CDATA[<h2 id="前言">前言</h2>
-<p>《JS权威指南》第四章第二部分，涉及运算符（优先级、结合性等）、算术表达式（基本运算符加减乘除等，位运算符）、关系表达式（<mark>和</mark>=，比较运算符，in和instanceof）</p>
+<p>《JS权威指南》第四章第二部分，涉及运算符（优先级、结合性等）、算术表达式（基本运算符加减乘除等，位运算符）、关系表达式（<code>==</code>和<code>===</code>，比较运算符，in和instanceof）</p>
 <!-- more -->
 <h2 id="运算符">运算符</h2>
 <p>大多数运算符是由标点符号表示的：<code>+</code>和<code>=</code>等</p>
