@@ -17,7 +17,7 @@
 <div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
 <div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
 <div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
-<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1602495196171" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1602495357346" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
 </div></div>
 <script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
 
@@ -253,8 +253,8 @@ alert(4294967294&gt;&gt;1);   // -1
 <p>建议，除非必要，避免使用位移运算符。你能想到的简单优化，编译器也很容易做到。</p>
 <h2 id="关系表达式">关系表达式</h2>
 <h3 id="相等和不等运算符">相等和不等运算符</h3>
-<p>“<mark>”和“</mark>=”运算符允许任意类型的操作符。</p>
-<p>“!=&quot;和&quot;!<mark>&quot;检测规则是“</mark>”和“===”运算符的求反。</p>
+<p>“<code>==</code>”和“<code>===</code>”运算符允许任意类型的操作符。</p>
+<p>“<code>!=</code>&quot;和&quot;<code>!==</code>&quot;检测规则是“<code>==</code>”和“<code>===</code>”运算符的求反。</p>
 <p>如果是对象的比较，之前已有详细说明，JS对象的比较是引用的比较，而不是值的比较，对象和其本身是相等的，但和其他任何对象都不相等。</p>
 <p>这块参照ECMA标准即可：<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-11.9.4">ECMAScript® Language Specification</a></p>
 <h4 id="严格相等运算符">严格相等运算符===</h4>
@@ -279,9 +279,9 @@ alert(4294967294&gt;&gt;1);   // -1
 <p>前面我们知道，<u>加法运算符更偏爱字符串，而比较运算符则更偏爱数字</u>，只有在两个操作数都是字符串的时候，才会进行字符串的比较：</p>
 <figure data-type="image" tabindex="12"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201012163841.png" alt="image-20201012163841725" loading="lazy"></figure>
 <p>::: tip 关于&lt;=和&gt;=需要注意的</p>
-<p>&lt;=和&gt;=在判断相等时，并不会依赖于<mark>和</mark>=的比较规则。</p>
+<p>&lt;=和&gt;=在判断相等时，并不会依赖于<code>==</code>和<code>===</code>的比较规则。</p>
 <p>&lt;=只是简单的不大于（即&gt;结果取反），&lt;=也只是简单的不小于。</p>
-<p>只有一个例外，当其中一个操作数（或者转换后是）NaN时，所有四个比较运算符均返回false</p>
+<p><strong>只有一个例外，当其中一个操作数（或者转换后是）NaN时，所有四个比较运算符均返回false</strong></p>
 <p>:::</p>
 <h3 id="in运算符">in运算符</h3>
 <p>in运算符希望它的左操作数是<u>一个字符串或可以转换为字符串</u>，希望它的右操作数是一个<u>对象</u>。</p>
