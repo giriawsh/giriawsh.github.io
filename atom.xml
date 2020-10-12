@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-10-12T09:05:21.962Z</updated>
+    <updated>2020-10-12T09:30:10.190Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -186,12 +186,14 @@ x+1 // =&gt; 11
 <p>::: tip 注意</p>
 <ul>
 <li>
-<p>移位运算符要求右操作数在0~31之间，在其操作数转换为无符号32位整数后，<u>它们将舍弃第五位之后的二进制位（？）</u>，以便生成一个位数正确的数字</p>
+<p>移位运算符要求右操作数在0<sub>31之间，在其操作数转换为无符号32位整数后，&lt;u&gt;右操作数将舍弃第5位之后的二进制位（相当于超过31的数字将会进行mod32的操作）&lt;/u&gt;，以便生成一个位数正确的数字（0</sub>31）</p>
 </li>
 <li>
 <p>位运算符会将NaN、Infinity和-Infinity都转换为0</p>
 </li>
 </ul>
+<p>感谢stackoverflow的大佬解答了问题（原谅我真的没看懂书上的“它们”是什么意思，以及在中文各问答平台中搜索无果，我太笨了555）：</p>
+<figure data-type="image" tabindex="6"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201012172730.png" alt="image-20201012172730715" loading="lazy"></figure>
 <p>:::</p>
 <h4 id="按位与">按位与&amp;</h4>
 <pre><code>1&amp;1 = 1
@@ -244,25 +246,25 @@ alert(4294967294&gt;&gt;1);   // -1
 <p>这块参照ECMA标准即可：<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-11.9.4">ECMAScript® Language Specification</a></p>
 <h4 id="严格相等运算符">严格相等运算符===</h4>
 <p>首先计算其操作数的值，然后比较这两个值，比较过程没有任何类型转换。</p>
-<figure data-type="image" tabindex="6"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201012152041.png" alt="image-20201012152034067" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201012152041.png" alt="image-20201012152034067" loading="lazy"></figure>
 <h4 id="相等运算符">相等运算符==</h4>
 <p>如果两个操作数不是同一类型，那么相等运算符会尝试进行一些类型转换，然后进行比较：</p>
-<figure data-type="image" tabindex="7"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201012152328.png" alt="image-20201012152327957" loading="lazy"></figure>
-<figure data-type="image" tabindex="8"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201012152338.png" alt="image-20201012152337881" loading="lazy"></figure>
+<figure data-type="image" tabindex="8"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201012152328.png" alt="image-20201012152327957" loading="lazy"></figure>
+<figure data-type="image" tabindex="9"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201012152338.png" alt="image-20201012152337881" loading="lazy"></figure>
 <p>对象转换比较那里我们之前已经提到过了。</p>
 <h3 id="比较运算符">比较运算符</h3>
 <p>比较运算符用来检测两个操作数的大小关系（数值大小或者字母表的顺序）</p>
 <p>有如下：&lt; &gt; &lt;= &gt;=</p>
 <p>比较操作符的操作数可能是任意类型，然而只有数字和字符串才能真正执行比较操作，因此那些不是数字和字符串的操作数都将进行类型转换，类型转换规则如下：</p>
-<figure data-type="image" tabindex="9"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201012162116.png" alt="image-20201012162116832" loading="lazy"></figure>
-<figure data-type="image" tabindex="10"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201012162107.png" alt="image-20201012162107189" loading="lazy"></figure>
+<figure data-type="image" tabindex="10"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201012162116.png" alt="image-20201012162116832" loading="lazy"></figure>
+<figure data-type="image" tabindex="11"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201012162107.png" alt="image-20201012162107189" loading="lazy"></figure>
 <p><u>字符串比较是区分大小写的，所有大写ASCII字母都“小于”小写ASCII字母。</u></p>
 <blockquote>
 <p>参照<code>String.localCompare()</code>方法更加健壮可靠，这个方法参照本地语言的字母表定义的字符次序。</p>
 <p>对于那些不区分字母大小写的比较，需要先通过<code>String.toLowerCase()</code>和<code>String.toUpperCase()</code>做大小写转换。</p>
 </blockquote>
 <p>前面我们知道，<u>加法运算符更偏爱字符串，而比较运算符则更偏爱数字</u>，只有在两个操作数都是字符串的时候，才会进行字符串的比较：</p>
-<figure data-type="image" tabindex="11"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201012163841.png" alt="image-20201012163841725" loading="lazy"></figure>
+<figure data-type="image" tabindex="12"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201012163841.png" alt="image-20201012163841725" loading="lazy"></figure>
 <p>::: tip 关于&lt;=和&gt;=需要注意的</p>
 <p>&lt;=和&gt;=在判断相等时，并不会依赖于<mark>和</mark>=的比较规则。</p>
 <p>&lt;=只是简单的不大于（即&gt;结果取反），&lt;=也只是简单的不小于。</p>
@@ -305,13 +307,13 @@ var data = [7, 8, 9]
 <blockquote>
 <p>如果左操作数不是对象的话，instanceof返回false，如果右操作数不是函数，则会抛出一个类型错误异常。</p>
 </blockquote>
-<figure data-type="image" tabindex="12"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201012165551.png" alt="image-20201012165551517" loading="lazy"></figure>
+<figure data-type="image" tabindex="13"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201012165551.png" alt="image-20201012165551517" loading="lazy"></figure>
 <p>::: tip</p>
 <p>所有的对象都是Object的实例。</p>
 <p>:::</p>
 <p><u>当通过instanceof判断一个对象是否是一个类的实例的时候，这个判断也会包含对“父类”的检测。</u></p>
 <p>instanceof的工作原理将会涉及“原型链”，JS的继承机制等。后面将会进行详细描述。</p>
-<p>为了计算表达式<code>o instanceof f</code>， JS会首先计算<code>f.prototype</code>，然后在原型链中查找o。如果找到，那么o是f（或者f的父类）的一个实例，表达式返回true，如果f.prototype不在o的原型链中，那么o就不是f的实例，instanceof返回false。（？）</p>
+<p>为了计算表达式<code>o instanceof f</code>， JS会首先计算<code>f.prototype</code>，然后在原型链中查找o。如果找到，那么o是f（或者f的父类）的一个实例，表达式返回true，如果f.prototype不在o的原型链中，那么o就不是f的实例，instanceof返回false。（？翻译好绕，我真的没看懂……等第六章以后再来回顾吧）</p>
 ]]></content>
     </entry>
     <entry>
