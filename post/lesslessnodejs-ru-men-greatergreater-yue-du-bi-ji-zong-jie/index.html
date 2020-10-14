@@ -17,7 +17,7 @@
 <div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
 <div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
 <div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
-<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1602691547959" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1602692372353" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
 </div></div>
 <script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
 
@@ -1118,6 +1118,7 @@ exports.show = show;
 <h2 id="总结与展望">总结与展望</h2>
 <p>Node.js社区非常活跃,有什么问题都可以向社区寻求解答。 其中<a href="https://github.com/joyent/node/wiki">Node.js社区的wiki</a>以及 <a href="http://www.nodecloud.org/">NodeCloud</a>就是最好的资源。</p>
 <p>下面进行代码总结：</p>
+<p>::: details 1. 一个基础的HTTP服务器</p>
 <pre><code class="language-js">//server.js
 var http = require(&quot;http&quot;);
 
@@ -1149,7 +1150,6 @@ var server = require(&quot;./server&quot;);
 server.start();
 </code></pre>
 <p>:::</p>
-<p>::: details 1. 一个基础的HTTP服务器</p>
 <p>::: detailds 3. 增加找出浏览器请求的URL路径功能</p>
 <pre><code class="language-js">var http = require(&quot;http&quot;);
 var url = require(&quot;url&quot;);
@@ -1267,7 +1267,7 @@ function route(handle, pathname) {
 exports.route = route;
 </code></pre>
 <p>:::</p>
-<p>::: details 6.以非阻塞操作进行请求响应,传递response对象，并将<em>onRequest()<em>处理程序中所有有关</em>response</em>的函数处理都交给route()来做</p>
+<p>::: details 6.以非阻塞操作进行请求响应,传递response对象，并将onRequest()处理程序中所有有关response的函数处理都交给route()来做</p>
 <pre><code class="language-js">//server.js
 var http = require(&quot;http&quot;);
 var url = require(&quot;url&quot;);
@@ -1359,7 +1359,7 @@ exports.start = start;
 exports.upload = upload;
 </code></pre>
 <p>:::</p>
-<p>::: details 8. 获取所有来自请求的数据，在服务器中处理POST数据，然后将最终的数据传递给请求路由和请求处理器，让他们来进行进一步的处理。在upload页面展示内容。在<em>requestHandlers.js</em>中，我们将数据包含在对<em>upload</em>请求的响应中。</p>
+<p>::: details 8. 获取所有来自请求的数据，在服务器中处理POST数据，然后将最终的数据传递给请求路由和请求处理器，让他们来进行进一步的处理。在upload页面展示内容。在requestHandlers.js中，我们将数据包含在对upload请求的响应中。</p>
 <pre><code class="language-js">//server.js
 var http = require(&quot;http&quot;);
 var url = require(&quot;url&quot;);
@@ -1439,7 +1439,7 @@ exports.start = start;
 exports.upload = upload;
 </code></pre>
 <p>:::</p>
-<p>::: details 9. 添加*/show<em>URL的请求处理程序，直接硬编码将文件</em>/tmp/test.png*内容展示到浏览器中</p>
+<p>::: details 9. 添加/showURL的请求处理程序，直接硬编码将文件/tmp/test.png内容展示到浏览器中</p>
 <pre><code class="language-js">//requestHandler.js
 var querystring = require(&quot;querystring&quot;),
     fs = require(&quot;fs&quot;);
@@ -1506,7 +1506,7 @@ handle[&quot;/show&quot;] = requestHandlers.show;
 server.start(router.route, handle);
 </code></pre>
 <p>:::</p>
-<p>::: details 10.在*/start<em>表单中添加一个文件上传元素；将node-formidable整合到我们的</em>upload<em>请求处理程序中，用于将上传的图片保存到</em>/tmp/test.png*；将上传的图片内嵌到*/upload<em>URL输出的HTML中。将</em>request*对象从服务器开始一路通过请求路由，再传递给请求处理程序</p>
+<p>::: details 10.在/start表单中添加一个文件上传元素；将node-formidable整合到我们的upload请求处理程序中，用于将上传的图片保存到/tmp/test.png；将上传的图片内嵌到/uploadURL输出的HTML中。将request对象从服务器开始一路通过请求路由，再传递给请求处理程序</p>
 <pre><code class="language-js">//server.js
 var http = require(&quot;http&quot;);
 var url = require(&quot;url&quot;);

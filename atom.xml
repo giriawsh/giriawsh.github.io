@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-10-14T16:05:55.023Z</updated>
+    <updated>2020-10-14T16:19:37.005Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -1102,6 +1102,7 @@ exports.show = show;
 <h2 id="总结与展望">总结与展望</h2>
 <p>Node.js社区非常活跃,有什么问题都可以向社区寻求解答。 其中<a href="https://github.com/joyent/node/wiki">Node.js社区的wiki</a>以及 <a href="http://www.nodecloud.org/">NodeCloud</a>就是最好的资源。</p>
 <p>下面进行代码总结：</p>
+<p>::: details 1. 一个基础的HTTP服务器</p>
 <pre><code class="language-js">//server.js
 var http = require(&quot;http&quot;);
 
@@ -1133,7 +1134,6 @@ var server = require(&quot;./server&quot;);
 server.start();
 </code></pre>
 <p>:::</p>
-<p>::: details 1. 一个基础的HTTP服务器</p>
 <p>::: detailds 3. 增加找出浏览器请求的URL路径功能</p>
 <pre><code class="language-js">var http = require(&quot;http&quot;);
 var url = require(&quot;url&quot;);
@@ -1251,7 +1251,7 @@ function route(handle, pathname) {
 exports.route = route;
 </code></pre>
 <p>:::</p>
-<p>::: details 6.以非阻塞操作进行请求响应,传递response对象，并将<em>onRequest()<em>处理程序中所有有关</em>response</em>的函数处理都交给route()来做</p>
+<p>::: details 6.以非阻塞操作进行请求响应,传递response对象，并将onRequest()处理程序中所有有关response的函数处理都交给route()来做</p>
 <pre><code class="language-js">//server.js
 var http = require(&quot;http&quot;);
 var url = require(&quot;url&quot;);
@@ -1343,7 +1343,7 @@ exports.start = start;
 exports.upload = upload;
 </code></pre>
 <p>:::</p>
-<p>::: details 8. 获取所有来自请求的数据，在服务器中处理POST数据，然后将最终的数据传递给请求路由和请求处理器，让他们来进行进一步的处理。在upload页面展示内容。在<em>requestHandlers.js</em>中，我们将数据包含在对<em>upload</em>请求的响应中。</p>
+<p>::: details 8. 获取所有来自请求的数据，在服务器中处理POST数据，然后将最终的数据传递给请求路由和请求处理器，让他们来进行进一步的处理。在upload页面展示内容。在requestHandlers.js中，我们将数据包含在对upload请求的响应中。</p>
 <pre><code class="language-js">//server.js
 var http = require(&quot;http&quot;);
 var url = require(&quot;url&quot;);
@@ -1423,7 +1423,7 @@ exports.start = start;
 exports.upload = upload;
 </code></pre>
 <p>:::</p>
-<p>::: details 9. 添加*/show<em>URL的请求处理程序，直接硬编码将文件</em>/tmp/test.png*内容展示到浏览器中</p>
+<p>::: details 9. 添加/showURL的请求处理程序，直接硬编码将文件/tmp/test.png内容展示到浏览器中</p>
 <pre><code class="language-js">//requestHandler.js
 var querystring = require(&quot;querystring&quot;),
     fs = require(&quot;fs&quot;);
@@ -1490,7 +1490,7 @@ handle[&quot;/show&quot;] = requestHandlers.show;
 server.start(router.route, handle);
 </code></pre>
 <p>:::</p>
-<p>::: details 10.在*/start<em>表单中添加一个文件上传元素；将node-formidable整合到我们的</em>upload<em>请求处理程序中，用于将上传的图片保存到</em>/tmp/test.png*；将上传的图片内嵌到*/upload<em>URL输出的HTML中。将</em>request*对象从服务器开始一路通过请求路由，再传递给请求处理程序</p>
+<p>::: details 10.在/start表单中添加一个文件上传元素；将node-formidable整合到我们的upload请求处理程序中，用于将上传的图片保存到/tmp/test.png；将上传的图片内嵌到/uploadURL输出的HTML中。将request对象从服务器开始一路通过请求路由，再传递给请求处理程序</p>
 <pre><code class="language-js">//server.js
 var http = require(&quot;http&quot;);
 var url = require(&quot;url&quot;);
