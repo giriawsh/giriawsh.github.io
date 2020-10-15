@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-10-15T08:11:54.762Z</updated>
+    <updated>2020-10-15T13:25:53.795Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -10,6 +10,202 @@
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[《7天学会Nodejs》第一天——NodeJS基础]]></title>
+        <id>https://giriawsh.github.io/post/lessless7-tian-xue-hui-nodejsgreatergreater-di-yi-tian-nodejs-ji-chu/</id>
+        <link href="https://giriawsh.github.io/post/lessless7-tian-xue-hui-nodejsgreatergreater-di-yi-tian-nodejs-ji-chu/">
+        </link>
+        <updated>2020-10-15T13:24:38.000Z</updated>
+        <content type="html"><![CDATA[<ul>
+<li>电子书地址：<a href="http://nqdeng.github.io/7-days-nodejs/#1">7天学会NodeJS</a></li>
+</ul>
+<h2 id="1-nodejs基础">1. NodeJS基础</h2>
+<h3 id="什么是nodejs">什么是NodeJS</h3>
+<p>JS是脚本语言，脚本语言都需要一个解析器才能运行。对于写在HTML页面里的JS，浏览器充当了解析器的角色。而对于需要独立运行的JS，NodeJS就是一个解析器。</p>
+<p>每一种解析器都是一个运行环境，不但允许JS定义各种数据结构，进行各种计算，还允许JS使用运行环境提供的内置对象和方法做一些事情。</p>
+<p>例如运行在浏览器中的JS的用途是操作DOM，浏览器就提供了<code>document</code>之类的内置对象。而<u>运行在NodeJS中的JS的用途是操作磁盘文件或搭建HTTP服务器</u>，NodeJS就相应提供了<code>fs</code>、<code>http</code>等内置对象。</p>
+<h3 id="nodejs用处">NodeJS用处</h3>
+<p>NodeJS的作者说，他创造NodeJS的目的是为了<u>实现高性能Web服务器，他首先看重的是事件机制和异步IO模型的优越性</u>，而不是JS。</p>
+<p>但是他需要选择一种编程语言实现他的想法，<u>这种编程语言不能自带IO功能，并且需要能良好支持事件机制。</u>JS没有自带IO功能，天生就用于处理浏览器中的DOM事件，并且拥有一大群程序员，因此就成为了天然的选择。</p>
+<h3 id="模块">模块</h3>
+<p>在NodeJS中，一般将代码合理拆分到不同的JS文件中，每一个文件就是一个模块，而文件路径就是模块名。</p>
+<p>在编写每个模块时，都有<code>require</code>、<code>exports</code>、<code>module</code>三个预先定义好的变量可供使用。</p>
+<h4 id="require">require</h4>
+<p><code>require</code>函数<strong>用于在当前模块中加载和使用别的模块</strong>，传入一个模块名，<u>返回一个模块导出对象</u>。</p>
+<p>模块名可使用相对路径（以<code>./</code>开头），或者是绝对路径（以<code>/</code>或<code>C:</code>之类的盘符开头）。另外，模块名中的<code>.js</code>扩展名可以省略。</p>
+<pre><code class="language-js">var foo1 = require('./foo');
+var foo2 = require('./foo.js');
+var foo3 = require('/home/user/foo');
+var foo4 = require('/home/user/foo.js');
+
+// foo1至foo4中保存的是同一个模块的导出对象。
+</code></pre>
+<p>另外，可以使用以下方式加载和使用一个JSON文件。</p>
+<pre><code class="language-js">var data = require('./data.json');
+</code></pre>
+<h4 id="exports">exports</h4>
+<p><code>exports</code>对象是当前模块的**导出对象，用于导出模块<u>公有方法和属性</u>。**别的模块通过<code>require</code>函数使用当前模块时得到的就是当前模块的<code>exports</code>对象。</p>
+<p>以下例子中导出了一个公有方法。</p>
+<pre><code class="language-js">exports.hello = function () {
+    console.log('Hello World!');
+};
+</code></pre>
+<h4 id="module">module</h4>
+<p>通过<code>module</code>对象可以访问到当前模块的一些相关信息，但最多的用途是<strong>替换当前模块的导出对象</strong>。</p>
+<p>例如模块导出对象默认是一个普通对象，如果想改成一个函数的话，可以使用以下方式。</p>
+<pre><code class="language-js">module.exports = function () {
+    console.log('Hello World!');
+};
+</code></pre>
+<p>::: tip Node.js模块里exports与module.exports的区别?</p>
+<p><strong>一句话说明就是：require方能看到的只有module.exports这个对象。它无法看到exports对象，而我们在编写模块时用到的exports对象实际上只是对module.exports的引用。</strong></p>
+<p>（exports指向的地址和module.exports指向的内存地址是一样的）</p>
+<p>这等同在每个模块头部，有一行这样的命令。</p>
+<pre><code class="language-js">var exports = module.exports;
+</code></pre>
+<p>在nodejs中，module.exports初始的时候置为{}，exports也指向这个空对象。在对外输出模块接口时，可以向exports对象添加方法。</p>
+<p>那么一下两者是完全等价的，修改的都是统一内存地址里的东西：</p>
+<pre><code class="language-js">exports.name = function(x){
+	console.log(x);
+}
+
+===
+
+module.exports.name = function(x){
+	console.log(x);
+}
+</code></pre>
+<p>但是这样写就有区别了：</p>
+<pre><code class="language-js">exports = function(x){
+	console.log(x)
+}
+// 上面的function是一块新的内存地址，导致exports和module.exports不再存在任何关系
+// 然而require只能看到module.exports对象，看到不到exports对象，所以这样写无法导出
+</code></pre>
+<p><code>exports.xxx = yyy</code>都能导出，因为<code>exports = module.exports</code>这一条赋值语句没有发生改变，它们还是指向同一块地址，只不过相当于增加了<code>xxx: yyy</code>这样的键值对而已。但是如果直接对对象本身进行重新赋值，将会改变它的指向。</p>
+<pre><code class="language-js">exports.hello = function() {
+  return 'hello';
+};
+
+module.exports = 'Hello world';
+
+// `hello`函数是无法对外输出的，因为`module.exports`被重新赋值了。
+</code></pre>
+<p>这意味着，<u>如果一个模块的对外接口，就是一个单一的值</u>，不能使用<code>exports</code>输出，只能使用<code>module.exports</code>输出。</p>
+<pre><code class="language-js">module.exports = function(x){
+	console.log(x);
+}
+
+//可以导出
+</code></pre>
+<p>module.exports除了导出对象、函数，还可以导出所有的类型（字符串、数值等）</p>
+<pre><code class="language-js">var x = 5
+
+var str = &quot;hello&quot;
+
+var addX = function (value) {
+  return value + x
+};
+
+class Point {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+
+  toString() {
+    return '(' + this.x + ', ' + this.y + ')';
+  }
+}
+
+// module.exports.x = x
+// module.exports.str = str
+// module.exports.addX = addX
+// module.exports.Point = Point
+
+module.exports = {
+  x: x,
+  str: str,
+  addX: addX,
+  Point: Point
+}
+
+//却不能这样写
+exports = {
+  x: 10,
+}
+</code></pre>
+<p>:::</p>
+<ul>
+<li>
+<p>当通过exports去改变内存块里内容时，module.exports的值也会改变</p>
+</li>
+<li>
+<p>当通过module.exports去改变内存块里内容时，exports的值也会改变</p>
+</li>
+<li>
+<p>当module.exports被改变的时候，exports不会被改变</p>
+</li>
+<li>
+<p>当exports被改变的时候，module.exports不会被改变</p>
+</li>
+</ul>
+<p>所以，exports属性的出现应该可以直接向exports对象添加方法，从而方便对外输出模块接口。<u>不过当module.exports改变时，exports与module.exports也就断开了链接</u>，所以最好不要采用这种方式，统一采用module.exports方式。</p>
+<blockquote>
+<p>关于CommonJS规范（Nodejs采用的）和ES6中的AMD规范可看文章：<a href="https://javascript.ruanyifeng.com/nodejs/module.html">CommonJS规范</a></p>
+<p><a href="https://juejin.im/post/6844903971153264654">JS模块的导出和引入</a></p>
+</blockquote>
+<h4 id="模块初始化">模块初始化</h4>
+<p>一个模块中的JS代码仅在模块第一次被使用时执行一次，并在执行过程中初始化模块的导出对象。之后，缓存起来的导出对象被重复利用。</p>
+<h4 id="主模块">主模块</h4>
+<p>通过命令行参数传递给NodeJS以启动程序的模块被称为主模块。主模块负责调度组成整个程序的其它模块完成工作。</p>
+<p>例如通过以下命令启动程序时，<code>main.js</code>就是主模块。</p>
+<pre><code class="language-shell">$ node main.js
+</code></pre>
+<p>调用的实际上都是同一个模块，只会初始化一次。</p>
+<p>例如有以下目录。</p>
+<pre><code>- /home/user/hello/
+    - util/
+        counter.js
+    main.js
+</code></pre>
+<p>其中<code>counter.js</code>内容如下：</p>
+<pre><code class="language-js">var i = 0;
+
+function count() {
+    return ++i;
+}
+
+exports.count = count;
+</code></pre>
+<p>该模块内部定义了一个私有变量<code>i</code>，并在<code>exports</code>对象导出了一个公有方法<code>count</code>。</p>
+<p>主模块<code>main.js</code>内容如下：</p>
+<pre><code class="language-js">var counter1 = require('./util/counter');
+var    counter2 = require('./util/counter');
+
+console.log(counter1.count());
+console.log(counter2.count());
+console.log(counter2.count());
+</code></pre>
+<p>运行该程序的结果如下：</p>
+<pre><code class="language-shell">$ node main.js
+1
+2
+3
+</code></pre>
+<p>可以看到，<code>counter.js</code>并没有因为被require了两次而初始化两次。</p>
+<h3 id="二进制模块">二进制模块</h3>
+<p>虽然一般我们使用JS编写模块，但<u>NodeJS也支持使用C/C++编写二进制模块</u>。编译好的二进制模块除了文件扩展名是<code>.node</code>外，和JS模块的使用方式相同。虽然二进制模块能使用操作系统提供的所有功能，拥有无限的潜能，但对于前端同学而言编写过于困难，并且难以跨平台使用。</p>
+<h3 id="小结">小结</h3>
+<p>本章介绍了有关NodeJS的基本概念和使用方法，总结起来有以下知识点：</p>
+<ul>
+<li>NodeJS是一个JS脚本解析器，任何操作系统下安装NodeJS本质上做的事情都是把NodeJS执行程序复制到一个目录，然后保证这个目录在系统PATH环境变量下，以便终端下可以使用<code>node</code>命令。</li>
+<li>终端下直接输入<code>node</code>命令可进入命令交互模式，很适合用来测试一些JS代码片段，比如正则表达式。</li>
+<li>NodeJ<u>S使用<a href="http://wiki.commonjs.org/">CMD</a>模块系统，主模块作为程序入口点，所有模块在执行过程中只初始化一次。</u></li>
+<li>除非JS模块不能满足需求，否则<u>不要轻易使用二进制模块</u>，否则你的用户会叫苦连天。</li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[理解Node.js 阅读记录]]></title>
         <id>https://giriawsh.github.io/post/li-jie-nodejs-yue-du-ji-lu/</id>
@@ -5606,185 +5802,6 @@ http.createServer(...);
   return module.exports;
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[NodeJS初学系列1——回调函数、事件循环、EventEmitter]]></title>
-        <id>https://giriawsh.github.io/post/nodejs-chu-xue-xi-lie-hui-diao-han-shu-shi-jian-xun-huan-eventemitter/</id>
-        <link href="https://giriawsh.github.io/post/nodejs-chu-xue-xi-lie-hui-diao-han-shu-shi-jian-xun-huan-eventemitter/">
-        </link>
-        <updated>2020-09-28T08:54:55.000Z</updated>
-        <summary type="html"><![CDATA[<h1 id="前言">前言</h1>
-<p>Giria开始踏入Nodejs的坑了，今天学习了回调函数、事件循环、EventEmitter等内容。以下是一些记录。</p>
-]]></summary>
-        <content type="html"><![CDATA[<h1 id="前言">前言</h1>
-<p>Giria开始踏入Nodejs的坑了，今天学习了回调函数、事件循环、EventEmitter等内容。以下是一些记录。</p>
-<!-- more -->
-<h1 id="回调函数">回调函数</h1>
-<h2 id="阻塞代码">阻塞代码</h2>
-<p>阻塞代码示例：</p>
-<pre><code class="language-js">var fs = require(&quot;fs&quot;);
-
-var data = fs.readFileSync('input.txt');
-
-console.log(data.toString());
-console.log(&quot;程序执行结束!&quot;);
-</code></pre>
-<p>执行结果：</p>
-<pre><code>$ node main.js
-菜鸟教程官网地址：www.runoob.com
-
-程序执行结束!
-</code></pre>
-<h2 id="非阻塞代码">非阻塞代码</h2>
-<pre><code class="language-js">var fs = require(&quot;fs&quot;);
-
-fs.readFile('input.txt', function (err, data) {
-    if (err) return console.error(err);
-    console.log(data.toString());
-});
-
-console.log(&quot;程序执行结束!&quot;);
-</code></pre>
-<p>执行结果：</p>
-<pre><code>$ node main.js
-程序执行结束!
-菜鸟教程官网地址：www.runoob.com
-</code></pre>
-<p>第一个实例在文件读取完后才执行程序。 第二个实例我们不需要等待文件读取完，这样就可以在读取文件时同时执行接下来的代码，大大提高了程序的性能。</p>
-<p>因此，阻塞是按顺序执行的，而非阻塞是不需要按顺序的，所以如果需要处理回调函数的参数，我们就需要写在回调函数内。</p>
-<h1 id="事件循环">事件循环</h1>
-<p>Node.js 单线程类似进入一个while(true)的事件循环，直到没有事件观察者退出，每个异步事件都生成一个事件观察者，如果有事件发生就调用该回调函数.</p>
-<h2 id="事件驱动程序">事件驱动程序</h2>
-<p>Node.js 使用事件驱动模型，当web server接收到请求，就把它关闭然后进行处理，然后去服务下一个web请求。</p>
-<p>当这个请求完成，它被放回处理队列，当到达队列开头，这个结果被返回给用户。</p>
-<p>这个模型非常高效可扩展性非常强，因为 webserver 一直接受请求而不等待任何读写操作。（这也称之为非阻塞式IO或者事件驱动IO）</p>
-<p>在事件驱动模型中，<strong>会生成一个主循环来监听事件，当检测到事件时触发回调函数</strong>。</p>
-<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200928154841.jpeg" alt="img" loading="lazy"></figure>
-<p>Node.js 有多个内置的事件，我们可以通过引入 events 模块，并通过实例化 EventEmitter 类来绑定和监听事件。</p>
-<pre><code class="language-js">// 引入 events 模块
-var events = require('events');
-// 创建 eventEmitter 对象
-var eventEmitter = new events.EventEmitter();
- 
-// 创建事件处理程序
-var connectHandler = function connected() {
-   console.log('连接成功。');
-  
-   // 触发 data_received 事件 
-   eventEmitter.emit('data_received');
-}
- 
-// 绑定 connection 事件处理程序
-eventEmitter.on('connection', connectHandler);
- 
-// 使用匿名函数绑定 data_received 事件
-eventEmitter.on('data_received', function(){
-   console.log('数据接收成功。');
-});
- 
-// 触发 connection 事件 
-eventEmitter.emit('connection');
- 
-console.log(&quot;程序执行完毕。&quot;);
-</code></pre>
-<p>在 Node 应用程序中，执行异步操作的函数将回调函数作为最后一个参数， 回调函数接收错误对象作为第一个参数。</p>
-<h1 id="eventemitter">EventEmitter</h1>
-<p>Node.js 所有的异步 I/O 操作在完成时都会发送一个事件到事件队列。</p>
-<p>Node.js 里面的许多对象都会分发事件， 所有产生事件的对象都是 events.EventEmitter 的实例。</p>
-<h2 id="eventemitter类">EventEmitter类</h2>
-<p>events 模块只提供了一个对象： events.EventEmitter。EventEmitter 的核心就是事件触发与事件监听器功能的封装。</p>
-<pre><code class="language-js">// 引入 events 模块
-var events = require('events');
-// 创建 eventEmitter 对象
-var eventEmitter = new events.EventEmitter();
-</code></pre>
-<p>EventEmitter 对象如果在实例化时发生错误，会触发 error 事件。当添加新的监听器时，newListener 事件会触发，当监听器被移除时，removeListener 事件被触发。</p>
-<p>也可以这样写：</p>
-<pre><code class="language-js">var EventEmitter = require('events').EventEmitter; 
-var event = new EventEmitter(); 
-</code></pre>
-<p>EventEmitter 的每个事件由一个事件名和若干个参数组成，事件名是一个字符串，通常表达一定的语义。对于每个事件，EventEmitter 支持 若干个事件监听器。</p>
-<p>当事件触发时，注册到这个事件的事件监听器被依次调用，事件参数作为回调函数参数传递。</p>
-<p>多个事件的例子：</p>
-<pre><code>//event.js 文件
-var events = require('events'); 
-var emitter = new events.EventEmitter(); 
-emitter.on('someEvent', function(arg1, arg2) { 
-    console.log('listener1', arg1, arg2); 
-}); 
-emitter.on('someEvent', function(arg1, arg2) { 
-    console.log('listener2', arg1, arg2); 
-}); 
-emitter.emit('someEvent', 'arg1 参数', 'arg2 参数'); 
-</code></pre>
-<p>执行结果：</p>
-<pre><code>listener1 arg1 参数 arg2 参数
-listener2 arg1 参数 arg2 参数
-</code></pre>
-<p>可以看到两个事件监听器回调函数被先后调用。 这就是EventEmitter最简单的用法。</p>
-<p>一个实例：</p>
-<pre><code class="language-js">var events = require('events');
-var eventEmitter = new events.EventEmitter();
-
-// 监听器 #1
-var listener1 = function listener1() {
-   console.log('监听器 listener1 执行。');
-}
-
-// 监听器 #2
-var listener2 = function listener2() {
-  console.log('监听器 listener2 执行。');
-}
-
-// 绑定 connection 事件，处理函数为 listener1 
-eventEmitter.addListener('connection', listener1);
-
-// 绑定 connection 事件，处理函数为 listener2
-eventEmitter.on('connection', listener2);
-
-var eventListeners = eventEmitter.listenerCount('connection');
-console.log(eventListeners + &quot; 个监听器监听连接事件。&quot;);
-
-// 处理 connection 事件 
-eventEmitter.emit('connection');
-
-// 移除监绑定的 listener1 函数
-eventEmitter.removeListener('connection', listener1);
-console.log(&quot;listener1 不再受监听。&quot;);
-
-// 触发连接事件
-eventEmitter.emit('connection');
-
-eventListeners = eventEmitter.listenerCount('connection');
-console.log(eventListeners + &quot; 个监听器监听连接事件。&quot;);
-
-console.log(&quot;程序执行完毕。&quot;);
-</code></pre>
-<p>执行结果：</p>
-<pre><code>2 个监听器监听连接事件。
-监听器 listener1 执行。
-监听器 listener2 执行。
-listener1 不再受监听。
-监听器 listener2 执行。
-1 个监听器监听连接事件。
-程序执行完毕。
-</code></pre>
-<h2 id="error事件">error事件</h2>
-<p>EventEmitter 定义了一个特殊的事件 error，它包含了错误的语义，我们在遇到 异常的时候通常会触发 error 事件。</p>
-<p>当 error 被触发时，EventEmitter 规定如果没有响 应的监听器，Node.js 会把它当作异常，退出程序并输出错误信息。</p>
-<p>我们一般要为会触发 error 事件的对象设置监听器，避免遇到错误后整个程序崩溃。</p>
-<h2 id="继承eventemitter">继承EventEmitter</h2>
-<p>大多数时候我们不会直接使用 EventEmitter，而是在对象中继承它。包括 fs、net、 http 在内的，只要是支持事件响应的核心模块都是 EventEmitter 的子类。</p>
-<p>原因有两点：</p>
-<ul>
-<li>
-<p>首先，具有某个实体功能的对象实现事件符合语义， 事件的监听和发生应该是一个对象的方法。</p>
-</li>
-<li>
-<p>其次 JavaScript 的对象机制是基于原型的，支持部分多重继承，继承 EventEmitter 不会打乱对象原有的继承关系。</p>
-</li>
-</ul>
 ]]></content>
     </entry>
 </feed>

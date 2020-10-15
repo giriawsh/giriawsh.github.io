@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>《7天学会Nodejs》第一天——NodeJS基础 | Giria&#39;s Blog</title>
+<link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+
+<link rel="canonical" href="https://giriawsh.github.io/post/lessless7-tian-xue-hui-nodejsgreatergreater-di-yi-tian-nodejs-ji-chu/" />
+</head>
+<body>
+<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
+<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://giriawsh.github.io/"><img alt="logo" style="display:inline-block;" src="https://giriawsh.github.io//images/avatar.png"/></a><h1 title="Giria&#39;s Blog" class="weaklink"><a  href="/">Giria&#39;s Blog</a></h1>
+
+<div class="navbar weaklink">
+<div class="normal_nav">
+<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul></nav>
+<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
+<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1602768347134" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+</div></div>
+<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
+
+
+<div class="main"><div class="main-inner"><div class="content">
+<article class="post">
+<h2 class="post_title sm_margin"><a>《7天学会Nodejs》第一天——NodeJS基础</a></h2>
+<script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-10-15</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/NUEp6MDuu/" class="tag">Node.js</a> | 	<a href="https://giriawsh.github.io/tag/YijAokidn/" class="tag">NodeJS学习系列</a> | 	<a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="tag">前端</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">2011字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">8 min read</span>
+</section>
+
+<div style="display:flex">
+<div class="md_block" id="md_block">
+<div class="round-shape-one"></div>
+<ul>
+<li>电子书地址：<a href="http://nqdeng.github.io/7-days-nodejs/#1">7天学会NodeJS</a></li>
+</ul>
+<h2 id="1-nodejs基础">1. NodeJS基础</h2>
+<h3 id="什么是nodejs">什么是NodeJS</h3>
+<p>JS是脚本语言，脚本语言都需要一个解析器才能运行。对于写在HTML页面里的JS，浏览器充当了解析器的角色。而对于需要独立运行的JS，NodeJS就是一个解析器。</p>
+<p>每一种解析器都是一个运行环境，不但允许JS定义各种数据结构，进行各种计算，还允许JS使用运行环境提供的内置对象和方法做一些事情。</p>
+<p>例如运行在浏览器中的JS的用途是操作DOM，浏览器就提供了<code>document</code>之类的内置对象。而<u>运行在NodeJS中的JS的用途是操作磁盘文件或搭建HTTP服务器</u>，NodeJS就相应提供了<code>fs</code>、<code>http</code>等内置对象。</p>
+<h3 id="nodejs用处">NodeJS用处</h3>
+<p>NodeJS的作者说，他创造NodeJS的目的是为了<u>实现高性能Web服务器，他首先看重的是事件机制和异步IO模型的优越性</u>，而不是JS。</p>
+<p>但是他需要选择一种编程语言实现他的想法，<u>这种编程语言不能自带IO功能，并且需要能良好支持事件机制。</u>JS没有自带IO功能，天生就用于处理浏览器中的DOM事件，并且拥有一大群程序员，因此就成为了天然的选择。</p>
+<h3 id="模块">模块</h3>
+<p>在NodeJS中，一般将代码合理拆分到不同的JS文件中，每一个文件就是一个模块，而文件路径就是模块名。</p>
+<p>在编写每个模块时，都有<code>require</code>、<code>exports</code>、<code>module</code>三个预先定义好的变量可供使用。</p>
+<h4 id="require">require</h4>
+<p><code>require</code>函数<strong>用于在当前模块中加载和使用别的模块</strong>，传入一个模块名，<u>返回一个模块导出对象</u>。</p>
+<p>模块名可使用相对路径（以<code>./</code>开头），或者是绝对路径（以<code>/</code>或<code>C:</code>之类的盘符开头）。另外，模块名中的<code>.js</code>扩展名可以省略。</p>
+<pre><code class="language-js">var foo1 = require('./foo');
+var foo2 = require('./foo.js');
+var foo3 = require('/home/user/foo');
+var foo4 = require('/home/user/foo.js');
+
+// foo1至foo4中保存的是同一个模块的导出对象。
+</code></pre>
+<p>另外，可以使用以下方式加载和使用一个JSON文件。</p>
+<pre><code class="language-js">var data = require('./data.json');
+</code></pre>
+<h4 id="exports">exports</h4>
+<p><code>exports</code>对象是当前模块的**导出对象，用于导出模块<u>公有方法和属性</u>。**别的模块通过<code>require</code>函数使用当前模块时得到的就是当前模块的<code>exports</code>对象。</p>
+<p>以下例子中导出了一个公有方法。</p>
+<pre><code class="language-js">exports.hello = function () {
+    console.log('Hello World!');
+};
+</code></pre>
+<h4 id="module">module</h4>
+<p>通过<code>module</code>对象可以访问到当前模块的一些相关信息，但最多的用途是<strong>替换当前模块的导出对象</strong>。</p>
+<p>例如模块导出对象默认是一个普通对象，如果想改成一个函数的话，可以使用以下方式。</p>
+<pre><code class="language-js">module.exports = function () {
+    console.log('Hello World!');
+};
+</code></pre>
+<p>::: tip Node.js模块里exports与module.exports的区别?</p>
+<p><strong>一句话说明就是：require方能看到的只有module.exports这个对象。它无法看到exports对象，而我们在编写模块时用到的exports对象实际上只是对module.exports的引用。</strong></p>
+<p>（exports指向的地址和module.exports指向的内存地址是一样的）</p>
+<p>这等同在每个模块头部，有一行这样的命令。</p>
+<pre><code class="language-js">var exports = module.exports;
+</code></pre>
+<p>在nodejs中，module.exports初始的时候置为{}，exports也指向这个空对象。在对外输出模块接口时，可以向exports对象添加方法。</p>
+<p>那么一下两者是完全等价的，修改的都是统一内存地址里的东西：</p>
+<pre><code class="language-js">exports.name = function(x){
+	console.log(x);
+}
+
+===
+
+module.exports.name = function(x){
+	console.log(x);
+}
+</code></pre>
+<p>但是这样写就有区别了：</p>
+<pre><code class="language-js">exports = function(x){
+	console.log(x)
+}
+// 上面的function是一块新的内存地址，导致exports和module.exports不再存在任何关系
+// 然而require只能看到module.exports对象，看到不到exports对象，所以这样写无法导出
+</code></pre>
+<p><code>exports.xxx = yyy</code>都能导出，因为<code>exports = module.exports</code>这一条赋值语句没有发生改变，它们还是指向同一块地址，只不过相当于增加了<code>xxx: yyy</code>这样的键值对而已。但是如果直接对对象本身进行重新赋值，将会改变它的指向。</p>
+<pre><code class="language-js">exports.hello = function() {
+  return 'hello';
+};
+
+module.exports = 'Hello world';
+
+// `hello`函数是无法对外输出的，因为`module.exports`被重新赋值了。
+</code></pre>
+<p>这意味着，<u>如果一个模块的对外接口，就是一个单一的值</u>，不能使用<code>exports</code>输出，只能使用<code>module.exports</code>输出。</p>
+<pre><code class="language-js">module.exports = function(x){
+	console.log(x);
+}
+
+//可以导出
+</code></pre>
+<p>module.exports除了导出对象、函数，还可以导出所有的类型（字符串、数值等）</p>
+<pre><code class="language-js">var x = 5
+
+var str = &quot;hello&quot;
+
+var addX = function (value) {
+  return value + x
+};
+
+class Point {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+
+  toString() {
+    return '(' + this.x + ', ' + this.y + ')';
+  }
+}
+
+// module.exports.x = x
+// module.exports.str = str
+// module.exports.addX = addX
+// module.exports.Point = Point
+
+module.exports = {
+  x: x,
+  str: str,
+  addX: addX,
+  Point: Point
+}
+
+//却不能这样写
+exports = {
+  x: 10,
+}
+</code></pre>
+<p>:::</p>
+<ul>
+<li>
+<p>当通过exports去改变内存块里内容时，module.exports的值也会改变</p>
+</li>
+<li>
+<p>当通过module.exports去改变内存块里内容时，exports的值也会改变</p>
+</li>
+<li>
+<p>当module.exports被改变的时候，exports不会被改变</p>
+</li>
+<li>
+<p>当exports被改变的时候，module.exports不会被改变</p>
+</li>
+</ul>
+<p>所以，exports属性的出现应该可以直接向exports对象添加方法，从而方便对外输出模块接口。<u>不过当module.exports改变时，exports与module.exports也就断开了链接</u>，所以最好不要采用这种方式，统一采用module.exports方式。</p>
+<blockquote>
+<p>关于CommonJS规范（Nodejs采用的）和ES6中的AMD规范可看文章：<a href="https://javascript.ruanyifeng.com/nodejs/module.html">CommonJS规范</a></p>
+<p><a href="https://juejin.im/post/6844903971153264654">JS模块的导出和引入</a></p>
+</blockquote>
+<h4 id="模块初始化">模块初始化</h4>
+<p>一个模块中的JS代码仅在模块第一次被使用时执行一次，并在执行过程中初始化模块的导出对象。之后，缓存起来的导出对象被重复利用。</p>
+<h4 id="主模块">主模块</h4>
+<p>通过命令行参数传递给NodeJS以启动程序的模块被称为主模块。主模块负责调度组成整个程序的其它模块完成工作。</p>
+<p>例如通过以下命令启动程序时，<code>main.js</code>就是主模块。</p>
+<pre><code class="language-shell">$ node main.js
+</code></pre>
+<p>调用的实际上都是同一个模块，只会初始化一次。</p>
+<p>例如有以下目录。</p>
+<pre><code>- /home/user/hello/
+    - util/
+        counter.js
+    main.js
+</code></pre>
+<p>其中<code>counter.js</code>内容如下：</p>
+<pre><code class="language-js">var i = 0;
+
+function count() {
+    return ++i;
+}
+
+exports.count = count;
+</code></pre>
+<p>该模块内部定义了一个私有变量<code>i</code>，并在<code>exports</code>对象导出了一个公有方法<code>count</code>。</p>
+<p>主模块<code>main.js</code>内容如下：</p>
+<pre><code class="language-js">var counter1 = require('./util/counter');
+var    counter2 = require('./util/counter');
+
+console.log(counter1.count());
+console.log(counter2.count());
+console.log(counter2.count());
+</code></pre>
+<p>运行该程序的结果如下：</p>
+<pre><code class="language-shell">$ node main.js
+1
+2
+3
+</code></pre>
+<p>可以看到，<code>counter.js</code>并没有因为被require了两次而初始化两次。</p>
+<h3 id="二进制模块">二进制模块</h3>
+<p>虽然一般我们使用JS编写模块，但<u>NodeJS也支持使用C/C++编写二进制模块</u>。编译好的二进制模块除了文件扩展名是<code>.node</code>外，和JS模块的使用方式相同。虽然二进制模块能使用操作系统提供的所有功能，拥有无限的潜能，但对于前端同学而言编写过于困难，并且难以跨平台使用。</p>
+<h3 id="小结">小结</h3>
+<p>本章介绍了有关NodeJS的基本概念和使用方法，总结起来有以下知识点：</p>
+<ul>
+<li>NodeJS是一个JS脚本解析器，任何操作系统下安装NodeJS本质上做的事情都是把NodeJS执行程序复制到一个目录，然后保证这个目录在系统PATH环境变量下，以便终端下可以使用<code>node</code>命令。</li>
+<li>终端下直接输入<code>node</code>命令可进入命令交互模式，很适合用来测试一些JS代码片段，比如正则表达式。</li>
+<li>NodeJ<u>S使用<a href="http://wiki.commonjs.org/">CMD</a>模块系统，主模块作为程序入口点，所有模块在执行过程中只初始化一次。</u></li>
+<li>除非JS模块不能满足需求，否则<u>不要轻易使用二进制模块</u>，否则你的用户会叫苦连天。</li>
+</ul>
+
+<span id="footnote"></span>
+<div id = "warn"></div>
+</div>
+<div class="toc-container"><ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#1-nodejs%E5%9F%BA%E7%A1%80">1. NodeJS基础</a>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFnodejs">什么是NodeJS</a></li>
+<li><a href="#nodejs%E7%94%A8%E5%A4%84">NodeJS用处</a></li>
+<li><a href="#%E6%A8%A1%E5%9D%97">模块</a>
+<ul>
+<li><a href="#require">require</a></li>
+<li><a href="#exports">exports</a></li>
+<li><a href="#module">module</a></li>
+<li><a href="#%E6%A8%A1%E5%9D%97%E5%88%9D%E5%A7%8B%E5%8C%96">模块初始化</a></li>
+<li><a href="#%E4%B8%BB%E6%A8%A1%E5%9D%97">主模块</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%A8%A1%E5%9D%97">二进制模块</a></li>
+<li><a href="#%E5%B0%8F%E7%BB%93">小结</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="fullPage"><canvas id="canvas"></canvas></div>
+</article>
+<div id="eof"><span>EOF</span></div><div class="round-shape-one"></div>
+<section>
+<div class="doc_comments">
+
+	  
+		<div id="gitalk-container"></div>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/qyxtim/Static@3.8/gitalk.min.js"></script><link href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.css"rel="stylesheet"><script>var gitalk=new Gitalk({clientID:"ee7c215043d62409bb53",clientSecret:"455d2f4a532bbe073ca25fdf9111932f00bbc624",repo:"giriawsh.github.io",owner:"giriawsh",admin:["giriawsh"],id:(location.pathname).substring(0, 49),distractionFreeMode:false});gitalk.render("gitalk-container");</script>
+	  
+
+	  
+
+</div></section>
+</div></div></div><script>
+"use strict";!function(){for(var n=document.getElementsByTagName("pre"),e=n.length,s=0;s<e;s++){n[s].innerHTML='<span class="line-number"></span>'+n[s].innerHTML+'<span class="cl"></span>';for(var a=n[s].innerHTML.split(/\n/).length,r=0;r<a-1;r++){n[s].getElementsByTagName("span")[0].innerHTML+="<span>"+(r+1)+"</span>"}}}();
+let mainNavLinks=document.querySelectorAll(".markdownIt-TOC a");window.addEventListener("scroll",event=>{let fromTop=window.scrollY;mainNavLinks.forEach((link,index)=>{let section=document.getElementById(decodeURI(link.hash).substring(1));let nextSection=null
+if(mainNavLinks[index+1]){nextSection=document.getElementById(decodeURI(mainNavLinks[index+1].hash).substring(1));}
+if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop){link.classList.add("currentToc");}else{link.classList.remove("currentToc");}}else{link.classList.add("currentToc");}}else{link.classList.remove("currentToc");}});});
+var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
+var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
+var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
+content="本文最后更新于2020-10-15，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-10-15 21:24:38";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+</script>
+<style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
+<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"><a href="https://github.com/giriawsh"title="github"><i class="iconfont icon-github"></i></a></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
+<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>58</strong> posts</span></div></div>
+<script>
+console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;", );
+</script>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+<script type="text/javascript" async src="https://giriawsh.github.io//media/js/prism.js"></script>
+</body>
+
+</html>
