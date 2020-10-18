@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-10-17T15:19:23.549Z</updated>
+    <updated>2020-10-18T14:33:37.690Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -10,6 +10,356 @@
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[《JS权威指南》第四章3]]></title>
+        <id>https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-si-zhang-3/</id>
+        <link href="https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-si-zhang-3/">
+        </link>
+        <updated>2020-10-18T14:33:06.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="逻辑表达式">逻辑表达式</h2>
+<h3 id="逻辑与">逻辑与&amp;&amp;</h3>
+<p>&amp;&amp;运算符可以从三个不同的层次进行理解</p>
+<ol>
+<li>当操作数都是布尔值时，&amp;&amp;对两个值执行AND操作。返回true或false</li>
+</ol>
+<p>关系运算符的优先级比<code>&amp;&amp;</code>和<code>||</code>要高</p>
+<ol start="2">
+<li>&amp;&amp;可以对真值和假值（false, null, undefined, 0, -0, NaN,  &quot;&quot;）进行AND操作。返回真值或假值</li>
+</ol>
+<p>在JS中任何希望使用布尔值的地方，表达式和语句都会将其当做真值或假值来对待。</p>
+<ol start="3">
+<li>运算符首先计算左操作数的值（即&amp;&amp;左侧的表达式），如果是假值，&amp;&amp;此时简单地<u>返回左操作数的值</u>；如果左操作数是真值，&amp;&amp;将<u>计算右操作数的值并将其返回</u>作为整个表达式的计算结果。</li>
+</ol>
+<pre><code class="language-js">var o = { x: 1 };
+var p = null;
+o &amp;&amp; o.x // =&gt; 1 左值是真值，计算了右值后返回
+p &amp;&amp; p.x // =&gt; null
+</code></pre>
+<p>&amp;&amp;的行为有时被称作<strong>短路</strong></p>
+<pre><code class="language-js">if (a==b) stop()
+等价于
+(a==b) &amp;&amp; stop()
+</code></pre>
+<p>当&amp;&amp;右侧的表达式具有副作用（赋值、递增、递减、函数调用表达式）时，要小心，因为这些表达式的执行依赖于左操作数的计算结果。</p>
+<blockquote>
+<p>右侧有副作用应尽量避免</p>
+</blockquote>
+<pre><code class="language-js">var a = 0;
+a++ &amp;&amp; a // =&gt; 0 因为a++返回0，是个假值
+
+var b = 1;
+b++ &amp;&amp; b// =&gt; 2 b++返回1，是个真值，返回右值
+
+var c = 2;
+c &amp;&amp; c++ // =&gt; 2 c++返回2
+c // =&gt; 3
+
+var d = 3;
+d &amp;&amp; (b = d + 2) // =&gt; 5 赋值返回计算后结果
+
+var e = 4;
+(e = e -3) &amp;&amp; function(){return --e;}// =&gt; ƒ (){return --e;} 函数调用返回函数调用
+e // =&gt; 1 但是函数调用并没有执行
+</code></pre>
+<p>::: tip</p>
+<p>大多数情况下，&amp;&amp;仅用来对真值和假值做布尔运算</p>
+<p>:::</p>
+<h3 id="逻辑或">逻辑或||</h3>
+<p>大多数情况下知识做简单OR运算。</p>
+<p>首先计算第一个操作数的值，如果是真值，<u>返回这个真值</u>；否则，计算第二个操作数的值，<u>并返回这个表达式的计算结果</u>。</p>
+<blockquote>
+<p>同样应当避免右操作数包含一些具有副作用的表达式</p>
+</blockquote>
+<p>::: tip</p>
+<p>这个运算符最常用的方式是用来从一组备选表达式中选出第一个真值表达式。</p>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201015122340.png" alt="image-20201015122333585" loading="lazy"></figure>
+<p>这种用法通常用在函数体内，用来给参数提供默认值</p>
+<figure data-type="image" tabindex="2"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201015122407.png" alt="image-20201015122407148" loading="lazy"></figure>
+<p>:::</p>
+<h3 id="逻辑非">逻辑非！</h3>
+<p>一元运算符，目的是将操作数的布尔值进行求反。</p>
+<p>！首先将其操作数转换为布尔值（&amp;&amp;和||并不会这么做），然后再对布尔值求反。</p>
+<p>！ 总是返回true或者false</p>
+<p>::: tip</p>
+<p>可以通过两次逻辑非运算来得到一个值的等价布尔值：<code>!!x</code></p>
+<p>:::</p>
+<p>！具有很高的优先级</p>
+<p>有这样两个恒等式：</p>
+<pre><code class="language-js">!(p&amp;&amp;q) === !p || !q
+!(p||q) === !p &amp;&amp; !q
+</code></pre>
+<h2 id="赋值表达式">赋值表达式</h2>
+<p>JS使用<code>=</code>来给变量或者属性赋值。<code>=</code>运算符希望它的左操作数是一个左值（一个变量或者对象属性），它的右操作数可以是任意类型的任意值。</p>
+<p>赋值表达式的副作用时：右操作数的值赋值给左侧的变量或者对象属性，后续对这个变量和对象属性的引用都将得到这个值。</p>
+<p><code>=</code>具有非常低的优先级。</p>
+<p>赋值操作符的结合性是从右至左。因此可以这样给多个变量赋值：</p>
+<pre><code class="language-js">i=j=k=0;
+</code></pre>
+<h3 id="带操作的赋值运算">带操作的赋值运算</h3>
+<p>就是这些东西：</p>
+<figure data-type="image" tabindex="3"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201015165516.png" alt="image-20201015165516326" loading="lazy"></figure>
+<p>在大多数情况下：</p>
+<pre><code class="language-js">a op= b
+等价于
+a = a op b
+</code></pre>
+<p>第一行a被计算了一次，第二行a计算了两次。</p>
+<p>只有在a包含具有副作用的表达式（比如函数调用和赋值操作）的时候，两者才不等价。</p>
+<p>举个例子：</p>
+<pre><code class="language-js">data[i++] *= 2;
+data[i++] = data[i++] * 2
+</code></pre>
+<p>第二个i会被加两次。</p>
+<h2 id="表达式计算">表达式计算</h2>
+<p>JS可以解释运行由JS源代码组成的字符串，并产生一个值。JS通过全局函数eval()来完成这个工作。</p>
+<pre><code class="language-js">eval(&quot;3+2&quot;) // =&gt; 5
+</code></pre>
+<p>::: tip</p>
+<p>动态判断源代码中的字符串是一种强大的语言特性，几乎没有必要在实际中应用。</p>
+<p>如果使用了eval，应当仔细考虑是否真的需要。</p>
+<p>:::</p>
+<figure data-type="image" tabindex="4"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201015170353.png" alt="image-20201015170353743" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201015170402.png" alt="image-20201015170402753" loading="lazy"></figure>
+<h3 id="eval基本用法">eval()基本用法</h3>
+<p>eval()只有一个参数</p>
+<ul>
+<li>如果传入的参数不是字符串，它直接返回这个参数</li>
+<li>如果传入字符串，它会把字符串当成JS代码进行编译。
+<ul>
+<li>如果编译失败，抛出一个语法错误异常
+<ul>
+<li>这个异常将把调用传递给eval()</li>
+</ul>
+</li>
+<li>如果编译成功，则开始执行这段代码，并返回空字符串中的最后一个表达式或语句的值
+<ul>
+<li>如果最后一个表达式或语句没有值，则最终返回undefined</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>关于eval()最重要的是，<strong>它使用了调用它的变量作用域环境。</strong></p>
+<pre><code class="language-eval">var x = 1;
+eval(&quot;y = x + 1&quot;)
+y // =&gt; 2
+</code></pre>
+<p><strong>如果在最顶层代码中调用eval()，它会作用域全局变量和全局函数</strong>。</p>
+<pre><code class="language-js">var x = 1;
+function f(){
+    var x = 100;
+    x++;
+    eval(x++);
+    console.log(x);
+}
+f();
+eval(x++);
+console.log(x);
+
+102
+2
+</code></pre>
+<p>::: warning eval字符串必须在语法上讲得通</p>
+<p>比如<code>eval(&quot;return;&quot;)</code>是没有意义的，因为return只有在函数中才起作用</p>
+<p>:::</p>
+<p>事实上，<strong>eval的字符串执行时的上下文环境和调用函数的上下文环境是一样的</strong>。这不能使其作为函数的一部分来运行。</p>
+<figure data-type="image" tabindex="6"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201015172825.png" alt="image-20201015172824953" loading="lazy"></figure>
+<h3 id="全局eval">全局eval()</h3>
+<p>eval()<u>具有更改局部变量的能力</u>，这对于JS优化器来说是一个很大的问题。</p>
+<p>为了让JS解释器的实现更加简化，<strong>ECMAScript3</strong>规定任何解释器都不允许对eval赋予别名。否则抛出一个EvalError异常。</p>
+<p>实际上，大多数实现中，当通过别名调用时，eval()会将其字符串当成<u>顶层的全局代码</u>来执行。</p>
+<p>::: tip 当成顶层的全局代码执行不会影响函数内的代码优化</p>
+<p>执行的代码可能会定义新的全局变量和全局函数，或者给全局变量赋值。</p>
+<p>但是却不能使用或修改主调函数中的局部变量。</p>
+<p>因此，这不会影响到函数内的代码优化。</p>
+<p>:::</p>
+<p><strong>ECMAScript5</strong>是<u>反对使用EvalError</u>的，并且规范了eval()的行为。</p>
+<p>::: tip <strong>直接eval</strong></p>
+<p>当直接使用非限定的eval名称来调用eval()函数时，被称为直接eval。</p>
+<p>（就是不给它重新赋值给别的名字。）</p>
+<pre><code class="language-js">var f = eval;//使用了别名调用的eval
+var g = f;
+</code></pre>
+<p>:::</p>
+<ul>
+<li>
+<p>直接调用eval()时，它总是在调用它的上下文作用域内执行。</p>
+</li>
+<li>
+<p>其他的间接调用则使用全局对象作为其上下文作用域，并且<u>无法读、写、定义局部变量和函数</u>。</p>
+</li>
+</ul>
+<figure data-type="image" tabindex="7"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201018171256.png" alt="image-20201018171249320" loading="lazy"></figure>
+<p>如果是全局的话，在外层console x或者y时会得到修改，否侧不会。</p>
+<p>全局eval是一种很有用的特性，它允许我们执行那些对上下文没有任何依赖的全局脚本代码段（其实是一件很神奇的事，明明在函数内部使用，却最终影响的只有全局）</p>
+<h3 id="严格eval">严格eval()</h3>
+<p><strong>ECMAScript5严格模式</strong>下调用eval()时，eval执行的代码段可以查询或更改局部变量，但不能在局部作用域中定义新的变量或函数。</p>
+<p>且将“eval”列为保留字，不能用一个别名覆盖eval()函数。变量名、函数名、函数参数或者异常捕获的参数都不能取名为eval。</p>
+<p>（由于无法进行间接赋值，自然不可能对全局产生影响）</p>
+<h4 id="总结"><strong>总结</strong>：</h4>
+<p><strong>ECMAScript3</strong></p>
+<ul>
+<li>
+<p>规定任何解释器都不允许对eval赋予别名。否则抛出一个EvalError异常。</p>
+</li>
+<li>
+<p>大多数实现中，当通过别名调用时，eval()会将其字符串当成<u>顶层的全局代码</u>来执行。</p>
+</li>
+<li>
+<p>可能会定义新的全局变量和全局函数，或者给全局变量赋值。</p>
+</li>
+<li>
+<p>不能使用或修改主调函数中的局部变量。</p>
+</li>
+</ul>
+<p><strong>ECMAScript5</strong></p>
+<ul>
+<li>
+<p>反对使用EvalError。</p>
+</li>
+<li>
+<p>直接调用eval()时，它总是在调用它的上下文作用域内执行。</p>
+</li>
+<li>
+<p>其他的间接调用则使用全局对象作为其上下文作用域，并且<u>无法读、写、定义局部变量和函数</u>。</p>
+</li>
+</ul>
+<p><strong>ECMAScript5严格模式</strong></p>
+<ul>
+<li>
+<p>eval执行的代码段可以查询或更改局部变量，但不能在局部作用域中定义新的变量或函数。</p>
+</li>
+<li>
+<p>将“eval”列为保留字，任何东西都不能取名为eval</p>
+</li>
+<li>
+<p>由于无法进行间接赋值，自然不可能对全局产生影响</p>
+</li>
+</ul>
+<h2 id="其他运算符">其他运算符</h2>
+<h3 id="条件运算符">条件运算符?:</h3>
+<p>唯一一个三元运算符。操作数可以是任意类型。</p>
+<p>典型场景，判断一个变量是否有定义（并拥有一个有意义的真值）。</p>
+<figure data-type="image" tabindex="8"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201018174526.png" alt="image-20201018174526667" loading="lazy"></figure>
+<h3 id="typeof运算符">typeof运算符</h3>
+<p>一元运算符，操作数可以是任意类型。</p>
+<p>返回值 表示操作数类型的一个字符串。</p>
+<p>typeof运算符可以带上圆括号，让typeof看起来像一个函数名，而不是一个运算符关键字：</p>
+<pre><code>typeof(i);
+</code></pre>
+<figure data-type="image" tabindex="9"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201018174805.png" alt="image-20201018174805341" loading="lazy"></figure>
+<p>如果想将null和普通对象区分开，必须针对特殊值显式检测。</p>
+<p>对于宿主对象来说，typeof可能并不返回object，而返回字符串。</p>
+<blockquote>
+<p>但实际上客户端JS中的大多数宿主对象都是object类型。</p>
+</blockquote>
+<p>对于所有对象和数组的typeof结果都是object，因此它对于区分对象和其他原始值来说是很有帮助的。</p>
+<p>::: tip 区分方法</p>
+<ul>
+<li>typeof</li>
+</ul>
+<p>区分对象和其他原始值</p>
+<ul>
+<li>instanceof、class特性、constructor属性</li>
+</ul>
+<p>区别对象的类</p>
+<p>:::</p>
+<p>尽管JS中的函数是对象的一种，但typeof还是将特殊特殊对待，返回function。</p>
+<p>在JS中，函数和“可执行的对象”(callable object)有着微妙的区别。</p>
+<ul>
+<li>所有函数都是可执行的。</li>
+<li>对象也有可能是可执行的，可以像调用函数一样调用它，但是它并不是一个真正的函数。</li>
+</ul>
+<p>ES3规范：对于所有<strong>内置可执行对象</strong>，typeof返回function</p>
+<p>ES5规范：<strong>所有可执行对象（包括内置对象和宿主对象）</strong>，typeof返回function</p>
+<blockquote>
+<p>大多数浏览器厂商都将JS的<u>原生函数对象</u>当成它们的<u>宿主对象</u>。</p>
+</blockquote>
+<h4 id="内置对象-宿主对象-原生对象">*内置对象、宿主对象、原生对象</h4>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects">JS标准内置对象清单</a></p>
+<ol>
+<li>
+<p>内置（Build-in）对象与原生（Naitve）对象的区别在于：前者总是在<u>引擎初始化阶段就被创建好的对象</u>，是后者的一个子集；而后者<u>包括了一些在运行过程中动态创建的对象</u>。</p>
+</li>
+<li>
+<p>宿主对象不是引擎的原生对象，而是由宿主框架通过某种机制注册到JavaScript引擎中的对象。</p>
+</li>
+<li>
+<p>一些宿主会把自己提供的对象／构造器也称为“原生对象”，例如Internet Explorer 7就把它提供的XMLHttpRequest()称为原生的——与此相对的是在它的更早先版本中通过“new ActiveXObject('Microsoft.XMLHTTP')”这样的方法创建的对象。这种情况下，读者应注意到“宿主的原生对象”与“引擎的原生对象”之间的差异。</p>
+</li>
+</ol>
+<figure data-type="image" tabindex="10"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201018220006.webp" alt="img" loading="lazy"></figure>
+<h5 id="一-原生对象">一、原生对象：</h5>
+<p>ECMA-262 把原生对象（native object）定义为“独立于宿主环境的 ECMAScript 实现提供的对象”。</p>
+<p>Object、Function、Array、String、Boolean、Number、Date、RegExp、Error、EvalError、RangeError、ReferenceError、SyntaxError、TypeError、URIError、ActiveXObject(服务器方面)、Enumerator(集合遍历类)、RegExp（正则表达式）</p>
+<p>由此可以看出，简单来说，原生对象就是 ECMA-262 定义的类（引用类型）。</p>
+<h5 id="二-内置对象">二、内置对象</h5>
+<p>ECMA-262 把内置对象（built-in object）定义为“由 ECMAScript 实现提供的、独立于宿主环境的所有对象，在 ECMAScript 程序开始执行时出现”。这意味着<u>开发者不必明确实例化内置对象，它已被实例化了。</u></p>
+<p>每个内置对象都是原生对象。</p>
+<h5 id="三-宿主对象">三、宿主对象</h5>
+<p>何为“宿主对象”？ ECMAScript中的“宿主”当然就是我们网页的运行环境，即“操作系统”和“浏览器”。所有非原生对象都是宿主对象（host object），即由 ECMAScript 实现的<u>宿主环境提供的对象</u>。</p>
+<p>所有的 BOM 和 DOM 对象都是宿主对象。因为其对于不同的“宿主”环境所展示的内容不同。其实说白了就是，ECMAScript官方未定义的对象都属于宿主对象，因为其未定义的对象大多数是自己通过ECMAScript程序创建的对象。</p>
+<h3 id="delete运算符">delete运算符</h3>
+<p>delete是一元操作符，它用来删除对象属性或者数组元素。</p>
+<pre><code class="language-js">var o = {x:1, y:2};
+delete o.x;
+&quot;x&quot; in o; // =&gt; false
+</code></pre>
+<pre><code class="language-js">var a = [1, 2, 3];
+delete a[2];
+2 in a // =&gt; false注意这里的2是序号，也就是说a[2]不在a中了
+a // =&gt;[1, 2, 空]
+a.length // =&gt; 3但是a的长度却没有改变 删除操作留下了一个洞
+</code></pre>
+<p>删除属性或者数组元素不仅仅是设置了一个undefined的值。</p>
+<p>删除后这个元素不存在了，读取一个不存在的值将返回undefined，但是可以通过in运算符来检测这个属性是否在对象中存在。</p>
+<p>delete希望操作数是一个左值。</p>
+<ul>
+<li>不是左值，delete不进行任何操作，且返回true</li>
+<li>是左值，delete将试图删除这个指定的左值
+<ul>
+<li>删除成功，delete返回true（包括删除不存在的属性）</li>
+</ul>
+</li>
+</ul>
+<p>一些不可删除的属性：</p>
+<ol>
+<li>一些内置核心和客户端属性</li>
+<li>用户通过var语句声明的变量不能删除</li>
+<li>通过function语句定义的函数和函数参数。</li>
+</ol>
+<p>ES4严格模式中，如果delete的操作数是非法的（例如变量、函数、函数参数），delete操作将抛出一个语法错误。</p>
+<p>只有操作数是一个<u>属性访问表达式</u>的时候它才会正常工作。</p>
+<p>delete删除不可配置属性:</p>
+<ul>
+<li>严格模式下，会抛出一个类型错误异常</li>
+<li>非严格模式下，不会报错，只是简单地返回false，以表明操作数不能执行删除操作。</li>
+</ul>
+<figure data-type="image" tabindex="11"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201018221631.png" alt="image-20201018221631337" loading="lazy"></figure>
+<p>关于这一点，我们在第三章的全局对象属性中有提到：</p>
+<figure data-type="image" tabindex="12"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201018222255.png" alt="image-20201018222255610" loading="lazy"></figure>
+<h3 id="void运算符">void运算符</h3>
+<p>void是一元运算符,它出现在操作数之前，操作数可以是任意类型。</p>
+<p>操作数会照常计算，但<u>忽略计算结果并返回undefined</u>。</p>
+<p>::: tip</p>
+<p>由于void会忽略操作数的值，因此在操作数具有副作用的时候使用void来让程序更具语义。</p>
+<p>:::</p>
+<p>这个运算符最常用在客户端的URL——javascript:URL中。在URL中可以写带有副作用的表达式，而void则让浏览器不必显示这个表达式的计算结果。</p>
+<p>例如经常在a标签中使用的void运算符：</p>
+<pre><code class="language-html">&lt;a href=&quot;javascript:void window.open();&quot;&gt;打开一个新窗口&lt;/a&gt;
+</code></pre>
+<p>当然也可以通过给a标签的onclick绑定一个事件处理程序。</p>
+<h3 id="逗号运算符">逗号运算符</h3>
+<p>逗号运算符是二元运算符，操作室可以是任意类型。</p>
+<p>它首先计算左操作数，然后右操作数，最后返回 右操作数的值。</p>
+<figure data-type="image" tabindex="13"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201018223056.png" alt="image-20201018223056091" loading="lazy"></figure>
+<p>总是会计算左侧的表达式，但计算结果会被忽略。</p>
+<p>只有左侧表达式更具有副作用，才会使用逗号运算符让代码变得更通顺。</p>
+<p>最常用的地方当然是在for循环里了。</p>
+<pre><code class="language-js">for(var i = 0, j = 10; i &lt; j; i++, j--);
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[《7天学会Nodejs》第一天——NodeJS基础]]></title>
         <id>https://giriawsh.github.io/post/lessless7-tian-xue-hui-nodejsgreatergreater-di-yi-tian-nodejs-ji-chu/</id>
@@ -5396,410 +5746,6 @@ console.log(process.memoryUsage());
   heapTotal: 4734976,
   heapUsed: 2444624,
   external: 844606
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[NodeJS初学系列2——Buffer、Stream、模块系统]]></title>
-        <id>https://giriawsh.github.io/post/nodejs-chu-xue-xi-lie-2-bufferstreammo-kuai-xi-tong/</id>
-        <link href="https://giriawsh.github.io/post/nodejs-chu-xue-xi-lie-2-bufferstreammo-kuai-xi-tong/">
-        </link>
-        <updated>2020-09-30T10:24:18.000Z</updated>
-        <summary type="html"><![CDATA[<h1 id="前言">前言</h1>
-<p>今天是学习Node的第二天，今天学习了有Buffer、Stream、模块系统等（wait怎么越来越有c++那味儿了）</p>
-]]></summary>
-        <content type="html"><![CDATA[<h1 id="前言">前言</h1>
-<p>今天是学习Node的第二天，今天学习了有Buffer、Stream、模块系统等（wait怎么越来越有c++那味儿了）</p>
-<!-- more -->
-<h1 id="buffer">Buffer</h1>
-<p>JavaScript 语言自身只有字符串数据类型，没有二进制数据类型。</p>
-<p>但在处理像TCP流或文件流时，必须使用到二进制数据。因此在 Node.js中，定义了一个 Buffer 类，该类用来创建一个专门存放二进制数据的缓存区。</p>
-<p>在 Node.js 中，Buffer 类是随 Node 内核一起发布的核心库。Buffer 库为 Node.js 带来了一种存储原始数据的方法，可以让 Node.js 处理二进制数据，每当需要在 Node.js 中处理I/O操作中移动的数据时，就有可能使用 Buffer 库。</p>
-<p>原始数据存储在 Buffer 类的实例中。一个 Buffer 类似于一个整数数组，但它对应于 V8 堆内存之外的一块原始内存。</p>
-<h2 id="buffer与字符编码">Buffer与字符编码</h2>
-<p>Buffer 实例一般用于表示编码字符的序列，比如 UTF-8 、 UCS2 、 Base64 、或十六进制编码的数据。</p>
-<p>Buffer 实例与普通的 JavaScript 字符串之间进行相互转换：</p>
-<pre><code>const buf = Buffer.from('runoob', 'ascii');
-
-// 输出 72756e6f6f62
-console.log(buf.toString('hex'));
-
-// 输出 cnVub29i
-console.log(buf.toString('base64'));
-</code></pre>
-<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200929170751.png" alt="image-20200929170744188" loading="lazy"></figure>
-<h2 id="buffer类">Buffer类</h2>
-<p>Buffer 提供了以下 API 来创建 Buffer 类：</p>
-<ul>
-<li><strong>Buffer.alloc(size[, fill[, encoding]])：</strong> 返回一个指定大小的 Buffer 实例，如果没有设置 fill，则默认填满 0</li>
-<li><strong>Buffer.allocUnsafe(size)：</strong> 返回一个指定大小的 Buffer 实例，但是它不会被初始化，所以它可能包含敏感的数据</li>
-<li><strong>Buffer.allocUnsafeSlow(size)</strong></li>
-<li><strong>Buffer.from(array)：</strong> 返回一个被 array 的值初始化的新的 Buffer 实例（传入的 array 的元素只能是数字，不然就会自动被 0 覆盖）</li>
-<li><strong>Buffer.from(arrayBuffer[, byteOffset[, length]])：</strong> 返回一个新建的与给定的 ArrayBuffer 共享同一内存的 Buffer。</li>
-<li><strong>Buffer.from(buffer)：</strong> 复制传入的 Buffer 实例的数据，并返回一个新的 Buffer 实例</li>
-<li><strong>Buffer.from(string[, encoding])：</strong> 返回一个被 string 的值初始化的新的 Buffer 实例</li>
-</ul>
-<pre><code class="language-js">// 创建一个长度为 10、且用 0 填充的 Buffer。
-const buf1 = Buffer.alloc(10);
-
-// 创建一个长度为 10、且用 0x1 填充的 Buffer。 
-const buf2 = Buffer.alloc(10, 1);
-
-// 创建一个长度为 10、且未初始化的 Buffer。
-// 这个方法比调用 Buffer.alloc() 更快，
-// 但返回的 Buffer 实例可能包含旧数据，
-// 因此需要使用 fill() 或 write() 重写。
-const buf3 = Buffer.allocUnsafe(10);
-
-// 创建一个包含 [0x1, 0x2, 0x3] 的 Buffer。
-const buf4 = Buffer.from([1, 2, 3]);
-
-// 创建一个包含 UTF-8 字节 [0x74, 0xc3, 0xa9, 0x73, 0x74] 的 Buffer。
-const buf5 = Buffer.from('tést');
-
-// 创建一个包含 Latin-1 字节 [0x74, 0xe9, 0x73, 0x74] 的 Buffer。
-const buf6 = Buffer.from('tést', 'latin1');
-</code></pre>
-<h2 id="写入缓冲区">写入缓冲区</h2>
-<pre><code class="language-js">buf.write(string[, offset[, length]][, encoding])
-</code></pre>
-<ul>
-<li><strong>string</strong> - 写入缓冲区的字符串。</li>
-<li><strong>offset</strong> - 缓冲区开始写入的索引值，默认为 0 。</li>
-<li><strong>length</strong> - 写入的字节数，默认为 buffer.length</li>
-<li><strong>encoding</strong> - 使用的编码。默认为 'utf8' 。</li>
-</ul>
-<p>返回实际写入的大小。如果 buffer 空间不足， 则只会写入部分字符串。</p>
-<pre><code>buf = Buffer.alloc(256);
-len = buf.write(&quot;www.runoob.com&quot;);
-
-console.log(&quot;写入字节数 : &quot;+  len);
-</code></pre>
-<p>执行结果：</p>
-<pre><code>$node main.js
-写入字节数 : 14
-</code></pre>
-<h2 id="读取缓冲区">读取缓冲区</h2>
-<pre><code>buf.toString([encoding[, start[, end]]])
-</code></pre>
-<ul>
-<li><strong>encoding</strong> - 使用的编码。默认为 'utf8' 。</li>
-<li><strong>start</strong> - 指定开始读取的索引位置，默认为 0。</li>
-<li><strong>end</strong> - 结束位置，默认为缓冲区的末尾。</li>
-</ul>
-<p>解码缓冲区数据并使用指定的编码返回字符串。</p>
-<pre><code>buf = Buffer.alloc(26);
-for (var i = 0 ; i &lt; 26 ; i++) {
-  buf[i] = i + 97;
-}
-
-console.log( buf.toString('ascii'));       // 输出: abcdefghijklmnopqrstuvwxyz
-console.log( buf.toString('ascii',0,5));   //使用 'ascii' 编码, 并输出: abcde
-console.log( buf.toString('utf8',0,5));    // 使用 'utf8' 编码, 并输出: abcde
-console.log( buf.toString(undefined,0,5)); // 使用默认的 'utf8' 编码, 并输出: abcde
-</code></pre>
-<h2 id="buffer转换为json对象">Buffer转换为JSON对象</h2>
-<pre><code class="language-js">buf.toJSON()
-</code></pre>
-<p>当字符串化一个 Buffer 实例时，JSON.stringify() 会隐式地调用该 <strong>toJSON()</strong>。</p>
-<p>返回 JSON 对象。</p>
-<pre><code class="language-js">const buf = Buffer.from([0x1, 0x2, 0x3, 0x4, 0x5]);
-const json = JSON.stringify(buf);
-
-// 输出: {&quot;type&quot;:&quot;Buffer&quot;,&quot;data&quot;:[1,2,3,4,5]}
-console.log(json);
-
-const copy = JSON.parse(json, (key, value) =&gt; {
-  return value &amp;&amp; value.type === 'Buffer' ?
-    Buffer.from(value.data) :
-    value;
-});
-
-// 输出: &lt;Buffer 01 02 03 04 05&gt;
-console.log(copy);
-</code></pre>
-<h2 id="缓冲区合并">缓冲区合并</h2>
-<pre><code class="language-js">Buffer.concat(list[, totalLength])
-</code></pre>
-<ul>
-<li><strong>list</strong> - 用于合并的 Buffer 对象数组列表。</li>
-<li><strong>totalLength</strong> - 指定合并后Buffer对象的总长度。</li>
-</ul>
-<p>返回一个多个成员合并的新 Buffer 对象。</p>
-<pre><code>var buffer1 = Buffer.from(('菜鸟教程'));
-var buffer2 = Buffer.from(('www.runoob.com'));
-var buffer3 = Buffer.concat([buffer1,buffer2]);
-console.log(&quot;buffer3 内容: &quot; + buffer3.toString());
-</code></pre>
-<p>执行结果：</p>
-<pre><code>buffer3 内容: 菜鸟教程www.runoob.com
-</code></pre>
-<h2 id="缓冲区比较">缓冲区比较</h2>
-<pre><code>buf.compare(otherBuffer);
-</code></pre>
-<p><strong>otherBuffer</strong> - 与 <strong>buf</strong> 对象比较的另外一个 Buffer 对象。</p>
-<p>返回一个数字，表示 <strong>buf</strong> 在 <strong>otherBuffer</strong> 之前，之后或相同。</p>
-<pre><code class="language-js">var buffer1 = Buffer.from('ABC');
-var buffer2 = Buffer.from('ABCD');
-var result = buffer1.compare(buffer2);
-
-if(result &lt; 0) {
-   console.log(buffer1 + &quot; 在 &quot; + buffer2 + &quot;之前&quot;);
-}else if(result == 0){
-   console.log(buffer1 + &quot; 与 &quot; + buffer2 + &quot;相同&quot;);
-}else {
-   console.log(buffer1 + &quot; 在 &quot; + buffer2 + &quot;之后&quot;);
-}
-</code></pre>
-<p>执行结果：</p>
-<pre><code>ABC在ABCD之前
-</code></pre>
-<h2 id="拷贝缓冲区">拷贝缓冲区</h2>
-<pre><code>buf.copy(targetBuffer[, targetStart[, sourceStart[, sourceEnd]]])
-</code></pre>
-<ul>
-<li><strong>targetBuffer</strong> - 要拷贝的 Buffer 对象。</li>
-<li><strong>targetStart</strong> - 数字, 可选, 默认: 0</li>
-<li><strong>sourceStart</strong> - 数字, 可选, 默认: 0</li>
-<li><strong>sourceEnd</strong> - 数字, 可选, 默认: buffer.length</li>
-</ul>
-<p>没有返回值</p>
-<pre><code class="language-js">var buf1 = Buffer.from('abcdefghijkl');
-var buf2 = Buffer.from('RUNOOB');
-
-//将 buf2 插入到 buf1 指定位置上
-buf2.copy(buf1, 2);
-
-console.log(buf1.toString());
-</code></pre>
-<p>执行结果：</p>
-<pre><code>abRUNOOBijkl
-</code></pre>
-<h2 id="缓冲区裁剪">缓冲区裁剪</h2>
-<pre><code>buf.slice([start[, end]])
-</code></pre>
-<ul>
-<li><strong>start</strong> - 数字, 可选, 默认: 0</li>
-<li><strong>end</strong> - 数字, 可选, 默认: buffer.length</li>
-</ul>
-<p>返回一个新的缓冲区，它和旧缓冲区指向同一块内存，但是从索引 start 到 end 的位置剪切。</p>
-<pre><code class="language-js">var buffer1 = Buffer.from('runoob');
-// 剪切缓冲区
-var buffer2 = buffer1.slice(0,2);
-console.log(&quot;buffer2 content: &quot; + buffer2.toString());
-</code></pre>
-<p>执行结果：</p>
-<pre><code>buffer2 content: ru
-</code></pre>
-<h2 id="缓冲区长度">缓冲区长度</h2>
-<pre><code>buf.length;
-</code></pre>
-<p>返回 Buffer 对象所占据的内存长度。</p>
-<h1 id="stream">Stream</h1>
-<p>Stream 有四种流类型：</p>
-<ul>
-<li><strong>Readable</strong> - 可读操作。</li>
-<li><strong>Writable</strong> - 可写操作。</li>
-<li><strong>Duplex</strong> - 可读可写操作.</li>
-<li><strong>Transform</strong> - 操作被写入数据，然后读出结果。</li>
-</ul>
-<p>所有的 Stream 对象都是 EventEmitter 的实例。常用的事件有：</p>
-<ul>
-<li><strong>data</strong> - 当有数据可读时触发。</li>
-<li><strong>end</strong> - 没有更多的数据可读时触发。</li>
-<li><strong>error</strong> - 在接收和写入过程中发生错误时触发。</li>
-<li><strong>finish</strong> - 所有数据已被写入到底层系统时触发。</li>
-</ul>
-<h2 id="从流中读取数据">从流中读取数据</h2>
-<pre><code class="language-js">var fs = require(&quot;fs&quot;);
-var data = '';
-
-// 创建可读流
-var readerStream = fs.createReadStream('input.txt');
-
-// 设置编码为 utf8。
-readerStream.setEncoding('UTF8');
-
-// 处理流事件 --&gt; data, end, and error
-readerStream.on('data', function(chunk) {
-   data += chunk;
-});
-
-readerStream.on('end',function(){
-   console.log(data);
-});
-
-readerStream.on('error', function(err){
-   console.log(err.stack);
-});
-
-console.log(&quot;程序执行完毕&quot;);
-</code></pre>
-<p>执行结果：</p>
-<pre><code>程序执行完毕
-菜鸟教程官网地址：www.runoob.com
-</code></pre>
-<h2 id="写入流">写入流</h2>
-<pre><code class="language-js">var fs = require(&quot;fs&quot;);
-var data = '菜鸟教程官网地址：www.runoob.com';
-
-// 创建一个可以写入的流，写入到文件 output.txt 中
-var writerStream = fs.createWriteStream('output.txt');
-
-// 使用 utf8 编码写入数据
-writerStream.write(data,'UTF8');
-
-// 标记文件末尾
-writerStream.end();
-
-// 处理流事件 --&gt; finish、error
-writerStream.on('finish', function() {
-    console.log(&quot;写入完成。&quot;);
-});
-
-writerStream.on('error', function(err){
-   console.log(err.stack);
-});
-
-console.log(&quot;程序执行完毕&quot;);
-</code></pre>
-<p>执行结果：</p>
-<pre><code>$ node main.js 
-程序执行完毕
-写入完成。
-</code></pre>
-<h2 id="管道流">管道流</h2>
-<p>管道提供了一个输出流到输入流的机制。通常我们用于从一个流中获取数据并将数据传递到另外一个流中。</p>
-<pre><code class="language-js">var fs = require(&quot;fs&quot;);
-
-// 创建一个可读流
-var readerStream = fs.createReadStream('input.txt');
-
-// 创建一个可写流
-var writerStream = fs.createWriteStream('output.txt');
-
-// 管道读写操作
-// 读取 input.txt 文件内容，并将内容写入到 output.txt 文件中
-readerStream.pipe(writerStream);
-
-console.log(&quot;程序执行完毕&quot;);
-</code></pre>
-<p>代码执行结果如下：</p>
-<pre><code>$ node main.js 
-程序执行完毕
-</code></pre>
-<p>查看 output.txt 文件的内容：</p>
-<pre><code>$ cat output.txt 
-菜鸟教程官网地址：www.runoob.com
-管道流操作实例
-</code></pre>
-<h2 id="链式流">链式流</h2>
-<p><strong>链式是通过连接输出流到另外一个流并创建多个流操作链的机制</strong>。链式流一般用于管道操作。</p>
-<p>接下来我们就是用管道和链式来压缩和解压文件。</p>
-<p>压缩文件实例，创建 compress.js 文件：</p>
-<pre><code class="language-js">var fs = require(&quot;fs&quot;);
-var zlib = require('zlib');
-
-// 压缩 input.txt 文件为 input.txt.gz
-fs.createReadStream('input.txt')
-  .pipe(zlib.createGzip())
-  .pipe(fs.createWriteStream('input.txt.gz'));
-  
-console.log(&quot;文件压缩完成。&quot;);
-</code></pre>
-<p>执行完以上操作后，我们可以看到当前目录下生成了 input.txt 的压缩文件 input.txt.gz。</p>
-<p>接下来，让我们来解压该文件，创建 decompress.js 文件：</p>
-<pre><code class="language-js">var fs = require(&quot;fs&quot;);
-var zlib = require('zlib');
-
-// 解压 input.txt.gz 文件为 input.txt
-fs.createReadStream('input.txt.gz')
-  .pipe(zlib.createGunzip())
-  .pipe(fs.createWriteStream('input.txt'));
-  
-console.log(&quot;文件解压完成。&quot;);
-</code></pre>
-<h1 id="模块系统">模块系统</h1>
-<p>为了让Node.js的文件可以相互调用，Node.js提供了一个简单的模块系统。</p>
-<p>模块是Node.js 应用程序的基本组成部分，文件和模块是一一对应的。换言之，一个 Node.js 文件就是一个模块，这个文件可能是JavaScript 代码、JSON 或者编译过的C/C++ 扩展。</p>
-<h2 id="创建模块">创建模块</h2>
-<p>Node.js 提供了 exports 和 require 两个对象，其中 exports 是模块公开的接口，require 用于从外部获取一个模块的接口，即所获取模块的 exports 对象。</p>
-<p>简单使用：</p>
-<pre><code class="language-js">//main.js
-var hello = require('./hello');
-hello.world();
-
-//hello.js
-exports.world = function() {
-  console.log('Hello World');
-}
-</code></pre>
-<p>有时候我们只是想把一个对象封装到模块中</p>
-<pre><code class="language-js">//hello.js 
-function Hello() { 
-    var name; 
-    this.setName = function(thyName) { 
-        name = thyName; 
-    }; 
-    this.sayHello = function() { 
-        console.log('Hello ' + name); 
-    }; 
-}; 
-module.exports = Hello;
-</code></pre>
-<p>这样就可以直接获得这个对象了：</p>
-<pre><code class="language-js">//main.js 
-var Hello = require('./hello'); 
-hello = new Hello(); 
-hello.setName('BYVoid'); 
-hello.sayHello(); 
-</code></pre>
-<p>使用 module.exports = Hello 代替了exports.world = function(){}。 在外部引用该模块时，其接口对象就是要输出的 <strong>Hello 对象本身</strong>，而不是原先的 exports。</p>
-<h2 id="服务端的模块">服务端的模块</h2>
-<pre><code>var http = require(&quot;http&quot;);
-
-...
-
-http.createServer(...);
-</code></pre>
-<p>Node.js 中自带了一个叫做 <strong>http</strong> 的模块，我们在我们的代码中请求它并把返回值赋给一个本地变量。</p>
-<p>这把我们的本地变量变成了一个拥有所有 http 模块所提供的公共方法的对象。</p>
-<h3 id="require-方法中的文件查找策略">require 方法中的文件查找策略</h3>
-<p>由于 Node.js 中存在 4 类模块（原生模块和3种文件模块），尽管 require 方法极其简单，但是内部的加载却是十分复杂的，其加载优先级也各自不同。</p>
-<figure data-type="image" tabindex="2"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200929183520.jpeg" alt="img" loading="lazy"></figure>
-<h4 id="从文件模块缓存中加载">从文件模块缓存中加载</h4>
-<p>尽管原生模块与文件模块的优先级不同，但是都会优先从文件模块的缓存中加载已经存在的模块。</p>
-<h4 id="从原生模块加载">从原生模块加载</h4>
-<p>原生模块的优先级仅次于文件模块缓存的优先级。require 方法在解析文件名之后，优先检查模块是否在原生模块列表中。以http模块为例，尽管在目录下存在一个 http/http.js/http.node/http.json 文件，require(&quot;http&quot;) 都不会从这些文件中加载，而是<strong>从原生模块中加载</strong>。</p>
-<p>原生模块也有一个缓存区，同样也是优先从缓存区加载。如果缓存区没有被加载过，则调用原生模块的加载方式进行加载和执行。</p>
-<h4 id="从文件加载">从文件加载</h4>
-<p>当文件模块缓存中不存在，而且不是原生模块的时候，Node.js 会解析 require 方法传入的参数，并从文件系统中加载实际的文件。</p>
-<p>require方法接受以下几种参数的传递：</p>
-<ul>
-<li>http、fs、path等，原生模块。</li>
-<li>./mod或../mod，相对路径的文件模块。</li>
-<li>/pathtomodule/mod，绝对路径的文件模块。</li>
-<li>mod，非原生模块的文件模块。</li>
-</ul>
-<h4 id="exports-和-moduleexports-的使用"><strong>exports 和 module.exports 的使用</strong></h4>
-<p>如果要对外暴露属性或方法，就用 <strong>exports</strong> 就行，要暴露对象(类似class，包含了很多属性和方法)，就用 <strong>module.exports</strong>。</p>
-<blockquote>
-<p>不建议同时使用 exports 和 module.exports。</p>
-<p>如果先使用 exports 对外暴露属性或方法，再使用 module.exports 暴露对象，会使得 exports 上暴露的属性或者方法失效。</p>
-<p>原因在于，exports 仅仅是 module.exports 的一个引用。</p>
-</blockquote>
-<p>在 nodejs 中，是这么设计 require 函数的：</p>
-<pre><code class="language-js">function require(...){
-  var module = {exports: {}};
-
-  ((module, exports) =&gt; {
-    function myfn () {}
-    // 这个myfn就是我们自己的代码
-    exports.myfn = myfn; // 这里是在原本的对象上添加了一个myfn方法。
-    module.exports = myfn;// 这个直接把当初的对象进行覆盖。
-  })(module,module.exports)
-  return module.exports;
 }
 </code></pre>
 ]]></content>
