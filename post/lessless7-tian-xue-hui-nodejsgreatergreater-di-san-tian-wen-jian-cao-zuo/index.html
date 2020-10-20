@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>《7天学会Nodejs》第三天——文件操作 | Giria&#39;s Blog</title>
+<link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+
+<link rel="canonical" href="https://giriawsh.github.io/post/lessless7-tian-xue-hui-nodejsgreatergreater-di-san-tian-wen-jian-cao-zuo/" />
+</head>
+<body>
+<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
+<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://giriawsh.github.io/"><img alt="logo" style="display:inline-block;" src="https://giriawsh.github.io//images/avatar.png"/></a><h1 title="Giria&#39;s Blog" class="weaklink"><a  href="/">Giria&#39;s Blog</a></h1>
+
+<div class="navbar weaklink">
+<div class="normal_nav">
+<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul></nav>
+<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
+<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1603180002871" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+</div></div>
+<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
+
+
+<div class="main"><div class="main-inner"><div class="content">
+<article class="post">
+<h2 class="post_title sm_margin"><a>《7天学会Nodejs》第三天——文件操作</a></h2>
+<script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-10-20</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/NUEp6MDuu/" class="tag">Node.js</a> | 	<a href="https://giriawsh.github.io/tag/YijAokidn/" class="tag">NodeJS学习系列</a> | 	<a href="https://giriawsh.github.io/tag/7Xal1JEGf/" class="tag">学习系列</a> | 	<a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="tag">前端</a> | 	<a href="https://giriawsh.github.io/tag/2G-O1ZTp4/" class="tag">JavaScript</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">4256字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">17 min read</span>
+</section>
+
+<div style="display:flex">
+<div class="md_block" id="md_block">
+<div class="round-shape-one"></div>
+<h1 id="3-文件操作">3. 文件操作</h1>
+<p>让前端觉得如获神器的不是NodeJS能做网络编程，而是NodeJS能够操作文件。</p>
+<p>小至文件查找，大至代码编译，几乎没有一个前端工具不操作文件。</p>
+<h2 id="开门红">开门红</h2>
+<p>NodeJS提供了基本的文件操作API，但是像文件拷贝这种高级功能就没有提供。</p>
+<p>与<code>copy</code>命令类似，我们的程序需要能<u>接受源文件路径与目标文件路径</u>两个参数。</p>
+<h3 id="小文件拷贝">小文件拷贝</h3>
+<p>我们使用NodeJS内置的<code>fs</code>模块简单实现这个程序如下。</p>
+<pre><code class="language-js">var fs = require('fs');
+
+function copy(src, dst) {
+    fs.writeFileSync(dst, fs.readFileSync(src));
+}
+
+function main(argv) {
+    copy(argv[0], argv[1]);
+}
+
+main(process.argv.slice(2));
+</code></pre>
+<p>以上程序使用<code>fs.readFileSync</code>从源路径读取文件内容，并使用<code>fs.writeFileSync</code>将文件内容写入目标路径。</p>
+<p>::: tip process</p>
+<p><code>process</code>是一个全局变量，可通过<code>process.argv</code>获得命令行参数。</p>
+<p>由于<code>argv[0]</code>固定等于NodeJS执行程序的绝对路径，<code>argv[1]</code>固定等于主模块的绝对路径，因此第一个命令行参数从<code>argv[2]</code>这个位置开始。</p>
+<p>:::</p>
+<h3 id="大文件拷贝">大文件拷贝</h3>
+<p>上边的程序拷贝一些小文件没啥问题，但这种一次性把所有文件内容都读取到内存中后再一次性写入磁盘的方式<u>不适合拷贝大文件，内存会爆仓</u>。</p>
+<p>对于大文件，我们只能读一点写一点，直到完成拷贝。</p>
+<p>因此上边的程序需要改造如下。</p>
+<pre><code class="language-js">var fs = require('fs');
+
+function copy(src, dst) {
+    fs.createReadStream(src).pipe(fs.createWriteStream(dst));
+}
+
+function main(argv) {
+    copy(argv[0], argv[1]);
+}
+
+main(process.argv.slice(2));
+</code></pre>
+<p>以上程序使用<code>fs.createReadStream</code>创建了一个源文件的只读数据流，并使用<code>fs.createWriteStream</code>创建了一个目标文件的只写数据流，并且用<code>pipe</code>方法把两个数据流连接了起来。</p>
+<blockquote>
+<p>连接起来后发生的事情，说得抽象点的话，水顺着水管从一个桶流到了另一个桶。</p>
+</blockquote>
+<h2 id="api走马观花">API走马观花</h2>
+<p>我们先大致看看NodeJS提供了哪些和文件操作有关的API。详细还是参见每个API的官方文档。</p>
+<h3 id="buffer数据块">Buffer（数据块）</h3>
+<blockquote>
+<p><strong>官方文档：</strong> http://nodejs.org/api/buffer.html</p>
+</blockquote>
+<p>JS语言自身只有字符串数据类型，没有二进制数据类型，因此NodeJS提供了一个与<code>String</code>对等的全局构造函数<code>Buffer</code>来提供对二进制数据的操作。</p>
+<p>除了可以读取文件得到<code>Buffer</code>的实例外，还能够直接构造，例如：</p>
+<pre><code class="language-js">var bin = new Buffer([ 0x68, 0x65, 0x6c, 0x6c, 0x6f ]);
+</code></pre>
+<p><code>Buffer</code>与字符串类似，除了可以用<code>.length</code>属性得到字节长度外，还可以用<code>[index]</code>方式读取指定位置的字节，例如：</p>
+<pre><code class="language-js">bin[0]; // =&gt; 0x68;
+</code></pre>
+<p><code>Buffer</code>与字符串能够互相转化，例如可以使用指定编码将二进制数据转化为字符串：</p>
+<pre><code class="language-js">var str = bin.toString('utf-8'); // =&gt; &quot;hello&quot;
+</code></pre>
+<p>反过来，将字符串转换为指定编码下的二进制数据：</p>
+<pre><code class="language-js">var bin = new Buffer('hello', 'utf-8'); // =&gt; &lt;Buffer 68 65 6c 6c 6f&gt;
+</code></pre>
+<p>::: tip <code>Buffer</code>与字符串重要区别</p>
+<p>字符串是只读的，并且对字符串的任何修改得到的都是一个新字符串，原字符串保持不变。</p>
+<p>至于<code>Buffer</code>，更像是可以做指针操作的C语言数组。例如，可以用<code>[index]</code>方式直接修改某个位置的字节。</p>
+<pre><code class="language-js">bin[0] = 0x48;
+</code></pre>
+<p><code>.slice</code>方法也不是返回一个新的<code>Buffer</code>，而更像是返回了指向原<code>Buffer</code>中间的某个位置的指针，如下所示。</p>
+<pre><code class="language-js">[ 0x68, 0x65, 0x6c, 0x6c, 0x6f ]
+    ^           ^
+    |           |
+   bin     bin.slice(2)
+</code></pre>
+<p>因此对<code>.slice</code>方法返回的<code>Buffer</code>的修改会作用于原<code>Buffer</code>，例如：</p>
+<pre><code class="language-js">var bin = new Buffer([ 0x68, 0x65, 0x6c, 0x6c, 0x6f ]);
+var sub = bin.slice(2);
+
+sub[0] = 0x65;
+console.log(bin); // =&gt; &lt;Buffer 68 65 65 6c 6f&gt;
+</code></pre>
+<p>:::</p>
+<p>因此，如果想要拷贝一份<code>Buffer</code>，得<strong>首先创建一个新的<code>Buffer</code></strong>，并通过<code>.copy</code>方法把原<code>Buffer</code>中的数据复制过去。</p>
+<p>这个类似于申请一块新的内存，并把已有内存中的数据复制过去。以下是一个例子。</p>
+<pre><code class="language-js">var bin = new Buffer([ 0x68, 0x65, 0x6c, 0x6c, 0x6f ]);
+var dup = new Buffer(bin.length);
+
+bin.copy(dup);
+dup[0] = 0x48;
+console.log(bin); // =&gt; &lt;Buffer 68 65 6c 6c 6f&gt;
+console.log(dup); // =&gt; &lt;Buffer 48 65 65 6c 6f&gt;
+</code></pre>
+<p>总之，<u><code>Buffer</code>将JS的数据处理能力从字符串扩展到了任意二进制数据。</u></p>
+<h3 id="stream数据流">Stream（数据流）</h3>
+<blockquote>
+<p><strong>官方文档：</strong> http://nodejs.org/api/stream.html</p>
+</blockquote>
+<p>当内存中无法一次装下需要处理的数据时，或者<u>一边读取一边处理</u>更加高效时，我们就需要用到数据流。NodeJS中通过各种<code>Stream</code>来提供对数据流的操作。</p>
+<p>以上边的大文件拷贝程序为例，我们可以为数据来源创建一个只读数据流，示例如下：</p>
+<pre><code class="language-js">var rs = fs.createReadStream(pathname);
+
+rs.on('data', function (chunk) {
+    doSomething(chunk);
+});
+
+rs.on('end', function () {
+    cleanUp();
+});
+</code></pre>
+<p>::: tip stream与事件机制</p>
+<p><code>Stream</code>基于事件机制工作，所有<code>Stream</code>的实例都继承于NodeJS提供的<a href="http://nodejs.org/api/events.html">EventEmitter</a>。</p>
+<p>:::</p>
+<p>上边的代码中<code>data</code>事件会源源不断地被触发，不管<code>doSomething</code>函数是否处理得过来。代码可以继续做如下改造，以解决这个问题。</p>
+<pre><code class="language-js">var rs = fs.createReadStream(src);
+
+rs.on('data', function (chunk) {
+    rs.pause();
+    doSomething(chunk, function () {
+        rs.resume();
+    });
+});
+
+rs.on('end', function () {
+    cleanUp();
+});
+</code></pre>
+<p>以上代码给<code>doSomething</code>函数加上了回调，因此我们可以在处理数据前暂停数据读取，并在处理数据后继续读取数据。</p>
+<p>此外，我们也可以为数据目标创建一个只写数据流，示例如下：</p>
+<pre><code class="language-js">var rs = fs.createReadStream(src);
+var ws = fs.createWriteStream(dst);
+
+rs.on('data', function (chunk) {
+    ws.write(chunk);
+});
+
+rs.on('end', function () {
+    ws.end();
+});
+</code></pre>
+<p>我们把<code>doSomething</code>换成了往只写数据流里写入数据后，以上代码看起来就像是一个文件拷贝程序了。但是以上代码存在上边提到的问题，如果写入速度跟不上读取速度的话，只写数据流内部的缓存会爆仓。</p>
+<p>我们可以<u>根据<code>.write</code>方法的返回值来判断传入的数据是写入目标</u>了，还是临时放在了缓存了，并<u>根据<code>drain</code>事件来判断什么时候只写数据流已经将缓存中的数据写入目标</u>，可以传入下一个待写数据了。因此代码可以改造如下：</p>
+<pre><code class="language-js">var rs = fs.createReadStream(src);
+var ws = fs.createWriteStream(dst);
+
+rs.on('data', function (chunk) {
+    if (ws.write(chunk) === false) {
+        rs.pause();
+    }
+});
+
+rs.on('end', function () {
+    ws.end();
+});
+
+ws.on('drain', function () {
+    rs.resume();
+});
+</code></pre>
+<p>以上代码实现了数据从只读数据流到只写数据流的搬运，并包括了防爆仓控制。</p>
+<p>因为这种使用场景很多，例如上边的大文件拷贝程序，<strong>NodeJS直接提供了<code>.pipe</code>方法来做这件事情</strong>，其内部实现方式与上边的代码类似。</p>
+<h3 id="file-system文件系统">File System（文件系统）</h3>
+<blockquote>
+<p><strong>官方文档：</strong> http://nodejs.org/api/fs.html</p>
+</blockquote>
+<p>NodeJS通过<code>fs</code>内置模块提供对文件的操作。<code>fs</code>模块提供的API基本上可以分为以下三类：</p>
+<ul>
+<li>
+<p>文件属性读写。</p>
+<p>其中常用的有<code>fs.stat</code>、<code>fs.chmod</code>、<code>fs.chown</code>等等。</p>
+</li>
+<li>
+<p>文件内容读写。</p>
+<p>其中常用的有<code>fs.readFile</code>、<code>fs.readdir</code>、<code>fs.writeFile</code>、<code>fs.mkdir</code>等等。</p>
+</li>
+<li>
+<p>底层文件操作。</p>
+<p>其中常用的有<code>fs.open</code>、<code>fs.read</code>、<code>fs.write</code>、<code>fs.close</code>等等。</p>
+</li>
+</ul>
+<p>NodeJS<u>最精华的异步IO模型</u>在<code>fs</code>模块里有着充分的体现.</p>
+<p>例如上边提到的这些API都通过回调函数传递结果。以<code>fs.readFile</code>为例：</p>
+<pre><code class="language-js">fs.readFile(pathname, function (err, data) {
+    if (err) {
+        // Deal with error.
+    } else {
+        // Deal with data.
+    }
+});
+</code></pre>
+<p>基本上所有<code>fs</code>模块API的回调参数都有两个。第一个参数在有错误发生时等于异常对象，第二个参数始终用于返回API方法执行结果。</p>
+<p>此外，<code>fs</code>模块的<u>所有异步API都有对应的同步版本</u>，用于无法使用异步操作时，或者同步操作更方便时的情况。</p>
+<p>同步API除了方法名的末尾多了一个<code>Sync</code>之外，异常对象与执行结果的传递方式也有相应变化。同样以<code>fs.readFileSync</code>为例：</p>
+<pre><code class="language-js">try {
+    var data = fs.readFileSync(pathname);
+    // Deal with data.
+} catch (err) {
+    // Deal with error.
+}
+</code></pre>
+<p><code>fs</code>模块提供的API很多，需要时请自行查阅官方文档。</p>
+<h3 id="path路径">Path（路径）</h3>
+<blockquote>
+<p><strong>官方文档：</strong> http://nodejs.org/api/path.html</p>
+</blockquote>
+<p>操作文件时难免不与文件路径打交道。NodeJS提供了<u><code>path</code>内置模块来简化路径相关操作</u>，并提升代码可读性。</p>
+<p>以下分别介绍几个常用的API:</p>
+<ul>
+<li><code>path.normalize</code></li>
+</ul>
+<p><strong>将传入的路径转换为标准路径</strong>。</p>
+<p>具体讲的话，<u>除了解析路径中的<code>.</code>与<code>..</code>外，还能去掉多余的斜杠</u>。</p>
+<p>如果有程序需要使用路径作为某些数据的索引，但又允许用户随意输入路径时，就需要使用该方法<u>保证路径的唯一性</u>。</p>
+<p>以下是一个例子：</p>
+<pre><code class="language-js">  var cache = {};
+
+  function store(key, value) {
+      cache[path.normalize(key)] = value;
+  }
+
+  store('foo/bar', 1);
+  store('foo//baz//../bar', 2);
+  console.log(cache);  // =&gt; { &quot;foo/bar&quot;: 2 }
+</code></pre>
+<p>::: tip 不同操作系统需要标准化</p>
+<p><strong>坑出没注意：</strong> 标准化之后的路径里的斜杠在Windows系统下是<code>\</code>，而在Linux系统下是<code>/</code>。如果想保证任何系统下都使用<code>/</code>作为路径分隔符的话，需要用<code>.replace(/\\/g, '/')</code>再替换一下标准路径。</p>
+<p>:::</p>
+<ul>
+<li>path.join</li>
+</ul>
+<p><strong>将传入的多个路径拼接为标准路径。</strong></p>
+<p>该方法可避免手工拼接路径字符串的繁琐，并且能在不同系统下正确使用相应的路径分隔符。</p>
+<p>以下是一个例子：</p>
+<pre><code class="language-js">  path.join('foo/', 'baz/', '../bar'); // =&gt; &quot;foo/bar&quot;
+</code></pre>
+<ul>
+<li>path.extname</li>
+</ul>
+<p>当我们需要<strong>根据不同文件扩展名做不同操作</strong>时，该方法就显得很好用。以下是一个例子：</p>
+<pre><code class="language-js">  path.extname('foo/bar.js'); // =&gt; &quot;.js&quot;
+</code></pre>
+<h2 id="遍历目录">遍历目录</h2>
+<p>遍历目录是操作文件时的一个常见需求。比如写一个程序，需要找到并处理指定目录下的所有JS文件时，就需要遍历整个目录。</p>
+<h3 id="递归算法">递归算法</h3>
+<p>遍历目录时一般使用递归算法，否则就难以编写出简洁的代码。</p>
+<p>::: warning</p>
+<p><strong>陷阱：</strong> 使用递归算法编写的代码虽然简洁，但由于每递归一次就产生一次函数调用，在需要优先考虑性能时，需要把递归算法转换为循环算法，以减少函数调用次数。</p>
+<p>:::</p>
+<h3 id="遍历算法">遍历算法</h3>
+<p>目录是一个树状结构，在遍历时一般使用深度优先+先序遍历算法。</p>
+<p>深度优先，意味着到达一个节点后，<u>首先接着遍历子节点而不是邻居节点。</u></p>
+<p>先序遍历，意味着<u>首次到达了某节点就算遍历完成</u>，而不是最后一次返回某节点才算数。</p>
+<p>因此使用这种遍历方式时，下边这棵树的遍历顺序是<code>A &gt; B &gt; D &gt; E &gt; C &gt; F</code>。</p>
+<pre><code>          A
+         / \
+        B   C
+       / \   \
+      D   E   F
+</code></pre>
+<h3 id="同步遍历">同步遍历</h3>
+<p>我们可以简单地实现以下目录遍历函数。</p>
+<pre><code class="language-js">function travel(dir, callback) {
+    fs.readdirSync(dir).forEach(function (file) {
+        var pathname = path.join(dir, file);
+
+        if (fs.statSync(pathname).isDirectory()) {
+            travel(pathname, callback);
+        } else {
+            callback(pathname);
+        }
+    });
+}
+</code></pre>
+<p>可以看到，该函数以某个目录作为遍历的起点。遇到一个子目录时，就先接着遍历子目录。遇到一个文件时，就把文件的绝对路径传给回调函数。</p>
+<p>回调函数拿到文件路径后，就可以做各种判断和处理。</p>
+<p>假设有以下目录：</p>
+<pre><code>- /home/user/
+    - foo/
+        x.js
+    - bar/
+        y.js
+    z.css
+</code></pre>
+<p>使用以下代码遍历该目录时，得到的输入如下:</p>
+<pre><code class="language-js">travel('/home/user', function (pathname) {
+    console.log(pathname);
+});
+
+------------------------
+/home/user/foo/x.js
+/home/user/bar/y.js
+/home/user/z.css
+</code></pre>
+<h3 id="异步遍历">异步遍历</h3>
+<p>如果<u>读取目录或读取文件状态时使用的是异步API</u>，目录遍历函数实现起来会有些复杂，但原理完全相同。</p>
+<p><code>travel</code>函数的异步版本如下:</p>
+<pre><code class="language-js">var fs = require(&quot;fs&quot;);
+var path = require(&quot;path&quot;);
+function travel(dir, callback, finish) {
+    fs.readdir(dir, function (err, files) {
+        (function next(i) {
+            if (i &lt; files.length) {
+                var pathname = path.join(dir, files[i]);
+
+                fs.stat(pathname, function (err, stats) {
+                    if (stats.isDirectory()) {
+                        travel(pathname, callback, function () {
+                            next(i + 1);
+                        });
+                    } else {
+                        callback(pathname, function () {
+                            next(i + 1);
+                        });
+                    }
+                });
+            } else {
+                finish &amp;&amp; finish();
+            }
+        }(0));
+    });
+}
+</code></pre>
+<p>在后续章节中会详细介绍这个。总之我们可以看到异步编程还是蛮复杂的。</p>
+<h2 id="文本编码">文本编码</h2>
+<p>使用NodeJS编写前端工具时，操作得最多的是文本文件，因此也就涉及到了文件编码的处理问题。</p>
+<p>我们常用的文本编码有<code>UTF8</code>和<code>GBK</code>两种，并且<code>UTF8</code>文件还可能带有BOM。</p>
+<p>在读取不同编码的文本文件时，需要将文件内容转换为JS使用的<code>UTF8</code>编码字符串后才能正常处理。</p>
+<h3 id="bom的移除">BOM的移除</h3>
+<p>BOM用于<u>标记一个文本文件使用Unicode编码</u>，其本身是一个Unicode字符（&quot;\uFEFF&quot;），位于文本文件头部。</p>
+<p>在不同的Unicode编码下，BOM字符对应的二进制字节如下：</p>
+<pre><code>    Bytes      Encoding
+----------------------------
+    FE FF       UTF16BE
+    FF FE       UTF16LE
+    EF BB BF    UTF8
+</code></pre>
+<p>因此，我们可以<u>根据文本文件头几个字节等于啥来判断文件是否包含BOM</u>，以及使用哪种Unicode编码。</p>
+<p>但是，BOM字符虽然起到了标记文件编码的作用，<u>其本身却不属于文件内容的一部分</u>，如果读取文本文件时不去掉BOM，在某些使用场景下就会有问题。</p>
+<blockquote>
+<p>例如我们把几个JS文件合并成一个文件后，如果文件中间含有BOM字符，就会导致浏览器JS语法错误。</p>
+</blockquote>
+<p>因此，使用NodeJS读取文本文件时，一般需要去掉BOM。</p>
+<p>例如，以下代码实现了识别和去除UTF8 BOM的功能。</p>
+<pre><code class="language-js">function readText(pathname) {
+    var bin = fs.readFileSync(pathname);
+
+    if (bin[0] === 0xEF &amp;&amp; bin[1] === 0xBB &amp;&amp; bin[2] === 0xBF) {
+        bin = bin.slice(3);
+    }
+
+    return bin.toString('utf-8');
+}
+</code></pre>
+<h3 id="gbk转utf8">GBK转UTF8</h3>
+<p>NodeJS支持在读取文本文件时，或者在<code>Buffer</code><u>转换为字符串时指定文本编码</u>，但遗憾的是，GBK编码不在NodeJS自身支持范围内。</p>
+<p>因此，一般我们借助<code>iconv-lite</code>这个三方包来转换编码。使用NPM下载该包后，我们可以按下边方式编写一个<u>读取GBK文本文件的函数</u>。</p>
+<pre><code class="language-js">var iconv = require('iconv-lite');
+
+function readGBKText(pathname) {
+    var bin = fs.readFileSync(pathname);
+
+    return iconv.decode(bin, 'gbk');
+}
+</code></pre>
+<h3 id="单字节编码">单字节编码</h3>
+<p>有时候，我们无法预知需要读取的文件采用哪种编码，因此也就无法指定正确的编码。</p>
+<blockquote>
+<p>比如我们要处理的某些CSS文件中，有的用GBK编码，有的用UTF8编码。虽然可以一定程度可以根据文件的字节内容猜测出文本编码，但这里要介绍的是有些局限，但是要简单得多的一种技术。</p>
+</blockquote>
+<p>首先我们知道，如果一个文本文件只包含英文字符，比如<code>Hello World</code>，那无论用GBK编码或是UTF8编码读取这个文件都是没问题的。</p>
+<p>这是因为在这些编码下，<u>ASCII0~128范围内字符都使用相同的单字节编码</u>。</p>
+<p>反过来讲，即使一个文本文件中有中文等字符，如果我们需要处理的字符<u>仅在ASCII0~128范围内</u>，比如除了注释和字符串以外的JS代码，我们就可以<u>统一使用单字节编码来读取文件</u>，不用关心文件的实际编码是GBK还是UTF8。</p>
+<p>以下示例说明了这种方法。</p>
+<pre><code class="language-markdown">1. GBK编码源文件内容：
+    var foo = '中文';
+2. 对应字节：
+    76 61 72 20 66 6F 6F 20 3D 20 27 D6 D0 CE C4 27 3B
+3. 使用单字节编码读取后得到的内容：
+    var foo = '{乱码}{乱码}{乱码}{乱码}';
+4. 替换内容：
+    var bar = '{乱码}{乱码}{乱码}{乱码}';
+5. 使用单字节编码保存后对应字节：
+    76 61 72 20 62 61 72 20 3D 20 27 D6 D0 CE C4 27 3B
+6. 使用GBK编码读取后得到内容：
+    var bar = '中文';
+</code></pre>
+<p>这里的诀窍在于，<u>不管大于0xEF的单个字节在单字节编码下被解析成什么乱码字符，使用同样的单字节编码保存这些乱码字符时，背后对应的字节保持不变。</u></p>
+<p>NodeJS中自带了一种**<code>binary</code>编码**可以用来实现这个方法，因此在下例中，我们使用这种编码来演示上例对应的代码该怎么写。</p>
+<pre><code class="language-js">function replace(pathname) {
+    var str = fs.readFileSync(pathname, 'binary');
+    str = str.replace('foo', 'bar');
+    fs.writeFileSync(pathname, str, 'binary');
+}
+</code></pre>
+<h2 id="小结">小结</h2>
+<p>本章介绍了使用NodeJS操作文件时需要的API以及一些技巧，总结起来有以下几点：</p>
+<ul>
+<li>学好文件操作，编写各种程序都不怕。</li>
+<li>如果不是很在意性能，<code>fs</code>模块的<strong>同步API</strong>能让生活更加美好。</li>
+<li>需要对文件读写做到字节级别的精细控制时，请使用<code>fs</code>模块的文件底层操作API。</li>
+<li>不要使用拼接字符串的方式来处理路径，<strong>使用<code>path</code>模块</strong>。</li>
+<li>掌握好<strong>目录遍历和文件编码</strong>处理技巧，很实用。</li>
+</ul>
+
+<span id="footnote"></span>
+<div id = "warn"></div>
+</div>
+<div class="toc-container"><ul class="markdownIt-TOC">
+<li><a href="#3-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C">3. 文件操作</a>
+<ul>
+<li><a href="#%E5%BC%80%E9%97%A8%E7%BA%A2">开门红</a>
+<ul>
+<li><a href="#%E5%B0%8F%E6%96%87%E4%BB%B6%E6%8B%B7%E8%B4%9D">小文件拷贝</a></li>
+<li><a href="#%E5%A4%A7%E6%96%87%E4%BB%B6%E6%8B%B7%E8%B4%9D">大文件拷贝</a></li>
+</ul>
+</li>
+<li><a href="#api%E8%B5%B0%E9%A9%AC%E8%A7%82%E8%8A%B1">API走马观花</a>
+<ul>
+<li><a href="#buffer%E6%95%B0%E6%8D%AE%E5%9D%97">Buffer（数据块）</a></li>
+<li><a href="#stream%E6%95%B0%E6%8D%AE%E6%B5%81">Stream（数据流）</a></li>
+<li><a href="#file-system%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F">File System（文件系统）</a></li>
+<li><a href="#path%E8%B7%AF%E5%BE%84">Path（路径）</a></li>
+</ul>
+</li>
+<li><a href="#%E9%81%8D%E5%8E%86%E7%9B%AE%E5%BD%95">遍历目录</a>
+<ul>
+<li><a href="#%E9%80%92%E5%BD%92%E7%AE%97%E6%B3%95">递归算法</a></li>
+<li><a href="#%E9%81%8D%E5%8E%86%E7%AE%97%E6%B3%95">遍历算法</a></li>
+<li><a href="#%E5%90%8C%E6%AD%A5%E9%81%8D%E5%8E%86">同步遍历</a></li>
+<li><a href="#%E5%BC%82%E6%AD%A5%E9%81%8D%E5%8E%86">异步遍历</a></li>
+</ul>
+</li>
+<li><a href="#%E6%96%87%E6%9C%AC%E7%BC%96%E7%A0%81">文本编码</a>
+<ul>
+<li><a href="#bom%E7%9A%84%E7%A7%BB%E9%99%A4">BOM的移除</a></li>
+<li><a href="#gbk%E8%BD%ACutf8">GBK转UTF8</a></li>
+<li><a href="#%E5%8D%95%E5%AD%97%E8%8A%82%E7%BC%96%E7%A0%81">单字节编码</a></li>
+</ul>
+</li>
+<li><a href="#%E5%B0%8F%E7%BB%93">小结</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="fullPage"><canvas id="canvas"></canvas></div>
+</article>
+<div id="eof"><span>EOF</span></div><div class="round-shape-one"></div>
+<section>
+<div class="doc_comments">
+
+	  
+		<div id="gitalk-container"></div>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/qyxtim/Static@3.8/gitalk.min.js"></script><link href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.css"rel="stylesheet"><script>var gitalk=new Gitalk({clientID:"ee7c215043d62409bb53",clientSecret:"455d2f4a532bbe073ca25fdf9111932f00bbc624",repo:"giriawsh.github.io",owner:"giriawsh",admin:["giriawsh"],id:(location.pathname).substring(0, 49),distractionFreeMode:false});gitalk.render("gitalk-container");</script>
+	  
+
+	  
+
+</div></section>
+</div></div></div><script>
+"use strict";!function(){for(var n=document.getElementsByTagName("pre"),e=n.length,s=0;s<e;s++){n[s].innerHTML='<span class="line-number"></span>'+n[s].innerHTML+'<span class="cl"></span>';for(var a=n[s].innerHTML.split(/\n/).length,r=0;r<a-1;r++){n[s].getElementsByTagName("span")[0].innerHTML+="<span>"+(r+1)+"</span>"}}}();
+let mainNavLinks=document.querySelectorAll(".markdownIt-TOC a");window.addEventListener("scroll",event=>{let fromTop=window.scrollY;mainNavLinks.forEach((link,index)=>{let section=document.getElementById(decodeURI(link.hash).substring(1));let nextSection=null
+if(mainNavLinks[index+1]){nextSection=document.getElementById(decodeURI(mainNavLinks[index+1].hash).substring(1));}
+if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop){link.classList.add("currentToc");}else{link.classList.remove("currentToc");}}else{link.classList.add("currentToc");}}else{link.classList.remove("currentToc");}});});
+var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
+var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
+var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
+content="本文最后更新于2020-10-20，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-10-20 15:46:11";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+</script>
+<style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
+<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"><a href="https://github.com/giriawsh"title="github"><i class="iconfont icon-github"></i></a></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
+<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>62</strong> posts</span></div></div>
+<script>
+console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;", );
+</script>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+<script type="text/javascript" async src="https://giriawsh.github.io//media/js/prism.js"></script>
+</body>
+
+</html>
