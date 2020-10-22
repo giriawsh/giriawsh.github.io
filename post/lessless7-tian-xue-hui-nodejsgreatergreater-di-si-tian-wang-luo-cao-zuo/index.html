@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>《7天学会Nodejs》第四天——网络操作 | Giria&#39;s Blog</title>
+<link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+
+<link rel="canonical" href="https://giriawsh.github.io/post/lessless7-tian-xue-hui-nodejsgreatergreater-di-si-tian-wang-luo-cao-zuo/" />
+</head>
+<body>
+<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
+<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://giriawsh.github.io/"><img alt="logo" style="display:inline-block;" src="https://giriawsh.github.io//images/avatar.png"/></a><h1 title="Giria&#39;s Blog" class="weaklink"><a  href="/">Giria&#39;s Blog</a></h1>
+
+<div class="navbar weaklink">
+<div class="normal_nav">
+<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul></nav>
+<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
+<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1603381714951" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+</div></div>
+<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
+
+
+<div class="main"><div class="main-inner"><div class="content">
+<article class="post">
+<h2 class="post_title sm_margin"><a>《7天学会Nodejs》第四天——网络操作</a></h2>
+<script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-10-22</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/NUEp6MDuu/" class="tag">Node.js</a> | 	<a href="https://giriawsh.github.io/tag/YijAokidn/" class="tag">NodeJS学习系列</a> | 	<a href="https://giriawsh.github.io/tag/7Xal1JEGf/" class="tag">学习系列</a> | 	<a href="https://giriawsh.github.io/tag/mwArQWtwB/" class="tag">JS学习系列</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">3410字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">15 min read</span>
+</section>
+
+<div style="display:flex">
+<div class="md_block" id="md_block">
+<div class="round-shape-one"></div>
+<h1 id="网络操作">网络操作</h1>
+<p>不了解网络编程的程序员不是好前端，而NodeJS恰好提供了一扇了解网络编程的窗口。</p>
+<p>通过NodeJS，除了可以<u>编写一些服务端程序来协助前端开发和测试</u>外，还能够<u>学习一些HTTP协议与Socket协议的相关知识</u>，这些知识在优化前端性能和排查前端故障时说不定能派上用场。</p>
+<p>本章将介绍与之相关的NodeJS内置模块。</p>
+<h2 id="开门红">开门红</h2>
+<p>NodeJS本来的用途是编写高性能Web服务器。</p>
+<p>使用NodeJS内置的<code>http</code>模块简单实现一个HTTP服务器。</p>
+<pre><code class="language-js">var http = require('http');
+
+http.createServer(function (request, response) {
+    response.writeHead(200, { 'Content-Type': 'text-plain' });
+    response.end('Hello World\n');
+}).listen(8124);
+</code></pre>
+<p>以上程序创建了一个HTTP服务器并监听<code>8124</code>端口，打开浏览器访问该端口<code>http://127.0.0.1:8124/</code>就能够看到效果。</p>
+<p>::: tip linux系统下的不同</p>
+<p>在Linux系统下，监听1024以下端口需要root权限。因此，如果想监听80或443端口的话，需要使用<code>sudo</code>命令启动程序。</p>
+<p>:::</p>
+<h2 id="api走马观花">API走马观花</h2>
+<p>大致看看NodeJS提供了哪些和网络操作有关的API。详细可见官方文档。</p>
+<h3 id="http">HTTP</h3>
+<blockquote>
+<p><strong>官方文档：</strong> http://nodejs.org/api/http.html</p>
+</blockquote>
+<p>'http'模块提供两种使用方式：</p>
+<ul>
+<li>作为服务端使用时，<u>创建一个HTTP服务器，监听HTTP客户端请求并返回响应</u>。</li>
+<li>作为客户端使用时，<u>发起一个HTTP客户端请求，获取服务端响应</u>。</li>
+</ul>
+<h4 id="服务端模式">服务端模式</h4>
+<p>首先我们来看看服务端模式下如何工作。</p>
+<p>如开门红中的例子所示，首先需要使用<code>.createServer</code>方法创建一个服务器，然后调用<code>.listen</code>方法监听端口。</p>
+<p>之后，<u>每当来了一个客户端请求，创建服务器时传入的回调函数就被调用一次</u>。可以看出，这是一种<strong>事件机制。</strong></p>
+<p>HTTP请求本质上是一个数据流，由<strong>请求头</strong>（headers）和<strong>请求体</strong>（body）组成。</p>
+<p>例如以下是一个完整的HTTP请求数据内容。</p>
+<pre><code class="language-js">POST / HTTP/1.1
+User-Agent: curl/7.26.0
+Host: localhost
+Accept: */*
+Content-Length: 11
+Content-Type: application/x-www-form-urlencoded
+
+Hello World
+</code></pre>
+<p>空行之上是请求头，之下是请求体。</p>
+<p>HTTP请求在发送给服务器时，可以认为是按照从头到尾的顺序一个字节一个字节地以数据流方式发送的。而<code>http</code>模块创建的HTTP服务器在<u>接收到完整的请求头后，就会调用回调函数</u>。</p>
+<p>在回调函数中，除了可以<u>使用<code>request</code>对象访问请求头数据</u>外，还能<u>把<code>request</code>对象当作一个只读数据流来访问请求体数据</u>。以下是一个例子。</p>
+<pre><code class="language-js">http.createServer(function (request, response) {
+    var body = [];
+
+    console.log(request.method);
+    console.log(request.headers);
+
+    request.on('data', function (chunk) {
+        body.push(chunk);
+    });
+
+    request.on('end', function () {
+        body = Buffer.concat(body);
+        console.log(body.toString());
+    });
+}).listen(80);
+
+------------------------------------
+POST
+{ 'user-agent': 'curl/7.26.0',
+  host: 'localhost',
+  accept: '*/*',
+  'content-length': '11',
+  'content-type': 'application/x-www-form-urlencoded' }
+Hello World
+</code></pre>
+<p>HTTP响应本质上也是一个数据流，同样由<strong>响应头</strong>（headers）和<strong>响应体</strong>（body）组成。例如以下是一个完整的HTTP请求数据内容。</p>
+<pre><code class="language-js">HTTP/1.1 200 OK
+Content-Type: text/plain
+Content-Length: 11
+Date: Tue, 05 Nov 2013 05:31:38 GMT
+Connection: keep-alive
+
+Hello World
+</code></pre>
+<p>在回调函数中，除了可以<u>使用<code>response</code>对象来写入响应头数据外，还能把<code>response</code>对象当作一个只写数据流来写入响应体数据。</u></p>
+<p>例如在以下例子中，服务端原样将客户端请求的请求体数据返回给客户端。</p>
+<pre><code class="language-js">http.createServer(function (request, response) {
+    response.writeHead(200, { 'Content-Type': 'text/plain' });
+
+    request.on('data', function (chunk) {
+        response.write(chunk);
+    });
+
+    request.on('end', function () {
+        response.end();
+    });
+}).listen(80);
+</code></pre>
+<h4 id="客户端模式">客户端模式</h4>
+<p>接下来我们看看客户端模式下如何工作。</p>
+<p>为了发起一个客户端HTTP请求，我们需要<u>指定目标服务器的位置并发送请求头和请求体</u>，以下示例演示了具体做法。</p>
+<pre><code class="language-js">var options = {
+        hostname: 'www.example.com',
+        port: 80,
+        path: '/upload',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    };
+
+var request = http.request(options, function (response) {});
+
+request.write('Hello World');
+request.end();
+</code></pre>
+<p><code>.request</code>方法创建了一个客户端，并指定请求目标和请求头数据。</p>
+<p>之后，就可以把<code>request</code>对象当作一个只写数据流来写入请求体数据和结束请求。</p>
+<p>另外，由于HTTP请求中<code>GET</code>请求是最常见的一种，并且不需要请求体，因此<code>http</code>模块也提供了以下便捷API。</p>
+<pre><code class="language-js">http.get('http://www.example.com/', function (response) {});
+</code></pre>
+<p>当客户端发送请求并接收到完整的服务端响应头时，就会调用回调函数。</p>
+<p>在回调函数中，除了<u>可以使用<code>response</code>对象访问响应头数据外，还能把<code>response</code>对象当作一个只读数据流来访问响应体数据。</u></p>
+<p>以下是一个例子。</p>
+<pre><code class="language-js">http.get('http://www.example.com/', function (response) {
+    var body = [];
+
+    console.log(response.statusCode);
+    console.log(response.headers);
+
+    response.on('data', function (chunk) {
+        body.push(chunk);
+    });
+
+    response.on('end', function () {
+        body = Buffer.concat(body);
+        console.log(body.toString());
+    });
+});
+
+------------------------------------
+200
+{ 'content-type': 'text/html',
+  server: 'Apache',
+  'content-length': '801',
+  date: 'Tue, 05 Nov 2013 06:08:41 GMT',
+  connection: 'keep-alive' }
+&lt;!DOCTYPE html&gt;
+...
+</code></pre>
+<h3 id="https">HTTPS</h3>
+<blockquote>
+<p><strong>官方文档：</strong> http://nodejs.org/api/https.html</p>
+</blockquote>
+<p><code>https</code>模块与<code>http</code>模块极为类似，区别在于<u><code>https</code>模块需要额外处理SSL证书</u>。</p>
+<h4 id="服务端模式-2">服务端模式</h4>
+<p>在服务端模式下，创建一个HTTPS服务器的示例如下。</p>
+<pre><code class="language-js">var options = {
+        key: fs.readFileSync('./ssl/default.key'),
+        cert: fs.readFileSync('./ssl/default.cer')
+    };
+
+var server = https.createServer(options, function (request, response) {
+        // ...
+    });
+</code></pre>
+<p>与创建HTTP服务器相比，多了一个**<code>options</code>对象**，<u>通过<code>key</code>和<code>cert</code>字段指定了HTTPS服务器使用的私钥和公钥。</u></p>
+<p>另外，NodeJS支持<strong>SNI技术</strong>，可以根据HTTPS客户端请求使用的域名<u>动态使用不同的证书</u>，因此<u>同一个HTTPS服务器可以使用多个域名提供服务。</u></p>
+<p>接着上例，可以使用以下方法为HTTPS服务器添加多组证书。</p>
+<pre><code class="language-js">server.addContext('foo.com', {
+    key: fs.readFileSync('./ssl/foo.com.key'),
+    cert: fs.readFileSync('./ssl/foo.com.cer')
+});
+
+server.addContext('bar.com', {
+    key: fs.readFileSync('./ssl/bar.com.key'),
+    cert: fs.readFileSync('./ssl/bar.com.cer')
+});
+</code></pre>
+<h4 id="客户端模式-2">客户端模式</h4>
+<p>在客户端模式下，发起一个HTTPS客户端请求与<code>http</code>模块几乎相同，示例如下。</p>
+<pre><code class="language-js">var options = {
+        hostname: 'www.example.com',
+        port: 443,
+        path: '/',
+        method: 'GET'
+    };
+
+var request = https.request(options, function (response) {});
+
+request.end();
+</code></pre>
+<p>但如果目标服务器使用的SSL证书是自制的，不是从颁发机构购买的，默认情况下<code>https</code>模块会拒绝连接，提示说有证书安全问题。</p>
+<p><u>在<code>options</code>里加入<code>rejectUnauthorized: false</code>字段可以禁用对证书有效性的检查，从而允许<code>https</code>模块请求开发环境下使用自制证书的HTTPS服务器。</u></p>
+<h3 id="url">URL</h3>
+<blockquote>
+<p><strong>官方文档：</strong> http://nodejs.org/api/url.html</p>
+</blockquote>
+<p>处理HTTP请求时<code>url</code>模块使用率超高，因为<u>该模块允许解析URL、生成URL，以及拼接URL</u>。</p>
+<p>首先我们来看看一个完整的URL的各组成部分。</p>
+<pre><code class="language-js">                           href
+ -----------------------------------------------------------------
+                            host              path
+                      --------------- ----------------------------
+ http: // user:pass @ host.com : 8080 /p/a/t/h ?query=string #hash
+ -----    ---------   --------   ---- -------- ------------- -----
+protocol     auth     hostname   port pathname     search     hash
+                                                ------------
+                                                   query
+</code></pre>
+<h4 id="url字符串转对象">URL字符串转对象</h4>
+<p>我们可以使用<code>.parse</code>方法来<strong>将一个URL字符串转换为URL对象</strong>，示例如下。</p>
+<pre><code class="language-js">url.parse('http://user:pass@host.com:8080/p/a/t/h?query=string#hash');
+/* =&gt;
+{ protocol: 'http:',
+  auth: 'user:pass',
+  host: 'host.com:8080',
+  port: '8080',
+  hostname: 'host.com',
+  hash: '#hash',
+  search: '?query=string',
+  query: 'query=string',
+  pathname: '/p/a/t/h',
+  path: '/p/a/t/h?query=string',
+  href: 'http://user:pass@host.com:8080/p/a/t/h?query=string#hash' }
+*/
+</code></pre>
+<p>传给<code>.parse</code>方法的不一定要是一个完整的URL。</p>
+<p>例如在HTTP服务器回调函数中，<u><code>request.url</code>不包含协议头和域名，但同样可以用<code>.parse</code>方法解析。</u></p>
+<pre><code class="language-js">http.createServer(function (request, response) {
+    var tmp = request.url; // =&gt; &quot;/foo/bar?a=b&quot;
+    url.parse(tmp);
+    /* =&gt;
+    { protocol: null,
+      slashes: null,
+      auth: null,
+      host: null,
+      port: null,
+      hostname: null,
+      hash: null,
+      search: '?a=b',
+      query: 'a=b',
+      pathname: '/foo/bar',
+      path: '/foo/bar?a=b',
+      href: '/foo/bar?a=b' }
+    */
+}).listen(80);
+</code></pre>
+<p><code>.parse</code>方法还支持第二个和第三个布尔类型可选参数。</p>
+<ul>
+<li>第二个参数等于<code>true</code>时，该方法返回的URL对象中，<code>query</code>字段不再是一个字符串，而是<u>一个经过<code>querystring</code>模块转换后的参数对象。</u></li>
+<li>第三个参数等于<code>true</code>时，该方法可以<u>正确解析不带协议头的URL</u>，例如<code>//www.example.com/foo/bar</code>。</li>
+</ul>
+<h4 id="url对象转字符串">URL对象转字符串</h4>
+<p>反过来，<code>format</code>方法允许<strong>将一个URL对象转换为URL字符串</strong>，示例如下。</p>
+<pre><code class="language-js">url.format({
+    protocol: 'http:',
+    host: 'www.example.com',
+    pathname: '/p/a/t/h',
+    search: 'query=string'
+});
+/* =&gt;
+'http://www.example.com/p/a/t/h?query=string'
+*/
+</code></pre>
+<h4 id="拼接url">拼接URL</h4>
+<p><code>.resolve</code>方法可以用于<strong>拼接URL</strong>，示例如下。</p>
+<pre><code class="language-js">url.resolve('http://www.example.com/foo/bar', '../baz');
+/* =&gt;
+http://www.example.com/baz
+*/
+</code></pre>
+<h3 id="query-string">Query String</h3>
+<blockquote>
+<p><strong>官方文档：</strong> http://nodejs.org/api/querystring.html</p>
+</blockquote>
+<p><code>querystring</code>模块用于<strong>实现URL参数字符串与参数对象的互相转换</strong>，示例如下。</p>
+<pre><code class="language-js">querystring.parse('foo=bar&amp;baz=qux&amp;baz=quux&amp;corge');
+/* =&gt;
+{ foo: 'bar', baz: ['qux', 'quux'], corge: '' }
+*/
+
+querystring.stringify({ foo: 'bar', baz: ['qux', 'quux'], corge: '' });
+/* =&gt;
+'foo=bar&amp;baz=qux&amp;baz=quux&amp;corge='
+*/
+</code></pre>
+<h4 id="zlib">Zlib</h4>
+<blockquote>
+<p><strong>官方文档：</strong> http://nodejs.org/api/zlib.html</p>
+</blockquote>
+<p><code>zlib</code>模块提供了数据压缩和解压的功能。</p>
+<p>当我们处理HTTP请求和响应时，可能需要用到这个模块。</p>
+<h4 id="zlib模块压缩">zlib模块压缩</h4>
+<p>首先我们看一个使用<code>zlib</code>模块压缩HTTP响应体数据的例子。</p>
+<p>这个例子中，判断了客户端是否支持gzip，并在支持的情况下使用<code>zlib</code>模块返回gzip之后的响应体数据。</p>
+<pre><code class="language-js">http.createServer(function (request, response) {
+    var i = 1024,
+        data = '';
+
+    while (i--) {
+        data += '.';
+    }
+
+    if ((request.headers['accept-encoding'] || '').indexOf('gzip') !== -1) {
+        zlib.gzip(data, function (err, data) {
+            response.writeHead(200, {
+                'Content-Type': 'text/plain',
+                'Content-Encoding': 'gzip'
+            });
+            response.end(data);
+        });
+    } else {
+        response.writeHead(200, {
+            'Content-Type': 'text/plain'
+        });
+        response.end(data);
+    }
+}).listen(80);
+</code></pre>
+<h4 id="zlib解压">zlib解压</h4>
+<p>接着我们看一个使用<code>zlib</code>模块解压HTTP响应体数据的例子。</p>
+<p>这个例子中，判断了服务端响应是否使用gzip压缩，并在压缩的情况下使用<code>zlib</code>模块解压响应体数据。</p>
+<pre><code class="language-js">var options = {
+        hostname: 'www.example.com',
+        port: 80,
+        path: '/',
+        method: 'GET',
+        headers: {
+            'Accept-Encoding': 'gzip, deflate'
+        }
+    };
+
+http.request(options, function (response) {
+    var body = [];
+
+    response.on('data', function (chunk) {
+        body.push(chunk);
+    });
+
+    response.on('end', function () {
+        body = Buffer.concat(body);
+
+        if (response.headers['content-encoding'] === 'gzip') {
+            zlib.gunzip(body, function (err, data) {
+                console.log(data.toString());
+            });
+        } else {
+            console.log(data.toString());
+        }
+    });
+}).end();
+</code></pre>
+<h4 id="net">Net</h4>
+<blockquote>
+<p><strong>官方文档：</strong> http://nodejs.org/api/net.html</p>
+</blockquote>
+<p><code>net</code>模块可用于<strong>创建Socket服务器或Socket客户端</strong>。下面这个例子仅仅简单演示一下如何从Socket层面来实现HTTP请求和响应。</p>
+<p>首先我们来看一个<u>使用Socket搭建一个很不严谨的HTTP服务器</u>的例子。</p>
+<p>这个HTTP服务器不管收到啥请求，都固定返回相同的响应。</p>
+<pre><code class="language-js">net.createServer(function (conn) {
+    conn.on('data', function (data) {
+        conn.write([
+            'HTTP/1.1 200 OK',
+            'Content-Type: text/plain',
+            'Content-Length: 11',
+            '',
+            'Hello World'
+        ].join('\n'));
+    });
+}).listen(80);
+</code></pre>
+<p>接着我们来看一个<u>使用Socket发起HTTP客户端请求</u>的例子。</p>
+<p>这个例子中，Socket客户端在建立连接后发送了一个HTTP GET请求，并<u>通过<code>data</code>事件监听函数来获取服务器响应。</u></p>
+<pre><code class="language-js">var options = {
+        port: 80,
+        host: 'www.example.com'
+    };
+
+var client = net.connect(options, function () {
+        client.write([
+            'GET / HTTP/1.1',
+            'User-Agent: curl/7.26.0',
+            'Host: www.baidu.com',
+            'Accept: */*',
+            '',
+            ''
+        ].join('\n'));
+    });
+
+client.on('data', function (data) {
+    console.log(data.toString());
+    client.end();
+});
+</code></pre>
+<h2 id="灵机一点">灵机一点</h2>
+<p>使用NodeJS操作网络，特别是操作HTTP请求和响应时会遇到一些惊喜，这里对一些常见问题做解答。</p>
+<ul>
+<li>
+<p>问： 为什么通过<code>headers</code>对象访问到的HTTP请求头或响应头字段不是驼峰的？</p>
+<p>答： 从规范上讲，HTTP请求头和响应头字段都应该是驼峰的。</p>
+<p>但现实是残酷的，不是每个HTTP服务端或客户端程序都严格遵循规范，所以NodeJS在处理从别的客户端或服务端收到的头字段时，<strong>都统一地转换为了小写字母格式</strong>，以便开发者能使用统一的方式来访问头字段。</p>
+<p>例如<code>headers['content-length']</code>。</p>
+</li>
+<li>
+<p>问： 为什么<code>http</code>模块创建的HTTP服务器返回的响应是<code>chunked</code>传输方式的？</p>
+<p>答： 因为默认情况下，使用<code>.writeHead</code>方法写入响应头后，<u>允许使用<code>.write</code>方法写入任意长度的响应体数据</u>，并使用<code>.end</code>方法结束一个响应。</p>
+<p>由于响应体数据长度不确定，因此NodeJS**自动在响应头里添加了<code>Transfer-Encoding: chunked</code>**字段，并采用<code>chunked</code>传输方式。</p>
+<p>但是当响应体数据长度确定时，可使用<code>.writeHead</code>方法<u>在响应头里加上<code>Content-Length</code>字段</u>，这样做之后NodeJS就不会自动添加<code>Transfer-Encoding</code>字段和使用<code>chunked</code>传输方式。</p>
+</li>
+<li>
+<p>问： 为什么使用<code>http</code>模块发起HTTP客户端请求时，有时候会发生<code>socket hang up</code>错误？</p>
+<p>答： 发起客户端HTTP请求前需要先<u>创建一个客户端</u>。<code>http</code>模块提供了一个全局客户端<code>http.globalAgent</code>，可以让我们使用<code>.request</code>或<code>.get</code>方法时不用手动创建客户端。</p>
+<p>但是全局客户端默认<u>只允许5个并发Socket连接</u>，当某一个时刻HTTP客户端请求创建过多，超过这个数字时，就会发生<code>socket hang up</code>错误。</p>
+<p>解决方法也很简单，<strong>通过<code>http.globalAgent.maxSockets</code>属性把这个数字改大些</strong>即可。</p>
+<p>另外，<code>https</code>模块遇到这个问题时也一样通过<code>https.globalAgent.maxSockets</code>属性来处理。</p>
+</li>
+</ul>
+<h2 id="小结">小结</h2>
+<p>本章介绍了使用NodeJS操作网络时需要的API以及一些坑回避技巧，总结起来有以下几点：</p>
+<ul>
+<li><code>http</code>和<code>https</code>模块<u>支持服务端模式和客户端模式</u>两种使用方式。</li>
+<li><code>request</code>和<code>response</code>对象除了用于读写头数据外，都<u>可以当作数据流</u>来操作。</li>
+<li><code>url.parse</code>方法加上<code>request.url</code>属性是处理HTTP请求时的固定搭配。</li>
+<li>使用<code>zlib</code>模块可以减少使用HTTP协议时的数据传输量。</li>
+<li>通过<code>net</code>模块的Socket服务器与客户端可对HTTP协议做底层操作。</li>
+<li>小心踩坑。</li>
+</ul>
+
+<span id="footnote"></span>
+<div id = "warn"></div>
+</div>
+<div class="toc-container"><ul class="markdownIt-TOC">
+<li><a href="#%E7%BD%91%E7%BB%9C%E6%93%8D%E4%BD%9C">网络操作</a>
+<ul>
+<li><a href="#%E5%BC%80%E9%97%A8%E7%BA%A2">开门红</a></li>
+<li><a href="#api%E8%B5%B0%E9%A9%AC%E8%A7%82%E8%8A%B1">API走马观花</a>
+<ul>
+<li><a href="#http">HTTP</a>
+<ul>
+<li><a href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%A8%A1%E5%BC%8F">服务端模式</a></li>
+<li><a href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%A8%A1%E5%BC%8F">客户端模式</a></li>
+</ul>
+</li>
+<li><a href="#https">HTTPS</a>
+<ul>
+<li><a href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%A8%A1%E5%BC%8F-2">服务端模式</a></li>
+<li><a href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%A8%A1%E5%BC%8F-2">客户端模式</a></li>
+</ul>
+</li>
+<li><a href="#url">URL</a>
+<ul>
+<li><a href="#url%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E5%AF%B9%E8%B1%A1">URL字符串转对象</a></li>
+<li><a href="#url%E5%AF%B9%E8%B1%A1%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2">URL对象转字符串</a></li>
+<li><a href="#%E6%8B%BC%E6%8E%A5url">拼接URL</a></li>
+</ul>
+</li>
+<li><a href="#query-string">Query String</a>
+<ul>
+<li><a href="#zlib">Zlib</a></li>
+<li><a href="#zlib%E6%A8%A1%E5%9D%97%E5%8E%8B%E7%BC%A9">zlib模块压缩</a></li>
+<li><a href="#zlib%E8%A7%A3%E5%8E%8B">zlib解压</a></li>
+<li><a href="#net">Net</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E7%81%B5%E6%9C%BA%E4%B8%80%E7%82%B9">灵机一点</a></li>
+<li><a href="#%E5%B0%8F%E7%BB%93">小结</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="fullPage"><canvas id="canvas"></canvas></div>
+</article>
+<div id="eof"><span>EOF</span></div><div class="round-shape-one"></div>
+<section>
+<div class="doc_comments">
+
+	  
+		<div id="gitalk-container"></div>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/qyxtim/Static@3.8/gitalk.min.js"></script><link href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.css"rel="stylesheet"><script>var gitalk=new Gitalk({clientID:"ee7c215043d62409bb53",clientSecret:"455d2f4a532bbe073ca25fdf9111932f00bbc624",repo:"giriawsh.github.io",owner:"giriawsh",admin:["giriawsh"],id:(location.pathname).substring(0, 49),distractionFreeMode:false});gitalk.render("gitalk-container");</script>
+	  
+
+	  
+
+</div></section>
+</div></div></div><script>
+"use strict";!function(){for(var n=document.getElementsByTagName("pre"),e=n.length,s=0;s<e;s++){n[s].innerHTML='<span class="line-number"></span>'+n[s].innerHTML+'<span class="cl"></span>';for(var a=n[s].innerHTML.split(/\n/).length,r=0;r<a-1;r++){n[s].getElementsByTagName("span")[0].innerHTML+="<span>"+(r+1)+"</span>"}}}();
+let mainNavLinks=document.querySelectorAll(".markdownIt-TOC a");window.addEventListener("scroll",event=>{let fromTop=window.scrollY;mainNavLinks.forEach((link,index)=>{let section=document.getElementById(decodeURI(link.hash).substring(1));let nextSection=null
+if(mainNavLinks[index+1]){nextSection=document.getElementById(decodeURI(mainNavLinks[index+1].hash).substring(1));}
+if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop){link.classList.add("currentToc");}else{link.classList.remove("currentToc");}}else{link.classList.add("currentToc");}}else{link.classList.remove("currentToc");}});});
+var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
+var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
+var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
+content="本文最后更新于2020-10-22，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-10-22 23:48:05";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+</script>
+<style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
+<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"><a href="https://github.com/giriawsh"title="github"><i class="iconfont icon-github"></i></a></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
+<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>64</strong> posts</span></div></div>
+<script>
+console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;", );
+</script>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+<script type="text/javascript" async src="https://giriawsh.github.io//media/js/prism.js"></script>
+</body>
+
+</html>
