@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>vue+CodeMirror+垂直双栏布局 | Giria&#39;s Blog</title>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>2020-10-22日记 | Giria&#39;s Blog</title>
 <link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
 <script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
 
-<link rel="canonical" href="https://giriawsh.github.io/post/vuecodemirrorchui-zhi-shuang-lan-bu-ju/" />
+<link rel="canonical" href="https://giriawsh.github.io/post/2020-10-22/" />
 </head>
 <body>
 <div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
@@ -24,108 +24,38 @@
 
 <div class="main"><div class="main-inner"><div class="content">
 <article class="post">
-<h2 class="post_title sm_margin"><a>vue+CodeMirror+垂直双栏布局</a></h2>
+<h2 class="post_title sm_margin"><a>2020-10-22日记</a></h2>
 <script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
-<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-09-10</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/386A_FeL3/" class="tag">codemirror</a> | 	<a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="tag">前端</a> | 	<a href="https://giriawsh.github.io/tag/yklmR1Lly/" class="tag">Nuxt.js</a> | 	<a href="https://giriawsh.github.io/tag/P-LvHoQha/" class="tag">Vue.js</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">571字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">3 min read</span>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-10-22</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/9OedYhieZ/" class="tag">随笔</a> | 	<a href="https://giriawsh.github.io/tag/m5zWIbBTf/" class="tag">日记</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">443字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">2 min read</span>
 </section>
-
-<img class="featureImg" alt="featureimg" src="https://user-gold-cdn.xitu.io/2020/7/7/173285c79eeb076c?w=598&amp;h=714&amp;f=png&amp;s=17226" referrerpolicy="no-referrer">
 
 <div style="display:flex">
 <div class="md_block" id="md_block">
 <div class="round-shape-one"></div>
-<h1 id="️前言">✍️前言</h1>
-<p>关于codemirror在nuxt中正确引入,在上一篇blog里有做介绍,现在想要实现可以像codepen一样,自由调节的垂直双栏代码输入框,要怎么做呢?</p>
-<!-- more -->
-<h1 id="官方文档">官方文档</h1>
-<p>Codemirror官方有给出    <code>resize</code>属性,加上这个css属性,我们会看到右下角有一个小标记,可以自由地调节单个高度与宽度,将其设定为:<br>
-<code>resize: vertical;</code>就可以限定只调整高度了.</p>
-<h1 id="进一步调整">进一步调整</h1>
-<p>然而双栏并不是那么容易,首先理想型的上下栏调整需要中间有一个可以调节的bar,而不是单单的左下角,其次,如何在一个div中恰好地容纳下两个div,并且动态地调整高度呢?</p>
-<p>压缩上面的div,动态更新下面的div并使其占满,这里我们要用到两个属性:flex+overflow</p>
-<h1 id="最终配置">最终配置</h1>
-<!--more-->
-<pre><code class="language-css">    css:
-    .wrapper {
-      display: flex;
-      flex-direction: column;
-      height: 580px;
-      overflow: auto;
-    }
-
-    .box1, .box2 {
-      border-radius: 5px;
-      padding: 20px;
-      font-size: 100%;
-      box-sizing: inherit;
-      overflow: auto;//防止拖拽超过wrapper高度
-    }
-
-    .handler {
-      width: 100%;
-      height: 7px;
-      padding: 0;
-      cursor: ns-resize;
-      z-index: 2;//这里是为了防止移动时被codemirror数字覆盖
-    }
-
-    .handler::before {
-      content: '';
-      display: block;
-      width: 100%;
-      height: 100%;
-      background: #fff;
-      margin: 0 auto;
-    }
-
-    .CodeMirror {
-      resize: vertical;
-      overflow: auto !important;
-    }
-</code></pre>
-<pre><code class="language-html">&lt;div class=&quot;wrapper&quot;&gt;
-  &lt;no-ssr placeholder=&quot;Codemirror Loading...&quot; class=&quot;box1&quot;&gt;
-    &lt;codemirror v-model=&quot;code1&quot;
-                :options=&quot;cmOption&quot;
-                @cursorActivity=&quot;onCmCursorActivity&quot;
-                @ready=&quot;onCmReady&quot;
-                @focus=&quot;onCmFocus&quot;
-                @blur=&quot;onCmBlur&quot;&gt;
-    &lt;/codemirror&gt;
-  &lt;/no-ssr&gt;
-  &lt;div class=&quot;handler&quot;&gt;&lt;/div&gt;
-  &lt;no-ssr placeholder=&quot;Codemirror Loading...&quot; class=&quot;box2&quot;&gt;
-    &lt;codemirror v-model=&quot;code2&quot;
-                :options=&quot;cmOption&quot;
-                @cursorActivity=&quot;onCmCursorActivity&quot;
-                @ready=&quot;onCmReady&quot;
-                @focus=&quot;onCmFocus&quot;
-                @blur=&quot;onCmBlur&quot;&gt;
-    &lt;/codemirror&gt;
-  &lt;/no-ssr&gt;
-&lt;/div&gt;
-</code></pre>
-<h1 id="效果图">效果图</h1>
-<p><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200911111923.png" alt="效果图" loading="lazy"><br>
-啊无视这个背景颜色，这是我chrome插件的问题。</p>
-<p>这里还存在无法固定底栏的问题,下次查查如何才能将一个div的底栏固定在一个高度,希望可以解决.</p>
-<h1 id="参考">参考</h1>
-<p><a href="https://juejin.im/post/6844903923392872461">vue-resieze深度解读</a></p>
-<p><a href="https://codepen.io/Sphinxxxx/pen/dVPXdX">cm-resieze demo</a>&lt;-这个基于textarea实现效果很好</p>
-<p><a href="https://jsfiddle.net/mindplay/rs2L2vtb/2/">基于div的单栏可变高度</a>&lt;-这个的bar很符合我心目中的标准</p>
-<p><a href="https://codepen.io/sakifargo/pen/KodNyR">codemirror resize+padding</a></p>
-<p>还有一个专门针对codemirror resize的讨论帖,突然找不到了,那个帮助也很大</p>
+<h2 id="结束奔波的一天">结束奔波的一天</h2>
+<p>​	今天看了前一周抢到的专家号。专家一看我不严重就表示没什么毛病，多休息休息就好了。</p>
+<p>​	这一百块能退吗？</p>
+<p>​	现在是边吃白桃味半熟芝士边码字，晚上还看了华为“接地气英文”的发布会。到底该买iphone12还是mate40呢？</p>
+<p>​	有了新的梦想，征求了父母的意见，大体上还是吻合的。</p>
+<p>​	听说有个同学拿了腾讯ssp，非常厉害。三年的差距，自己要什么时候赶上呢？</p>
+<p>​	晚上排位了几把，运气不好。未来一段时间应该不会玩了。</p>
+<p>​	数据仓库今天讲了分类预处理算法的原理，线性代数果然是很有魅力的东西。能把如此复杂的问题变成简单的分解。上课的老师讲得很好，无奈听的人不多。</p>
+<p>​	被校医院不负责任又大吼大叫的医生气了一下，学生真是在校园里的各个地方都会受到无名的压迫。简直社会最底层。</p>
+<p>​	希望能早日逃离这种环境。</p>
+<p>​	医院回来路上去奥体公园转了转。风很大，有黄黄绿绿的鸭子。银杏叶很多。道路规整，露营处有些人聚集着，拿着外放音响放着伤感的歌曲。</p>
+<p>​	晚饭在凤凰汇吃了小大董，烤鸭8戳，鹅肝略腻。喝了从奥体捎回来的老北京酸奶，中规中矩。</p>
+<p>打车回家的路上，听到了隔壁学校一名博士跳楼的消息，今年已是第三例。一种悲伤从心底隐隐地渗出来。</p>
+<p>​	结束为身体健康奔波的一天。11月即将到来。</p>
 
 <span id="footnote"></span>
 <div id = "warn"></div>
 </div>
 <div class="toc-container"><ul class="markdownIt-TOC">
-<li><a href="#%EF%B8%8F%E5%89%8D%E8%A8%80">✍️前言</a></li>
-<li><a href="#%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3">官方文档</a></li>
-<li><a href="#%E8%BF%9B%E4%B8%80%E6%AD%A5%E8%B0%83%E6%95%B4">进一步调整</a></li>
-<li><a href="#%E6%9C%80%E7%BB%88%E9%85%8D%E7%BD%AE">最终配置</a></li>
-<li><a href="#%E6%95%88%E6%9E%9C%E5%9B%BE">效果图</a></li>
-<li><a href="#%E5%8F%82%E8%80%83">参考</a></li>
+<li>
+<ul>
+<li><a href="#%E7%BB%93%E6%9D%9F%E5%A5%94%E6%B3%A2%E7%9A%84%E4%B8%80%E5%A4%A9">结束奔波的一天</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -151,7 +81,7 @@ if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop)
 var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
 var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
 var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
-content="本文最后更新于2020-09-10，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-09-10 15:00:33";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+content="本文最后更新于2020-10-22，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-10-22 22:31:58";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
 </script>
 <style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
 <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"><a href="https://github.com/giriawsh"title="github"><i class="iconfont icon-github"></i></a></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
