@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>《7天学会Nodejs》第五天——进程管理 | Giria&#39;s Blog</title>
+<link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+
+<link rel="canonical" href="https://giriawsh.github.io/post/lessless7-tian-xue-hui-nodejsgreatergreater-di-wu-tian-jin-cheng-guan-li/" />
+</head>
+<body>
+<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
+<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://giriawsh.github.io/"><img alt="logo" style="display:inline-block;" src="https://giriawsh.github.io//images/avatar.png"/></a><h1 title="Giria&#39;s Blog" class="weaklink"><a  href="/">Giria&#39;s Blog</a></h1>
+
+<div class="navbar weaklink">
+<div class="normal_nav">
+<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul></nav>
+<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
+<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1603554393630" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+</div></div>
+<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
+
+
+<div class="main"><div class="main-inner"><div class="content">
+<article class="post">
+<h2 class="post_title sm_margin"><a>《7天学会Nodejs》第五天——进程管理</a></h2>
+<script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-10-24</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/NUEp6MDuu/" class="tag">Node.js</a> | 	<a href="https://giriawsh.github.io/tag/YijAokidn/" class="tag">NodeJS学习系列</a> | 	<a href="https://giriawsh.github.io/tag/7Xal1JEGf/" class="tag">学习系列</a> | 	<a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="tag">前端</a> | 	<a href="https://giriawsh.github.io/tag/mwArQWtwB/" class="tag">JS学习系列</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">1950字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">8 min read</span>
+</section>
+
+<div style="display:flex">
+<div class="md_block" id="md_block">
+<div class="round-shape-one"></div>
+<h1 id="进程管理">进程管理</h1>
+<p>NodeJS可以<u>感知和控制自身进程</u>的运行环境和状态，也可以<strong>创建子进程</strong>并与其协同工作。</p>
+<p>这使得NodeJS可以把多个程序组合在一起共同完成某项工作，并在其中充当胶水和调度器的作用。</p>
+<h2 id="开门红">开门红</h2>
+<p>NodeJS自带的<code>fs</code>模块比较基础，把一个目录里的所有文件和子目录都拷贝到另一个目录里需要写不少代码。</p>
+<p>相比之下，终端下的<code>cp</code>命令比较好用，一条<code>cp -r source/* target</code>命令就能搞定目录拷贝。</p>
+<p>那我们首先看看如何使用NodeJS调用终端命令来简化目录拷贝，示例代码如下：</p>
+<pre><code class="language-js">var child_process = require('child_process');
+var util = require('util');
+
+function copy(source, target, callback) {
+    child_process.exec(
+        util.format('cp -r %s/* %s', source, target), callback);
+}
+
+copy('a', 'b', function (err) {
+    // ...
+});
+</code></pre>
+<p>从以上代码中可以看到，<u>子进程是异步运行</u>的，<u>通过回调函数返回执行结果</u>。</p>
+<h2 id="api走马观花">API走马观花</h2>
+<h3 id="process">Process</h3>
+<blockquote>
+<p><strong>官方文档：</strong> http://nodejs.org/api/process.html</p>
+</blockquote>
+<p>任何一个进程都有启动进程时使用的命令行参数，有<u>标准输入标准输出，有运行权限，有运行环境和运行状态</u>。</p>
+<p>在NodeJS中，可以通过<code>process</code>对象感知和控制NodeJS自身进程的方方面面。另外需要注意的是，<u><code>process</code>不是内置模块，而是一个全局对象</u>，因此在任何地方都可以直接使用。</p>
+<h3 id="child-process">Child Process</h3>
+<blockquote>
+<p><strong>官方文档：</strong> http://nodejs.org/api/child_process.html</p>
+</blockquote>
+<p>使用<code>child_process</code>模块可以<u>创建和控制子进程</u>。该模块提供的API中<strong>最核心的是<code>.spawn</code></strong>，其余API都是针对特定使用场景对它的进一步封装，算是一种语法糖。</p>
+<h3 id="cluster">Cluster</h3>
+<blockquote>
+<p><strong>官方文档：</strong> http://nodejs.org/api/cluster.html</p>
+</blockquote>
+<p><code>cluster</code>模块是对<code>child_process</code>模块的进一步封装，专用于解决<u>单进程NodeJS Web服务器无法充分利用多核CPU的问题</u>。</p>
+<p>使用该模块可以简化多进程服务器程序的开发，<u>让每个核上运行一个工作进程，并统一通过主进程监听端口和分发请求。</u></p>
+<h2 id="应用场景">应用场景</h2>
+<p>这里分别介绍一些重要API的使用方法。</p>
+<h3 id="如何获取命令行参数">如何获取命令行参数</h3>
+<p>在NodeJS中可以<u>通过<code>process.argv</code>获取命令行参数</u>。</p>
+<p>但是需要注意的是，<code>node</code>执行程序路径和主模块文件路径固定占据了<code>argv[0]</code>和<code>argv[1]</code>两个位置，而第一个命令行参数从<code>argv[2]</code>开始。</p>
+<p>为了让<code>argv</code>使用起来更加自然，可以按照以下方式处理。</p>
+<pre><code class="language-js">function main(argv) {
+    // ...
+}
+
+main(process.argv.slice(2));
+</code></pre>
+<h3 id="如何退出程序">如何退出程序</h3>
+<p>通常一个程序做完所有事情后就正常退出了，这时程序的<u>退出状态码为<code>0</code>。</u></p>
+<p>或者一个程序运行时发生了异常后就挂了，这时程序的退出状态码不等于<code>0</code>。</p>
+<p>如果我们在代码中捕获了某个异常，但是觉得程序不应该继续运行下去，<u>需要立即退出，并且需要把退出状态码设置为指定数字</u>，比如<code>1</code>，就可以按照以下方式：</p>
+<pre><code class="language-js">try {
+    // ...
+} catch (err) {
+    // ...
+    process.exit(1);
+}
+</code></pre>
+<h3 id="如何控制输入输出">如何控制输入输出</h3>
+<p>NodeJS程序的标准输入流（stdin）、一个标准输出流（stdout）、一个标准错误流（stderr）分别对应<code>process.stdin</code>、<code>process.stdout</code>和<code>process.stderr</code>，<u>第一个是只读数据流，后边两个是只写数据流</u>，对它们的操作按照对数据流的操作方式即可。</p>
+<p>例如，<code>console.log</code>可以按照以下方式实现。</p>
+<pre><code class="language-js">function log() {
+    process.stdout.write(
+        util.format.apply(util, arguments) + '\n');
+}
+</code></pre>
+<h3 id="如何降权">如何降权</h3>
+<p>在Linux系统下，我们知道<u>需要使用root权限才能监听1024以下端口。</u></p>
+<p>但是一旦完成端口监听后，<u>继续让程序运行在root权限下存在安全隐患</u>，因此最好能把权限降下来。以下是这样一个例子。</p>
+<pre><code class="language-js">http.createServer(callback).listen(80, function () {
+    var env = process.env,
+        uid = parseInt(env['SUDO_UID'] || process.getuid(), 10),
+        gid = parseInt(env['SUDO_GID'] || process.getgid(), 10);
+
+    process.setgid(gid);
+    process.setuid(uid);
+});
+</code></pre>
+<p>上例中有几点需要注意：</p>
+<ol>
+<li>如果是通过<code>sudo</code>获取root权限的，运行程序的用户的UID和GID保存在环境变量<code>SUDO_UID</code>和<code>SUDO_GID</code>里边。如果是通过<code>chmod +s</code>方式获取root权限的，运行程序的用户的UID和GID可直接通过<code>process.getuid</code>和<code>process.getgid</code>方法获取。</li>
+<li><code>process.setuid</code>和<code>process.setgid</code>方法只接受<code>number</code>类型的参数。</li>
+<li>降权时必须先降GID再降UID，否则顺序反过来的话就没权限更改程序的GID了。</li>
+</ol>
+<h3 id="如何创建子进程">如何创建子进程</h3>
+<p>以下是一个创建NodeJS子进程的例子。</p>
+<pre><code class="language-js">var child = child_process.spawn('node', [ 'xxx.js' ]);
+
+child.stdout.on('data', function (data) {
+    console.log('stdout: ' + data);
+});
+
+child.stderr.on('data', function (data) {
+    console.log('stderr: ' + data);
+});
+
+child.on('close', function (code) {
+    console.log('child process exited with code ' + code);
+});
+</code></pre>
+<p>上例中使用了<code>.spawn(exec, args, options)</code>方法，该方法支持三个参数。</p>
+<p>第一个参数是执行文件路径，可以是执行文件的相对或绝对路径，也可以是根据PATH环境变量能找到的执行文件名。你   第二个参数中，数组中的每个成员都按顺序对应一个命令行参数。第三个参数可选，用于配置子进程的执行环境与行为。</p>
+<p>另外，上例中虽然通过子进程对象的<code>.stdout</code>和<code>.stderr</code>访问子进程的输出，但通过<code>options.stdio</code>字段的不同配置，<u>可以将子进程的输入输出重定向到任何数据流上，或者让子进程共享父进程的标准输入输出流，或者直接忽略子进程的输入输出。</u></p>
+<h3 id="进程间如何通讯">进程间如何通讯</h3>
+<p>在Linux系统下，<strong>进程之间可以通过信号互相通信</strong>。以下是一个例子。</p>
+<pre><code class="language-js">/* parent.js */
+var child = child_process.spawn('node', [ 'child.js' ]);
+
+child.kill('SIGTERM');
+
+/* child.js */
+process.on('SIGTERM', function () {
+    cleanUp();
+    process.exit(0);
+});
+</code></pre>
+<p>在上例中，父进程通过<code>.kill</code>方法向子进程发送<code>SIGTERM</code>信号，子进程监听<code>process</code>对象的<code>SIGTERM</code>事件响应信号。</p>
+<p>不要被<code>.kill</code>方法的名称迷惑了，该方法本质上是用来给进程发送信号的，<u>进程收到信号后具体要做啥，完全取决于信号的种类和进程自身的代码。</u></p>
+<p>另外，如果父子进程都是NodeJS进程，就可以<strong>通过IPC（进程间通讯）双向传递数据</strong>。以下是一个例子。</p>
+<pre><code class="language-js">/* parent.js */
+var child = child_process.spawn('node', [ 'child.js' ], {
+        stdio: [ 0, 1, 2, 'ipc' ]
+    });
+
+child.on('message', function (msg) {
+    console.log(msg);
+});
+
+child.send({ hello: 'hello' });
+
+/* child.js */
+process.on('message', function (msg) {
+    msg.hello = msg.hello.toUpperCase();
+    process.send(msg);
+});
+</code></pre>
+<p>可以看到，父进程在创建子进程时，在<code>options.stdio</code>字段中通过<code>ipc</code>开启了一条IPC通道，之后就可以<u>监听子进程对象的<code>message</code>事件接收来自子进程的消息，并通过<code>.send</code>方法给子进程发送消息</u>。</p>
+<p>在子进程这边，可以在<code>process</code>对象上监听<code>message</code>事件接收来自父进程的消息，并通过<code>.send</code>方法向父进程发送消息。</p>
+<p>数据在传递过程中，<u>会先在发送端使用<code>JSON.stringify</code>方法序列化，再在接收端使用<code>JSON.parse</code>方法反序列化。</u></p>
+<h3 id="如何守护子进程">如何守护子进程</h3>
+<p><strong>守护进程一般用于监控工作进程的运行状态</strong>，在工作进程不正常退出时重启工作进程，保障工作进程不间断运行。以下是一种实现方式。</p>
+<pre><code class="language-js">/* daemon.js */
+function spawn(mainModule) {
+    var worker = child_process.spawn('node', [ mainModule ]);
+
+    worker.on('exit', function (code) {
+        if (code !== 0) {
+            spawn(mainModule);
+        }
+    });
+}
+
+spawn('worker.js');
+</code></pre>
+<p>可以看到，工作进程非正常退出时，<u>守护进程立即重启工作进程</u>。</p>
+<h2 id="小结">小结</h2>
+<p>本章介绍了使用NodeJS管理进程时需要的API以及主要的应用场景，总结起来有以下几点：</p>
+<ul>
+<li>使用<code>process</code>对象管理自身。</li>
+<li>使用<code>child_process</code>模块创建和管理子进程。</li>
+</ul>
+
+<span id="footnote"></span>
+<div id = "warn"></div>
+</div>
+<div class="toc-container"><ul class="markdownIt-TOC">
+<li><a href="#%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86">进程管理</a>
+<ul>
+<li><a href="#%E5%BC%80%E9%97%A8%E7%BA%A2">开门红</a></li>
+<li><a href="#api%E8%B5%B0%E9%A9%AC%E8%A7%82%E8%8A%B1">API走马观花</a>
+<ul>
+<li><a href="#process">Process</a></li>
+<li><a href="#child-process">Child Process</a></li>
+<li><a href="#cluster">Cluster</a></li>
+</ul>
+</li>
+<li><a href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF">应用场景</a>
+<ul>
+<li><a href="#%E5%A6%82%E4%BD%95%E8%8E%B7%E5%8F%96%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0">如何获取命令行参数</a></li>
+<li><a href="#%E5%A6%82%E4%BD%95%E9%80%80%E5%87%BA%E7%A8%8B%E5%BA%8F">如何退出程序</a></li>
+<li><a href="#%E5%A6%82%E4%BD%95%E6%8E%A7%E5%88%B6%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA">如何控制输入输出</a></li>
+<li><a href="#%E5%A6%82%E4%BD%95%E9%99%8D%E6%9D%83">如何降权</a></li>
+<li><a href="#%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA%E5%AD%90%E8%BF%9B%E7%A8%8B">如何创建子进程</a></li>
+<li><a href="#%E8%BF%9B%E7%A8%8B%E9%97%B4%E5%A6%82%E4%BD%95%E9%80%9A%E8%AE%AF">进程间如何通讯</a></li>
+<li><a href="#%E5%A6%82%E4%BD%95%E5%AE%88%E6%8A%A4%E5%AD%90%E8%BF%9B%E7%A8%8B">如何守护子进程</a></li>
+</ul>
+</li>
+<li><a href="#%E5%B0%8F%E7%BB%93">小结</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="fullPage"><canvas id="canvas"></canvas></div>
+</article>
+<div id="eof"><span>EOF</span></div><div class="round-shape-one"></div>
+<section>
+<div class="doc_comments">
+
+	  
+		<div id="gitalk-container"></div>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/qyxtim/Static@3.8/gitalk.min.js"></script><link href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.css"rel="stylesheet"><script>var gitalk=new Gitalk({clientID:"ee7c215043d62409bb53",clientSecret:"455d2f4a532bbe073ca25fdf9111932f00bbc624",repo:"giriawsh.github.io",owner:"giriawsh",admin:["giriawsh"],id:(location.pathname).substring(0, 49),distractionFreeMode:false});gitalk.render("gitalk-container");</script>
+	  
+
+	  
+
+</div></section>
+</div></div></div><script>
+"use strict";!function(){for(var n=document.getElementsByTagName("pre"),e=n.length,s=0;s<e;s++){n[s].innerHTML='<span class="line-number"></span>'+n[s].innerHTML+'<span class="cl"></span>';for(var a=n[s].innerHTML.split(/\n/).length,r=0;r<a-1;r++){n[s].getElementsByTagName("span")[0].innerHTML+="<span>"+(r+1)+"</span>"}}}();
+let mainNavLinks=document.querySelectorAll(".markdownIt-TOC a");window.addEventListener("scroll",event=>{let fromTop=window.scrollY;mainNavLinks.forEach((link,index)=>{let section=document.getElementById(decodeURI(link.hash).substring(1));let nextSection=null
+if(mainNavLinks[index+1]){nextSection=document.getElementById(decodeURI(mainNavLinks[index+1].hash).substring(1));}
+if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop){link.classList.add("currentToc");}else{link.classList.remove("currentToc");}}else{link.classList.add("currentToc");}}else{link.classList.remove("currentToc");}});});
+var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
+var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
+var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
+content="本文最后更新于2020-10-24，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-10-24 23:43:20";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+</script>
+<style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
+<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"><a href="https://github.com/giriawsh"title="github"><i class="iconfont icon-github"></i></a></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
+<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>65</strong> posts</span></div></div>
+<script>
+console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;", );
+</script>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+<script type="text/javascript" async src="https://giriawsh.github.io//media/js/prism.js"></script>
+</body>
+
+</html>

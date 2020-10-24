@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-10-22T15:48:40.658Z</updated>
+    <updated>2020-10-24T15:46:45.229Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -10,6 +10,178 @@
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[《7天学会Nodejs》第五天——进程管理]]></title>
+        <id>https://giriawsh.github.io/post/lessless7-tian-xue-hui-nodejsgreatergreater-di-wu-tian-jin-cheng-guan-li/</id>
+        <link href="https://giriawsh.github.io/post/lessless7-tian-xue-hui-nodejsgreatergreater-di-wu-tian-jin-cheng-guan-li/">
+        </link>
+        <updated>2020-10-24T15:43:20.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="进程管理">进程管理</h1>
+<p>NodeJS可以<u>感知和控制自身进程</u>的运行环境和状态，也可以<strong>创建子进程</strong>并与其协同工作。</p>
+<p>这使得NodeJS可以把多个程序组合在一起共同完成某项工作，并在其中充当胶水和调度器的作用。</p>
+<h2 id="开门红">开门红</h2>
+<p>NodeJS自带的<code>fs</code>模块比较基础，把一个目录里的所有文件和子目录都拷贝到另一个目录里需要写不少代码。</p>
+<p>相比之下，终端下的<code>cp</code>命令比较好用，一条<code>cp -r source/* target</code>命令就能搞定目录拷贝。</p>
+<p>那我们首先看看如何使用NodeJS调用终端命令来简化目录拷贝，示例代码如下：</p>
+<pre><code class="language-js">var child_process = require('child_process');
+var util = require('util');
+
+function copy(source, target, callback) {
+    child_process.exec(
+        util.format('cp -r %s/* %s', source, target), callback);
+}
+
+copy('a', 'b', function (err) {
+    // ...
+});
+</code></pre>
+<p>从以上代码中可以看到，<u>子进程是异步运行</u>的，<u>通过回调函数返回执行结果</u>。</p>
+<h2 id="api走马观花">API走马观花</h2>
+<h3 id="process">Process</h3>
+<blockquote>
+<p><strong>官方文档：</strong> http://nodejs.org/api/process.html</p>
+</blockquote>
+<p>任何一个进程都有启动进程时使用的命令行参数，有<u>标准输入标准输出，有运行权限，有运行环境和运行状态</u>。</p>
+<p>在NodeJS中，可以通过<code>process</code>对象感知和控制NodeJS自身进程的方方面面。另外需要注意的是，<u><code>process</code>不是内置模块，而是一个全局对象</u>，因此在任何地方都可以直接使用。</p>
+<h3 id="child-process">Child Process</h3>
+<blockquote>
+<p><strong>官方文档：</strong> http://nodejs.org/api/child_process.html</p>
+</blockquote>
+<p>使用<code>child_process</code>模块可以<u>创建和控制子进程</u>。该模块提供的API中<strong>最核心的是<code>.spawn</code></strong>，其余API都是针对特定使用场景对它的进一步封装，算是一种语法糖。</p>
+<h3 id="cluster">Cluster</h3>
+<blockquote>
+<p><strong>官方文档：</strong> http://nodejs.org/api/cluster.html</p>
+</blockquote>
+<p><code>cluster</code>模块是对<code>child_process</code>模块的进一步封装，专用于解决<u>单进程NodeJS Web服务器无法充分利用多核CPU的问题</u>。</p>
+<p>使用该模块可以简化多进程服务器程序的开发，<u>让每个核上运行一个工作进程，并统一通过主进程监听端口和分发请求。</u></p>
+<h2 id="应用场景">应用场景</h2>
+<p>这里分别介绍一些重要API的使用方法。</p>
+<h3 id="如何获取命令行参数">如何获取命令行参数</h3>
+<p>在NodeJS中可以<u>通过<code>process.argv</code>获取命令行参数</u>。</p>
+<p>但是需要注意的是，<code>node</code>执行程序路径和主模块文件路径固定占据了<code>argv[0]</code>和<code>argv[1]</code>两个位置，而第一个命令行参数从<code>argv[2]</code>开始。</p>
+<p>为了让<code>argv</code>使用起来更加自然，可以按照以下方式处理。</p>
+<pre><code class="language-js">function main(argv) {
+    // ...
+}
+
+main(process.argv.slice(2));
+</code></pre>
+<h3 id="如何退出程序">如何退出程序</h3>
+<p>通常一个程序做完所有事情后就正常退出了，这时程序的<u>退出状态码为<code>0</code>。</u></p>
+<p>或者一个程序运行时发生了异常后就挂了，这时程序的退出状态码不等于<code>0</code>。</p>
+<p>如果我们在代码中捕获了某个异常，但是觉得程序不应该继续运行下去，<u>需要立即退出，并且需要把退出状态码设置为指定数字</u>，比如<code>1</code>，就可以按照以下方式：</p>
+<pre><code class="language-js">try {
+    // ...
+} catch (err) {
+    // ...
+    process.exit(1);
+}
+</code></pre>
+<h3 id="如何控制输入输出">如何控制输入输出</h3>
+<p>NodeJS程序的标准输入流（stdin）、一个标准输出流（stdout）、一个标准错误流（stderr）分别对应<code>process.stdin</code>、<code>process.stdout</code>和<code>process.stderr</code>，<u>第一个是只读数据流，后边两个是只写数据流</u>，对它们的操作按照对数据流的操作方式即可。</p>
+<p>例如，<code>console.log</code>可以按照以下方式实现。</p>
+<pre><code class="language-js">function log() {
+    process.stdout.write(
+        util.format.apply(util, arguments) + '\n');
+}
+</code></pre>
+<h3 id="如何降权">如何降权</h3>
+<p>在Linux系统下，我们知道<u>需要使用root权限才能监听1024以下端口。</u></p>
+<p>但是一旦完成端口监听后，<u>继续让程序运行在root权限下存在安全隐患</u>，因此最好能把权限降下来。以下是这样一个例子。</p>
+<pre><code class="language-js">http.createServer(callback).listen(80, function () {
+    var env = process.env,
+        uid = parseInt(env['SUDO_UID'] || process.getuid(), 10),
+        gid = parseInt(env['SUDO_GID'] || process.getgid(), 10);
+
+    process.setgid(gid);
+    process.setuid(uid);
+});
+</code></pre>
+<p>上例中有几点需要注意：</p>
+<ol>
+<li>如果是通过<code>sudo</code>获取root权限的，运行程序的用户的UID和GID保存在环境变量<code>SUDO_UID</code>和<code>SUDO_GID</code>里边。如果是通过<code>chmod +s</code>方式获取root权限的，运行程序的用户的UID和GID可直接通过<code>process.getuid</code>和<code>process.getgid</code>方法获取。</li>
+<li><code>process.setuid</code>和<code>process.setgid</code>方法只接受<code>number</code>类型的参数。</li>
+<li>降权时必须先降GID再降UID，否则顺序反过来的话就没权限更改程序的GID了。</li>
+</ol>
+<h3 id="如何创建子进程">如何创建子进程</h3>
+<p>以下是一个创建NodeJS子进程的例子。</p>
+<pre><code class="language-js">var child = child_process.spawn('node', [ 'xxx.js' ]);
+
+child.stdout.on('data', function (data) {
+    console.log('stdout: ' + data);
+});
+
+child.stderr.on('data', function (data) {
+    console.log('stderr: ' + data);
+});
+
+child.on('close', function (code) {
+    console.log('child process exited with code ' + code);
+});
+</code></pre>
+<p>上例中使用了<code>.spawn(exec, args, options)</code>方法，该方法支持三个参数。</p>
+<p>第一个参数是执行文件路径，可以是执行文件的相对或绝对路径，也可以是根据PATH环境变量能找到的执行文件名。你   第二个参数中，数组中的每个成员都按顺序对应一个命令行参数。第三个参数可选，用于配置子进程的执行环境与行为。</p>
+<p>另外，上例中虽然通过子进程对象的<code>.stdout</code>和<code>.stderr</code>访问子进程的输出，但通过<code>options.stdio</code>字段的不同配置，<u>可以将子进程的输入输出重定向到任何数据流上，或者让子进程共享父进程的标准输入输出流，或者直接忽略子进程的输入输出。</u></p>
+<h3 id="进程间如何通讯">进程间如何通讯</h3>
+<p>在Linux系统下，<strong>进程之间可以通过信号互相通信</strong>。以下是一个例子。</p>
+<pre><code class="language-js">/* parent.js */
+var child = child_process.spawn('node', [ 'child.js' ]);
+
+child.kill('SIGTERM');
+
+/* child.js */
+process.on('SIGTERM', function () {
+    cleanUp();
+    process.exit(0);
+});
+</code></pre>
+<p>在上例中，父进程通过<code>.kill</code>方法向子进程发送<code>SIGTERM</code>信号，子进程监听<code>process</code>对象的<code>SIGTERM</code>事件响应信号。</p>
+<p>不要被<code>.kill</code>方法的名称迷惑了，该方法本质上是用来给进程发送信号的，<u>进程收到信号后具体要做啥，完全取决于信号的种类和进程自身的代码。</u></p>
+<p>另外，如果父子进程都是NodeJS进程，就可以<strong>通过IPC（进程间通讯）双向传递数据</strong>。以下是一个例子。</p>
+<pre><code class="language-js">/* parent.js */
+var child = child_process.spawn('node', [ 'child.js' ], {
+        stdio: [ 0, 1, 2, 'ipc' ]
+    });
+
+child.on('message', function (msg) {
+    console.log(msg);
+});
+
+child.send({ hello: 'hello' });
+
+/* child.js */
+process.on('message', function (msg) {
+    msg.hello = msg.hello.toUpperCase();
+    process.send(msg);
+});
+</code></pre>
+<p>可以看到，父进程在创建子进程时，在<code>options.stdio</code>字段中通过<code>ipc</code>开启了一条IPC通道，之后就可以<u>监听子进程对象的<code>message</code>事件接收来自子进程的消息，并通过<code>.send</code>方法给子进程发送消息</u>。</p>
+<p>在子进程这边，可以在<code>process</code>对象上监听<code>message</code>事件接收来自父进程的消息，并通过<code>.send</code>方法向父进程发送消息。</p>
+<p>数据在传递过程中，<u>会先在发送端使用<code>JSON.stringify</code>方法序列化，再在接收端使用<code>JSON.parse</code>方法反序列化。</u></p>
+<h3 id="如何守护子进程">如何守护子进程</h3>
+<p><strong>守护进程一般用于监控工作进程的运行状态</strong>，在工作进程不正常退出时重启工作进程，保障工作进程不间断运行。以下是一种实现方式。</p>
+<pre><code class="language-js">/* daemon.js */
+function spawn(mainModule) {
+    var worker = child_process.spawn('node', [ mainModule ]);
+
+    worker.on('exit', function (code) {
+        if (code !== 0) {
+            spawn(mainModule);
+        }
+    });
+}
+
+spawn('worker.js');
+</code></pre>
+<p>可以看到，工作进程非正常退出时，<u>守护进程立即重启工作进程</u>。</p>
+<h2 id="小结">小结</h2>
+<p>本章介绍了使用NodeJS管理进程时需要的API以及主要的应用场景，总结起来有以下几点：</p>
+<ul>
+<li>使用<code>process</code>对象管理自身。</li>
+<li>使用<code>child_process</code>模块创建和管理子进程。</li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[《7天学会Nodejs》第四天——网络操作]]></title>
         <id>https://giriawsh.github.io/post/lessless7-tian-xue-hui-nodejsgreatergreater-di-si-tian-wang-luo-cao-zuo/</id>
@@ -3810,601 +3982,6 @@ var data = [7, 8, 9]
 <p><u>当通过instanceof判断一个对象是否是一个类的实例的时候，这个判断也会包含对“父类”的检测。</u></p>
 <p>instanceof的工作原理将会涉及“原型链”，JS的继承机制等。后面将会进行详细描述。</p>
 <p>为了计算表达式<code>o instanceof f</code>， JS会首先计算<code>f.prototype</code>，然后在原型链中查找o。如果找到，那么o是f（或者f的父类）的一个实例，表达式返回true，如果f.prototype不在o的原型链中，那么o就不是f的实例，instanceof返回false。（？翻译好绕，我真的没看懂……等第六章以后再来回顾吧）</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[NodeJS初学系列6——Express框架、RESTful API]]></title>
-        <id>https://giriawsh.github.io/post/nodejs-chu-xue-xi-lie-6-express-kuang-jia-restful-api/</id>
-        <link href="https://giriawsh.github.io/post/nodejs-chu-xue-xi-lie-6-express-kuang-jia-restful-api/">
-        </link>
-        <updated>2020-10-11T16:44:55.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="express框架">Express框架</h2>
-<p>Express 是一个简洁而灵活的 node.js Web应用框架, 提供了一系列强大特性帮助你创建各种 Web 应用，和丰富的 HTTP 工具。</p>
-<p>Express 框架核心特性：</p>
-<ul>
-<li>可以设置中间件来响应 HTTP 请求。</li>
-<li>定义了路由表用于执行不同的 HTTP 请求动作。</li>
-<li>可以通过向模板传递参数来动态渲染 HTML 页面。</li>
-</ul>
-<h3 id="express安装">Express安装</h3>
-<p>安装 Express 并将其保存到依赖列表中：</p>
-<pre><code class="language-shell">$ npm install express --save
-</code></pre>
-<p>以上命令会将 Express 框架安装在当前目录的 <strong>node_modules</strong> 目录中， <strong>node_modules</strong> 目录下会自动创建 express 目录。以下几个重要的模块是需要与 express 框架一起安装的：</p>
-<ul>
-<li><strong>body-parser</strong> - node.js 中间件，用于处理 JSON, Raw, Text 和 URL 编码的数据。</li>
-<li><strong>cookie-parser</strong> - 这就是一个解析Cookie的工具。通过req.cookies可以取到传过来的cookie，并把它们转成对象。</li>
-<li><strong>multer</strong> - node.js 中间件，用于处理 enctype=&quot;multipart/form-data&quot;（设置表单的MIME编码）的表单数据。</li>
-</ul>
-<h4 id="第一个-express-框架实例">第一个 Express 框架实例</h4>
-<p>引入了 express 模块，并在客户端发起请求后，响应 &quot;Hello World&quot; 字符串。</p>
-<p>创建 express_demo.js 文件，代码如下所示：</p>
-<pre><code class="language-js">//express_demo.js 文件
-var express = require('express');
-var app = express();
- 
-app.get('/', function (req, res) {
-   res.send('Hello World');
-})
- 
-var server = app.listen(8081, function () {
- 
-  var host = server.address().address
-  var port = server.address().port
- 
-  console.log(&quot;应用实例，访问地址为 http://%s:%s&quot;, host, port)
- 
-})
-</code></pre>
-<p>执行以上代码：</p>
-<pre><code class="language-shell">$ node express_demo.js 
-应用实例，访问地址为 http://0.0.0.0:8081
-</code></pre>
-<h3 id="请求和响应">请求和响应</h3>
-<p>Express 应用使用回调函数的参数： <strong>request</strong> 和 <strong>response</strong> 对象来处理请求和响应的数据。</p>
-<pre><code class="language-js">app.get('/', function (req, res) {
-   // --
-})
-</code></pre>
-<p><strong>request</strong> 和 <strong>response</strong> 对象的具体介绍：</p>
-<h4 id="request-对象"><strong>Request 对象</strong></h4>
-<p>request 对象表示 HTTP 请求，包含了请求查询字符串，参数，内容，HTTP 头部等属性。常见属性有：</p>
-<ol>
-<li>req.app：当callback为外部文件时，用req.app访问express的实例</li>
-<li>req.baseUrl：获取路由当前安装的URL路径</li>
-<li>req.body / req.cookies：获得「请求主体」/ Cookies</li>
-<li>req.fresh / req.stale：判断请求是否还「新鲜」</li>
-<li>req.hostname / req.ip：获取主机名和IP地址</li>
-<li>req.originalUrl：获取原始请求URL</li>
-<li>req.params：获取路由的parameters</li>
-<li>req.path：获取请求路径</li>
-<li>req.protocol：获取协议类型</li>
-<li>req.query：获取URL的查询参数串</li>
-<li>req.route：获取当前匹配的路由</li>
-<li>req.subdomains：获取子域名</li>
-<li>req.accepts()：检查可接受的请求的文档类型</li>
-<li>req.acceptsCharsets / req.acceptsEncodings / req.acceptsLanguages：返回指定字符集的第一个可接受字符编码</li>
-<li>req.get()：获取指定的HTTP请求头</li>
-<li>req.is()：判断请求头Content-Type的MIME类型</li>
-</ol>
-<h4 id="response-对象"><strong>Response 对象</strong></h4>
-<p>response 对象表示 HTTP 响应，即在<strong>接收到请求时向客户端发送的 HTTP 响应数据</strong>。常见属性有：</p>
-<ol>
-<li>res.app：同req.app一样</li>
-<li>res.append()：追加指定HTTP头</li>
-<li>res.set()在res.append()后将重置之前设置的头</li>
-<li>res.cookie(name，value [，option])：设置Cookie</li>
-<li>opition: domain / expires / httpOnly / maxAge / path / secure / signed</li>
-<li>res.clearCookie()：清除Cookie</li>
-<li>res.download()：传送指定路径的文件</li>
-<li>res.get()：返回指定的HTTP头</li>
-<li>res.json()：传送JSON响应</li>
-<li>res.jsonp()：传送JSONP响应</li>
-<li>res.location()：只设置响应的Location HTTP头，不设置状态码或者close response</li>
-<li>res.redirect()：设置响应的Location HTTP头，并且设置状态码302</li>
-<li>res.render(view,[locals],callback)：渲染一个view，同时向callback传递渲染后的字符串，如果在渲染过程中有错误发生next(err)将会被自动调用。callback将会被传入一个可能发生的错误以及渲染后的页面，这样就不会自动输出了。</li>
-<li>res.send()：传送HTTP响应</li>
-<li>res.sendFile(path [，options] [，fn])：传送指定路径的文件 -会自动根据文件extension设定Content-Type</li>
-<li>res.set()：设置HTTP头，传入object可以一次设置多个头</li>
-<li>res.status()：设置HTTP状态码</li>
-<li>res.type()：设置Content-Type的MIME类型</li>
-</ol>
-<h3 id="路由">路由</h3>
-<p>我们已经了解了 HTTP 请求的基本应用，而<strong>路由决定了由谁(指定脚本)去响应客户端请求</strong>。</p>
-<p>在HTTP请求中，我们可以通过路由提取出请求的URL以及GET/POST参数。</p>
-<p>接下来我们扩展 Hello World，添加一些功能来处理更多类型的 HTTP 请求。</p>
-<pre><code class="language-js">var express = require('express');
-var app = express();
-
-//  主页输出 &quot;Hello World&quot;
-app.get('/', function (req, res) {
-    console.log(&quot;主页 GET 请求&quot;);
-    res.send('Hello GET');
-})
-
-
-//  POST 请求
-app.post('/', function (req, res) {
-    console.log(&quot;主页 POST 请求&quot;);
-    res.send('Hello POST');
-})
-
-//  /del_user 页面响应
-app.get('/del_user', function (req, res) {
-    console.log(&quot;/del_user 响应 DELETE 请求&quot;);
-    res.send('删除页面');
-})
-
-//  /list_user 页面 GET 请求
-app.get('/list_user', function (req, res) {
-    console.log(&quot;/list_user GET 请求&quot;);
-    res.send('用户列表页面');
-})
-
-// 对页面 abcd, abxcd, ab123cd, 等响应 GET 请求
-app.get('/ab*cd', function(req, res) {
-    console.log(&quot;/ab*cd GET 请求&quot;);
-    res.send('正则匹配');
-})
-
-
-var server = app.listen(8081, function () {
-
-    var host = server.address().address
-    var port = server.address().port
-
-    console.log(&quot;应用实例，访问地址为 http://%s:%s&quot;, host, port)
-
-})
-</code></pre>
-<pre><code>$ node express_demo2.js 
-应用实例，访问地址为 http://0.0.0.0:8081
-</code></pre>
-<p>接着去访问 http://127.0.0.1:8081 不同的地址，可以查看效果。</p>
-<h3 id="静态文件">静态文件</h3>
-<p>Express 提供了内置的中间件 <strong>express.static</strong> 来设置静态文件如：图片， CSS, JavaScript 等。</p>
-<p>你可以使用 <strong>express.static</strong> 中间件来设置静态文件路径。例如，如果你将图片， CSS, JavaScript 文件放在 public 目录下，你可以这么写：</p>
-<pre><code class="language-js">app.use('/public', express.static('public'));
-</code></pre>
-<p>我们可以到 public/images 目录下放些图片,如下所示：</p>
-<pre><code>node_modules
-server.js
-public/
-public/images
-public/images/logo.png
-</code></pre>
-<pre><code class="language-js">var express = require('express');
-var app = express();
- 
-app.use('/public', express.static('public'));//如果不写进可以解析的文件夹名将无法进行public及其子目录的访问
- 
-app.get('/', function (req, res) {
-   res.send('Hello World');
-})
- 
-var server = app.listen(8081, function () {
- 
-  var host = server.address().address
-  var port = server.address().port
- 
-  console.log(&quot;应用实例，访问地址为 http://%s:%s&quot;, host, port)
- 
-})
-</code></pre>
-<h3 id="get-方法">GET 方法</h3>
-<p>在表单中通过 GET 方法提交两个参数，我们可以使用 server.js 文件内的 <strong>process_get</strong> 路由器来处理输入</p>
-<pre><code class="language-html">//index.html
-&lt;html&gt;
-&lt;body&gt;
-&lt;form action=&quot;http://127.0.0.1:8081/process_get&quot; method=&quot;GET&quot;&gt;
-First Name: &lt;input type=&quot;text&quot; name=&quot;first_name&quot;&gt;  &lt;br&gt;
- 
-Last Name: &lt;input type=&quot;text&quot; name=&quot;last_name&quot;&gt;
-&lt;input type=&quot;submit&quot; value=&quot;Submit&quot;&gt;
-&lt;/form&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<pre><code class="language-js">//server.js
-var express = require('express');
-var app = express();
- 
-app.use('/public', express.static('public'));
- 
-app.get('/index.html', function (req, res) {
-   res.sendFile( __dirname + &quot;/&quot; + &quot;index.html&quot; );
-})
- 
-app.get('/process_get', function (req, res) {
- 
-   // 输出 JSON 格式
-   var response = {
-       &quot;first_name&quot;:req.query.first_name,
-       &quot;last_name&quot;:req.query.last_name
-   };
-   console.log(response);
-   res.end(JSON.stringify(response));
-})
- 
-var server = app.listen(8081, function () {
- 
-  var host = server.address().address
-  var port = server.address().port
- 
-  console.log(&quot;应用实例，访问地址为 http://%s:%s&quot;, host, port)
- 
-})
-</code></pre>
-<p>执行以上代码：</p>
-<pre><code>node server.js 
-应用实例，访问地址为 http://0.0.0.0:8081
-</code></pre>
-<p>浏览器访问 http://127.0.0.1:8081/index.html</p>
-<p>可以向表单输入数据，并提交.</p>
-<h3 id="post-方法">POST 方法</h3>
-<p>以下实例演示了在表单中通过 POST 方法提交两个参数，我们可以使用 server.js 文件内的 <strong>process_post</strong> 路由器来处理输入</p>
-<pre><code class="language-html">//index.html
-&lt;html&gt;
-&lt;body&gt;
-&lt;form action=&quot;http://127.0.0.1:8081/process_post&quot; method=&quot;POST&quot;&gt;
-First Name: &lt;input type=&quot;text&quot; name=&quot;first_name&quot;&gt;  &lt;br&gt;
- 
-Last Name: &lt;input type=&quot;text&quot; name=&quot;last_name&quot;&gt;
-&lt;input type=&quot;submit&quot; value=&quot;Submit&quot;&gt;
-&lt;/form&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<pre><code class="language-js">//server.js
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
- 
-// 创建 application/x-www-form-urlencoded 编码解析
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
- 
-app.use('/public', express.static('public'));
- 
-app.get('/index.html', function (req, res) {
-   res.sendFile( __dirname + &quot;/&quot; + &quot;index.html&quot; );
-})
- 
-app.post('/process_post', urlencodedParser, function (req, res) {
- 
-   // 输出 JSON 格式
-   var response = {
-       &quot;first_name&quot;:req.body.first_name,
-       &quot;last_name&quot;:req.body.last_name
-   };
-   console.log(response);
-   res.end(JSON.stringify(response));
-})
- 
-var server = app.listen(8081, function () {
- 
-  var host = server.address().address
-  var port = server.address().port
- 
-  console.log(&quot;应用实例，访问地址为 http://%s:%s&quot;, host, port)
- 
-})
-</code></pre>
-<p>执行以上代码：</p>
-<pre><code class="language-shell">$ node server.js
-应用实例，访问地址为 http://0.0.0.0:8081
-</code></pre>
-<p>浏览器访问 http://127.0.0.1:8081/index.html.</p>
-<h3 id="文件上传">文件上传</h3>
-<p>以下我们创建一个用于上传文件的表单，使用 POST 方法，表单 enctype 属性设置为 multipart/form-data。</p>
-<pre><code class="language-html">&lt;html&gt;
-&lt;head&gt;
-&lt;title&gt;文件上传表单&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;h3&gt;文件上传：&lt;/h3&gt;
-选择一个文件上传: &lt;br /&gt;
-&lt;form action=&quot;/file_upload&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;
-&lt;input type=&quot;file&quot; name=&quot;image&quot; size=&quot;50&quot; /&gt;
-&lt;br /&gt;
-&lt;input type=&quot;submit&quot; value=&quot;上传文件&quot; /&gt;
-&lt;/form&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-<pre><code class="language-js">//server.js
-var express = require('express');
-var app = express();
-var fs = require(&quot;fs&quot;);
- 
-var bodyParser = require('body-parser');
-var multer  = require('multer');
- 
-app.use('/public', express.static('public'));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(multer({ dest: '/tmp/'}).array('image'));//处理multipart/form-data文件（生成files），同时在dest路径下创建一个临时文件。windows在解释时会解释到当前盘
- 
-app.get('/index.html', function (req, res) {
-   res.sendFile( __dirname + &quot;/&quot; + &quot;index.html&quot; );
-})
- 
-app.post('/file_upload', function (req, res) {
- 
-   console.log(req.files[0]);  // 上传的文件信息
- 
-   var des_file = __dirname + &quot;/&quot; + req.files[0].originalname;
-   fs.readFile( req.files[0].path, function (err, data) {
-        fs.writeFile(des_file, data, function (err) {
-         if( err ){
-              console.log( err );
-         }else{
-               response = {
-                   message:'File uploaded successfully', 
-                   filename:req.files[0].originalname
-              };
-          }
-          console.log( response );
-          res.end( JSON.stringify( response ) );
-       });
-   });
-})
- 
-var server = app.listen(8081, function () {
- 
-  var host = server.address().address
-  var port = server.address().port
- 
-  console.log(&quot;应用实例，访问地址为 http://%s:%s&quot;, host, port)
- 
-})
-</code></pre>
-<p>所以实际上是执行了两次文件操作，一次是解析到/tmp（由dest决定）中，然后fs再将它写入当前的工作目录下（由des_file决定）。</p>
-<p>执行以上代码：</p>
-<pre><code>$ node server.js 
-应用实例，访问地址为 http://0.0.0.0:8081
-</code></pre>
-<p>浏览器访问 http://127.0.0.1:8081/index.html</p>
-<h3 id="cookie-管理">Cookie 管理</h3>
-<p>我们可以使用中间件向 Node.js 服务器发送 cookie 信息，以下代码输出了客户端发送的 cookie 信息：</p>
-<blockquote>
-<p><strong>util.inspect(object,[showHidden],[depth],[colors])</strong> 是一个将任意对象转换 为字符串的方法，通常用于调试和错误输出。它至少接受一个参数 object，即要转换的对象。</p>
-</blockquote>
-<pre><code class="language-js">// express_cookie.js 文件
-var express      = require('express')
-var cookieParser = require('cookie-parser')
-var util = require('util');
- 
-var app = express()
-app.use(cookieParser())
- 
-app.get('/', function(req, res) {
-    console.log(&quot;Cookies: &quot; + util.inspect(req.cookies));
-})
- 
-app.listen(8081)
-</code></pre>
-<p>执行以上代码：</p>
-<pre><code>$ node express_cookie.js 
-</code></pre>
-<p>现在你可以访问 http://127.0.0.1:8081 并查看终端信息的输出:</p>
-<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201011195429.png" alt="image-20201011195421936" loading="lazy"></figure>
-<h2 id="restful-api">RESTful API</h2>
-<h3 id="rest介绍">REST介绍</h3>
-<p>REST即表述性状态传递（英文：Representational State Transfer，简称REST）是Roy Fielding博士在2000年他的博士论文中提出来的一种软件架构风格。</p>
-<p>表述性状态转移是一组架构约束条件和原则。满足这些约束条件和原则的应用程序或设计就是RESTful。需要注意的是，REST是设计风格而不是标准。REST通常基于使用HTTP，URI，和XML（标准通用标记语言下的一个子集）以及HTML（标准通用标记语言下的一个应用）这些现有的广泛流行的协议和标准。REST 通常使用 JSON 数据格式。</p>
-<h4 id="http-方法">HTTP 方法</h4>
-<p>以下为 REST 基本架构的四个方法：</p>
-<ul>
-<li><strong>GET</strong> - 用于获取数据。</li>
-<li><strong>PUT</strong> - 用于更新或添加数据。</li>
-<li><strong>DELETE</strong> - 用于删除数据。</li>
-<li><strong>POST</strong> - 用于添加数据。</li>
-</ul>
-<h3 id="restful-web-services">RESTful Web Services</h3>
-<p>Web service是一个平台独立的，低耦合的，自包含的、基于可编程的web的应用程序，<strong>可使用开放的XML（标准通用标记语言下的一个子集）标准来描述、发布、发现、协调和配置这些应用程序</strong>，用于开发分布式的互操作的应用程序。</p>
-<p><strong>基于 REST 架构的 Web Services 即是 RESTful</strong>。</p>
-<p>由于轻量级以及通过 HTTP 直接传输数据的特性，Web 服务的 RESTful 方法已经成为最常见的替代方法。可以使用各种语言（比如 Java 程序、Perl、Ruby、Python、PHP 和 Javascript[包括 Ajax]）实现客户端。</p>
-<p>RESTful Web 服务通常可以通过自动客户端或代表用户的应用程序访问。但是，这种服务的简便性让用户能够与之直接交互，使用它们的 Web 浏览器构建一个 GET URL 并读取返回的内容。</p>
-<h3 id="创建-restful">创建 RESTful</h3>
-<p>首先，创建一个 json 数据资源文件 users.json，内容如下：</p>
-<pre><code class="language-json">{
-   &quot;user1&quot; : {
-      &quot;name&quot; : &quot;mahesh&quot;,
-      &quot;password&quot; : &quot;password1&quot;,
-      &quot;profession&quot; : &quot;teacher&quot;,
-      &quot;id&quot;: 1
-   },
-   &quot;user2&quot; : {
-      &quot;name&quot; : &quot;suresh&quot;,
-      &quot;password&quot; : &quot;password2&quot;,
-      &quot;profession&quot; : &quot;librarian&quot;,
-      &quot;id&quot;: 2
-   },
-   &quot;user3&quot; : {
-      &quot;name&quot; : &quot;ramesh&quot;,
-      &quot;password&quot; : &quot;password3&quot;,
-      &quot;profession&quot; : &quot;clerk&quot;,
-      &quot;id&quot;: 3
-   }
-}
-</code></pre>
-<p>基于以上数据，我们创建以下 RESTful API：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">序号</th>
-<th style="text-align:left">URI</th>
-<th style="text-align:left">HTTP 方法</th>
-<th style="text-align:left">发送内容</th>
-<th style="text-align:left">结果</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">1</td>
-<td style="text-align:left">listUsers</td>
-<td style="text-align:left">GET</td>
-<td style="text-align:left">空</td>
-<td style="text-align:left">显示所有用户列表</td>
-</tr>
-<tr>
-<td style="text-align:left">2</td>
-<td style="text-align:left">addUser</td>
-<td style="text-align:left">POST</td>
-<td style="text-align:left">JSON 字符串</td>
-<td style="text-align:left">添加新用户</td>
-</tr>
-<tr>
-<td style="text-align:left">3</td>
-<td style="text-align:left">deleteUser</td>
-<td style="text-align:left">DELETE</td>
-<td style="text-align:left">JSON 字符串</td>
-<td style="text-align:left">删除用户</td>
-</tr>
-<tr>
-<td style="text-align:left">4</td>
-<td style="text-align:left">:id</td>
-<td style="text-align:left">GET</td>
-<td style="text-align:left">空</td>
-<td style="text-align:left">显示用户详细信息</td>
-</tr>
-</tbody>
-</table>
-<h3 id="获取用户列表">获取用户列表</h3>
-<p>以下代码，我们创建了 RESTful API <strong>listUsers</strong>，用于读取用户的信息列表， server.js 文件代码如下所示：</p>
-<pre><code class="language-js">var express = require('express');
-var app = express();
-var fs = require(&quot;fs&quot;);
-
-app.get('/listUsers', function (req, res) {
-   fs.readFile( __dirname + &quot;/&quot; + &quot;users.json&quot;, 'utf8', function (err, data) {
-       console.log( data );
-       res.end( data );
-   });
-})
-
-var server = app.listen(8081, function () {
-
-  var host = server.address().address
-  var port = server.address().port
-
-  console.log(&quot;应用实例，访问地址为 http://%s:%s&quot;, host, port)
-
-})
-</code></pre>
-<p>接下来执行以下命令：</p>
-<pre><code>$ node server.js 
-应用实例，访问地址为 http://0.0.0.0:8081
-</code></pre>
-<p>在浏览器中访问 http://127.0.0.1:8081/listUsers</p>
-<h4 id="添加用户">添加用户</h4>
-<p>以下代码，我们创建了 RESTful API <strong>addUser</strong>， 用于添加新的用户数据，server.js 文件代码如下所示：</p>
-<pre><code class="language-js">var express = require('express');
-var app = express();
-var fs = require(&quot;fs&quot;);
-
-//添加的新用户数据
-var user = {
-   &quot;user4&quot; : {
-      &quot;name&quot; : &quot;mohit&quot;,
-      &quot;password&quot; : &quot;password4&quot;,
-      &quot;profession&quot; : &quot;teacher&quot;,
-      &quot;id&quot;: 4
-   }
-}
-
-app.get('/addUser', function (req, res) {
-   // 读取已存在的数据
-   fs.readFile( __dirname + &quot;/&quot; + &quot;users.json&quot;, 'utf8', function (err, data) {
-       data = JSON.parse( data );
-       data[&quot;user4&quot;] = user[&quot;user4&quot;];
-       console.log( data );
-       res.end( JSON.stringify(data));
-   });
-})
-
-var server = app.listen(8081, function () {
-
-  var host = server.address().address
-  var port = server.address().port
-  console.log(&quot;应用实例，访问地址为 http://%s:%s&quot;, host, port)
-
-})
-</code></pre>
-<p>接下来执行以下命令：</p>
-<pre><code>$ node server.js 
-应用实例，访问地址为 http://0.0.0.0:8081
-</code></pre>
-<p>在浏览器中访问 http://127.0.0.1:8081/addUser</p>
-<h4 id="显示用户详情">显示用户详情</h4>
-<p>以下代码，我们创建了 RESTful API <strong>:id（用户id）</strong>， 用于读取指定用户的详细信息，server.js 文件代码如下所示：</p>
-<pre><code class="language-js">var express = require('express');
-var app = express();
-var fs = require(&quot;fs&quot;);
-
-app.get('/:id', function (req, res) {
-   // 首先我们读取已存在的用户
-   fs.readFile( __dirname + &quot;/&quot; + &quot;users.json&quot;, 'utf8', function (err, data) {
-       data = JSON.parse( data );
-       var user = data[&quot;user&quot; + req.params.id] 
-       console.log( user );
-       res.end( JSON.stringify(user));
-   });
-})
-
-var server = app.listen(8081, function () {
-
-  var host = server.address().address
-  var port = server.address().port
-  console.log(&quot;应用实例，访问地址为 http://%s:%s&quot;, host, port)
-
-})
-</code></pre>
-<p>接下来执行以下命令：</p>
-<pre><code>$ node server.js 
-应用实例，访问地址为 http://0.0.0.0:8081
-</code></pre>
-<p>在浏览器中访问 http://127.0.0.1:8081/2</p>
-<p>::: tip</p>
-<p>注意<code>:id</code>将会匹配所有其余不是listUser或者addUser的域名。</p>
-<p>如果想要实现只匹配单个数字，可以增加正则表达式：<code>'/:id([0-9]*)'</code></p>
-<p>:::</p>
-<h4 id="删除用户">删除用户</h4>
-<p>以下代码，我们创建了 RESTful API <strong>deleteUser</strong>， 用于删除指定用户的详细信息，以下实例中，用户 id 为 2，server.js 文件代码如下所示：</p>
-<pre><code class="language-js">var express = require('express');
-var app = express();
-var fs = require(&quot;fs&quot;);
-
-var id = 2;
-
-app.get('/deleteUser', function (req, res) {
-
-   // First read existing users.
-   fs.readFile( __dirname + &quot;/&quot; + &quot;users.json&quot;, 'utf8', function (err, data) {
-       data = JSON.parse( data );
-       delete data[&quot;user&quot; + id];
-       
-       console.log( data );
-       res.end( JSON.stringify(data));
-   });
-})
-
-var server = app.listen(8081, function () {
-
-  var host = server.address().address
-  var port = server.address().port
-  console.log(&quot;应用实例，访问地址为 http://%s:%s&quot;, host, port)
-
-})
-</code></pre>
-<p>接下来执行以下命令：</p>
-<pre><code>$ node server.js 
-应用实例，访问地址为 http://0.0.0.0:8081
-</code></pre>
-<p>在浏览器中访问 http://127.0.0.1:8081/deleteUser</p>
-<p>::: tip</p>
-<p>但是这里实际上并没有写回文件，所以再次访问listUser时会发现user2并没有被删掉。</p>
-<p>这里就是后端非常多涉及到的文件增删改查领域，如何提高效率同时保持一致性，比较多的是结合数据库，也可以设计新的增删改查方式。</p>
-<p>:::</p>
 ]]></content>
     </entry>
 </feed>
