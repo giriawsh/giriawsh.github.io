@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>《7天学会Nodejs》第六天——异步编程 | Giria&#39;s Blog</title>
+<link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+
+<link rel="canonical" href="https://giriawsh.github.io/post/lessless7-tian-xue-hui-nodejsgreatergreater-di-liu-tian-yi-bu-bian-cheng/" />
+</head>
+<body>
+<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
+<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://giriawsh.github.io/"><img alt="logo" style="display:inline-block;" src="https://giriawsh.github.io//images/avatar.png"/></a><h1 title="Giria&#39;s Blog" class="weaklink"><a  href="/">Giria&#39;s Blog</a></h1>
+
+<div class="navbar weaklink">
+<div class="normal_nav">
+<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul></nav>
+<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
+<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1603781138001" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+</div></div>
+<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
+
+
+<div class="main"><div class="main-inner"><div class="content">
+<article class="post">
+<h2 class="post_title sm_margin"><a>《7天学会Nodejs》第六天——异步编程</a></h2>
+<script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-10-27</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/NUEp6MDuu/" class="tag">Node.js</a> | 	<a href="https://giriawsh.github.io/tag/YijAokidn/" class="tag">NodeJS学习系列</a> | 	<a href="https://giriawsh.github.io/tag/7Xal1JEGf/" class="tag">学习系列</a> | 	<a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="tag">前端</a> | 	<a href="https://giriawsh.github.io/tag/mwArQWtwB/" class="tag">JS学习系列</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">2958字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">12 min read</span>
+</section>
+
+<div style="display:flex">
+<div class="md_block" id="md_block">
+<div class="round-shape-one"></div>
+<h1 id="异步编程">异步编程</h1>
+<p>NodeJS最大的卖点——事件机制和异步IO，对开发者并不是透明的。开发者需要按异步方式编写代码才用得上这个卖点。</p>
+<h2 id="回调">回调</h2>
+<p>在代码中，异步编程的直接体现就是回调。<strong>异步编程依托于回调来实现</strong>，但不能说使用了回调后程序就异步化了。</p>
+<pre><code class="language-js">function heavyCompute(n, callback) {
+    var count = 0,
+        i, j;
+
+    for (i = n; i &gt; 0; --i) {
+        for (j = n; j &gt; 0; --j) {
+            count += 1;
+        }
+    }
+
+    callback(count);
+}
+
+heavyCompute(10000, function (count) {
+    console.log(count);
+});
+
+console.log('hello');
+
+-- Console ------------------------------
+100000000
+hello
+</code></pre>
+<p>以上代码中的回调函数仍然先于后续代码执行。JS本身是单线程运行的，不可能在一段代码还未结束运行时去运行别的代码，因此也就不存在异步执行的概念。</p>
+<p>但是，如果某个函数做的事情是<strong>创建一个别的线程或进程</strong>，并<u>与JS主线程并行地做一些事情，并在事情做完后通知JS主线程</u>，那情况又不一样了。我们接着看看以下代码。</p>
+<pre><code class="language-js">setTimeout(function () {
+    console.log('world');
+}, 1000);
+
+console.log('hello');
+
+-- Console ------------------------------
+hello
+world
+</code></pre>
+<p>这次可以看到，回调函数后于后续代码执行了。</p>
+<p>JS本身是单线程的，无法异步执行，因此我们可以认为<code>setTimeout</code>这类JS规范之外的<u>由运行环境提供的特殊函数做的事情是创建一个平行线程后立即返回，让JS主进程可以接着执行后续代码，并在收到平行进程的通知后再执行回调函数。</u></p>
+<p>除了<code>setTimeout</code>、<code>setInterval</code>这些常见的，这类函数还包括NodeJS提供的诸如<code>fs.readFile</code>之类的异步API。</p>
+<p>另外，我们仍然回到JS是单线程运行的这个事实上，这决定了<u>JS在执行完一段代码之前无法执行包括回调函数在内的别的代码。</u></p>
+<p>也就是说，即使平行线程完成工作了，通知JS主线程执行回调函数了，<u>回调函数也要等到JS主线程空闲时才能开始执行</u>。以下就是这么一个例子。</p>
+<pre><code class="language-js">function heavyCompute(n) {
+    var count = 0,
+        i, j;
+
+    for (i = n; i &gt; 0; --i) {
+        for (j = n; j &gt; 0; --j) {
+            count += 1;
+        }
+    }
+}
+
+var t = new Date();
+
+setTimeout(function () {
+    console.log(new Date() - t);
+}, 1000);
+
+heavyCompute(50000);
+
+-- Console ------------------------------
+8520
+</code></pre>
+<p>可以看到，本来应该在1秒后被调用的回调函数因为JS主线程忙于运行其它代码，实际执行时间被大幅延迟。</p>
+<h2 id="代码设计模式">代码设计模式</h2>
+<p>异步编程有很多特有的代码设计模式，为了实现同样的功能，使用同步方式和异步方式编写的代码会有很大差异。以下分别介绍一些常见的模式。</p>
+<h3 id="函数返回值">函数返回值</h3>
+<p>使用一个函数的输出作为另一个函数的输入是很常见的需求，在同步方式下一般按以下方式编写代码：</p>
+<pre><code class="language-js">var output = fn1(fn2('input'));
+// Do something.
+</code></pre>
+<p>而在异步方式下，由于函数执行结果不是通过返回值，而是通过回调函数传递，因此一般按以下方式编写代码：</p>
+<pre><code class="language-js">fn2('input', function (output2) {
+    fn1(output2, function (output1) {
+        // Do something.
+    });
+});
+</code></pre>
+<p>这种方式就是一个回调函数套一个回调函多，套得太多了很容易写出<code>&gt;</code>形状的代码。</p>
+<h3 id="遍历数组">遍历数组</h3>
+<p>在遍历数组时，<u>使用某个函数依次对数据成员做一些处理</u>也是常见的需求。</p>
+<p>如果函数是同步执行的，一般就会写出以下代码：</p>
+<pre><code class="language-js">var len = arr.length,
+    i = 0;
+
+for (; i &lt; len; ++i) {
+    arr[i] = sync(arr[i]);
+}
+
+// All array items have processed.
+</code></pre>
+<p>如果函数是异步执行的，以上代码就无法保证循环结束后所有数组成员都处理完毕了。如果数组成员必须一个接一个串行处理，则一般按照以下方式编写异步代码：</p>
+<pre><code class="language-js">(function next(i, len, callback) {
+    if (i &lt; len) {
+        async(arr[i], function (value) {
+            arr[i] = value;
+            next(i + 1, len, callback);
+        });
+    } else {
+        callback();
+    }
+}(0, arr.length, function () {
+    // All array items have processed.
+}));
+</code></pre>
+<p>以上代码在异步函数<u>执行一次并返回执行结果后才传入下一个数组成员并开始下一轮执行</u>，直到所有数组成员处理完毕后，<u>通过回调的方式触发后续代码的执行</u>。</p>
+<p>如果数组成员<u>可以并行处理，但后续代码仍然需要所有数组成员处理完毕后才能执行</u>的话，则异步代码会调整成以下形式：</p>
+<pre><code class="language-js">(function (i, len, count, callback) {
+    for (; i &lt; len; ++i) {
+        (function (i) {
+            async(arr[i], function (value) {
+                arr[i] = value;
+                if (++count === len) {
+                    callback();
+                }
+            });
+        }(i));
+    }
+}(0, arr.length, 0, function () {
+    // All array items have processed.
+}));
+</code></pre>
+<p>可以看到，与异步串行遍历的版本相比，以上代码并行处理所有数组成员，并通过计数器变量来判断什么时候所有数组成员都处理完毕了。</p>
+<p>::: error 重看提醒</p>
+<p>这一块好复杂……需要再多看看。</p>
+<p>:::</p>
+<h3 id="异常处理">异常处理</h3>
+<p>JS自身提供的异常捕获和处理机制——<code>try..catch..</code>，<strong>只能用于同步执行的代码</strong>。</p>
+<pre><code class="language-js">function sync(fn) {
+    return fn();
+}
+
+try {
+    sync(null);
+    // Do something.
+} catch (err) {
+    console.log('Error: %s', err.message);
+}
+
+-- Console ------------------------------
+Error: object is not a function
+</code></pre>
+<p>可以看到，异常会沿着代码执行路径一直冒泡，直到遇到第一个<code>try</code>语句时被捕获住。</p>
+<p>但由于<u>异步函数会打断代码执行路径</u>，异步函数执行过程中以及执行之后产生的异常冒泡到执行路径被打断的位置时，如果一直没有遇到<code>try</code>语句，就<u>作为一个全局异常抛出。</u></p>
+<p>以下是一个例子。</p>
+<pre><code class="language-js">function async(fn, callback) {
+    // Code execution path breaks here.
+    setTimeout(function ()　{
+        callback(fn());
+    }, 0);
+}
+
+try {
+    async(null, function (data) {
+        // Do something.
+    });
+} catch (err) {
+    console.log('Error: %s', err.message);
+}
+
+-- Console ------------------------------
+/home/user/test.js:4
+        callback(fn());
+                 ^
+TypeError: object is not a function
+    at null._onTimeout (/home/user/test.js:4:13)
+    at Timer.listOnTimeout [as ontimeout] (timers.js:110:15)
+</code></pre>
+<p>因为代码执行路径被打断了，我们就需要在异常冒泡到断点之前用<code>try</code>语句把异常捕获住，并通过回调函数传递被捕获的异常。</p>
+<p>于是我们可以像下边这样改造上边的例子。</p>
+<pre><code class="language-js">function async(fn, callback) {
+    // Code execution path breaks here.
+    setTimeout(function ()　{
+        try {
+            callback(null, fn());
+        } catch (err) {
+            callback(err);
+        }
+    }, 0);
+}
+
+async(null, function (err, data) {
+    if (err) {
+        console.log('Error: %s', err.message);
+    } else {
+        // Do something.
+    }
+});
+
+-- Console ------------------------------
+Error: object is not a function
+</code></pre>
+<p>可以看到，异常再次被捕获住了。在NodeJS中，几乎所有异步API都按照以上方式设计，回调函数中第一个参数都是<code>err</code>。</p>
+<p>因此我们在编写自己的异步函数时，也可以按照这种方式来处理异常，与NodeJS的设计风格保持一致。</p>
+<p>基本上，我们的代码都是做一些事情，然后调用一个函数，然后再做一些事情，然后再调用一个函数，如此循环。</p>
+<p>如果我们写的是同步代码，只需要在代码入口点写一个<code>try</code>语句就能捕获所有冒泡上来的异常，示例如下。</p>
+<pre><code class="language-js">function main() {
+    // Do something.
+    syncA();
+    // Do something.
+    syncB();
+    // Do something.
+    syncC();
+}
+
+try {
+    main();
+} catch (err) {
+    // Deal with exception.
+}
+</code></pre>
+<p>如果我们写的是异步代码，由于每次异步函数调用都会打断代码执行路径，只能通过回调函数来传递异常，于是<u>我们就需要在每个回调函数里判断是否有异常发生</u>，于是只用三次异步函数调用，就会产生下边这种代码。</p>
+<pre><code class="language-js">function main(callback) {
+    // Do something.
+    asyncA(function (err, data) {
+        if (err) {
+            callback(err);
+        } else {
+            // Do something
+            asyncB(function (err, data) {
+                if (err) {
+                    callback(err);
+                } else {
+                    // Do something
+                    asyncC(function (err, data) {
+                        if (err) {
+                            callback(err);
+                        } else {
+                            // Do something
+                            callback(null);
+                        }
+                    });
+                }
+            });
+        }
+    });
+}
+
+main(function (err) {
+    if (err) {
+        // Deal with exception.
+    }
+});
+</code></pre>
+<p>可以看到，回调函数已经让代码变得复杂了，而<u>异步方式下对异常的处理更加剧了代码的复杂度。</u></p>
+<p>接下来会介绍NodeJS提供的一些解决方案。</p>
+<h2 id="域domain">域（Domain）</h2>
+<blockquote>
+<p><strong>官方文档：</strong> http://nodejs.org/api/domain.html</p>
+</blockquote>
+<p>NodeJS提供了<code>domain</code>模块，可以简化异步代码的异常处理。</p>
+<p>简单的讲，<strong>一个域就是一个JS运行环境</strong>。在一个运行环境中，<u>如果一个异常没有被捕获，将作为一个全局异常被抛出。</u></p>
+<p>NodeJS通过<code>process</code>对象提供了捕获全局异常的方法，示例代码如下：</p>
+<pre><code class="language-js">process.on('uncaughtException', function (err) {
+    console.log('Error: %s', err.message);
+});
+
+setTimeout(function (fn) {
+    fn();
+});
+
+-- Console ------------------------------
+Error: undefined is not a function
+</code></pre>
+<p>虽然全局异常有个地方可以捕获了，但是对于大多数异常，我们希望<u>尽早捕获，并根据结果决定代码的执行路径。</u>我们用以下HTTP服务器代码作为例子：</p>
+<pre><code class="language-js">function async(request, callback) {
+    // Do something.
+    asyncA(request, function (err, data) {
+        if (err) {
+            callback(err);
+        } else {
+            // Do something
+            asyncB(request, function (err, data) {
+                if (err) {
+                    callback(err);
+                } else {
+                    // Do something
+                    asyncC(request, function (err, data) {
+                        if (err) {
+                            callback(err);
+                        } else {
+                            // Do something
+                            callback(null, data);
+                        }
+                    });
+                }
+            });
+        }
+    });
+}
+
+http.createServer(function (request, response) {
+    async(request, function (err, data) {
+        if (err) {
+            response.writeHead(500);
+            response.end();
+        } else {
+            response.writeHead(200);
+            response.end(data);
+        }
+    });
+});
+</code></pre>
+<p>以上代码将请求对象交给异步函数处理后，再根据处理结果返回响应。</p>
+<p>为了让代码好看点，我们可以在每处理一个请求时，使用<code>domain</code>模块创建一个子域（JS子运行环境）。<u>在子域内运行的代码可以随意抛出异常，而这些异常可以通过子域对象的<code>error</code>事件统一捕获。</u></p>
+<p>于是以上代码可以做如下改造：</p>
+<pre><code class="language-js">function async(request, callback) {
+    // Do something.
+    asyncA(request, function (data) {
+        // Do something
+        asyncB(request, function (data) {
+            // Do something
+            asyncC(request, function (data) {
+                // Do something
+                callback(data);
+            });
+        });
+    });
+}
+
+http.createServer(function (request, response) {
+    var d = domain.create();
+
+    d.on('error', function () {
+        response.writeHead(500);
+        response.end();
+    });
+
+    d.run(function () {
+        async(request, function (data) {
+            response.writeHead(200);
+            response.end(data);
+        });
+    });
+});
+</code></pre>
+<p>我们使用<code>.create</code>方法创建了一个子域对象，并通过<code>.run</code>方法进入需要在子域中运行的代码的入口点。</p>
+<p>而位于子域中的异步函数回调函数由于不再需要捕获异常，代码一下子瘦身很多。</p>
+<h3 id="陷阱">陷阱</h3>
+<p>无论是通过<code>process</code>对象的<code>uncaughtException</code>事件捕获到全局异常，还是通过子域对象的<code>error</code>事件捕获到了子域异常，在NodeJS官方文档里都<strong>强烈建议处理完异常后立即重启程序</strong>，而不是让程序继续运行。</p>
+<p>按照官方文档的说法，发生异常后的程序处于一个不确定的运行状态，如果不立即退出的话，<u>程序可能会发生严重内存泄漏</u>，也可能表现得很奇怪。</p>
+<p>但这里需要澄清一些事实。JS本身的<code>throw..try..catch</code>异常处理机制并不会导致内存泄漏，也不会让程序的执行结果出乎意料，<u>但NodeJS并不是存粹的JS</u>。NodeJS里大量的API内部是用C/C++实现的，因此NodeJS程序的运行过程中，代码执行路径穿梭于JS引擎内部和外部，<u>而JS的异常抛出机制可能会打断正常的代码执行流程，导致C/C++部分的代码表现异常，进而导致内存泄漏等问题。</u></p>
+<p>因此，<u>使用<code>uncaughtException</code>或<code>domain</code>捕获异常</u>，代码执行路径里涉及到了C/C++部分的代码时，如果不能确定是否会导致内存泄漏等问题，最好在<strong>处理完异常后重启程序比较妥当</strong>。</p>
+<p>而<u>使用<code>try</code>语句捕获异常时一般捕获到的都是JS本身的异常，不用担心上述问题</u>。</p>
+<h2 id="小结">小结</h2>
+<p>本章介绍了JS异步编程相关的知识，总结起来有以下几点：</p>
+<ul>
+<li>不掌握异步编程就不算学会NodeJS。</li>
+<li>异步编程依托于回调来实现，而使用回调不一定就是异步编程。</li>
+<li>异步编程下的函数间数据传递、数组遍历和异常处理与同步编程有很大差别。</li>
+<li>使用<code>domain</code>模块简化异步代码的异常处理，并小心陷阱。</li>
+</ul>
+
+<span id="footnote"></span>
+<div id = "warn"></div>
+</div>
+<div class="toc-container"><ul class="markdownIt-TOC">
+<li><a href="#%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B">异步编程</a>
+<ul>
+<li><a href="#%E5%9B%9E%E8%B0%83">回调</a></li>
+<li><a href="#%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F">代码设计模式</a>
+<ul>
+<li><a href="#%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC">函数返回值</a></li>
+<li><a href="#%E9%81%8D%E5%8E%86%E6%95%B0%E7%BB%84">遍历数组</a></li>
+<li><a href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86">异常处理</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9F%9Fdomain">域（Domain）</a>
+<ul>
+<li><a href="#%E9%99%B7%E9%98%B1">陷阱</a></li>
+</ul>
+</li>
+<li><a href="#%E5%B0%8F%E7%BB%93">小结</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="fullPage"><canvas id="canvas"></canvas></div>
+</article>
+<div id="eof"><span>EOF</span></div><div class="round-shape-one"></div>
+<section>
+<div class="doc_comments">
+
+	  
+		<div id="gitalk-container"></div>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/qyxtim/Static@3.8/gitalk.min.js"></script><link href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.css"rel="stylesheet"><script>var gitalk=new Gitalk({clientID:"ee7c215043d62409bb53",clientSecret:"455d2f4a532bbe073ca25fdf9111932f00bbc624",repo:"giriawsh.github.io",owner:"giriawsh",admin:["giriawsh"],id:(location.pathname).substring(0, 49),distractionFreeMode:false});gitalk.render("gitalk-container");</script>
+	  
+
+	  
+
+</div></section>
+</div></div></div><script>
+"use strict";!function(){for(var n=document.getElementsByTagName("pre"),e=n.length,s=0;s<e;s++){n[s].innerHTML='<span class="line-number"></span>'+n[s].innerHTML+'<span class="cl"></span>';for(var a=n[s].innerHTML.split(/\n/).length,r=0;r<a-1;r++){n[s].getElementsByTagName("span")[0].innerHTML+="<span>"+(r+1)+"</span>"}}}();
+let mainNavLinks=document.querySelectorAll(".markdownIt-TOC a");window.addEventListener("scroll",event=>{let fromTop=window.scrollY;mainNavLinks.forEach((link,index)=>{let section=document.getElementById(decodeURI(link.hash).substring(1));let nextSection=null
+if(mainNavLinks[index+1]){nextSection=document.getElementById(decodeURI(mainNavLinks[index+1].hash).substring(1));}
+if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop){link.classList.add("currentToc");}else{link.classList.remove("currentToc");}}else{link.classList.add("currentToc");}}else{link.classList.remove("currentToc");}});});
+var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
+var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
+var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
+content="本文最后更新于2020-10-27，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-10-27 14:44:29";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+</script>
+<style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
+<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"><a href="https://github.com/giriawsh"title="github"><i class="iconfont icon-github"></i></a></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
+<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>66</strong> posts</span></div></div>
+<script>
+console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;", );
+</script>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+<script type="text/javascript" async src="https://giriawsh.github.io//media/js/prism.js"></script>
+</body>
+
+</html>
