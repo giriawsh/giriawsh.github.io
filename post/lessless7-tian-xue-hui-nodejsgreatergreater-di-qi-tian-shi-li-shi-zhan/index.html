@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>《7天学会Nodejs》第七天——示例实战 | Giria&#39;s Blog</title>
+<link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+
+<link rel="canonical" href="https://giriawsh.github.io/post/lessless7-tian-xue-hui-nodejsgreatergreater-di-qi-tian-shi-li-shi-zhan/" />
+</head>
+<body>
+<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
+<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://giriawsh.github.io/"><img alt="logo" style="display:inline-block;" src="https://giriawsh.github.io//images/avatar.png"/></a><h1 title="Giria&#39;s Blog" class="weaklink"><a  href="/">Giria&#39;s Blog</a></h1>
+
+<div class="navbar weaklink">
+<div class="normal_nav">
+<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul></nav>
+<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
+<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1604124913375" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+</div></div>
+<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
+
+
+<div class="main"><div class="main-inner"><div class="content">
+<article class="post">
+<h2 class="post_title sm_margin"><a>《7天学会Nodejs》第七天——示例实战</a></h2>
+<script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-10-31</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/NUEp6MDuu/" class="tag">Node.js</a> | 	<a href="https://giriawsh.github.io/tag/YijAokidn/" class="tag">NodeJS学习系列</a> | 	<a href="https://giriawsh.github.io/tag/7Xal1JEGf/" class="tag">学习系列</a> | 	<a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="tag">前端</a> | 	<a href="https://giriawsh.github.io/tag/mwArQWtwB/" class="tag">JS学习系列</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">3146字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">13 min read</span>
+</section>
+
+<div style="display:flex">
+<div class="md_block" id="md_block">
+<div class="round-shape-one"></div>
+<h1 id="大示例">大示例</h1>
+<p>作为最后一章，将完整地介绍一个使用NodeJS开发Web服务器的示例。</p>
+<h2 id="需求">需求</h2>
+<p>我们要开发的是一个简单的静态文件合并服务器，该服务器需要支持类似以下格式的JS或CSS文件合并请求。</p>
+<pre><code class="language-http">http://assets.example.com/foo/??bar.js,baz.js
+</code></pre>
+<p>在以上URL中，<code>??</code>是一个分隔符，之前是需要合并的多个文件的URL的公共部分，之后是使用<code>,</code>分隔的差异部分。因此服务器处理这个URL时，返回的是以下两个文件按顺序合并后的内容：</p>
+<pre><code>/foo/bar.js
+/foo/baz.js
+</code></pre>
+<p>另外，服务器也需要能支持类似以下格式的普通的JS或CSS文件请求。</p>
+<pre><code class="language-http">http://assets.example.com/foo/bar.js
+</code></pre>
+<h2 id="第一次迭代">第一次迭代</h2>
+<p>快速迭代是一种不错的开发方式，因此我们在第一次迭代时先实现服务器的基本功能。</p>
+<h3 id="设计">设计</h3>
+<p>简单分析了需求之后，我们大致会得到以下的设计方案。</p>
+<pre><code>           +---------+   +-----------+   +----------+
+request --&gt;|  parse  |--&gt;|  combine  |--&gt;|  output  |--&gt; response
+           +---------+   +-----------+   +----------+
+</code></pre>
+<ol>
+<li>
+<p>服务器会首先分析URL，得到请求的文件的路径和类型（MIME）。</p>
+</li>
+<li>
+<p>然后，服务器会读取请求的文件，并按顺序合并文件内容。</p>
+</li>
+<li>
+<p>最后，服务器返回响应，完成对一次请求的处理。</p>
+</li>
+</ol>
+<p>另外，服务器在<u>读取文件时需要有个根目录</u>，并且服务器监听的HTTP端口最好也不要写死在代码里，因此服务器需要是可配置的。</p>
+<h3 id="实现">实现</h3>
+<pre><code class="language-js">var fs = require('fs'),
+    path = require('path'),
+    http = require('http');
+
+var MIME = {
+    '.css': 'text/css',
+    '.js': 'application/javascript'
+};
+
+function combineFiles(pathnames, callback) {
+    var output = [];
+
+    (function next(i, len) {
+        if (i &lt; len) {
+            fs.readFile(pathnames[i], function (err, data) {
+                if (err) {
+                    callback(err);
+                } else {
+                    output.push(data);
+                    next(i + 1, len);
+                }
+            });
+        } else {
+            callback(null, Buffer.concat(output));
+        }
+    }(0, pathnames.length));
+}
+
+function main(argv) {
+    var config = JSON.parse(fs.readFileSync(argv[0], 'utf-8')),
+        root = config.root || '.',
+        port = config.port || 80;
+
+    http.createServer(function (request, response) {
+        var urlInfo = parseURL(root, request.url);
+
+        combineFiles(urlInfo.pathnames, function (err, data) {
+            if (err) {
+                response.writeHead(404);
+                response.end(err.message);
+            } else {
+                response.writeHead(200, {
+                    'Content-Type': urlInfo.mime
+                });
+                response.end(data);
+            }
+        });
+    }).listen(port);
+}
+
+function parseURL(root, url) {
+    var base, pathnames, parts;
+
+    if (url.indexOf('??') === -1) {
+        url = url.replace('/', '/??');
+    }
+
+    parts = url.split('??');
+    base = parts[0];
+    pathnames = parts[1].split(',').map(function (value) {
+        return path.join(root, base, value);
+    });
+
+    return {
+        mime: MIME[path.extname(pathnames[0])] || 'text/plain',
+        pathnames: pathnames
+    };
+}
+
+main(process.argv.slice(2));
+</code></pre>
+<p>以上代码完整实现了服务器所需的功能，并且有以下几点值得注意：</p>
+<ol>
+<li>使用命令行参数传递JSON配置文件路径，入口函数负责读取配置并创建服务器。</li>
+<li>入口函数完整描述了程序的运行逻辑，其中解析URL和合并文件的具体实现封装在其它两个函数里。</li>
+<li>解析URL时先将普通URL转换为了文件合并URL，使得两种URL的处理方式可以一致。</li>
+<li>合并文件时使用异步API读取文件，避免服务器因等待磁盘IO而发生阻塞。</li>
+</ol>
+<p>我们可以把以上代码保存为<code>server.js</code>，之后就可以通过<code>node server.js config.json</code>命令启动程序，于是我们的第一版静态文件合并服务器就顺利完工了。</p>
+<p>另外，以上代码存在一个不那么明显的逻辑缺陷。例如，使用以下URL请求服务器时会有惊喜。</p>
+<pre><code>    http://assets.example.com/foo/bar.js,foo/baz.js
+</code></pre>
+<p>经过分析之后我们会发现<u>问题出在<code>/</code>被自动替换<code>/??</code>这个行为上</u>，而这个问题我们可以到第二次迭代时再解决。</p>
+<h2 id="第二次迭代">第二次迭代</h2>
+<p>下来我们需要从性能的角度出发，看看代码还有哪些改进余地。</p>
+<h3 id="设计-2">设计</h3>
+<p>把<code>map</code>方法换成<code>for</code>循环或许会更快一些，但第一版代码最大的性能问题存在于从读取文件到输出响应的过程当中。我们以处理<code>/??a.js,b.js,c.js</code>这个请求为例，看看整个处理过程中耗时在哪儿。</p>
+<pre><code> 发送请求       等待服务端响应         接收响应
+---------+----------------------+-------------&gt;
+         --                                        解析请求
+           ------                                  读取a.js
+                 ------                            读取b.js
+                       ------                      读取c.js
+                             --                    合并数据
+                               --                  输出响应
+</code></pre>
+<p>把<code>map</code>方法换成<code>for</code>循环或许会更快一些，但第一版代码最大的性能问题存在于从读取文件到输出响应的过程当中。我们以处理<code>/??a.js,b.js,c.js</code>这个请求为例，看看整个处理过程中耗时在哪儿。</p>
+<pre><code> 发送请求       等待服务端响应         接收响应
+---------+----------------------+-------------&gt;
+         --                                        解析请求
+           ------                                  读取a.js
+                 ------                            读取b.js
+                       ------                      读取c.js
+                             --                    合并数据
+                               --                  输出响应
+</code></pre>
+<p>可以看到，第一版代码依次把请求的文件读取到内存中之后，再合并数据和输出响应。这会导致以下两个问题：</p>
+<ol>
+<li>当请求的文件比较多比较大时，串行读取文件会比较耗时，从而拉长了服务端响应等待时间。</li>
+<li>由于每次响应输出的数据都需要先完整地缓存在内存里，当服务器请求并发数较大时，会有较大的内存开销。</li>
+</ol>
+<p>对于第一个问题，很容易想到<u>把读取文件的方式从串行改为并行</u>。</p>
+<p>但是别这样做，因为<u>对于机械磁盘而言，因为只有一个磁头，尝试并行读取文件只会造成磁头频繁抖动，反而降低IO效率。</u></p>
+<p>而对于固态硬盘，虽然的确存在多个并行IO通道，但是对于服务器并行处理的多个请求而言，硬盘已经在做并行IO了，<u>对单个请求采用并行IO无异于拆东墙补西墙</u>。</p>
+<p>因此，正确的做法不是改用并行IO，而是<strong>一边读取文件一边输出响应</strong>，把响应输出时机提前至读取第一个文件的时刻。这样调整后，整个请求处理过程变成下边这样。</p>
+<pre><code>发送请求 等待服务端响应 接收响应
+---------+----+-------------------------------&gt;
+         --                                        解析请求
+           --                                      检查文件是否存在
+             --                                    输出响应头
+               ------                              读取和输出a.js
+                     ------                        读取和输出b.js
+                           ------                  读取和输出c.js
+</code></pre>
+<p>按上述方式解决第一个问题后，因为服务器<u>不需要完整地缓存每个请求的输出数据了</u>，第二个问题也迎刃而解。</p>
+<h3 id="实现-2">实现</h3>
+<p>根据以上设计，第二版代码按以下方式调整了部分函数。</p>
+<pre><code class="language-js">function main(argv) {
+    var config = JSON.parse(fs.readFileSync(argv[0], 'utf-8')),
+        root = config.root || '.',
+        port = config.port || 80;
+
+    http.createServer(function (request, response) {
+        var urlInfo = parseURL(root, request.url);
+
+        validateFiles(urlInfo.pathnames, function (err, pathnames) {
+            if (err) {
+                response.writeHead(404);
+                response.end(err.message);
+            } else {
+                response.writeHead(200, {
+                    'Content-Type': urlInfo.mime
+                });
+                outputFiles(pathnames, response);
+            }
+        });
+    }).listen(port);
+}
+
+function outputFiles(pathnames, writer) {
+    (function next(i, len) {
+        if (i &lt; len) {
+            var reader = fs.createReadStream(pathnames[i]);
+
+            reader.pipe(writer, { end: false });
+            reader.on('end', function() {
+                next(i + 1, len);
+            });
+        } else {
+            writer.end();
+        }
+    }(0, pathnames.length));
+}
+
+function validateFiles(pathnames, callback) {
+    (function next(i, len) {
+        if (i &lt; len) {
+            fs.stat(pathnames[i], function (err, stats) {
+                if (err) {
+                    callback(err);
+                } else if (!stats.isFile()) {
+                    callback(new Error());
+                } else {
+                    next(i + 1, len);
+                }
+            });
+        } else {
+            callback(null, pathnames);
+        }
+    }(0, pathnames.length));
+}
+</code></pre>
+<p>可以看到，第二版代码在检查了请求的所有文件是否有效之后，立即就输出了响应头，并接着一边按顺序读取文件一边输出响应内容。并且，在读取文件时，第二版代码直接使用了只读数据流来简化代码。</p>
+<h2 id="第三次迭代">第三次迭代</h2>
+<p>服务器本身的功能和性能已经得到了初步满足。接下来我们需要从稳定性的角度重新审视一下代码，看看还需要做些什么。</p>
+<h3 id="设计-3">设计</h3>
+<p>从工程角度上讲，没有绝对可靠的系统。即使第二次迭代的代码经过反复检查后能确保没有bug，也很难说是否会因为NodeJS本身，或者是操作系统本身，甚至是硬件本身导致我们的服务器程序在某一天挂掉。</p>
+<p>因此一般生产环境下的服务器程序都配有一个<strong>守护进程</strong>，在服务挂掉的时候立即重启服务。</p>
+<p>一般守护进程的代码会远比服务进程的代码简单，从概率上可以保证守护进程更难挂掉。</p>
+<p>如果再做得严谨一些，<u>甚至守护进程自身可以在自己挂掉时重启自己</u>，从而实现双保险。</p>
+<h3 id="实现-3">实现</h3>
+<p>根据以上设计，我们编写了守护进程需要的代码。</p>
+<pre><code class="language-js">var cp = require('child_process');
+
+var worker;
+
+function spawn(server, config) {
+    worker = cp.spawn('node', [ server, config ]);
+    worker.on('exit', function (code) {
+        if (code !== 0) {
+            spawn(server, config);
+        }
+    });
+}
+
+function main(argv) {
+    spawn('server.js', argv[0]);
+    process.on('SIGTERM', function () {
+        worker.kill();
+        process.exit(0);
+    });
+}
+
+main(process.argv.slice(2));
+</code></pre>
+<p>此外，服务器代码本身的入口函数也要做以下调整。</p>
+<pre><code class="language-js">function main(argv) {
+    var config = JSON.parse(fs.readFileSync(argv[0], 'utf-8')),
+        root = config.root || '.',
+        port = config.port || 80,
+        server;
+
+    server = http.createServer(function (request, response) {
+        ...
+    }).listen(port);
+
+    process.on('SIGTERM', function () {
+        server.close(function () {
+            process.exit(0);
+        });
+    });
+}
+</code></pre>
+<p>我们可以把守护进程的代码保存为<code>daemon.js</code>，之后我们可以通过<code>node daemon.js config.json</code>启动服务，而守护进程会进一步启动和监控服务器进程。</p>
+<p>此外，为了能够正常终止服务，我们<u>让守护进程在接收到<code>SIGTERM</code>信号时终止服务器进程</u>。而在服务器进程这一端，同样<u>在收到<code>SIGTERM</code>信号时先停掉HTTP服务再正常退出</u>。</p>
+<p>至此，我们的服务器程序就靠谱很多了。</p>
+<h2 id="第四次迭代">第四次迭代</h2>
+<p>解决了服务器本身的功能、性能和可靠性的问题后，接着我们需要考虑一下代码部署的问题，以及服务器控制的问题。</p>
+<h3 id="设计-4">设计</h3>
+<p>一般而言，程序在服务器上有一个固定的部署目录，每次程序有更新后，都重新发布到部署目录里。</p>
+<p>而一旦完成部署后，一般也可以通过固定的服务控制脚本启动和停止服务。</p>
+<p>因此我们的服务器程序部署目录可以做如下设计。</p>
+<pre><code>- deploy/
+    - bin/
+        startws.sh
+        killws.sh
+    + conf/
+        config.json
+    + lib/
+        daemon.js
+        server.js
+</code></pre>
+<p>在以上目录结构中，我们分类存放了服务控制脚本、配置文件和服务器代码。</p>
+<h3 id="实现-4">实现</h3>
+<p>按以上目录结构分别存放对应的文件之后，接下来我们看看控制脚本怎么写。首先是<code>start.sh</code>。</p>
+<pre><code class="language-sh">#!/bin/sh
+if [ ! -f &quot;pid&quot; ]
+then
+    node ../lib/daemon.js ../conf/config.json &amp;
+    echo $! &gt; pid
+fi
+</code></pre>
+<p>然后是<code>killws.sh</code>。</p>
+<pre><code class="language-sh">#!/bin/sh
+if [ -f &quot;pid&quot; ]
+then
+    kill $(tr -d '\r\n' &lt; pid)
+    rm pid
+fi
+</code></pre>
+<p>于是这样我们就有了一个简单的代码部署目录和服务控制脚本，我们的服务器程序就可以上线工作了。</p>
+<h3 id="后续迭代">后续迭代</h3>
+<p>我们的服务器程序正式上线工作后，我们接下来或许会发现还有很多可以改进的点。</p>
+<p>比如服务器程序在合并JS文件时可以自动在JS文件之间插入一个<code>;</code>来避免一些语法问题，比如服务器程序需要提供日志来统计访问量，比如服务器程序需要能充分利用多核CPU，等等。</p>
+<h2 id="小结">小结</h2>
+<p>本章将之前零散介绍的知识点串了起来，完整地演示了一个使用NodeJS开发程序的例子，至此我们的课程就全部结束了。以下是对新诞生的NodeJSer的一些建议。</p>
+<ul>
+<li>要熟悉官方API文档。并不是说要熟悉到能记住每个API的名称和用法，而是要熟悉NodeJS提供了哪些功能，一旦需要时知道查询API文档的哪块地方。</li>
+<li>要先设计再实现。在开发一个程序前首先要有一个全局的设计，不一定要很周全，但要足够能写出一些代码。</li>
+<li>要实现后再设计。在写了一些代码，有了一些具体的东西后，一定会发现一些之前忽略掉的细节。这时再反过来改进之前的设计，为第二轮迭代做准备。</li>
+<li>要充分利用三方包。NodeJS有一个庞大的生态圈，在写代码之前先看看有没有现成的三方包能节省不少时间。</li>
+<li>不要迷信三方包。任何事情做过头了就不好了，三方包也是一样。三方包是一个黑盒，每多使用一个三方包，就为程序增加了一份潜在风险。并且三方包很难恰好只提供程序需要的功能，每多使用一个三方包，就让程序更加臃肿一些。因此在决定使用某个三方包之前，最好三思而后行。</li>
+</ul>
+
+<span id="footnote"></span>
+<div id = "warn"></div>
+</div>
+<div class="toc-container"><ul class="markdownIt-TOC">
+<li><a href="#%E5%A4%A7%E7%A4%BA%E4%BE%8B">大示例</a>
+<ul>
+<li><a href="#%E9%9C%80%E6%B1%82">需求</a></li>
+<li><a href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%BF%AD%E4%BB%A3">第一次迭代</a>
+<ul>
+<li><a href="#%E8%AE%BE%E8%AE%A1">设计</a></li>
+<li><a href="#%E5%AE%9E%E7%8E%B0">实现</a></li>
+</ul>
+</li>
+<li><a href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E8%BF%AD%E4%BB%A3">第二次迭代</a>
+<ul>
+<li><a href="#%E8%AE%BE%E8%AE%A1-2">设计</a></li>
+<li><a href="#%E5%AE%9E%E7%8E%B0-2">实现</a></li>
+</ul>
+</li>
+<li><a href="#%E7%AC%AC%E4%B8%89%E6%AC%A1%E8%BF%AD%E4%BB%A3">第三次迭代</a>
+<ul>
+<li><a href="#%E8%AE%BE%E8%AE%A1-3">设计</a></li>
+<li><a href="#%E5%AE%9E%E7%8E%B0-3">实现</a></li>
+</ul>
+</li>
+<li><a href="#%E7%AC%AC%E5%9B%9B%E6%AC%A1%E8%BF%AD%E4%BB%A3">第四次迭代</a>
+<ul>
+<li><a href="#%E8%AE%BE%E8%AE%A1-4">设计</a></li>
+<li><a href="#%E5%AE%9E%E7%8E%B0-4">实现</a></li>
+<li><a href="#%E5%90%8E%E7%BB%AD%E8%BF%AD%E4%BB%A3">后续迭代</a></li>
+</ul>
+</li>
+<li><a href="#%E5%B0%8F%E7%BB%93">小结</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="fullPage"><canvas id="canvas"></canvas></div>
+</article>
+<div id="eof"><span>EOF</span></div><div class="round-shape-one"></div>
+<section>
+<div class="doc_comments">
+
+	  
+		<div id="gitalk-container"></div>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/qyxtim/Static@3.8/gitalk.min.js"></script><link href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.css"rel="stylesheet"><script>var gitalk=new Gitalk({clientID:"ee7c215043d62409bb53",clientSecret:"455d2f4a532bbe073ca25fdf9111932f00bbc624",repo:"giriawsh.github.io",owner:"giriawsh",admin:["giriawsh"],id:(location.pathname).substring(0, 49),distractionFreeMode:false});gitalk.render("gitalk-container");</script>
+	  
+
+	  
+
+</div></section>
+</div></div></div><script>
+"use strict";!function(){for(var n=document.getElementsByTagName("pre"),e=n.length,s=0;s<e;s++){n[s].innerHTML='<span class="line-number"></span>'+n[s].innerHTML+'<span class="cl"></span>';for(var a=n[s].innerHTML.split(/\n/).length,r=0;r<a-1;r++){n[s].getElementsByTagName("span")[0].innerHTML+="<span>"+(r+1)+"</span>"}}}();
+let mainNavLinks=document.querySelectorAll(".markdownIt-TOC a");window.addEventListener("scroll",event=>{let fromTop=window.scrollY;mainNavLinks.forEach((link,index)=>{let section=document.getElementById(decodeURI(link.hash).substring(1));let nextSection=null
+if(mainNavLinks[index+1]){nextSection=document.getElementById(decodeURI(mainNavLinks[index+1].hash).substring(1));}
+if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop){link.classList.add("currentToc");}else{link.classList.remove("currentToc");}}else{link.classList.add("currentToc");}}else{link.classList.remove("currentToc");}});});
+var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
+var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
+var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
+content="本文最后更新于2020-10-31，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-10-31 14:14:40";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+</script>
+<style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
+<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"><a href="https://github.com/giriawsh"title="github"><i class="iconfont icon-github"></i></a></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
+<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>68</strong> posts</span></div></div>
+<script>
+console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;", );
+</script>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+<script type="text/javascript" async src="https://giriawsh.github.io//media/js/prism.js"></script>
+</body>
+
+</html>
