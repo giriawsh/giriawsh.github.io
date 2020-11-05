@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-10-31T06:16:27.404Z</updated>
+    <updated>2020-11-05T07:28:54.281Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -10,6 +10,527 @@
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[《JS权威指南》第五章]]></title>
+        <id>https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-wu-zhang/</id>
+        <link href="https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-wu-zhang/">
+        </link>
+        <updated>2020-11-05T07:28:20.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="第五章-语句">第五章 语句</h1>
+<p>表达式在JS中是短语，那么语句就是JS的整句或命令。</p>
+<p>表达式计算出一个值，但语句用来执行以使某件事发生。</p>
+<p>::: tip 表达式语句和声明语句</p>
+<p>赋值和函数调用这些有副作用的表达式，是可以作为单独的语句的，这种把表达式当做语句的用法也称作<strong>表达式语句</strong>。</p>
+<p><strong>声明语句</strong>用来声明新变量或定义新函数。</p>
+<p>:::</p>
+<p>默认情况下，JS解释器依照语句的编写顺序一次执行。JS中有很多语句和<strong>控制结构</strong>来改变语句的默认执行顺序。</p>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201019211929.png" alt="image-20201019211922674" loading="lazy"></figure>
+<h2 id="表达式语句">表达式语句</h2>
+<p>具有副作用的表达式是JS中最简单的语句。</p>
+<ol>
+<li>赋值语句是其中一类比较重要的表达式语句：</li>
+</ol>
+<pre><code class="language-js">greeting = &quot;Hello&quot; + name;
+</code></pre>
+<ol start="2">
+<li><code>++</code>和<code>--</code>和赋值语句有关，它们的作用是改变一个变量的值，就像执行一条赋值语句一样。</li>
+</ol>
+<pre><code class="language-js">counter++;
+</code></pre>
+<ol start="3">
+<li>delete运算符的重要作用是删除一个对象的属性，它一般作为语句使用，而不是复杂表达式的一部分。</li>
+</ol>
+<pre><code class="language-js">delete o.x;
+</code></pre>
+<ol start="4">
+<li>函数调用时表达式语句的另一个大类。</li>
+</ol>
+<pre><code class="language-js">alert(greeting);
+window.close();
+</code></pre>
+<p>虽然这些客户端函数调用都是表达式，但是它们都会Web浏览器造成了一些影响，所以我们认为它们也是语句。</p>
+<p>调用一个没有任何副作用的函数时没有意义的，除非它是复杂表达式或赋值语句的一部分。</p>
+<pre><code class="language-js">Math.cos(x); // 算完即丢弃没有意义
+
+cx = Marg,cos(x); //赋值，以便将来使用
+</code></pre>
+<h2 id="复合语句和空语句">复合语句和空语句</h2>
+<p>::: tip 复合语句</p>
+<p>JS中可以将多条语句联合在一起，形成一条<strong>复合语句</strong>。</p>
+<p>只须用花括号将多条语句括起来即可。</p>
+<p>:::</p>
+<figure data-type="image" tabindex="2"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201019212612.png" alt="image-20201019212612679" loading="lazy"></figure>
+<p>关于语句块：</p>
+<ol>
+<li>语句块的结尾不需要分号</li>
+<li>语句块中的行有缩进，但不是必须的</li>
+<li>J<u>S中没有块级作用域。在语句块中声明的变量并不是语句块私有的。</u></li>
+</ol>
+<p>在JS中，当希望多条语句被当做一条语句使用时，使用复合语句来替代。</p>
+<p>::: tip 空语句</p>
+<p><strong>空语句</strong>(empty statement)则恰好相反，它允许包含0条语句的语句。</p>
+<pre><code>;
+</code></pre>
+<p>:::</p>
+<p>JS执行空语句时不会执行任何动作。但当创建一个具有空循环体的循环时，空语句很有作用。</p>
+<pre><code class="language-js">//初始化一个数组a
+for(i = 0; i &lt; a.length; a[i++] = 0) /* empty */;
+</code></pre>
+<p>如果有特殊目的需要使用空语句，<u>最好在代码中添加注释</u>。</p>
+<h2 id="声明语句">声明语句</h2>
+<p><code>var</code>和<code>function</code>都是声明语句。它们声明或定义变量或函数。这些语句定义标识符（变量名和函数名）并给其赋值，这些标识符可以在程序中任意地方使用。</p>
+<h3 id="var">var</h3>
+<p>var语句用来声明一个或者多个变量，语法如下：</p>
+<pre><code class="language-js">var name_1 [ = value_1] [ ,..., name_n [= value_n]]
+</code></pre>
+<p>列表中的每一个变量都可以带有初始化表达式。</p>
+<ul>
+<li>如果var出现在函数体内，那么它定义的是一个局部变量，其作用域就是这个函数</li>
+<li>如果var出现在顶层代码中，它声明的是全局变量，在整个JS程序中都是可见的。</li>
+</ul>
+<p>全局变量是全局对象的属性。和其他全局对象属性不同的是，var声明的变量是无法通过delete删除的。</p>
+<ul>
+<li>
+<p>如果var语句中变量没有指定初始化表达式，那么这个变量的值初始为undefined。</p>
+</li>
+<li>
+<p>变量在声明它们的脚本或函数中都是有定义的，变量声明语句会被“提前”至脚本或者函数的顶部。</p>
+<ul>
+<li>但是初始化的操作还是在原来var语句的位置执行，在声明语句之前变量的值都是undefined</li>
+</ul>
+</li>
+<li>
+<p>多次声明同一个变量是无所谓的。</p>
+</li>
+</ul>
+<h3 id="function">function</h3>
+<p>function用来定义函数。函数定义也可以写成语句的形式。</p>
+<p>下面是两种定义写法</p>
+<pre><code class="language-js">var f = function(x) {return x+1;} //将表达式赋值给一个变量
+function m(x) {return x+1;} //含有变量名的语句
+</code></pre>
+<p>::: warning 不可用delete删除</p>
+<p>上面例子中的f和m函数不可通过delete删除，将会返回false。</p>
+<p>:::</p>
+<p>函数声明语句语法：</p>
+<pre><code class="language-js">function funcname([arg1 [, arg2 [..., argn]]]){
+	statements
+}
+</code></pre>
+<p>在定义函数时，<u>并不执行函数体内的语句</u>，它和调用函数时待执行的新函数对象相关联。</p>
+<p><strong>注意</strong>： function语句里的花括号是必须的。</p>
+<ul>
+<li>
+<p>函数声明语句通常出现在JS代码的<strong>最顶层</strong>，也可以嵌套在其他函数体内。</p>
+</li>
+<li>
+<p>在嵌套时，函数声明只能出现在所嵌套函数的<strong>顶部</strong>。</p>
+</li>
+</ul>
+<p>::: tip 函数定义只能出现在顶层</p>
+<p>也就是说，函数定义不能出现在if、while或者其他任何语句中，正是因为声明位置的这种限制，ECMA标准规范<u>并没有将函数声明归类为真正的语句</u>。</p>
+<p>有一些JS实现允许出现语句的地方都可以进行函数声明，但是不具备可移植性。</p>
+<p>:::</p>
+<p>尽管函数声明语句和函数定义表达式包含相同的函数名，但两者是不同的。</p>
+<ul>
+<li>两种方式都创建了新的函数对象</li>
+<li>函数声明语句（未使用var）中的函数名是一个变量名，变量指向函数对象。
+<ul>
+<li>函数名称和函数体均提前。</li>
+<li>脚本中所有函数和函数中所有嵌套的函数都会在当前上下文中其他代码<u>之前声明</u></li>
+<li>也就是说<u>可以在声明一个JS函数之前调用它</u>。</li>
+</ul>
+</li>
+<li>函数定义语句（使用了var）中的函数被显式“提前”到了脚本或函数的顶部，因为它们在整个脚本和函数内都是可见的。
+<ul>
+<li>只有变量声明提前了，但是变量的初始化代码仍然在原来的位置。</li>
+</ul>
+</li>
+</ul>
+<p>::: tip 使用函数声明语句可以提前调用</p>
+<pre><code class="language-js">console.log(f(1));//报错
+console.log(m(1));//能够成功调用
+
+var f = function(x){
+    return x+1;
+}
+function m(x){
+    return x-1;
+}
+</code></pre>
+<p>:::</p>
+<p>和var语句一样，函数声明语句创建的变量也是<strong>无法删除</strong>的。</p>
+<p>但是这些变量<strong>不是只读的，变量值可以重写</strong>。</p>
+<h2 id="条件语句">条件语句</h2>
+<p>::: tip 定义</p>
+<p><strong>条件语句</strong>：通过判断指定表达式的值来决定执行还是跳过某些语句</p>
+<p>:::</p>
+<h3 id="if">if</h3>
+<p>第一种形式：</p>
+<pre><code class="language-js">if(expression)
+	statement
+</code></pre>
+<p>如果expression计算结果是<strong>真值</strong>（非null/undefined/false/0/&quot;&quot;/NaN），那么就执行statement</p>
+<p>第二种形式：</p>
+<pre><code class="language-js">if(expression)
+	statement1
+else
+	statement2
+</code></pre>
+<p>JS中if、else匹配规则是，<u>else总是和就近的if语句匹配</u>。</p>
+<p>使用花括号可让代码结构更加清晰。</p>
+<h3 id="else-if">else if</h3>
+<p>只不过是多条if/else语句连在一起时的一种惯用写法</p>
+<figure data-type="image" tabindex="3"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201021004511.png" alt="image-20201021004511513" loading="lazy"></figure>
+<p>但是显然<strong>使用else if写法更清晰也更可取</strong>。</p>
+<figure data-type="image" tabindex="4"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201021004544.png" alt="image-20201021004544128" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201021004552.png" alt="image-20201021004552504" loading="lazy"></figure>
+<h3 id="switch">switch</h3>
+<p>适合处理所有的分支都依赖于同一个表达式的值的情况。</p>
+<pre><code class="language-js">switch(expression){
+	statements
+}
+</code></pre>
+<p>代码块中可以使用多个由case关键字表示的代码片段，紧跟一个表达式和一个冒号。</p>
+<ol>
+<li>首先计算expression</li>
+<li>查找case中的表达式是否和expression的值相同（<strong>这里的相同是按照<code>===</code>进行比较的</strong>）</li>
+<li>匹配到case，执行对象代码块；匹配不到case，执行<code>default:</code>；没有<code>default:</code>,跳过它的所有代码块。</li>
+</ol>
+<blockquote>
+<p><code>default:</code>标签一般出现在switch的末尾，但实际上，<u>可以放置在switch语句内的任何地方</u>。</p>
+</blockquote>
+<figure data-type="image" tabindex="6"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201021005506.png" alt="image-20201021005506528" loading="lazy"></figure>
+<p>break语句可以使解释器跳出switch语句或循环语句。</p>
+<p>如果在函数中使用switch，可以使用return来代替break。</p>
+<p>下面一个例子，根据值的类型将该值转换为字符串：</p>
+<figure data-type="image" tabindex="7"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201021005723.png" alt="image-20201021005723060" loading="lazy"></figure>
+<p>case关键字后跟随数字和字符串直接量是比较常见的，但是ECMA标准<u>允许每个case关键字跟随任意的表达式</u>。</p>
+<p>由于case匹配是<code>===</code>比较，因此表达式和case的匹配并不会做任何类型转换。</p>
+<p>::: tip js中的case表达式是在运行时计算的</p>
+<figure data-type="image" tabindex="8"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201021005919.png" alt="image-20201021005919452" loading="lazy"></figure>
+<p>:::</p>
+<p>由于每次执行switch时，并不是所有的case都能执行到，<u>因此应当避免带有副作用的case表达式</u>。（例如函数调用表达式和赋值表达式）</p>
+<p>最安全的做法是在case表达式中使用常量表达式。</p>
+<h2 id="循环语句">循环语句</h2>
+<p>循环语句就是程序路径的一个回路。其中最常用的循环就是对数组元素的遍历。</p>
+<h3 id="while">while</h3>
+<p>和if一样，while语句也是一个基本循环语句，语法如下：</p>
+<pre><code class="language-js">while(expression)
+	statement
+</code></pre>
+<ol>
+<li>首先计算expression的值</li>
+<li>如果是假值，跳过statement，执行程序中的吓一跳语句。</li>
+<li>如果是真值，JS解释器将执行循环体内的逻辑，然后再次计算表达式expression的值，知道expression的值为假值。</li>
+</ol>
+<p>如果想要让代码可读性更强，<strong>应该使用更具语义的变量名。</strong></p>
+<h3 id="dowhile">do/while</h3>
+<p>在循环的尾部检测循环表达式，这意味着循环体至少会执行一次。语法如下：</p>
+<pre><code class="language-js">do
+	statement
+while(expression);
+</code></pre>
+<p>do循环要求必须使用关键字do来标识循环的开始，用while来标识循环的结尾并进入循环条件判断。</p>
+<p>do循环是用分号结尾的。</p>
+<h3 id="for">for</h3>
+<p>语法如下：</p>
+<pre><code class="language-js">for(initialize; testl increment)
+	statement
+</code></pre>
+<p>分别负责初始化操作、循环条件判断和计数器变量的更新。</p>
+<p>与之等价的while循环：</p>
+<pre><code class="language-js">initialize;
+while(text){
+	statement
+	increment;
+}
+</code></pre>
+<p>::: warning</p>
+<p>在使用continue语句时，while循环和for循环并不等价</p>
+<p>:::</p>
+<ol>
+<li>
+<p>初始化表达式应具有副作用（通常是一条赋值语句）。</p>
+</li>
+<li>
+<p>每次循环执行之前会执行test表达式，如果test计算结果为真，执行statement，最后执行increment。</p>
+</li>
+<li>
+<p>同样这里的increment表达式也必须具有副作用。通常来讲它不是一个赋值表达式就是一个由<code>++</code>或<code>--</code>运算符构成的表达式。</p>
+</li>
+</ol>
+<p>给出一个例子，用for循环来遍历链表数据结构，并返回链表中的最后一个对象。</p>
+<pre><code class="language-js">function tail(o){
+	for(; o.next; o = o.next)/* empty */;
+	return 0;
+}
+</code></pre>
+<p>两个分号必不可少</p>
+<h3 id="forin">for/in</h3>
+<p>语法如下：</p>
+<pre><code class="language-js">for(variable in object)
+	statement	
+</code></pre>
+<p>variable通常是一个变量名，也可以是一个可以产生左值的表达式或者一个通过var语句声明的变量，总之是一个<strong>适用于赋值表达式左侧的值</strong>。</p>
+<p>object是一个表达式，这个表达式的计算结果是一个对象。</p>
+<ol>
+<li>JS解释器首先计算object表达式</li>
+<li>如果表达式为null或undefined，JS解释器会跳过循环并执行后续的代码</li>
+<li>如果表达式为原始值，这个表达式将会转换为与之对应的<u>包装对象</u>，否则expression本身已经是对象。</li>
+<li>JS会依次枚举对象的属性来执行循环</li>
+<li>在<u>每次循环之前，JS都会先计算variable表达式的值</u>，并<u>将属性名（一个字符串）赋值给它</u>。</li>
+</ol>
+<p>::: tip 注意</p>
+<p>只要for/in循环中的variable的值可以当做赋值表达式的左值，它可以是任意表达式。</p>
+<p>每次循环都会计算这个表达式，也就是说，每次循环它计算的值可能不同。</p>
+<p>:::</p>
+<p><strong>for/in循环可以用来更方便地遍历对象属性成员</strong>。</p>
+<pre><code class="language-js">for(var p in o) //将属性名字赋值给变量p
+	console.log(o[p]); //输出每一个属性的值
+</code></pre>
+<p>下面这段代码可以将所有对象属性复制至一个数组中：</p>
+<pre><code class="language-js">var o = {x:1, y:2, z:3};
+var a = [],i = 0;
+for(a[i++] in o)/*empty*/;
+console.log(a);
+// =&gt; [&quot;x&quot;, &quot;y&quot;, &quot;z&quot;]
+</code></pre>
+<p>当然for/in循环可以像枚举对象属性一样枚举数组索引。</p>
+<p>其实for/in循环并不会遍历对象的所有属性，只有<strong>可枚举</strong>的属性才会遍历到。</p>
+<p>譬如，JS语言核心所定义的<u>内置方法</u>就不是“可枚举的”。比如所有对象都有方法toString()，但for/in循环并不枚举它。除了内置方法之外，还有很多内置对象的属性也是“不可枚举的”。</p>
+<p>代码中定义的所有属性和方法都是可枚举的。（ES5中可以通过特殊手段让可枚举属性变为不可枚举）</p>
+<p>对象可以继承其他对象的属性，继承的自定义属性也可以也可以用for/in枚举出来。</p>
+<p>::: warning 循环中发生删除与新定义</p>
+<p>如果for/in的循环体删除了还未枚举的属性，那么这个属性将不会再枚举到。</p>
+<p>如果循环体定义了对象的新属性，这些属性通常也不会枚举到。</p>
+<p>（然而JS的有些实现是可以枚举那些在循环体中增加的继承属性的）</p>
+<p>上面这句话的具体实现？？？</p>
+<p>:::</p>
+<h4 id="属性枚举的顺序">属性枚举的顺序</h4>
+<p><strong>- JS解释器枚举“简单”对象一种交互的属性枚举顺序</strong></p>
+<p>ES规范没有指定for/in循环按照何种顺序来枚举对象属性。</p>
+<p>但实际上，主流浏览器厂商的JS实现<u>是按照属性定义的先后顺序来枚举简单对象的属性，先定义的属性先枚举</u>。</p>
+<p>如果使用对象直接量的形式创建对象，则将<u>按照直接量中属性的出现顺序</u>枚举。</p>
+<p>有一些JS库是依赖于这种枚举顺序的，浏览器厂商不大可能会修改这个顺序。</p>
+<p><strong>- 下列情况下枚举的顺序取决于具体的实现：</strong></p>
+<ul>
+<li>对象继承了可枚举属性</li>
+<li>对象具有整数数组索引的属性</li>
+<li>使用delete删除了对象已有的属性</li>
+<li>使用Object.defineProperty()或者类似的方法改变了对象的属性</li>
+</ul>
+<p>除了所有非继承的“自有”属性以外的<strong>继承属性</strong>往往都是（但并不是所有JS实现都是如此）可枚举的，而且按照它们定义的顺序进行枚举。</p>
+<p>如果对象属性继承自多个“原型”，也就是说它的原型链上有多个对象，那么链上面的每一个原型对象的属性的遍历也是依照特定顺序执行的。</p>
+<p>JS的一些（但不是全部）实现依照数字顺序来枚举数组属性，而不是某种特定顺序。</p>
+<p>但当数组元素的索引是非数字或数组是稀疏数组（数组索引是不连续的）时它们则按照特定顺序枚举。</p>
+<h2 id="跳转语句">跳转语句</h2>
+<p>JS中的语句可以命名或带有标签，break和continue可以标识目标循环或者其他语句标签。</p>
+<p>return语句让解释器跳出函数体的执行，并提供本次调用的返回值。</p>
+<p>throw语句触发或者抛出一个异常，它是与try/catch/finally语句一同使用的，这些语句指定了处理异常单额代码逻辑。当抛出一个异常的时候，程序将跳<strong>转至最近的闭合异常处理程序</strong>，这个异常处理程序可以是在同一个函数中或者在更高层的调用栈中。</p>
+<h3 id="标签语句">标签语句</h3>
+<p>语法如下：</p>
+<pre><code class="language-js">identifier:statement
+</code></pre>
+<p><strong>break</strong>和<strong>continue</strong>是JS中唯一可以使用语句标签的语句。</p>
+<figure data-type="image" tabindex="9"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201103165138.png" alt="image-20201103165131097" loading="lazy"></figure>
+<p>用作标签的identifier必须是一个合法的JS标识符，而<u>不能是一个保留字</u>。可以使用同一个标识符作为语句标签和作为变量名或函数名。</p>
+<p>语句标签只有在它所起作用的语句（当然也可以在它的句子中）内室有定义的。</p>
+<p>一个语句标签不能和它内部的语句标签重名。但在两个代码段不相互嵌套的情况下是可以出现同名的语句标签的。</p>
+<p>带有标签的额语句还可以带有标签，任何语句可以有很多个标签。</p>
+<h3 id="break语句">break语句</h3>
+<p>单独使用break语句的作用是立即退出最内层的循环或switch语句。这种形式的break只有出现在这类语句中才是合法的。</p>
+<p>JS中同样允许break关键字后面跟随一个语句标签（只有标识符，没有冒号）</p>
+<pre><code class="language-js">break labelname;
+</code></pre>
+<p>当没有任何闭合语句块指定了break所用的标签，会产生一个语法错误。</p>
+<p>当使用这种形式的break语句时，带标签的语句不应该是循环或者switch语句（因为break可以跳出任何闭合的语句块）</p>
+<p>当希望通过break来跳出非就近的循环体或者switch语句时，就会用到带标签的break语句：</p>
+<figure data-type="image" tabindex="10"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201104234725.png" alt="image-20201104234718169" loading="lazy"></figure>
+<figure data-type="image" tabindex="11"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201104234731.png" alt="image-20201104234731364" loading="lazy"></figure>
+<p>不管break语句带不带标签，它的控制权都无法越过函数的边界。</p>
+<p>对于一条带标签的函数定义语句来说，不能从函数内部通过这个标签来跳转到函数外部。</p>
+<h3 id="continue语句">continue语句</h3>
+<p>continue与break类似，不是退出循环，而是转而执行下一次循环。</p>
+<p>同样可以带有标签：</p>
+<pre><code class="language-js">continue labelname;
+</code></pre>
+<p>不管continue语句带不带标签，它只能在循环体内使用。</p>
+<p>在不同类型的循环中，continue行为有所区别：</p>
+<figure data-type="image" tabindex="12"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201104235016.png" alt="image-20201104235016141" loading="lazy"></figure>
+<figure data-type="image" tabindex="13"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201104235025.png" alt="image-20201104235025009" loading="lazy"></figure>
+<p>::: tip continue语句在while和for循环中的区别</p>
+<p>while循环直接进入下一轮的循环条件判断。</p>
+<p>for循环首先计算其increment表达式，然后判断循环条件。</p>
+<p>由于continue在两种循环中的行为表现不同，因此使用while循环不可能完美地模拟等价的for循环</p>
+<p>:::</p>
+<p>和break语句类似，带标签的continue语句可以用在嵌套的循环中，用以跳出多层次嵌套的循环体逻辑。</p>
+<h3 id="return语句">return语句</h3>
+<p>语法：</p>
+<pre><code class="language-js">return expression
+</code></pre>
+<p>return语句只能在函数体内出现，如果不是的话会报语法错误。</p>
+<p>如果没有return语句，执行函数体内语句后返回调用程序，调用表达式的结果是undefined。</p>
+<p>return语句可以单独使用而不必带有expression，这样的话函数也会向调用程序返回undefined。</p>
+<h3 id="throw语句">throw语句</h3>
+<p>**异常：**当发生了某种异常情况或错误时产生的一个信号。</p>
+<p><strong>抛出异常</strong>：用信号通知发生了错误或异常情况。</p>
+<p>**捕获异常：**处理这个信号，采取必要的手段从异常中回复。</p>
+<p>使用try/catch/finally可以捕获异常。</p>
+<p>throw语句的语法如下：</p>
+<pre><code class="language-js">throw expression
+</code></pre>
+<p>expression的值可以是任意类型。可以抛出一个代表错误码的数字，或者包含可读的错误消息的字符串。</p>
+<p>当JS解释器抛出异常的时候通常采用Error类型和其子类型。</p>
+<p><u>一个Error对象有一个name属性表示错误类型，一个message类型用来存放传递给构造函数的字符串。</u></p>
+<p>例子如下：</p>
+<figure data-type="image" tabindex="14"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201105000221.png" alt="image-20201105000221547" loading="lazy"></figure>
+<p>当抛出异常时，JS解释器会立即停止当前正在执行的逻辑，并跳转至<strong>就近</strong>的异常处理程序。（异常处理程序时用try/catch/finally语句的catch从句编写的。）</p>
+<p>如果抛出异常的代码块没有一条相关联的catch从句，解释器会检查更高层的闭合代码块，以此类推，直到找到一个异常处理程序为止。</p>
+<p>这样的话，异常就会沿着JS方法的词法结构和调用栈<strong>向上传播</strong>，如果最终没有找到任何异常处理程序，JS将把异常当成<strong>程序错误</strong>来处理，并报告给用户。</p>
+<h3 id="trycatchfinally语句">try/catch/finally语句</h3>
+<ul>
+<li>
+<p>try从句定义了需要处理的异常所在的代码块。</p>
+</li>
+<li>
+<p>catch从句跟随在try从句之后，当try块内某处发生了异常时，调用catch内的代码逻辑。</p>
+</li>
+<li>
+<p>catch从句后跟随finally块，后者中放置清理代码，不管try块中是否产生异常，finally块内的逻辑总是会执行。</p>
+</li>
+</ul>
+<p>尽管catch和finally都是可选，但try从句需要至少二者之一与之组成完成的语句。</p>
+<p>花括号是必须的，绝对不能省略。</p>
+<p>语法和使用目的：</p>
+<figure data-type="image" tabindex="15"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201105000734.png" alt="image-20201105000734019" loading="lazy"></figure>
+<p>::: tip catch(e)</p>
+<p>catch的圆括号内是一个标识符，和函数参数很像。</p>
+<p>当捕获一个异常时，把和这个异常相关的值（比如Error对象）赋值给这个参数。</p>
+<p>和普通变量不同，这条catch子句中的标识符具有块级作用域，它只在catch语句块内有定义。</p>
+<p>:::</p>
+<p>finally从句通常在try从句的代码后用于清理工作。</p>
+<p>当由于return、continue、break语句使得解释器跳出try语句块时，解释器在执行新的目标代码之前先执行finally块中的逻辑。</p>
+<pre><code class="language-js">try{
+    var x = 1;
+    while(x&lt;2)
+    {
+        if(x) break;
+    }
+}
+finally{
+    console.log(&quot;finally&quot;);
+}
+console.log(&quot;outside&quot;);
+// =&gt;
+finally
+outside
+</code></pre>
+<p>可以看到finally先被执行了。</p>
+<ul>
+<li>
+<p>如果try中产生了异常，而且存在一条与之相关的catch从句来处理这个异常，解释器会首先执行catch中的逻辑，然后执行finally中的逻辑。</p>
+</li>
+<li>
+<p>如果不存在处理异常的局部catch从句，解释器会首先执行finally中的逻辑，然后向上传播这个异常，直到找到能处理这个异常的catch从句。</p>
+</li>
+</ul>
+<p>如果<strong>finally块使用了return、continue、break、throw语句</strong>使程序发生跳转，或者通过调用了抛出异常的犯法改变了执行流程，不管这个跳转使程序挂起还是继续执行，<strong>解释器都会将原本的异常忽略</strong>。</p>
+<p>例如：如果finally从句抛出一个异常，这个异常将替代正在抛出的异常。</p>
+<figure data-type="image" tabindex="16"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201105141100.png" alt="image-20201105141053017" loading="lazy"></figure>
+<p>如果finally从句运行到了return语句，尽管已经抛出了异常且这个抛出的异常还没有处理，这个方法依然会正常返回。</p>
+<figure data-type="image" tabindex="17"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201105141111.png" alt="image-20201105141111730" loading="lazy"></figure>
+<p>在没有catch从句的情况下try从句可以和finally从句一起使用，在这种情况下finally块值包含清理代码，且一定会执行。</p>
+<p>如果使用try/finally语句，就能使用while循环来正确模拟包含continue的for循环：</p>
+<figure data-type="image" tabindex="18"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201105142226.png" alt="image-20201105142226608" loading="lazy"></figure>
+<p>::: warning 当body包含break语句时</p>
+<p>while循环和for循环有了更微妙的区别：</p>
+<ul>
+<li>由于finally块中一定会被执行，因此上述等价while循环会进行一次额外的自增运算。</li>
+<li>但是for循环并不会</li>
+</ul>
+<p>看下面的实例：</p>
+<pre><code class="language-js">var x = 0;
+while(x &lt; 10){
+    try{
+            break;
+    }
+    finally{
+        x++;
+    }
+}
+console.log(x); //=&gt; 1 因为在finally中无法避免地进行了一次自增运算
+
+for(var x = 0; x &lt; 10; x++){
+    break;
+}
+console.log(x); // =&gt; 0 直接break将不会进行自增运算
+</code></pre>
+<p>因此即使使用了finally，使用while来完全模拟for循环依然是不可能的。</p>
+<p>:::</p>
+<h2 id="其他语句类型">其他语句类型</h2>
+<h3 id="with语句">with语句</h3>
+<p>第三章中有提到作用域链，一个可以按序检索的对象列表，通过它可以进行变量名解析。</p>
+<p>with语句用于<strong>临时扩展作用域链</strong>。语法如下：</p>
+<pre><code class="language-js">with(object)
+statement
+</code></pre>
+<p>这条语句将object添加到作用域链的头部，然后执行statement，最后把作用域链恢复到原始状态。</p>
+<p>在严格模式中，禁止使用with语句，在非严格模式也是不推荐，尽可能避免使用with。</p>
+<p>那些使用with语句的JS代码<u>非常难于优化</u>，同没有使用with语句的代码相比，它<u>运行得更慢</u>。</p>
+<p>在对象嵌套层次很深的时候会使用with语句来简化代码编写。</p>
+<p>例如在客户端JS中，可能会使用类似这种表达式来访问一个HTML表单中的元素：</p>
+<pre><code class="language-js">document.forms[0].address.value
+</code></pre>
+<p>这种代码多次出现时，可以使用with语句将form对象添加至作用域链的顶层：</p>
+<pre><code class="language-js">with(document.forms[0]){
+	//直接访问表单元素，例如：
+	name.value = &quot;&quot;;
+	address.value = &quot;&quot;;//等价于上面的document.forms[0].address.value
+	email.value = &quot;&quot;;
+}
+</code></pre>
+<p>这种方法减少了大量地输入，不用再为每个属性名添加<code>document.forms[0]</code>前缀。</p>
+<p>这个对象临时挂在在作用域链上，当JS需要解析注入address的标识符时，就会<u>自动首先在这个对象中查找</u>。</p>
+<p>不适用with语句的等价代码如下：</p>
+<pre><code class="language-js">var f = document.forms[0];
+f.name.value = &quot;&quot;;
+f.address.value = &quot;&quot;;
+f.email.value = &quot;&quot;;
+</code></pre>
+<p>::: warning 注意！</p>
+<p>只有在查找标识符的时候才会用到作用域链，创建新的变量的时候不适用它。</p>
+<pre><code class="language-js">with(o) x = 1;
+</code></pre>
+<p>如果对象o中有一个属性，那么这行代码给这个属性赋值为1。</p>
+<p>但如果o中没有定义属性x，这段代码等价于：</p>
+<pre><code class="language-js">x = 1;
+</code></pre>
+<figure data-type="image" tabindex="19"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201105150358.png" alt="image-20201105150358434" loading="lazy"></figure>
+<p><strong>with语句提供了一种读取o的属性的快捷方式，但它并不能创建o的属性</strong>！</p>
+<p>:::</p>
+<h3 id="debugger语句">debugger语句</h3>
+<p>debugger语句通常什么也不做。实际上，这条语句用来产生一个断点，JS代码的执行会停止在断点的位置，这时可以使用调试器输出变量的值、检查调用栈等。</p>
+<figure data-type="image" tabindex="20"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201105150933.png" alt="image-20201105150933137" loading="lazy"></figure>
+<p>这时，当调用f()的时候没有传入参数，程序将停止执行，这时可以通过调试器检测调用栈并找出错误产生的原因。</p>
+<p>在ES5中，debugger语句正式加入到这门语言里，它不会启动调试器。但如果调试器已经在运行中，这条语句才会真正产生一个断点。</p>
+<h3 id="use-strict">“use strict”</h3>
+<p>&quot;use strict&quot;是ES5引入的一条指令（不是语句，但非常接近）。</p>
+<p>&quot;user strict&quot;指令和普通的语句之间有两个重要的区别：</p>
+<figure data-type="image" tabindex="21"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201105151228.png" alt="image-20201105151228197" loading="lazy"></figure>
+<figure data-type="image" tabindex="22"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201105151238.png" alt="image-20201105151237998" loading="lazy"></figure>
+<p>使用&quot;use strict&quot;指令的目的是说明（脚本或函数中）后续的代码将会解析为严格代码。</p>
+<p>如果顶层（不在任何函数内）使用了&quot;use strict&quot;指令，那么它们就是严格代码。</p>
+<p>如果函数体定义所处的代码是严格代码或者函数体使用了&quot;use strict&quot;指令，那么函数体的代码时严格代码。</p>
+<p>如果eval()调用时所处的代码是严格代码或者eval()要执行的字符串中使用了&quot;strict code&quot;指令，则eval()内的代码是严格代码。</p>
+<p>严格模式和非严格模式之间的区别如下（前三条尤为重要）：</p>
+<figure data-type="image" tabindex="23"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201105152437.png" alt="image-20201105152437163" loading="lazy"></figure>
+<figure data-type="image" tabindex="24"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201105152449.png" alt="image-20201105152449227" loading="lazy"></figure>
+<h2 id="javascript语句小结">JavaScript语句小结</h2>
+<figure data-type="image" tabindex="25"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201105152726.png" alt="image-20201105152725989" loading="lazy"></figure>
+<figure data-type="image" tabindex="26"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201105152741.png" alt="image-20201105152740887" loading="lazy"></figure>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[《7天学会Nodejs》第七天——示例实战]]></title>
         <id>https://giriawsh.github.io/post/lessless7-tian-xue-hui-nodejsgreatergreater-di-qi-tian-shi-li-shi-zhan/</id>
@@ -2715,78 +3236,6 @@ console.log(counter2.count());
 <li>NodeJ<u>S使用<a href="http://wiki.commonjs.org/">CMD</a>模块系统，主模块作为程序入口点，所有模块在执行过程中只初始化一次。</u></li>
 <li>除非JS模块不能满足需求，否则<u>不要轻易使用二进制模块</u>，否则你的用户会叫苦连天。</li>
 </ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[理解Node.js 阅读记录]]></title>
-        <id>https://giriawsh.github.io/post/li-jie-nodejs-yue-du-ji-lu/</id>
-        <link href="https://giriawsh.github.io/post/li-jie-nodejs-yue-du-ji-lu/">
-        </link>
-        <updated>2020-10-15T08:09:32.000Z</updated>
-        <content type="html"><![CDATA[<ul>
-<li>原文地址：[<a href="http://debuggable.com/posts/understanding-node-js:4bd98440-45e4-4a9a-8ef7-0f7ecbdd56cb">Understanding node.js</a>]</li>
-<li>原文作者：<a href="http://felixge.de/">Felix Geisendörfer</a></li>
-<li>译文地址：<a href="https://segmentfault.com/a/1190000008289033">理解NodeJS译文</a></li>
-</ul>
-<h3 id="什么是nodejs">什么是NodeJS？</h3>
-<p>下面就是我对于<code>node</code>的解释：</p>
-<ul>
-<li>它是一个命令行工具，你可以下载一个tarball文件，编译然后安装源文件；</li>
-<li>它可以让你在你的终端输入<code>node my_app.js</code>来运行Javascript程序；</li>
-<li>Node的JS代码是由 <a href="http://code.google.com/p/v8/">V8 javascript 引擎</a>（就是那个使得Chrome如此之快的东西）所执行的；</li>
-<li>Node提供了诸如访问网络或是操作文件系统的<code>Javascript API</code></li>
-</ul>
-<h3 id="nodejs抽象化解释">NodeJS抽象化解释</h3>
-<p>当你需要同时做好几件事的时候<code>Node</code>会表现的十分优秀。你有写了一段代码然后对他说&quot;我想你可以并行运行！&quot;的体验吗？哈哈哈，在Node中除了你的代码所有的东西都是并行运行的。</p>
-<p>你可以把你自己的代码想象成一个国王，而<code>Node</code>就是他的仆人军队。</p>
-<p>新的一天是这样开始的：某个仆人叫醒了国王，然后问他是否需要什么。国王给了这个仆人一个任务清单然后就回去继续睡觉了。然后这个仆人就把任务清单上的任务分发下去，仆人们开始工作了。</p>
-<p>当一个仆人完成了他的任务的时候，他就跑到国王寝宫外面排队等候报告。<u>国王一次只能听取一个仆人报告任务，有的时候国王会在仆人报告结束的时候给他更多的任务。</u>(看你代码咋写咯)</p>
-<p>生活是美好的，因为国王的诸多仆人同时执行多个任务，但报告结果的时候是一个一个来的，所以国王能够很专注。</p>
-<h3 id="给出一个例子吧">给出一个例子吧</h3>
-<pre><code class="language-js">var fs = require('fs')
-  , sys = require('sys');
-//译者注：sys is deprecated. Use util instead.这里我们直接用console.log即可
-fs.readFile('treasure-chamber-report.txt', function(report) {
-  //sys.puts(&quot;oh, look at all my money: &quot;+report);
-  console.log(&quot;oh, look at all my money: &quot;+report)
-});
-
-fs.writeFile('letter-to-princess.txt', '...', function() {
-  //sys.puts(&quot;can't wait to hear back from her!&quot;);
-  console.log(&quot;can't wait to hear back from her!&quot;)
-});
-</code></pre>
-<p>你的代码(国王)给了<code>node</code>(仆人)两个任务即读(readFile)和写(writeFile)文件，然后就去睡大觉了。一旦node完成了某个任务，跟这个任务对应的回调就会触发。<u>但同一时间只能有一个回调被触发，在那个回调执行完成之前，所有其它的回调都得排队等待。</u></p>
-<p>进一步说，回调触发的顺序是不能被保证的。</p>
-<h3 id="所以我不必担心代码在同一时间访问同一个数据结构">&quot;所以我不必担心代码在同一时间访问同一个数据结构？&quot;</h3>
-<p>这就是JavaScript的单进程/事件循环设计美丽的地方。</p>
-<h3 id="更多优点">更多优点</h3>
-<ol>
-<li>
-<p>**效率。**在一个web应用中，响应时间主要是花在了执行数据库查询上面，而用<code>node</code>,你可以<u>一次性执行所有的数据库查询</u>。将响应时间<u>减少到了执行最慢的数据库查询所用的时间。</u></p>
-</li>
-<li>
-<p>**使用了<code>Javascript</code>。**你可以使用<code>Node</code>让你的浏览器和后端共享代码。</p>
-</li>
-<li>
-<p>**原生速度。**V8正在不断的推进作为地球上最快的动态语言编译器之一的边界，我也想不到有任何其它的语言在速度上能够像Javascript一样不断的高歌猛进。再进一步说，<code>node</code>的I/O设备真的十分的轻量，能够让你<u>尽可能最大程度的利用系统的I/O容量。</u></p>
-</li>
-</ol>
-<h3 id="评估参考">评估参考</h3>
-<p>一旦你开始舞弄<code>node</code>这柄锤子，所有的东西都会开始变得像钉子。但如果你当前的工作有一个deadline，你可以参考下面的几点来做决定用不用<code>node</code>:</p>
-<ul>
-<li><strong>低响应时间/高并发</strong>是否重要？Node真的很擅长处理这俩问题；</li>
-<li>项目有多大？<strong>小项目</strong>没问题，如果是大项目就应该认真评估了(可用的库，修复一个bug所需的资源或者two upstream等等)</li>
-</ul>
-<h3 id="我能在node中访问dom吗">&quot;我能在Node中访问DOM吗？&quot;</h3>
-<p>这是一个好问题！答案是不行。</p>
-<p>DOM是浏览器的东西，node的JS引擎（V8）跟那些混乱的东西是完全分离的。不过，有人在以node模块的形式来实现DOM，或许带来令人兴奋的可能性比如对客户端代码进行单元测试。</p>
-<p>::: tip 关于Node-DOM的实现</p>
-<p>现在已经有人实现了这个模块，详情查看<a href="https://www.npmjs.com/package/node-dom">Node-dom</a>)。</p>
-<p>:::</p>
-<h3 id="我应该从哪里学到更多">&quot;我应该从哪里学到更多？&quot;</h3>
-<p>Tim Caswell正在运作优秀的<a href="http://howtonode.org/">How To Node</a>博客。在twitter上Follow <a href="https://twitter.com/search?q=node.js&amp;src=typd">nodejs</a>。订阅<a href="http://groups.google.com/group/nodejs">邮件列表</a>。</p>
-<p>也可以结合<a href="http://nodejs.cn/api/">Node.js 6.9.5 文档</a>进行学习，另外，译者写了一个node的小应用<a href="https://github.com/damonare/node-sample">node-sample</a>可以clone下来看下</p>
 ]]></content>
     </entry>
 </feed>
