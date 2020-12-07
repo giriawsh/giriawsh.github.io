@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-12-07T12:15:53.106Z</updated>
+    <updated>2020-12-07T13:45:06.419Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -22,6 +22,122 @@
 <p>访问数组的数组中的元素，只要简单地使用两次<code>[]</code>操作符。</p>
 <p>示例如下：</p>
 <figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/image-20201207190244493.png" alt="image-20201207190244493" loading="lazy"></figure>
+<h2 id="数组方法">数组方法</h2>
+<p>ES3在<code>Array.prototype</code>中定义了操作数组很有用的函数，这意味着这些函数作为任何数组的方法都是可用的。</p>
+<h3 id="join">join()</h3>
+<p><code>Array.join()</code>将数组中所有元素都转化为<strong>字符串</strong>并连接在一起，返回最后生成的字符串。</p>
+<p>可以指定一个可选的字符串在生成的字符串中分隔数组的各个元素。</p>
+<p>默认使用逗号。</p>
+<figure data-type="image" tabindex="2"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/image-20201207204022438.png" alt="image-20201207204022438" loading="lazy"></figure>
+<p><code>Array.join()</code>方法是<code>String.split()</code>方法的逆向操作，后者是将字符串分割成若干块来创建一个数组。</p>
+<h3 id="reverse">reverse()</h3>
+<p><code>Array.reverse()</code>方法将数组中的元素<strong>颠倒顺序</strong>，返回逆序的数组。</p>
+<p>⭐它不通过重新排列的元素创建新的数组，而是在<strong>原先</strong>的数组中重新排列它们。</p>
+<pre><code class="language-js">var a = [1,2,3];
+a.reverse().join() //=&gt; a = [3,2,1]
+a.reverse().reverse() === a // =&gt; true
+</code></pre>
+<h3 id="sort">sort()</h3>
+<p><code>Array.sort()</code>方法将数组中的元素排列并返回排序后的数组。（修改了原先调用的数组）</p>
+<p>当不带参数调用时，数组元素以<strong>字母表</strong>顺序排序。（如有必要将临时转化为字符串进行比较）</p>
+<figure data-type="image" tabindex="3"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/image-20201207204231339.png" alt="image-20201207204231339" loading="lazy"></figure>
+<p>如果数组包含undefined元素，它们会被排到数组的尾部。</p>
+<pre><code class="language-js">var a = [&quot;a&quot;, &quot;u&quot;, &quot;undefined&quot;, undefined, &quot;z&quot;];
+a.sort(); // =&gt; [&quot;a&quot;, &quot;u&quot;, &quot;undefined&quot;, &quot;z&quot;, undefined]
+var s = a.join(&quot;,&quot;); // =&gt; &quot;a,u,undefined,z,&quot;
+</code></pre>
+<p>必须给sort()方法传递一个比较函数。该函数决定了它的两个参数在排好序的数组中的先后顺序：</p>
+<ul>
+<li>假设第一个参数应该在<strong>前</strong>，比较函数应返回一个<strong>小于</strong>0的数值</li>
+<li>假设第一个参数应该在<strong>后</strong>，比较函数应返回一个<strong>大于</strong>0的数值</li>
+<li>假设两个值相等，比较函数应返回0</li>
+</ul>
+<pre><code class="language-js">var a = [33, 4, 1111, 222];
+a.sort();// =&gt;  [1111, 222, 33, 4]
+a.sort(function(a,b){return a-b;}); // =&gt; [4, 33, 222, 1111]
+a.sort(function(a,b){return b-a;}); // =&gt; [1111, 222, 33, 4]
+</code></pre>
+<p>注意，这里使用<u>匿名函数表达式</u>非常方便（比较函数只使用一次）。</p>
+<p>下面这个例子，需要对一个字符串数组执行不区分大小写的字母表排序。</p>
+<figure data-type="image" tabindex="4"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/image-20201207205104218.png" alt="image-20201207205104218" loading="lazy"></figure>
+<h3 id="concat">concat()</h3>
+<p><code>Array.concat()</code>方法创建并返回一个新数组，它的元素包括调用concat()的原始数组的元素和concat()每个参数。</p>
+<p>如果参数中任何一个自身是数组，则连接的是<strong>数组的元素</strong>，而非数组本身。</p>
+<p>⭐ concat()不会递归扁平化数组的数组（只会去掉最外面的<code>[]</code>符号），也不会修改调用的数组（返回新数组）,也不会像数组自动留空一样串接空值。</p>
+<pre><code class="language-js">var a = [1,2,3];
+a.concat([4,5],6,[7,[8,9]],[10,[11,[12,13]]]); // =&gt; 返回[1,2,3,4,5,6,7,[8,9],10,[11,[12,13]]]
+</code></pre>
+<h3 id="slice">slice()</h3>
+<p><code>Array.slice()</code>方法返回指定数组的一个片段或子数组。</p>
+<p>两个参数分别指定了片段的开始和结束的位置。</p>
+<p><code>[开头，结尾）</code>返回的数组包含第一个参数指定的位置，和所有到<strong>但不含</strong>第二个参数指定的位置之间的所有数组元素。</p>
+<ul>
+<li>如果只指定一个参数，返回的数组将包含从开始位置到数组结尾的所有元素</li>
+<li>如果参数中出现负数，它表示相对于数组中最后一个元素的位置</li>
+</ul>
+<blockquote>
+<p>-1：最后一个元素</p>
+<p>-3：倒数第三个元素</p>
+</blockquote>
+<p>⭐ slice()不会修改调用的数组（返回新数组）</p>
+<figure data-type="image" tabindex="5"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/image-20201207210151056.png" alt="image-20201207210151056" loading="lazy"></figure>
+<h3 id="splice">splice()</h3>
+<p><code>Array.splice()</code>方法是在数组中插入或删除元素的通用方法。</p>
+<p>⭐不同于slice()和concat()，splice()会修改调用的数组。</p>
+<p><code>splice()</code>能够从数组中删除、插入元素，或者同时完成这两种操作。</p>
+<p>在插入或删除之后，数组元素会根据需要增加或缩小它们的索引值，因此数组的其他部分仍然保持连续。</p>
+<p>第一个参数，指定了插入和（或）删除的起始位置(删除的元素包括起始位置)。</p>
+<p>第二个参数，指定了应该从数组中删除的元素的个数。（如果省略第二个参数，从起始点开始到数组结尾的所有元素都将被删除）</p>
+<p>返回一个删除元素组成的数组，如果没有删除元素就返回一个空数组。</p>
+<pre><code class="language-js">a.splice(0); // =&gt; [1, 2, 3, 4, 5, 6, 7, 8]
+a // =&gt; []
+
+var b = [1,2,3,4,5,6,7,8]
+b.splice(1,3);// =&gt; [2, 3, 4]
+b // =&gt; [1, 5, 6, 7, 8]
+</code></pre>
+<p>前两个参数指定了需要删除的数组元素，紧随其后的任意个数的参数指定了需要插入到数组中的元素,从第一个参数指定的位置开始插入。</p>
+<pre><code class="language-js">var a = [1,2,3,4,5]
+a.splice(2,0,'a', 'b'); // =&gt; []
+a // =&gt; [1, 2, &quot;a&quot;, &quot;b&quot;, 3, 4, 5]
+a.splice(2,2,[100,101],[102,[103,104]]) // =&gt; [&quot;a&quot;, &quot;b&quot;]
+a // =&gt; [1,2,[100,101],[102,[103,104]],3,4,5]
+</code></pre>
+<p>⭐区别于concat(),splice()会插入<strong>数组本身</strong>而非数组的元素。</p>
+<h3 id="push和pop">push()和pop()</h3>
+<p>这两个方法允许数组当作栈来调用。</p>
+<p>push()方法在数组的<strong>尾部</strong>添加一个或多个元素，并<u>返回数组新的长度</u>。</p>
+<p>pop()方法删除数组的最后一个元素，减少数组长度并<u>返回它删除的值</u>。</p>
+<p>⭐ 两个方法都修改并替换原始数组（改变了调用的数组），而非生成一个修改版的新数组</p>
+<p>组合使用push()和pop()能够用JS数组实现先进后出的栈。</p>
+<figure data-type="image" tabindex="6"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/image-20201207212946852.png" alt="image-20201207212946852" loading="lazy"></figure>
+<h3 id="unshift和shift">unshift()和shift()</h3>
+<p>这两个方法的行为非常类似于push()和pop()，不一样的是它们是在数组的<strong>头部</strong>进行操作。</p>
+<p>unshift()在数组的头部添加一个或多个元素，并将已存在的元素移动到更高索引的位置来获得足够的空间，最后<u>返回数组新的长度</u>。</p>
+<p>shift()删除数组的第一个元素<u>并将其返回</u>，然后把所有随后的元素下移一个位置。</p>
+<figure data-type="image" tabindex="7"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/image-20201207213555275.png" alt="image-20201207213555275" loading="lazy"></figure>
+<p>::: tip 插入多个值时并不是单个插入的</p>
+<p>一次性使用push多个元素时，并不会拆分进行操作，而会将整个输入都作为一个参数：</p>
+<pre><code class="language-js">var a = [];
+a.push(1,2,3);
+a // =&gt; [1, 2, 3]
+</code></pre>
+<p>unshift()也同理，参数时一次性插入的。这意味着最终的数组中插入的元素的顺序和它们在参数列表中的顺序一致：</p>
+<pre><code class="language-js">var a = [0];
+a.unshift(1,2,3);
+a // =&gt; [1, 2, 3, 0]
+</code></pre>
+<p>:::</p>
+<h3 id="tostring和tolocalestring">toString()和toLocaleString()</h3>
+<p>针对数组，toString()方法将其每个元素转化为字符串（如有必要调用元素的toString()方法），并且输出用<strong>逗号</strong>分割的字符串列表。</p>
+<p>⭐输出不包括方括号或其他任何形式的包裹数组值的分隔符：</p>
+<figure data-type="image" tabindex="8"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/image-20201207214247700.png" alt="image-20201207214247700" loading="lazy"></figure>
+<pre><code class="language-js">[1,&quot;a&quot;, undefined, null, [], [2,3,[&quot;b&quot;]]].toString() // =&gt; &quot;1,a,,,,2,3,b&quot;
+[1,&quot;a&quot;, undefined, null, [], [2,3,[&quot;b&quot;]]].join() === [1,&quot;a&quot;, undefined, null, [], [2,3,[&quot;b&quot;]]].toString()
+// =&gt; true
+</code></pre>
+<p>这里与不使用任何参数调用join()方法返回的字符串是一样的。</p>
+<p>toLocaleString()是toString()方法的本地化版本，调用元素的toLocaleString()方法将每个数组元素转化为字符串，并且使用<strong>本地化</strong>（和自定义实现的）分隔符将这些字符串连接起来生成最终的字符串。</p>
 ]]></content>
     </entry>
     <entry>
