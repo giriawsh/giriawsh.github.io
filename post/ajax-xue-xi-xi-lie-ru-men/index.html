@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>AJAX学习系列——入门 | Giria&#39;s Blog</title>
+<link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+
+<link rel="canonical" href="https://giriawsh.github.io/post/ajax-xue-xi-xi-lie-ru-men/" />
+</head>
+<body>
+<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
+<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://giriawsh.github.io/"><img alt="logo" style="display:inline-block;" src="https://giriawsh.github.io//images/avatar.png"/></a><h1 title="Giria&#39;s Blog" class="weaklink"><a  href="/">Giria&#39;s Blog</a></h1>
+
+<div class="navbar weaklink">
+<div class="normal_nav">
+<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul></nav>
+<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
+<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tag/9OedYhieZ/" class="selected active current nav__item" >碎碎念</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://giriawsh.github.io/archives" class="selected active current nav__item" >时间轴</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://record.giriawsh.com" class="selected active current nav__item" >个人学习系列↗</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1607351506341" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+</div></div>
+<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
+
+
+<div class="main"><div class="main-inner"><div class="content">
+<article class="post">
+<h2 class="post_title sm_margin"><a>AJAX学习系列——入门</a></h2>
+<script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-12-07</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px"></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">2913字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">13 min read</span>
+</section>
+
+<div style="display:flex">
+<div class="md_block" id="md_block">
+<div class="round-shape-one"></div>
+<h2 id="ajax是什么">AJAX是什么</h2>
+<p>AJAX = Asynchronous JavaScript and XML（异步的 JavaScript 和 XML）。</p>
+<p>AJAX 不是新的编程语言，而是一种使用现有标准的新方法。</p>
+<p>AJAX 最大的优点是在不重新加载整个页面的情况下，可以与服务器交换数据并更新部分网页内容。</p>
+<p>AJAX 不需要任何浏览器插件，但需要用户允许JavaScript在浏览器上执行。</p>
+<p>AJAX 是一种用于创建快速动态网页的技术。</p>
+<p>通过在后台与服务器进行少量<strong>数据交换</strong>，AJAX 可以使网页实现<strong>异步更新</strong>。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。</p>
+<h2 id="ajax应用">AJAX应用</h2>
+<ul>
+<li>运用XHTML+CSS来表达资讯；</li>
+<li>运用JavaScript操作DOM（Document Object Model）来执行动态效果；</li>
+<li>运用XML和XSLT操作资料;</li>
+<li>运用XMLHttpRequest或新的Fetch API与网页服务器进行异步资料交换；</li>
+<li>注意：AJAX与Flash、Silverlight和Java Applet等RIA技术是有区分的。</li>
+</ul>
+<h2 id="ajax简介">AJAX简介</h2>
+<p>AJAX 是一种在<strong>无需重新加载整个网页</strong>的情况下，能够更新部分网页的技术。</p>
+<h3 id="工作原理">工作原理</h3>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201204193130.png" alt="AJAX" loading="lazy"></figure>
+<h3 id="基于现有的internet标准">基于现有的Internet标准</h3>
+<p>AJAX是基于现有的Internet标准，并且联合使用它们：</p>
+<ul>
+<li>XMLHttpRequest 对象 (异步的与服务器交换数据)</li>
+<li>JavaScript/DOM (信息显示/交互)</li>
+<li>CSS (给数据定义样式)</li>
+<li>XML (作为转换数据的格式)</li>
+</ul>
+<p><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201204193209.gif" alt="lamp" loading="lazy"> AJAX应用程序与浏览器和平台无关的！</p>
+<h3 id="google应用">Google应用</h3>
+<p>在 2005 年，Google 通过其 Google Suggest 使 AJAX 变得流行起来。</p>
+<p>Google Suggest 使用 AJAX 创造出动态性极强的 web 界面：当您在谷歌的搜索框输入关键字时，JavaScript 会把这些字符发送到服务器，然后服务器会返回一个搜索建议的列表。</p>
+<h2 id="ajax实例">AJAX实例</h2>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;script&gt;
+function loadXMLDoc()
+{
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	{
+		//  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{
+		// IE6, IE5 浏览器执行代码
+		xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+	}
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)
+		{
+			document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText;
+		}
+	}
+	xmlhttp.open(&quot;GET&quot;,&quot;/try/ajax/ajax_info.txt&quot;,true);
+	xmlhttp.send();
+}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id=&quot;myDiv&quot;&gt;&lt;h2&gt;使用 AJAX 修改该文本内容&lt;/h2&gt;&lt;/div&gt;
+&lt;button type=&quot;button&quot; onclick=&quot;loadXMLDoc()&quot;&gt;修改内容&lt;/button&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="实例解析">实例解析</h3>
+<p>AJAX 应用程序包含一个 div 和一个按钮。</p>
+<p>div 部分用于显示来自服务器的信息。当按钮被点击时，它负责调用名为 loadXMLDoc() 的函数</p>
+<h2 id="创建xmlhttprequest对象">创建XMLHttpRequest对象</h2>
+<p>所有现代浏览器均支持 XMLHttpRequest 对象（IE5 和 IE6 使用 ActiveXObject）。</p>
+<p>XMLHttpRequest 用于在后台与服务器交换数据。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。</p>
+<p>创建 XMLHttpRequest 对象的语法：</p>
+<pre><code>variable=new XMLHttpRequest();
+</code></pre>
+<p>老版本的 Internet Explorer （IE5 和 IE6）使用 ActiveX 对象：</p>
+<pre><code>variable=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+</code></pre>
+<p>使用前应进行浏览器支持性检查。</p>
+<h2 id="向服务器发送请求">向服务器发送请求</h2>
+<p>XMLHttpRequest 对象用于和服务器交换数据。</p>
+<h3 id="open和send">open()和send()</h3>
+<p>如需将请求发送到服务器，我们使用 XMLHttpRequest 对象的 open() 和 send() 方法：</p>
+<pre><code>xmlhttp.open(&quot;GET&quot;,&quot;ajax_info.txt&quot;,true);
+xmlhttp.send();
+</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">方法</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">open(<em>method</em>,<em>url</em>,<em>async</em>)</td>
+<td style="text-align:left">规定请求的类型、URL 以及是否异步处理请求。<br /><em>method</em>：请求的类型；GET 或 POST<br /><em>url</em>：文件在服务器上的位置<br /><em>async</em>：true（异步）或 false（同步）</td>
+</tr>
+<tr>
+<td style="text-align:left">send(<em>string</em>)</td>
+<td style="text-align:left">将请求发送到服务器。<em>string</em>：仅用于 POST 请求</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get还是post">GET还是POST</h3>
+<p>与 POST 相比，GET 更简单也更快，并且在大部分情况下都能用。</p>
+<p>然而，在以下情况中，请使用 POST 请求：</p>
+<ul>
+<li>无法使用缓存文件（更新服务器上的文件或数据库）</li>
+<li>向服务器发送大量数据（POST 没有数据量限制）</li>
+<li>发送包含未知字符的用户输入时，POST 比 GET 更稳定也更可靠</li>
+</ul>
+<h3 id="get请求">GET请求</h3>
+<p>一个简单的 GET 请求：</p>
+<pre><code>xmlhttp.open(&quot;GET&quot;,&quot;/try/ajax/demo_get.php&quot;,true); xmlhttp.send();
+</code></pre>
+<p>这个例子中，可能得到的是缓存的结果。</p>
+<p>为了避免这种情况，请向 URL 添加一个唯一的 ID（当然用random也不一定是唯一的，这一块还有很多其他的设计，譬如用时间戳等）：</p>
+<pre><code>xmlhttp.open(&quot;GET&quot;,&quot;/try/ajax/demo_get.php?t=&quot; + Math.random(),true);
+xmlhttp.send();
+</code></pre>
+<p>如果希望通过 GET 方法发送信息，请向 URL 添加信息：</p>
+<pre><code>xmlhttp.open(&quot;GET&quot;,&quot;/try/ajax/demo_get2.php?fname=Henry&amp;lname=Ford&quot;,true);
+xmlhttp.send();
+</code></pre>
+<h3 id="post请求">POST请求</h3>
+<p>一个简单 POST 请求：</p>
+<pre><code>xmlhttp.open(&quot;POST&quot;,&quot;/try/ajax/demo_post.php&quot;,true); xmlhttp.send();
+</code></pre>
+<p>如果需要像 HTML 表单那样 POST 数据，请使用 <strong>setRequestHeader()</strong> 来添加 HTTP 头。然后在 send() 方法中规定您希望发送的数据：</p>
+<pre><code>xmlhttp.open(&quot;POST&quot;,&quot;/try/ajax/demo_post2.php&quot;,true);
+xmlhttp.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);
+xmlhttp.send(&quot;fname=Henry&amp;lname=Ford&quot;);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">方法</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">setRequestHeader(<em>header,value</em>)</td>
+<td style="text-align:left">向请求添加 HTTP 头。<em>header</em>: 规定头的名称<em>value</em>: 规定头的值</td>
+</tr>
+</tbody>
+</table>
+<p>open() 方法的 <em>url</em> 参数是<u>服务器上文件的地址</u>：</p>
+<pre><code>xmlhttp.open(&quot;GET&quot;,&quot;ajax_test.html&quot;,true);
+</code></pre>
+<p>该文件可以是任何类型的文件，比如 .txt 和 .xml，或者服务器脚本文件，比如 .asp 和 .php （在传回响应之前，<u>能够在服务器上执行任务</u>）。</p>
+<h3 id="异步-true-or-false">异步-True or False？</h3>
+<p>AJAX 指的是异步 JavaScript 和 XML（Asynchronous JavaScript and XML）。</p>
+<p>XMLHttpRequest 对象如果要用于 AJAX 的话，其 open() 方法的 async 参数必须设置为 true：</p>
+<pre><code>xmlhttp.open(&quot;GET&quot;,&quot;ajax_test.html&quot;,true);
+</code></pre>
+<p>对于 web 开发人员来说，发送异步请求是一个巨大的进步。很多在服务器执行的任务都相当费时。AJAX 出现之前，这可能会引起应用程序挂起或停止。</p>
+<p>通过 AJAX，<u>JavaScript 无需等待服务器的响应</u>，而是：</p>
+<ul>
+<li>在等待服务器响应时执行其他脚本</li>
+<li>当响应就绪后对响应进行处理</li>
+</ul>
+<h3 id="asynctrue">Async=true</h3>
+<p>当使用 async=true 时，请规定在<strong>响应处于 onreadystatechange 事件中的就绪状态时执行的函数</strong>：</p>
+<pre><code>xmlhttp.onreadystatechange=function()
+{
+    if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)
+    {
+        document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText;
+    }
+}
+xmlhttp.open(&quot;GET&quot;,&quot;/try/ajax/ajax_info.txt&quot;,true);
+xmlhttp.send();
+</code></pre>
+<h3 id="async-false">Async = false</h3>
+<p>如需使用 async=false，请将 open() 方法中的第三个参数改为 false：</p>
+<pre><code>xmlhttp.open(&quot;GET&quot;,&quot;test1.txt&quot;,false);
+</code></pre>
+<p>我们不推荐使用 async=false，但是对于一些小型的请求，也是可以的。</p>
+<p>请记住，JavaScript 会等到服务器响应就绪才继续执行。如果服务器繁忙或缓慢，应用程序会挂起或停止。</p>
+<p>::: tip 不要编写onreadystatechange函数</p>
+<p>**注意：**当您使用 async=false 时，请不要编写 onreadystatechange 函数 - 把代码放到 send() 语句后面即可：</p>
+<pre><code>xmlhttp.open(&quot;GET&quot;,&quot;/try/ajax/ajax_info.txt&quot;,false);
+xmlhttp.send();
+document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText;
+</code></pre>
+<p>:::</p>
+<h2 id="服务器相应">服务器相应</h2>
+<p>如需获得来自服务器的响应，请使用 XMLHttpRequest 对象的 responseText 或 responseXML 属性。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">属性</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">responseText</td>
+<td style="text-align:left">获得<strong>字符串形式</strong>的响应数据。</td>
+</tr>
+<tr>
+<td style="text-align:left">responseXML</td>
+<td style="text-align:left">获得 <strong>XML 形式</strong>的响应数据。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="responsetext属性">responseText属性</h3>
+<p>responseText 属性返回字符串形式的响应，因此您可以这样使用：</p>
+<pre><code>document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText;
+</code></pre>
+<h3 id="responsexml属性">responseXML属性</h3>
+<p>如果来自服务器的响应是 XML，而且需要作为 XML 对象进行解析，请使用 responseXML 属性：</p>
+<pre><code>xmlDoc=xmlhttp.responseXML;
+txt=&quot;&quot;;
+x=xmlDoc.getElementsByTagName(&quot;ARTIST&quot;);
+for (i=0;i&lt;x.length;i++)
+{
+    txt=txt + x[i].childNodes[0].nodeValue + &quot;&lt;br&gt;&quot;;
+}
+document.getElementById(&quot;myDiv&quot;).innerHTML=txt;
+</code></pre>
+<h2 id="onreadystatechage事件">onreadystatechage事件</h2>
+<p>当请求被发送到服务器时，我们需要执行一些基于响应的任务。</p>
+<p>每当 readyState 改变时，就会触发 onreadystatechange 事件。</p>
+<p><strong>readyState 属性存有 XMLHttpRequest 的状态信息。</strong></p>
+<p>下面是 XMLHttpRequest 对象的三个重要的属性：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">属性</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">onreadystatechange</td>
+<td style="text-align:left">存储函数（或函数名），每当 readyState 属性改变时，就会调用该函数。</td>
+</tr>
+<tr>
+<td style="text-align:left">readyState</td>
+<td style="text-align:left">存有 XMLHttpRequest 的状态。从 0 到 4 发生变化。0: 请求未初始化1: 服务器连接已建立2: 请求已接收3: 请求处理中4: 请求已完成，且响应已就绪</td>
+</tr>
+<tr>
+<td style="text-align:left">status</td>
+<td style="text-align:left">200: &quot;OK&quot; 404: 未找到页面</td>
+</tr>
+</tbody>
+</table>
+<p>在 onreadystatechange 事件中，我们规定当服务器响应已做好被处理的准备时所执行的任务。</p>
+<p>当 readyState 等于 4 且状态为 200 时，表示响应已就绪：</p>
+<pre><code>xmlhttp.onreadystatechange=function()
+{
+    if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)
+    {
+        document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText;
+    }
+}
+</code></pre>
+<h3 id="使用回调函数">使用回调函数</h3>
+<p>回调函数是一种以参数形式传递给另一个函数的函数。</p>
+<p>如果您的网站上存在多个 AJAX 任务，那么您应该为创建 XMLHttpRequest 对象编写一个<em>标准</em>的函数，并<u>为每个 AJAX 任务调用该函数</u>。</p>
+<p>该函数调用应该包含 URL 以及发生 onreadystatechange 事件时执行的任务（每次调用可能不尽相同）：</p>
+<pre><code>function myFunction()
+{
+    loadXMLDoc(&quot;/try/ajax/ajax_info.txt&quot;,function()
+    {
+        if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)
+        {
+            document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText;
+        }
+    });
+}
+</code></pre>
+<h2 id="一个例子">一个例子</h2>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;script&gt;
+function showHint(str)
+{
+  var xmlhttp;
+  if (str.length==0)
+  { 
+    document.getElementById(&quot;txtHint&quot;).innerHTML=&quot;&quot;;
+    return;
+  }
+  if (window.XMLHttpRequest)
+  {
+    // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+    xmlhttp=new XMLHttpRequest();
+  }
+  else
+  {
+    // IE6, IE5 浏览器执行代码
+    xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+  }
+  xmlhttp.onreadystatechange=function()
+  {
+    if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)
+    {
+      document.getElementById(&quot;txtHint&quot;).innerHTML=xmlhttp.responseText;
+    }
+  }
+  xmlhttp.open(&quot;GET&quot;,&quot;/try/ajax/gethint.php?q=&quot;+str,true);
+  xmlhttp.send();
+}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;h3&gt;在输入框中尝试输入字母 a:&lt;/h3&gt;
+&lt;form action=&quot;&quot;&gt; 
+输入姓名: &lt;input type=&quot;text&quot; id=&quot;txt1&quot; onkeyup=&quot;showHint(this.value)&quot; /&gt;
+&lt;/form&gt;
+&lt;p&gt;提示信息: &lt;span id=&quot;txtHint&quot;&gt;&lt;/span&gt;&lt;/p&gt; 
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>源代码解析：</p>
+<p>如果输入框为空 <strong>str.length==0</strong>，则该函数清空 <strong>txtHint</strong> 占位符的内容，并退出函数。</p>
+<p>如果输入框不为空，<strong>showHint()</strong> 函数执行以下任务：</p>
+<ul>
+<li>创建 <strong>XMLHttpRequest</strong> 对象</li>
+<li>当服务器响应就绪时执行函数</li>
+<li>把请求发送到服务器上的文件</li>
+<li>请注意我们向 URL <strong>添加了一个参数 q</strong> （带有输入框的内容）</li>
+</ul>
+<h2 id="ajax与xml">AJAX与XML</h2>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;style&gt;
+table,th,td {
+  border : 1px solid black;
+  border-collapse: collapse;
+}
+th,td {
+  padding: 5px;
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;h1&gt;XMLHttpRequest 对象&lt;/h1&gt;
+
+&lt;button type=&quot;button&quot; onclick=&quot;loadXMLDoc()&quot;&gt;获取我收藏的 CD&lt;/button&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;table id=&quot;demo&quot;&gt;&lt;/table&gt;
+
+&lt;script&gt;
+function loadXMLDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 &amp;&amp; this.status == 200) {
+      myFunction(this);
+    }
+  };
+  xhttp.open(&quot;GET&quot;, &quot;cd_catalog.xml&quot;, true);
+  xhttp.send();
+}
+function myFunction(xml) {
+  var i;
+  var xmlDoc = xml.responseXML;
+  var table=&quot;&lt;tr&gt;&lt;th&gt;Artist&lt;/th&gt;&lt;th&gt;Title&lt;/th&gt;&lt;/tr&gt;&quot;;
+  var x = xmlDoc.getElementsByTagName(&quot;CD&quot;);
+  for (i = 0; i &lt;x.length; i++) {
+    table += &quot;&lt;tr&gt;&lt;td&gt;&quot; +
+    x[i].getElementsByTagName(&quot;ARTIST&quot;)[0].childNodes[0].nodeValue +
+    &quot;&lt;/td&gt;&lt;td&gt;&quot; +
+    x[i].getElementsByTagName(&quot;TITLE&quot;)[0].childNodes[0].nodeValue +
+    &quot;&lt;/td&gt;&lt;/tr&gt;&quot;;
+  }
+  document.getElementById(&quot;demo&quot;).innerHTML = table;
+}
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>当用户点击上面的&quot;获取我收藏的 CD&quot;这个按钮，就会执行 loadXMLDoc() 函数。</p>
+<p>loadXMLDoc() 函数创建 XMLHttpRequest 对象，添加当服务器响应就绪时执行的函数，并将请求发送到服务器。</p>
+<p>当服务器响应就绪时，会构建一个 HTML 表格，从 XML 文件中提取节点（元素），最后使用 XML 数据的 填充 id=&quot;demo&quot; 的表格元素。</p>
+<p><a href="https://www.runoob.com/try/demo_source/cd_catalog.xml">cd_catelog.xml文件内容</a></p>
+
+<span id="footnote"></span>
+<div id = "warn"></div>
+</div>
+<div class="toc-container"><ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#ajax%E6%98%AF%E4%BB%80%E4%B9%88">AJAX是什么</a></li>
+<li><a href="#ajax%E5%BA%94%E7%94%A8">AJAX应用</a></li>
+<li><a href="#ajax%E7%AE%80%E4%BB%8B">AJAX简介</a>
+<ul>
+<li><a href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86">工作原理</a></li>
+<li><a href="#%E5%9F%BA%E4%BA%8E%E7%8E%B0%E6%9C%89%E7%9A%84internet%E6%A0%87%E5%87%86">基于现有的Internet标准</a></li>
+<li><a href="#google%E5%BA%94%E7%94%A8">Google应用</a></li>
+</ul>
+</li>
+<li><a href="#ajax%E5%AE%9E%E4%BE%8B">AJAX实例</a>
+<ul>
+<li><a href="#%E5%AE%9E%E4%BE%8B%E8%A7%A3%E6%9E%90">实例解析</a></li>
+</ul>
+</li>
+<li><a href="#%E5%88%9B%E5%BB%BAxmlhttprequest%E5%AF%B9%E8%B1%A1">创建XMLHttpRequest对象</a></li>
+<li><a href="#%E5%90%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82">向服务器发送请求</a>
+<ul>
+<li><a href="#open%E5%92%8Csend">open()和send()</a></li>
+<li><a href="#get%E8%BF%98%E6%98%AFpost">GET还是POST</a></li>
+<li><a href="#get%E8%AF%B7%E6%B1%82">GET请求</a></li>
+<li><a href="#post%E8%AF%B7%E6%B1%82">POST请求</a></li>
+<li><a href="#%E5%BC%82%E6%AD%A5-true-or-false">异步-True or False？</a></li>
+<li><a href="#asynctrue">Async=true</a></li>
+<li><a href="#async-false">Async = false</a></li>
+</ul>
+</li>
+<li><a href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%BA%94">服务器相应</a>
+<ul>
+<li><a href="#responsetext%E5%B1%9E%E6%80%A7">responseText属性</a></li>
+<li><a href="#responsexml%E5%B1%9E%E6%80%A7">responseXML属性</a></li>
+</ul>
+</li>
+<li><a href="#onreadystatechage%E4%BA%8B%E4%BB%B6">onreadystatechage事件</a>
+<ul>
+<li><a href="#%E4%BD%BF%E7%94%A8%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0">使用回调函数</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90">一个例子</a></li>
+<li><a href="#ajax%E4%B8%8Exml">AJAX与XML</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="fullPage"><canvas id="canvas"></canvas></div>
+</article>
+<div id="eof"><span>EOF</span></div><div class="round-shape-one"></div>
+<section>
+<div class="doc_comments">
+
+	  
+		<div id="gitalk-container"></div>
+		<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/qyxtim/Static@3.8/gitalk.min.js"></script><link href="https://cdn.jsdelivr.net/npm/gitalk@1.5.0/dist/gitalk.css"rel="stylesheet"><script>var gitalk=new Gitalk({clientID:"ee7c215043d62409bb53",clientSecret:"455d2f4a532bbe073ca25fdf9111932f00bbc624",repo:"giriawsh.github.io",owner:"giriawsh",admin:["giriawsh"],id:(location.pathname).substring(0, 49),distractionFreeMode:false});gitalk.render("gitalk-container");</script>
+	  
+
+	  
+
+</div></section>
+</div></div></div><script>
+"use strict";!function(){for(var n=document.getElementsByTagName("pre"),e=n.length,s=0;s<e;s++){n[s].innerHTML='<span class="line-number"></span>'+n[s].innerHTML+'<span class="cl"></span>';for(var a=n[s].innerHTML.split(/\n/).length,r=0;r<a-1;r++){n[s].getElementsByTagName("span")[0].innerHTML+="<span>"+(r+1)+"</span>"}}}();
+let mainNavLinks=document.querySelectorAll(".markdownIt-TOC a");window.addEventListener("scroll",event=>{let fromTop=window.scrollY;mainNavLinks.forEach((link,index)=>{let section=document.getElementById(decodeURI(link.hash).substring(1));let nextSection=null
+if(mainNavLinks[index+1]){nextSection=document.getElementById(decodeURI(mainNavLinks[index+1].hash).substring(1));}
+if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop){link.classList.add("currentToc");}else{link.classList.remove("currentToc");}}else{link.classList.add("currentToc");}}else{link.classList.remove("currentToc");}});});
+var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
+var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
+var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
+content="本文最后更新于2020-12-07，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-12-07 22:31:18";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+</script>
+<style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
+<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"><a href="https://github.com/giriawsh"title="github"><i class="iconfont icon-github"></i></a></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
+<span style="display: inline;margin-right:15px;">👁<strong><span id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv" style="display: inline;"><span>📚<strong>77</strong> posts</span></div></div>
+<script>
+console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;", );
+</script>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+<script type="text/javascript" async src="https://giriawsh.github.io//media/js/prism.js"></script>
+</body>
+
+</html>

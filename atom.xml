@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-12-07T13:45:35.034Z</updated>
+    <updated>2020-12-07T14:31:54.084Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -10,6 +10,406 @@
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[AJAX学习系列——入门]]></title>
+        <id>https://giriawsh.github.io/post/ajax-xue-xi-xi-lie-ru-men/</id>
+        <link href="https://giriawsh.github.io/post/ajax-xue-xi-xi-lie-ru-men/">
+        </link>
+        <updated>2020-12-07T14:31:18.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="ajax是什么">AJAX是什么</h2>
+<p>AJAX = Asynchronous JavaScript and XML（异步的 JavaScript 和 XML）。</p>
+<p>AJAX 不是新的编程语言，而是一种使用现有标准的新方法。</p>
+<p>AJAX 最大的优点是在不重新加载整个页面的情况下，可以与服务器交换数据并更新部分网页内容。</p>
+<p>AJAX 不需要任何浏览器插件，但需要用户允许JavaScript在浏览器上执行。</p>
+<p>AJAX 是一种用于创建快速动态网页的技术。</p>
+<p>通过在后台与服务器进行少量<strong>数据交换</strong>，AJAX 可以使网页实现<strong>异步更新</strong>。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。</p>
+<h2 id="ajax应用">AJAX应用</h2>
+<ul>
+<li>运用XHTML+CSS来表达资讯；</li>
+<li>运用JavaScript操作DOM（Document Object Model）来执行动态效果；</li>
+<li>运用XML和XSLT操作资料;</li>
+<li>运用XMLHttpRequest或新的Fetch API与网页服务器进行异步资料交换；</li>
+<li>注意：AJAX与Flash、Silverlight和Java Applet等RIA技术是有区分的。</li>
+</ul>
+<h2 id="ajax简介">AJAX简介</h2>
+<p>AJAX 是一种在<strong>无需重新加载整个网页</strong>的情况下，能够更新部分网页的技术。</p>
+<h3 id="工作原理">工作原理</h3>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201204193130.png" alt="AJAX" loading="lazy"></figure>
+<h3 id="基于现有的internet标准">基于现有的Internet标准</h3>
+<p>AJAX是基于现有的Internet标准，并且联合使用它们：</p>
+<ul>
+<li>XMLHttpRequest 对象 (异步的与服务器交换数据)</li>
+<li>JavaScript/DOM (信息显示/交互)</li>
+<li>CSS (给数据定义样式)</li>
+<li>XML (作为转换数据的格式)</li>
+</ul>
+<p><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201204193209.gif" alt="lamp" loading="lazy"> AJAX应用程序与浏览器和平台无关的！</p>
+<h3 id="google应用">Google应用</h3>
+<p>在 2005 年，Google 通过其 Google Suggest 使 AJAX 变得流行起来。</p>
+<p>Google Suggest 使用 AJAX 创造出动态性极强的 web 界面：当您在谷歌的搜索框输入关键字时，JavaScript 会把这些字符发送到服务器，然后服务器会返回一个搜索建议的列表。</p>
+<h2 id="ajax实例">AJAX实例</h2>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;script&gt;
+function loadXMLDoc()
+{
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	{
+		//  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{
+		// IE6, IE5 浏览器执行代码
+		xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+	}
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)
+		{
+			document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText;
+		}
+	}
+	xmlhttp.open(&quot;GET&quot;,&quot;/try/ajax/ajax_info.txt&quot;,true);
+	xmlhttp.send();
+}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id=&quot;myDiv&quot;&gt;&lt;h2&gt;使用 AJAX 修改该文本内容&lt;/h2&gt;&lt;/div&gt;
+&lt;button type=&quot;button&quot; onclick=&quot;loadXMLDoc()&quot;&gt;修改内容&lt;/button&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="实例解析">实例解析</h3>
+<p>AJAX 应用程序包含一个 div 和一个按钮。</p>
+<p>div 部分用于显示来自服务器的信息。当按钮被点击时，它负责调用名为 loadXMLDoc() 的函数</p>
+<h2 id="创建xmlhttprequest对象">创建XMLHttpRequest对象</h2>
+<p>所有现代浏览器均支持 XMLHttpRequest 对象（IE5 和 IE6 使用 ActiveXObject）。</p>
+<p>XMLHttpRequest 用于在后台与服务器交换数据。这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。</p>
+<p>创建 XMLHttpRequest 对象的语法：</p>
+<pre><code>variable=new XMLHttpRequest();
+</code></pre>
+<p>老版本的 Internet Explorer （IE5 和 IE6）使用 ActiveX 对象：</p>
+<pre><code>variable=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+</code></pre>
+<p>使用前应进行浏览器支持性检查。</p>
+<h2 id="向服务器发送请求">向服务器发送请求</h2>
+<p>XMLHttpRequest 对象用于和服务器交换数据。</p>
+<h3 id="open和send">open()和send()</h3>
+<p>如需将请求发送到服务器，我们使用 XMLHttpRequest 对象的 open() 和 send() 方法：</p>
+<pre><code>xmlhttp.open(&quot;GET&quot;,&quot;ajax_info.txt&quot;,true);
+xmlhttp.send();
+</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">方法</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">open(<em>method</em>,<em>url</em>,<em>async</em>)</td>
+<td style="text-align:left">规定请求的类型、URL 以及是否异步处理请求。<br /><em>method</em>：请求的类型；GET 或 POST<br /><em>url</em>：文件在服务器上的位置<br /><em>async</em>：true（异步）或 false（同步）</td>
+</tr>
+<tr>
+<td style="text-align:left">send(<em>string</em>)</td>
+<td style="text-align:left">将请求发送到服务器。<em>string</em>：仅用于 POST 请求</td>
+</tr>
+</tbody>
+</table>
+<h3 id="get还是post">GET还是POST</h3>
+<p>与 POST 相比，GET 更简单也更快，并且在大部分情况下都能用。</p>
+<p>然而，在以下情况中，请使用 POST 请求：</p>
+<ul>
+<li>无法使用缓存文件（更新服务器上的文件或数据库）</li>
+<li>向服务器发送大量数据（POST 没有数据量限制）</li>
+<li>发送包含未知字符的用户输入时，POST 比 GET 更稳定也更可靠</li>
+</ul>
+<h3 id="get请求">GET请求</h3>
+<p>一个简单的 GET 请求：</p>
+<pre><code>xmlhttp.open(&quot;GET&quot;,&quot;/try/ajax/demo_get.php&quot;,true); xmlhttp.send();
+</code></pre>
+<p>这个例子中，可能得到的是缓存的结果。</p>
+<p>为了避免这种情况，请向 URL 添加一个唯一的 ID（当然用random也不一定是唯一的，这一块还有很多其他的设计，譬如用时间戳等）：</p>
+<pre><code>xmlhttp.open(&quot;GET&quot;,&quot;/try/ajax/demo_get.php?t=&quot; + Math.random(),true);
+xmlhttp.send();
+</code></pre>
+<p>如果希望通过 GET 方法发送信息，请向 URL 添加信息：</p>
+<pre><code>xmlhttp.open(&quot;GET&quot;,&quot;/try/ajax/demo_get2.php?fname=Henry&amp;lname=Ford&quot;,true);
+xmlhttp.send();
+</code></pre>
+<h3 id="post请求">POST请求</h3>
+<p>一个简单 POST 请求：</p>
+<pre><code>xmlhttp.open(&quot;POST&quot;,&quot;/try/ajax/demo_post.php&quot;,true); xmlhttp.send();
+</code></pre>
+<p>如果需要像 HTML 表单那样 POST 数据，请使用 <strong>setRequestHeader()</strong> 来添加 HTTP 头。然后在 send() 方法中规定您希望发送的数据：</p>
+<pre><code>xmlhttp.open(&quot;POST&quot;,&quot;/try/ajax/demo_post2.php&quot;,true);
+xmlhttp.setRequestHeader(&quot;Content-type&quot;,&quot;application/x-www-form-urlencoded&quot;);
+xmlhttp.send(&quot;fname=Henry&amp;lname=Ford&quot;);
+</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">方法</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">setRequestHeader(<em>header,value</em>)</td>
+<td style="text-align:left">向请求添加 HTTP 头。<em>header</em>: 规定头的名称<em>value</em>: 规定头的值</td>
+</tr>
+</tbody>
+</table>
+<p>open() 方法的 <em>url</em> 参数是<u>服务器上文件的地址</u>：</p>
+<pre><code>xmlhttp.open(&quot;GET&quot;,&quot;ajax_test.html&quot;,true);
+</code></pre>
+<p>该文件可以是任何类型的文件，比如 .txt 和 .xml，或者服务器脚本文件，比如 .asp 和 .php （在传回响应之前，<u>能够在服务器上执行任务</u>）。</p>
+<h3 id="异步-true-or-false">异步-True or False？</h3>
+<p>AJAX 指的是异步 JavaScript 和 XML（Asynchronous JavaScript and XML）。</p>
+<p>XMLHttpRequest 对象如果要用于 AJAX 的话，其 open() 方法的 async 参数必须设置为 true：</p>
+<pre><code>xmlhttp.open(&quot;GET&quot;,&quot;ajax_test.html&quot;,true);
+</code></pre>
+<p>对于 web 开发人员来说，发送异步请求是一个巨大的进步。很多在服务器执行的任务都相当费时。AJAX 出现之前，这可能会引起应用程序挂起或停止。</p>
+<p>通过 AJAX，<u>JavaScript 无需等待服务器的响应</u>，而是：</p>
+<ul>
+<li>在等待服务器响应时执行其他脚本</li>
+<li>当响应就绪后对响应进行处理</li>
+</ul>
+<h3 id="asynctrue">Async=true</h3>
+<p>当使用 async=true 时，请规定在<strong>响应处于 onreadystatechange 事件中的就绪状态时执行的函数</strong>：</p>
+<pre><code>xmlhttp.onreadystatechange=function()
+{
+    if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)
+    {
+        document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText;
+    }
+}
+xmlhttp.open(&quot;GET&quot;,&quot;/try/ajax/ajax_info.txt&quot;,true);
+xmlhttp.send();
+</code></pre>
+<h3 id="async-false">Async = false</h3>
+<p>如需使用 async=false，请将 open() 方法中的第三个参数改为 false：</p>
+<pre><code>xmlhttp.open(&quot;GET&quot;,&quot;test1.txt&quot;,false);
+</code></pre>
+<p>我们不推荐使用 async=false，但是对于一些小型的请求，也是可以的。</p>
+<p>请记住，JavaScript 会等到服务器响应就绪才继续执行。如果服务器繁忙或缓慢，应用程序会挂起或停止。</p>
+<p>::: tip 不要编写onreadystatechange函数</p>
+<p>**注意：**当您使用 async=false 时，请不要编写 onreadystatechange 函数 - 把代码放到 send() 语句后面即可：</p>
+<pre><code>xmlhttp.open(&quot;GET&quot;,&quot;/try/ajax/ajax_info.txt&quot;,false);
+xmlhttp.send();
+document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText;
+</code></pre>
+<p>:::</p>
+<h2 id="服务器相应">服务器相应</h2>
+<p>如需获得来自服务器的响应，请使用 XMLHttpRequest 对象的 responseText 或 responseXML 属性。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">属性</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">responseText</td>
+<td style="text-align:left">获得<strong>字符串形式</strong>的响应数据。</td>
+</tr>
+<tr>
+<td style="text-align:left">responseXML</td>
+<td style="text-align:left">获得 <strong>XML 形式</strong>的响应数据。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="responsetext属性">responseText属性</h3>
+<p>responseText 属性返回字符串形式的响应，因此您可以这样使用：</p>
+<pre><code>document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText;
+</code></pre>
+<h3 id="responsexml属性">responseXML属性</h3>
+<p>如果来自服务器的响应是 XML，而且需要作为 XML 对象进行解析，请使用 responseXML 属性：</p>
+<pre><code>xmlDoc=xmlhttp.responseXML;
+txt=&quot;&quot;;
+x=xmlDoc.getElementsByTagName(&quot;ARTIST&quot;);
+for (i=0;i&lt;x.length;i++)
+{
+    txt=txt + x[i].childNodes[0].nodeValue + &quot;&lt;br&gt;&quot;;
+}
+document.getElementById(&quot;myDiv&quot;).innerHTML=txt;
+</code></pre>
+<h2 id="onreadystatechage事件">onreadystatechage事件</h2>
+<p>当请求被发送到服务器时，我们需要执行一些基于响应的任务。</p>
+<p>每当 readyState 改变时，就会触发 onreadystatechange 事件。</p>
+<p><strong>readyState 属性存有 XMLHttpRequest 的状态信息。</strong></p>
+<p>下面是 XMLHttpRequest 对象的三个重要的属性：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">属性</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">onreadystatechange</td>
+<td style="text-align:left">存储函数（或函数名），每当 readyState 属性改变时，就会调用该函数。</td>
+</tr>
+<tr>
+<td style="text-align:left">readyState</td>
+<td style="text-align:left">存有 XMLHttpRequest 的状态。从 0 到 4 发生变化。0: 请求未初始化1: 服务器连接已建立2: 请求已接收3: 请求处理中4: 请求已完成，且响应已就绪</td>
+</tr>
+<tr>
+<td style="text-align:left">status</td>
+<td style="text-align:left">200: &quot;OK&quot; 404: 未找到页面</td>
+</tr>
+</tbody>
+</table>
+<p>在 onreadystatechange 事件中，我们规定当服务器响应已做好被处理的准备时所执行的任务。</p>
+<p>当 readyState 等于 4 且状态为 200 时，表示响应已就绪：</p>
+<pre><code>xmlhttp.onreadystatechange=function()
+{
+    if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)
+    {
+        document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText;
+    }
+}
+</code></pre>
+<h3 id="使用回调函数">使用回调函数</h3>
+<p>回调函数是一种以参数形式传递给另一个函数的函数。</p>
+<p>如果您的网站上存在多个 AJAX 任务，那么您应该为创建 XMLHttpRequest 对象编写一个<em>标准</em>的函数，并<u>为每个 AJAX 任务调用该函数</u>。</p>
+<p>该函数调用应该包含 URL 以及发生 onreadystatechange 事件时执行的任务（每次调用可能不尽相同）：</p>
+<pre><code>function myFunction()
+{
+    loadXMLDoc(&quot;/try/ajax/ajax_info.txt&quot;,function()
+    {
+        if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)
+        {
+            document.getElementById(&quot;myDiv&quot;).innerHTML=xmlhttp.responseText;
+        }
+    });
+}
+</code></pre>
+<h2 id="一个例子">一个例子</h2>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;script&gt;
+function showHint(str)
+{
+  var xmlhttp;
+  if (str.length==0)
+  { 
+    document.getElementById(&quot;txtHint&quot;).innerHTML=&quot;&quot;;
+    return;
+  }
+  if (window.XMLHttpRequest)
+  {
+    // IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+    xmlhttp=new XMLHttpRequest();
+  }
+  else
+  {
+    // IE6, IE5 浏览器执行代码
+    xmlhttp=new ActiveXObject(&quot;Microsoft.XMLHTTP&quot;);
+  }
+  xmlhttp.onreadystatechange=function()
+  {
+    if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)
+    {
+      document.getElementById(&quot;txtHint&quot;).innerHTML=xmlhttp.responseText;
+    }
+  }
+  xmlhttp.open(&quot;GET&quot;,&quot;/try/ajax/gethint.php?q=&quot;+str,true);
+  xmlhttp.send();
+}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;h3&gt;在输入框中尝试输入字母 a:&lt;/h3&gt;
+&lt;form action=&quot;&quot;&gt; 
+输入姓名: &lt;input type=&quot;text&quot; id=&quot;txt1&quot; onkeyup=&quot;showHint(this.value)&quot; /&gt;
+&lt;/form&gt;
+&lt;p&gt;提示信息: &lt;span id=&quot;txtHint&quot;&gt;&lt;/span&gt;&lt;/p&gt; 
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>源代码解析：</p>
+<p>如果输入框为空 <strong>str.length==0</strong>，则该函数清空 <strong>txtHint</strong> 占位符的内容，并退出函数。</p>
+<p>如果输入框不为空，<strong>showHint()</strong> 函数执行以下任务：</p>
+<ul>
+<li>创建 <strong>XMLHttpRequest</strong> 对象</li>
+<li>当服务器响应就绪时执行函数</li>
+<li>把请求发送到服务器上的文件</li>
+<li>请注意我们向 URL <strong>添加了一个参数 q</strong> （带有输入框的内容）</li>
+</ul>
+<h2 id="ajax与xml">AJAX与XML</h2>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;style&gt;
+table,th,td {
+  border : 1px solid black;
+  border-collapse: collapse;
+}
+th,td {
+  padding: 5px;
+}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;h1&gt;XMLHttpRequest 对象&lt;/h1&gt;
+
+&lt;button type=&quot;button&quot; onclick=&quot;loadXMLDoc()&quot;&gt;获取我收藏的 CD&lt;/button&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;table id=&quot;demo&quot;&gt;&lt;/table&gt;
+
+&lt;script&gt;
+function loadXMLDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 &amp;&amp; this.status == 200) {
+      myFunction(this);
+    }
+  };
+  xhttp.open(&quot;GET&quot;, &quot;cd_catalog.xml&quot;, true);
+  xhttp.send();
+}
+function myFunction(xml) {
+  var i;
+  var xmlDoc = xml.responseXML;
+  var table=&quot;&lt;tr&gt;&lt;th&gt;Artist&lt;/th&gt;&lt;th&gt;Title&lt;/th&gt;&lt;/tr&gt;&quot;;
+  var x = xmlDoc.getElementsByTagName(&quot;CD&quot;);
+  for (i = 0; i &lt;x.length; i++) {
+    table += &quot;&lt;tr&gt;&lt;td&gt;&quot; +
+    x[i].getElementsByTagName(&quot;ARTIST&quot;)[0].childNodes[0].nodeValue +
+    &quot;&lt;/td&gt;&lt;td&gt;&quot; +
+    x[i].getElementsByTagName(&quot;TITLE&quot;)[0].childNodes[0].nodeValue +
+    &quot;&lt;/td&gt;&lt;/tr&gt;&quot;;
+  }
+  document.getElementById(&quot;demo&quot;).innerHTML = table;
+}
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>当用户点击上面的&quot;获取我收藏的 CD&quot;这个按钮，就会执行 loadXMLDoc() 函数。</p>
+<p>loadXMLDoc() 函数创建 XMLHttpRequest 对象，添加当服务器响应就绪时执行的函数，并将请求发送到服务器。</p>
+<p>当服务器响应就绪时，会构建一个 HTML 表格，从 XML 文件中提取节点（元素），最后使用 XML 数据的 填充 id=&quot;demo&quot; 的表格元素。</p>
+<p><a href="https://www.runoob.com/try/demo_source/cd_catalog.xml">cd_catelog.xml文件内容</a></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[《JS权威指南》第七章2]]></title>
         <id>https://giriawsh.github.io/post/lesslessjs-quan-wei-zhi-nan-greatergreater-di-qi-zhang-2/</id>
@@ -2905,439 +3305,6 @@ spawn('worker.js');
 <ul>
 <li>使用<code>process</code>对象管理自身。</li>
 <li>使用<code>child_process</code>模块创建和管理子进程。</li>
-</ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[《7天学会Nodejs》第四天——网络操作]]></title>
-        <id>https://giriawsh.github.io/post/lessless7-tian-xue-hui-nodejsgreatergreater-di-si-tian-wang-luo-cao-zuo/</id>
-        <link href="https://giriawsh.github.io/post/lessless7-tian-xue-hui-nodejsgreatergreater-di-si-tian-wang-luo-cao-zuo/">
-        </link>
-        <updated>2020-10-22T15:48:05.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="网络操作">网络操作</h1>
-<p>不了解网络编程的程序员不是好前端，而NodeJS恰好提供了一扇了解网络编程的窗口。</p>
-<p>通过NodeJS，除了可以<u>编写一些服务端程序来协助前端开发和测试</u>外，还能够<u>学习一些HTTP协议与Socket协议的相关知识</u>，这些知识在优化前端性能和排查前端故障时说不定能派上用场。</p>
-<p>本章将介绍与之相关的NodeJS内置模块。</p>
-<h2 id="开门红">开门红</h2>
-<p>NodeJS本来的用途是编写高性能Web服务器。</p>
-<p>使用NodeJS内置的<code>http</code>模块简单实现一个HTTP服务器。</p>
-<pre><code class="language-js">var http = require('http');
-
-http.createServer(function (request, response) {
-    response.writeHead(200, { 'Content-Type': 'text-plain' });
-    response.end('Hello World\n');
-}).listen(8124);
-</code></pre>
-<p>以上程序创建了一个HTTP服务器并监听<code>8124</code>端口，打开浏览器访问该端口<code>http://127.0.0.1:8124/</code>就能够看到效果。</p>
-<p>::: tip linux系统下的不同</p>
-<p>在Linux系统下，监听1024以下端口需要root权限。因此，如果想监听80或443端口的话，需要使用<code>sudo</code>命令启动程序。</p>
-<p>:::</p>
-<h2 id="api走马观花">API走马观花</h2>
-<p>大致看看NodeJS提供了哪些和网络操作有关的API。详细可见官方文档。</p>
-<h3 id="http">HTTP</h3>
-<blockquote>
-<p><strong>官方文档：</strong> http://nodejs.org/api/http.html</p>
-</blockquote>
-<p>'http'模块提供两种使用方式：</p>
-<ul>
-<li>作为服务端使用时，<u>创建一个HTTP服务器，监听HTTP客户端请求并返回响应</u>。</li>
-<li>作为客户端使用时，<u>发起一个HTTP客户端请求，获取服务端响应</u>。</li>
-</ul>
-<h4 id="服务端模式">服务端模式</h4>
-<p>首先我们来看看服务端模式下如何工作。</p>
-<p>如开门红中的例子所示，首先需要使用<code>.createServer</code>方法创建一个服务器，然后调用<code>.listen</code>方法监听端口。</p>
-<p>之后，<u>每当来了一个客户端请求，创建服务器时传入的回调函数就被调用一次</u>。可以看出，这是一种<strong>事件机制。</strong></p>
-<p>HTTP请求本质上是一个数据流，由<strong>请求头</strong>（headers）和<strong>请求体</strong>（body）组成。</p>
-<p>例如以下是一个完整的HTTP请求数据内容。</p>
-<pre><code class="language-js">POST / HTTP/1.1
-User-Agent: curl/7.26.0
-Host: localhost
-Accept: */*
-Content-Length: 11
-Content-Type: application/x-www-form-urlencoded
-
-Hello World
-</code></pre>
-<p>空行之上是请求头，之下是请求体。</p>
-<p>HTTP请求在发送给服务器时，可以认为是按照从头到尾的顺序一个字节一个字节地以数据流方式发送的。而<code>http</code>模块创建的HTTP服务器在<u>接收到完整的请求头后，就会调用回调函数</u>。</p>
-<p>在回调函数中，除了可以<u>使用<code>request</code>对象访问请求头数据</u>外，还能<u>把<code>request</code>对象当作一个只读数据流来访问请求体数据</u>。以下是一个例子。</p>
-<pre><code class="language-js">http.createServer(function (request, response) {
-    var body = [];
-
-    console.log(request.method);
-    console.log(request.headers);
-
-    request.on('data', function (chunk) {
-        body.push(chunk);
-    });
-
-    request.on('end', function () {
-        body = Buffer.concat(body);
-        console.log(body.toString());
-    });
-}).listen(80);
-
-------------------------------------
-POST
-{ 'user-agent': 'curl/7.26.0',
-  host: 'localhost',
-  accept: '*/*',
-  'content-length': '11',
-  'content-type': 'application/x-www-form-urlencoded' }
-Hello World
-</code></pre>
-<p>HTTP响应本质上也是一个数据流，同样由<strong>响应头</strong>（headers）和<strong>响应体</strong>（body）组成。例如以下是一个完整的HTTP请求数据内容。</p>
-<pre><code class="language-js">HTTP/1.1 200 OK
-Content-Type: text/plain
-Content-Length: 11
-Date: Tue, 05 Nov 2013 05:31:38 GMT
-Connection: keep-alive
-
-Hello World
-</code></pre>
-<p>在回调函数中，除了可以<u>使用<code>response</code>对象来写入响应头数据外，还能把<code>response</code>对象当作一个只写数据流来写入响应体数据。</u></p>
-<p>例如在以下例子中，服务端原样将客户端请求的请求体数据返回给客户端。</p>
-<pre><code class="language-js">http.createServer(function (request, response) {
-    response.writeHead(200, { 'Content-Type': 'text/plain' });
-
-    request.on('data', function (chunk) {
-        response.write(chunk);
-    });
-
-    request.on('end', function () {
-        response.end();
-    });
-}).listen(80);
-</code></pre>
-<h4 id="客户端模式">客户端模式</h4>
-<p>接下来我们看看客户端模式下如何工作。</p>
-<p>为了发起一个客户端HTTP请求，我们需要<u>指定目标服务器的位置并发送请求头和请求体</u>，以下示例演示了具体做法。</p>
-<pre><code class="language-js">var options = {
-        hostname: 'www.example.com',
-        port: 80,
-        path: '/upload',
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    };
-
-var request = http.request(options, function (response) {});
-
-request.write('Hello World');
-request.end();
-</code></pre>
-<p><code>.request</code>方法创建了一个客户端，并指定请求目标和请求头数据。</p>
-<p>之后，就可以把<code>request</code>对象当作一个只写数据流来写入请求体数据和结束请求。</p>
-<p>另外，由于HTTP请求中<code>GET</code>请求是最常见的一种，并且不需要请求体，因此<code>http</code>模块也提供了以下便捷API。</p>
-<pre><code class="language-js">http.get('http://www.example.com/', function (response) {});
-</code></pre>
-<p>当客户端发送请求并接收到完整的服务端响应头时，就会调用回调函数。</p>
-<p>在回调函数中，除了<u>可以使用<code>response</code>对象访问响应头数据外，还能把<code>response</code>对象当作一个只读数据流来访问响应体数据。</u></p>
-<p>以下是一个例子。</p>
-<pre><code class="language-js">http.get('http://www.example.com/', function (response) {
-    var body = [];
-
-    console.log(response.statusCode);
-    console.log(response.headers);
-
-    response.on('data', function (chunk) {
-        body.push(chunk);
-    });
-
-    response.on('end', function () {
-        body = Buffer.concat(body);
-        console.log(body.toString());
-    });
-});
-
-------------------------------------
-200
-{ 'content-type': 'text/html',
-  server: 'Apache',
-  'content-length': '801',
-  date: 'Tue, 05 Nov 2013 06:08:41 GMT',
-  connection: 'keep-alive' }
-&lt;!DOCTYPE html&gt;
-...
-</code></pre>
-<h3 id="https">HTTPS</h3>
-<blockquote>
-<p><strong>官方文档：</strong> http://nodejs.org/api/https.html</p>
-</blockquote>
-<p><code>https</code>模块与<code>http</code>模块极为类似，区别在于<u><code>https</code>模块需要额外处理SSL证书</u>。</p>
-<h4 id="服务端模式-2">服务端模式</h4>
-<p>在服务端模式下，创建一个HTTPS服务器的示例如下。</p>
-<pre><code class="language-js">var options = {
-        key: fs.readFileSync('./ssl/default.key'),
-        cert: fs.readFileSync('./ssl/default.cer')
-    };
-
-var server = https.createServer(options, function (request, response) {
-        // ...
-    });
-</code></pre>
-<p>与创建HTTP服务器相比，多了一个**<code>options</code>对象**，<u>通过<code>key</code>和<code>cert</code>字段指定了HTTPS服务器使用的私钥和公钥。</u></p>
-<p>另外，NodeJS支持<strong>SNI技术</strong>，可以根据HTTPS客户端请求使用的域名<u>动态使用不同的证书</u>，因此<u>同一个HTTPS服务器可以使用多个域名提供服务。</u></p>
-<p>接着上例，可以使用以下方法为HTTPS服务器添加多组证书。</p>
-<pre><code class="language-js">server.addContext('foo.com', {
-    key: fs.readFileSync('./ssl/foo.com.key'),
-    cert: fs.readFileSync('./ssl/foo.com.cer')
-});
-
-server.addContext('bar.com', {
-    key: fs.readFileSync('./ssl/bar.com.key'),
-    cert: fs.readFileSync('./ssl/bar.com.cer')
-});
-</code></pre>
-<h4 id="客户端模式-2">客户端模式</h4>
-<p>在客户端模式下，发起一个HTTPS客户端请求与<code>http</code>模块几乎相同，示例如下。</p>
-<pre><code class="language-js">var options = {
-        hostname: 'www.example.com',
-        port: 443,
-        path: '/',
-        method: 'GET'
-    };
-
-var request = https.request(options, function (response) {});
-
-request.end();
-</code></pre>
-<p>但如果目标服务器使用的SSL证书是自制的，不是从颁发机构购买的，默认情况下<code>https</code>模块会拒绝连接，提示说有证书安全问题。</p>
-<p><u>在<code>options</code>里加入<code>rejectUnauthorized: false</code>字段可以禁用对证书有效性的检查，从而允许<code>https</code>模块请求开发环境下使用自制证书的HTTPS服务器。</u></p>
-<h3 id="url">URL</h3>
-<blockquote>
-<p><strong>官方文档：</strong> http://nodejs.org/api/url.html</p>
-</blockquote>
-<p>处理HTTP请求时<code>url</code>模块使用率超高，因为<u>该模块允许解析URL、生成URL，以及拼接URL</u>。</p>
-<p>首先我们来看看一个完整的URL的各组成部分。</p>
-<pre><code class="language-js">                           href
- -----------------------------------------------------------------
-                            host              path
-                      --------------- ----------------------------
- http: // user:pass @ host.com : 8080 /p/a/t/h ?query=string #hash
- -----    ---------   --------   ---- -------- ------------- -----
-protocol     auth     hostname   port pathname     search     hash
-                                                ------------
-                                                   query
-</code></pre>
-<h4 id="url字符串转对象">URL字符串转对象</h4>
-<p>我们可以使用<code>.parse</code>方法来<strong>将一个URL字符串转换为URL对象</strong>，示例如下。</p>
-<pre><code class="language-js">url.parse('http://user:pass@host.com:8080/p/a/t/h?query=string#hash');
-/* =&gt;
-{ protocol: 'http:',
-  auth: 'user:pass',
-  host: 'host.com:8080',
-  port: '8080',
-  hostname: 'host.com',
-  hash: '#hash',
-  search: '?query=string',
-  query: 'query=string',
-  pathname: '/p/a/t/h',
-  path: '/p/a/t/h?query=string',
-  href: 'http://user:pass@host.com:8080/p/a/t/h?query=string#hash' }
-*/
-</code></pre>
-<p>传给<code>.parse</code>方法的不一定要是一个完整的URL。</p>
-<p>例如在HTTP服务器回调函数中，<u><code>request.url</code>不包含协议头和域名，但同样可以用<code>.parse</code>方法解析。</u></p>
-<pre><code class="language-js">http.createServer(function (request, response) {
-    var tmp = request.url; // =&gt; &quot;/foo/bar?a=b&quot;
-    url.parse(tmp);
-    /* =&gt;
-    { protocol: null,
-      slashes: null,
-      auth: null,
-      host: null,
-      port: null,
-      hostname: null,
-      hash: null,
-      search: '?a=b',
-      query: 'a=b',
-      pathname: '/foo/bar',
-      path: '/foo/bar?a=b',
-      href: '/foo/bar?a=b' }
-    */
-}).listen(80);
-</code></pre>
-<p><code>.parse</code>方法还支持第二个和第三个布尔类型可选参数。</p>
-<ul>
-<li>第二个参数等于<code>true</code>时，该方法返回的URL对象中，<code>query</code>字段不再是一个字符串，而是<u>一个经过<code>querystring</code>模块转换后的参数对象。</u></li>
-<li>第三个参数等于<code>true</code>时，该方法可以<u>正确解析不带协议头的URL</u>，例如<code>//www.example.com/foo/bar</code>。</li>
-</ul>
-<h4 id="url对象转字符串">URL对象转字符串</h4>
-<p>反过来，<code>format</code>方法允许<strong>将一个URL对象转换为URL字符串</strong>，示例如下。</p>
-<pre><code class="language-js">url.format({
-    protocol: 'http:',
-    host: 'www.example.com',
-    pathname: '/p/a/t/h',
-    search: 'query=string'
-});
-/* =&gt;
-'http://www.example.com/p/a/t/h?query=string'
-*/
-</code></pre>
-<h4 id="拼接url">拼接URL</h4>
-<p><code>.resolve</code>方法可以用于<strong>拼接URL</strong>，示例如下。</p>
-<pre><code class="language-js">url.resolve('http://www.example.com/foo/bar', '../baz');
-/* =&gt;
-http://www.example.com/baz
-*/
-</code></pre>
-<h3 id="query-string">Query String</h3>
-<blockquote>
-<p><strong>官方文档：</strong> http://nodejs.org/api/querystring.html</p>
-</blockquote>
-<p><code>querystring</code>模块用于<strong>实现URL参数字符串与参数对象的互相转换</strong>，示例如下。</p>
-<pre><code class="language-js">querystring.parse('foo=bar&amp;baz=qux&amp;baz=quux&amp;corge');
-/* =&gt;
-{ foo: 'bar', baz: ['qux', 'quux'], corge: '' }
-*/
-
-querystring.stringify({ foo: 'bar', baz: ['qux', 'quux'], corge: '' });
-/* =&gt;
-'foo=bar&amp;baz=qux&amp;baz=quux&amp;corge='
-*/
-</code></pre>
-<h4 id="zlib">Zlib</h4>
-<blockquote>
-<p><strong>官方文档：</strong> http://nodejs.org/api/zlib.html</p>
-</blockquote>
-<p><code>zlib</code>模块提供了数据压缩和解压的功能。</p>
-<p>当我们处理HTTP请求和响应时，可能需要用到这个模块。</p>
-<h4 id="zlib模块压缩">zlib模块压缩</h4>
-<p>首先我们看一个使用<code>zlib</code>模块压缩HTTP响应体数据的例子。</p>
-<p>这个例子中，判断了客户端是否支持gzip，并在支持的情况下使用<code>zlib</code>模块返回gzip之后的响应体数据。</p>
-<pre><code class="language-js">http.createServer(function (request, response) {
-    var i = 1024,
-        data = '';
-
-    while (i--) {
-        data += '.';
-    }
-
-    if ((request.headers['accept-encoding'] || '').indexOf('gzip') !== -1) {
-        zlib.gzip(data, function (err, data) {
-            response.writeHead(200, {
-                'Content-Type': 'text/plain',
-                'Content-Encoding': 'gzip'
-            });
-            response.end(data);
-        });
-    } else {
-        response.writeHead(200, {
-            'Content-Type': 'text/plain'
-        });
-        response.end(data);
-    }
-}).listen(80);
-</code></pre>
-<h4 id="zlib解压">zlib解压</h4>
-<p>接着我们看一个使用<code>zlib</code>模块解压HTTP响应体数据的例子。</p>
-<p>这个例子中，判断了服务端响应是否使用gzip压缩，并在压缩的情况下使用<code>zlib</code>模块解压响应体数据。</p>
-<pre><code class="language-js">var options = {
-        hostname: 'www.example.com',
-        port: 80,
-        path: '/',
-        method: 'GET',
-        headers: {
-            'Accept-Encoding': 'gzip, deflate'
-        }
-    };
-
-http.request(options, function (response) {
-    var body = [];
-
-    response.on('data', function (chunk) {
-        body.push(chunk);
-    });
-
-    response.on('end', function () {
-        body = Buffer.concat(body);
-
-        if (response.headers['content-encoding'] === 'gzip') {
-            zlib.gunzip(body, function (err, data) {
-                console.log(data.toString());
-            });
-        } else {
-            console.log(data.toString());
-        }
-    });
-}).end();
-</code></pre>
-<h4 id="net">Net</h4>
-<blockquote>
-<p><strong>官方文档：</strong> http://nodejs.org/api/net.html</p>
-</blockquote>
-<p><code>net</code>模块可用于<strong>创建Socket服务器或Socket客户端</strong>。下面这个例子仅仅简单演示一下如何从Socket层面来实现HTTP请求和响应。</p>
-<p>首先我们来看一个<u>使用Socket搭建一个很不严谨的HTTP服务器</u>的例子。</p>
-<p>这个HTTP服务器不管收到啥请求，都固定返回相同的响应。</p>
-<pre><code class="language-js">net.createServer(function (conn) {
-    conn.on('data', function (data) {
-        conn.write([
-            'HTTP/1.1 200 OK',
-            'Content-Type: text/plain',
-            'Content-Length: 11',
-            '',
-            'Hello World'
-        ].join('\n'));
-    });
-}).listen(80);
-</code></pre>
-<p>接着我们来看一个<u>使用Socket发起HTTP客户端请求</u>的例子。</p>
-<p>这个例子中，Socket客户端在建立连接后发送了一个HTTP GET请求，并<u>通过<code>data</code>事件监听函数来获取服务器响应。</u></p>
-<pre><code class="language-js">var options = {
-        port: 80,
-        host: 'www.example.com'
-    };
-
-var client = net.connect(options, function () {
-        client.write([
-            'GET / HTTP/1.1',
-            'User-Agent: curl/7.26.0',
-            'Host: www.baidu.com',
-            'Accept: */*',
-            '',
-            ''
-        ].join('\n'));
-    });
-
-client.on('data', function (data) {
-    console.log(data.toString());
-    client.end();
-});
-</code></pre>
-<h2 id="灵机一点">灵机一点</h2>
-<p>使用NodeJS操作网络，特别是操作HTTP请求和响应时会遇到一些惊喜，这里对一些常见问题做解答。</p>
-<ul>
-<li>
-<p>问： 为什么通过<code>headers</code>对象访问到的HTTP请求头或响应头字段不是驼峰的？</p>
-<p>答： 从规范上讲，HTTP请求头和响应头字段都应该是驼峰的。</p>
-<p>但现实是残酷的，不是每个HTTP服务端或客户端程序都严格遵循规范，所以NodeJS在处理从别的客户端或服务端收到的头字段时，<strong>都统一地转换为了小写字母格式</strong>，以便开发者能使用统一的方式来访问头字段。</p>
-<p>例如<code>headers['content-length']</code>。</p>
-</li>
-<li>
-<p>问： 为什么<code>http</code>模块创建的HTTP服务器返回的响应是<code>chunked</code>传输方式的？</p>
-<p>答： 因为默认情况下，使用<code>.writeHead</code>方法写入响应头后，<u>允许使用<code>.write</code>方法写入任意长度的响应体数据</u>，并使用<code>.end</code>方法结束一个响应。</p>
-<p>由于响应体数据长度不确定，因此NodeJS**自动在响应头里添加了<code>Transfer-Encoding: chunked</code>**字段，并采用<code>chunked</code>传输方式。</p>
-<p>但是当响应体数据长度确定时，可使用<code>.writeHead</code>方法<u>在响应头里加上<code>Content-Length</code>字段</u>，这样做之后NodeJS就不会自动添加<code>Transfer-Encoding</code>字段和使用<code>chunked</code>传输方式。</p>
-</li>
-<li>
-<p>问： 为什么使用<code>http</code>模块发起HTTP客户端请求时，有时候会发生<code>socket hang up</code>错误？</p>
-<p>答： 发起客户端HTTP请求前需要先<u>创建一个客户端</u>。<code>http</code>模块提供了一个全局客户端<code>http.globalAgent</code>，可以让我们使用<code>.request</code>或<code>.get</code>方法时不用手动创建客户端。</p>
-<p>但是全局客户端默认<u>只允许5个并发Socket连接</u>，当某一个时刻HTTP客户端请求创建过多，超过这个数字时，就会发生<code>socket hang up</code>错误。</p>
-<p>解决方法也很简单，<strong>通过<code>http.globalAgent.maxSockets</code>属性把这个数字改大些</strong>即可。</p>
-<p>另外，<code>https</code>模块遇到这个问题时也一样通过<code>https.globalAgent.maxSockets</code>属性来处理。</p>
-</li>
-</ul>
-<h2 id="小结">小结</h2>
-<p>本章介绍了使用NodeJS操作网络时需要的API以及一些坑回避技巧，总结起来有以下几点：</p>
-<ul>
-<li><code>http</code>和<code>https</code>模块<u>支持服务端模式和客户端模式</u>两种使用方式。</li>
-<li><code>request</code>和<code>response</code>对象除了用于读写头数据外，都<u>可以当作数据流</u>来操作。</li>
-<li><code>url.parse</code>方法加上<code>request.url</code>属性是处理HTTP请求时的固定搭配。</li>
-<li>使用<code>zlib</code>模块可以减少使用HTTP协议时的数据传输量。</li>
-<li>通过<code>net</code>模块的Socket服务器与客户端可对HTTP协议做底层操作。</li>
-<li>小心踩坑。</li>
 </ul>
 ]]></content>
     </entry>
