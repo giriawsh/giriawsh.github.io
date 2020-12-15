@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-12-12T14:03:19.346Z</updated>
+    <updated>2020-12-15T15:06:28.281Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -10,6 +10,819 @@
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[《深入浅出NodeJS》第二章 模块机制]]></title>
+        <id>https://giriawsh.github.io/post/lesslessshen-ru-qian-chu-nodejsgreatergreater-di-er-zhang-mo-kuai-ji-zhi/</id>
+        <link href="https://giriawsh.github.io/post/lesslessshen-ru-qian-chu-nodejsgreatergreater-di-er-zhang-mo-kuai-ji-zhi/">
+        </link>
+        <updated>2020-12-15T15:05:50.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="第二章-模块机制">第二章 模块机制</h1>
+<p>JavaScript自诞生以来，曾经没有人拿它当做一门真正的编程语言，认为它不过是一种网页小脚本而已。</p>
+<p>在Web 1.0时代，这种脚本语言在网络中主要有两个作用广为流传，一个是<strong>表单校验</strong>， 另一个是**网页特效。**另一方面，由于仓促地被创造出来，所以它自身的各种陷阱和缺点也被各种编程人员广为诉病。</p>
+<p>直到Web 2.0时代，前端工程师利用它大大提升了<u>网页上的用户体验</u>。在这个过程中，B/S应用展现出比C/S应用优越的地方。至此，JavaScript才被广泛重视起来。</p>
+<p>在Web 2.0流行的过程中，各种前端库和框架被开发出来，它们最初用于兼容各个版本的浏览器，随后随着更多的用户需求在前端被实现，JavaScript也<strong>从表单校验跃迁到应用开发的级别</strong>上。</p>
+<p>在这个过程中，它大致经历了工具类库、组件库、前端框架、前端应用的变迁：</p>
+<figure data-type="image" tabindex="1"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/image-20201212203541679.png" alt="image-20201212203541679" loading="lazy"></figure>
+<p>从成长工程中，JS发现了自身先天就缺乏的一项功能：模块。</p>
+<p>与其他服务端语言相比，JS通过<code>&lt;script&gt;</code>标签引入的代码十分杂乱无章，人们不得不用命名空间等方式人为地约束代码，以求达到安全和易用的目的。</p>
+<p>直到社区为JS制定了相应的规范，其中CommonJS是最重要的里程碑。</p>
+<h2 id="commonjs规范">CommonJS规范</h2>
+<p>亲爹似的人物，它希望JS能够在任何地方运行。</p>
+<h3 id="1-commonjs的出发点">1. CommonJS的出发点</h3>
+<p>在实际应用中，JS的表现能力取决于宿主环境中API支持程度。</p>
+<p>在Web1.0时代，只有对DOM、BOM等基本的支持。随着Web2.0的推进，HTML5崭露头角，它将Web网页带进Web应用的时代。在浏览器中出现了更多、更强大的API供JS调用。</p>
+<p>对于JS自身而言，它的规范依然是薄弱的，有以下缺陷：</p>
+<ul>
+<li>
+<p>没有模块系统。</p>
+</li>
+<li>
+<p>标准库较少。ECMAScript仅定义了部分核心库，对于<u>文件系统，I/O流</u>等常见需求却没有标准的API。就HTML5的发展状况而言，W3C标准化在一定意义上是在推进这个过程， 但是它仅限于浏览器端。</p>
+</li>
+<li>
+<p>没有标准接口。在JavaScript中，几乎没有定义过如Web服务器或者数据库之类的标准统一接口。</p>
+</li>
+<li>
+<p>缺乏<u>包管理系统</u>。这导致JavaScript应用中基本没有自动加载和安装依赖的能力。</p>
+</li>
+</ul>
+<p>CommonJS规范的提出，主要是为了弥补当前JavaScript没有标准的缺陷，以达到像Python、Ruby和Java具备开发大型应用的基础能力，而不是停留在小脚本程序的阶段。他们期望那些用CommonJS API写出的应用可以<u>具备跨宿主环境执行的能力</u>，这样不仅可以利用JavaScript开发富客户端应用，而且还可以编写以下应用。</p>
+<ul>
+<li>
+<p>服务器端JavaScript应用程序。</p>
+</li>
+<li>
+<p>命令行工具。</p>
+</li>
+<li>
+<p>桌面图形界面应用程序。</p>
+</li>
+<li>
+<p>混合应用（Titanium和Adobe AIR等形式的应用）。</p>
+</li>
+</ul>
+<p>目前，它依旧在成长中，这些规范涵盖了模块、二进制、Buffer、字符集编码、I/O流、进程环境、文件系统、套接字、单元测试、Web服务器网关接口、包管理等。</p>
+<p>Node与浏览器、W3C组织、CommonJS组织、ECMAScript共同构成了一个繁荣的生态系统。</p>
+<figure data-type="image" tabindex="2"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/image-20201213195500272.png" alt="image-20201213195500272" loading="lazy"></figure>
+<p>Node借鉴CommonJS的Modules规范实现了一套非常易用的模块系统，NPM对Packages规范的完好支持使得Node应用在开发过程中事半功倍。</p>
+<h3 id="2-commonjs的模块规范">2. CommonJS的模块规范</h3>
+<p>主要分为模块引用、模块定义、模块标识三个部分</p>
+<h4 id="21-模块引用">2.1 模块引用</h4>
+<p>模块引用的示例代码如下：</p>
+<pre><code class="language-js">var  math  =  require('math');
+</code></pre>
+<p>在CommonJS规范中，存在require()方法，这个方法接受<strong>模块标识</strong>，以此引入一个模块的API 到当前上下文中。</p>
+<h4 id="22-模块定义">2.2 模块定义</h4>
+<p>在模块中，上下文提供require()方法来引入模块。</p>
+<p>对应引入的功能，上下文提供了<strong>exports对象</strong>用于导出当前模块的方法或者变量，并且它是<strong>唯一导出的出口</strong>。</p>
+<p>在模块中，还存在一个module对象，它代表<strong>模块自身</strong>，而<u>exports是module的属性</u>。</p>
+<p>在Node中，一个文件就是一个模块，将方法挂载在exports对象上作为属性即可定义导出的方式：</p>
+<pre><code class="language-js">// math.js
+exports.add = function() {
+    var sum = 0,
+        i = 0,
+        args = arguments,
+        l = args.length;
+    while (i &lt; l) {
+        sum += args[i++];
+    }
+    return sum;
+};
+</code></pre>
+<p>在另一个文件中， 我们通过require() 方法引入模块后， 就能调用定义的属性或方法了：</p>
+<pre><code class="language-js">// program.js
+var math = require('math');
+exports.increment = function(val) {
+    return math.add(val, 1);
+};
+</code></pre>
+<p>关于两者区别可见：<a href="https://record.giriawsh.com/fe/nodejs/7daysLearningNodejs/lessless7-tian-xue-hui-nodejsgreatergreater-di-yi-tian-nodejs-ji-chu.html#node-js%E6%A8%A1%E5%9D%97%E9%87%8Cexports%E4%B8%8Emodule-exports%E7%9A%84%E5%8C%BA%E5%88%AB">Node.js模块里exports与module.exports的区别?</a></p>
+<blockquote>
+<p><strong>一句话说明就是：require方能看到的只有module.exports这个对象。它无法看到exports对象，而我们在编写模块时用到的exports对象实际上只是对module.exports的引用。</strong></p>
+</blockquote>
+<h4 id="23-模块标识">2.3 模块标识</h4>
+<p>模块标识其实就是<u>传递给require()方法</u>的参数，它必须符合<strong>小驼峰命名</strong>的字符串，或者以<code>.</code>或者<code>..</code>开头的相对路径，或者绝对路径。</p>
+<p>它可以没有文件名后缀<code>.js</code></p>
+<p>它的意义在于将类聚的方法和变量等限定在私有的作用域中，同时支持引入和导出功能以顺畅地连接上下游依赖。每个模块都具有<strong>独立的空间</strong>，它们互不干扰。</p>
+<figure data-type="image" tabindex="3"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/image-20201213200857811.png" alt="image-20201213200857811" loading="lazy"></figure>
+<p>CommonJS构建的这套模块导出和引入机制使得用户完全不必考虑变量污染，命名空间等方案与之相比相形见绌。</p>
+<h2 id="node的模块实现">Node的模块实现</h2>
+<p>Node在实现中并非完全按照规范实现，而是对模块规范进行了一定的取舍，同时也增加了少许自身需要的特性。</p>
+<p>尽管规范中exports、require和module听起来十分简单，但是Node在实现它们的过程中究竟经历了什么，这个过程需要知晓。</p>
+<p>在Node中引入模块，需要经历如下3个步骤。</p>
+<p>(1) 路径分析</p>
+<p>(2) 文件定位</p>
+<p>(3) 编译执行</p>
+<p>在Node中，模块分为两类：一类是Node提供的模块，称为<strong>核心模块</strong>；另一类是用户编写的模块，称为<strong>文件模块</strong>。</p>
+<ul>
+<li>
+<p>核心模块部分：在Node源代码的编译过程中，<u>编译进了二进制执行文件</u>。在Node进程启动时，部分核心模块就被直接加载进内存中，所以这部分核心模块引入时，文件定位和编译执行这两个步骤可以省略掉，并且<u>在路径分析中优先判断，所以它的加载速度是最快的</u>。</p>
+</li>
+<li>
+<p>文件模块则是在运行时<u>动态加载</u>，需要完整的路径分析、文件定位、编译执行过程，速度比核心模块慢。</p>
+</li>
+</ul>
+<p>接下来，我们展开详细的模块加载过程。</p>
+<h3 id="1-优先从缓存加载">1. 优先从缓存加载</h3>
+<p>前端浏览器会缓存静态脚本以提高性能，<u>Node对引入过的模块都会进行缓存</u>，以减少二次引入时的开销。</p>
+<p>不同的地方在于，浏览器仅仅缓存文件，而Node缓存的是<u>编译和执行之后的对象。</u>（在Node中每个文件模块都是一个对象）</p>
+<p>不论是核心模块还是文件模块，require()方法对相同模块的二次加载都一律<strong>采用缓存优先</strong>的方式，这是第一优先级的。不同之处在于<strong>核心模块的缓存检查先于文件模块的缓存检查</strong>。</p>
+<h3 id="2-路径分析和文件定位">2. 路径分析和文件定位</h3>
+<p>标识符有几种形式，对于不同的标识符，模块的查找和定位有不同程度上的差异</p>
+<h4 id="21-模块标识符分析">2.1 模块标识符分析</h4>
+<p>require()方法接受一个标识符作为参数。在Node实现中，正是基于这样一个标识符进行模块查找。模块标识符在Node中主要分为以下几类：</p>
+<ul>
+<li>
+<p>核心模块，如http、fs、path等。</p>
+</li>
+<li>
+<p><code>.</code>或<code>..</code>开始的相对路径文件模块。</p>
+</li>
+<li>
+<p>以/开始的绝对路径文件模块。</p>
+</li>
+<li>
+<p>非路径形式的文件模块，如自定义的connect模块。</p>
+</li>
+</ul>
+<p>（1）核心模块</p>
+<p>优先级仅次于缓存加载。它在Node的源代码编译过程中已经编译为二进制代码，加载过程最快。</p>
+<p>::: warning 自定义模块优先级较低</p>
+<p>如果试图加载一个与核心模块标识符相同的自定义模块，那是不会成功的。如果自己编写了一个http用户模块，想要加载成功，必须选择一个不同的标识符或者换用路径的方式。</p>
+<p>:::</p>
+<p>（2）路径形式的文件模块</p>
+<p>以<code>.</code>、<code>..</code>和<code>/</code>开始的标识符，这里都被当做<strong>文件模块</strong>来处理。在分析路径模块时，require()方法会将路径<u>转为真实路径</u>，并以真实路径作为索引，<u>将编译执行后的结果存放到缓存中</u>，以使二次加载时更快。</p>
+<p>由于文件模块给Node指明了确切的文件位置，所以在查找过程中可以节约大量时间，其<u>加载速度慢于核心模块。</u></p>
+<p>（3）自定义模块</p>
+<p>指非核心模块，也不是路径形式的标识符。是一种特殊的文件模块，可能时一个文件或者包的形式。</p>
+<p>这类模块的查找最费时，最慢。</p>
+<p>::: tip 模块路径概念</p>
+<p>模块路径是Node在定位文件模块的具体文件时制定的<strong>查找策略</strong>，具体表现为一个<u>路径组成的数组</u>。</p>
+<p>关于路径生成规则的实验：</p>
+<p>创建文件module_path.js文件</p>
+<pre><code class="language-js">console.log(module.paths);
+</code></pre>
+<p>任意目录中执行：</p>
+<figure data-type="image" tabindex="4"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/image-20201213203429170.png" alt="image-20201213203429170" loading="lazy"></figure>
+<p>可以看到模块路径的生成规则如下：</p>
+<ul>
+<li>
+<p>当前文件目录下的node_modules目录。</p>
+</li>
+<li>
+<p>父目录下的node_modules目录。</p>
+</li>
+<li>
+<p>父目录的父目录下的node_modules目录。</p>
+</li>
+<li>
+<p>沿路径向上逐级递归，直到根目录下的node_modules目录。</p>
+</li>
+</ul>
+<p>生成方式与JS的原型链或作用域链的查找方式十分相似。在加载的过程中，Node会逐个尝试模块路径中的路径，直到找到目标文件为止。</p>
+<p>可以看出，当前文件的路径越深，模块查找耗时会越多，这是自定义模块的加载速度最慢的原因。</p>
+<p>:::</p>
+<h4 id="22-文件定位">2.2 文件定位</h4>
+<p>从缓存加载的优化策略使得二次引入<u>时不需要路径分析、文件定位和编译执行的过程</u>，大大提高了再次加载模块时的效率。</p>
+<p>但在文件的定位过程中，还有一些细节需要注意，这主要包括文件扩展名的分析、目录和包的处理。</p>
+<ul>
+<li>文件扩展名的分析</li>
+</ul>
+<p>require()在分析标识符的过程中，会出现标识符中不包含文件扩展名的情况。CommonJS模块规范也允许在标识符中不包含文件扩展名，这种情况下，Node会<strong>按.js、.json、.node的次序补足扩展名</strong>，依次尝试。</p>
+<p>在尝试的过程中，需要<u>调用fs模块同步阻塞式地判断文件是否存在</u>。因为Node是单线程的， 所以这里是一个会引起性能问题的地方。</p>
+<p>::: tip 文件定位小技巧</p>
+<p>小诀窍是：<u>如果是.node和.json文件，在传递给require() 的标识符中带上扩展名，会加快一点速度。</u></p>
+<p>另一个诀窍是：同步配合缓存，可以大幅度缓解Node 单线程中阻塞式调用的缺陷。（具体实现？）</p>
+<p>:::</p>
+<ul>
+<li>目录分析和包</li>
+</ul>
+<p>在分析标识符的过程中，require()通过分析文件扩展名之后，可能没有查找到对应文件，但却得到一个<strong>目录</strong>，这在引入自定义模块和逐个模块路径进行查找时经常会出现，此时Node会<u>将目录当做一个包来处理。</u></p>
+<ol>
+<li>首先，Node在当前目录下查找<strong>package.json</strong>（CommonJS包规范定义的包描述文件）</li>
+<li>通过JSON.parse()解析出包描述对象，从中取出<strong>main属性</strong>指定的文件名进行定位。</li>
+<li>如果文件名缺少扩展名，将会进入扩展名分析的步骤。</li>
+<li>而如果main属性指定的文件名错误，或者压根没有package.json文件，Node会将<strong>index</strong>当做默认文件名，然后依次查找index.js、index.json、index.node。</li>
+</ol>
+<p>如果在目录分析的过程中没有定位成功任何文件，则自定义模块进入下一个模块路径进行查找。如果模块路径数组都被遍历完毕，依然没有查找到目标文件，则会抛出查找失败的异常。</p>
+<h3 id="3-模块编译">3. 模块编译</h3>
+<p>在Node中，每个文件模块都是一个对象，它的定义如下：</p>
+<pre><code class="language-js">function Module(id, parent) {
+    this.id = id;
+    this.exports = {};
+    this.parent = parent;
+    if (parent &amp;&amp; parent.children) {
+        parent.children.push(this);
+    }
+
+    this.filename = null;
+    this.loaded = false;
+    this.children = [];
+}
+</code></pre>
+<p>编译和执行是引入文件模块的最后一个阶段。</p>
+<p>定位到具体的文件后，Node会<strong>新建一个模块对象</strong>，然后根据路径载入并编译。</p>
+<p>对于不同的文件扩展名，其载入方法也有所不同，具体如下所示。</p>
+<ul>
+<li>
+<p>.js文件。通过fs模块<u>同步读取文件</u>后编译执行。</p>
+</li>
+<li>
+<p>.node文件。这是用C/C++编写的扩展文件，<u>通过dlopen()方法加载</u>最后编译生成的文件。</p>
+</li>
+<li>
+<p>.json文件。通过<u>fs模块同步读取</u>文件后，用<u>JSON.parse()解析</u>返回结果。</p>
+</li>
+<li>
+<p>其余扩展名文件。它们都被当做.js文件载入。</p>
+</li>
+</ul>
+<p>※ 每一个编译成功的模块都会将其文件路径作为索引缓存在<code>Module._cache</code>对象上，以提高二次引入的性能。</p>
+<p>根据不同的文件扩展名，Node会调用不同的<strong>读取方式</strong>，如.json文件的调用如下：</p>
+<pre><code class="language-js">//  Native  extension  for  .json
+Module._extensions['.json'] = function(module, filename) {
+    var content = NativeModule.require('fs').readFileSync(filename, 'utf8');
+    try {
+        module.exports = JSON.parse(stripBOM(content));
+    } catch (err) {
+        err.message = filename + ':  ' + err.message;
+        throw err;
+    }
+};
+</code></pre>
+<p>其中， <code>Module._extensions</code>会被赋值给require() 的extensions 属性， 所以通过在代码中访问</p>
+<p><code>require.extensions</code>可以知道系统中<strong>已有的扩展加载方式</strong>。编写如下代码测试一下：</p>
+<pre><code class="language-js">console.log(require.extensions);
+</code></pre>
+<p>得到的执行结果如下：</p>
+<pre><code>{  '.js':  [Function],  '.json':  [Function],  '.node':  [Function]  }
+</code></pre>
+<figure data-type="image" tabindex="5"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/image-20201213210401480.png" alt="image-20201213210401480" loading="lazy"></figure>
+<p>如果想对自定义的扩展名进行特殊的加载，可以通过类似<code>require.extensions['.ext']</code>的方式实现</p>
+<blockquote>
+<p>早期的CoffeeScript文件就是通过添加<code>require.extensions['.coffee']</code>扩展的方式来实现加载的。</p>
+<p>但是从v0.10.6版本开始，官方不鼓励通过这种方式来进行自定义扩展名的加载，而是<strong>期望先将其他语言或文件编译成JavaScript文件后再加载</strong>，这样做的好处在于不将烦琐的编译加载等过程引入Node的执行过程中。</p>
+</blockquote>
+<p>在确定文件的扩展名之后，Node将调用具体的编译方式来将文件执行后返回给调用者。</p>
+<h4 id="31-javascript模块的编译">3.1 JavaScript模块的编译</h4>
+<p>（大开眼界）</p>
+<p>回到CommonJS模块规范，我们知道每个模块文件中存在着require、exports、module这3个变量，但是它们在模块文件中并没有定义，<u>那么从何而来呢？</u></p>
+<p>甚至在Node的API文档中，我们知道每个模块中还有 filename、 dirname这两个变量的存在，它们又是从何而来的呢？</p>
+<p>如果我们把直接定义模块的过程放诸在浏览器端，会存在污染全局变量的情况。</p>
+<p>事实上，在编译的过程中，Node对获取的JavaScript文件内容进行了头尾包装。<u>在头部添加了(function (exports, require, module, filename, dirname) {\n，在尾部添加了\n});。</u>一个正常的JavaScript文件会被包装成如下的样子：</p>
+<pre><code class="language-js">(function (exports, require, module, filename, dirname) {
+  var math = require(&quot;math&quot;);
+
+  exports.area = function (radius) {
+    return Math.PI * radius * radius;
+  };
+});
+</code></pre>
+<p>这样每个模块文件之间进行了作用域隔离。包装之后的代码会通过vm原生模块的**runInThisContent()**方法执行（类似eval，只是具有明确上下文，不污染全局），返回一个具体的 function对象。</p>
+<p>最后，将当前模块对象的exports属性、require()方法、module（模块对象自身），以及在文件定位中得到的完整文件路径和文件目录<u>作为参数传递给这个function()执行</u>。</p>
+<p>这就是这些变量并没有定义在每个模块文件中却存在的原因。在执行之后，<u>模块的exports属性被返回给了调用方。</u></p>
+<p>exports属性上的任何方法和属性都可以被外部调用到，但是模块中的其余变量或属性则不可直接被调用。</p>
+<p>至此，require、exports、module的流程已经完整，这就是Node对CommonJS模块规范的实现。</p>
+<p>::: tip 为什么还要存在module.exports?</p>
+<p>许多初学者都曾经纠结过为何存在exports的情况下，还存在module.exports。理想情况下，只要赋值给exports即可：</p>
+<pre><code class="language-js">exports = function () {
+
+// My Class
+
+};
+</code></pre>
+<p>但是通常都会得到一个失败的结果。其原因在于，**exports对象是通过形参的方式传入的，直接赋值形参会改变形参的引用，但并不能改变作用域外的值。**测试代码如下：</p>
+<pre><code class="language-js">var change = function(a){
+    a.b = 100;
+    a.c = 200;
+    a = 1000;
+}
+var a = {b:10};
+change(a);
+console.log(a.b);// =&gt; 100 改变/添加方法可以改变作用域外的值
+console.log(a.c);// =&gt; 200
+console.log(a); // =&gt; {b: 100} 改变对象本身只会改变形参的引用，不能改变作用域外的值
+</code></pre>
+<p>如果要达到require引入一个类的效果，请<strong>赋值给module.exports对象</strong>。这个迂回的方案不改变形参的引用。</p>
+<p>:::</p>
+<h4 id="32-cc模块的编译">3.2 C/C++模块的编译</h4>
+<p>Node调用<strong>process.dlopen()方法</strong>进行加载和执行。在Node的架构下，dlopen()方法在Windows和*nix平台下分别有不同的实现，通过libuv兼容层进行了封装。</p>
+<p>实际上，<u><code>.node</code>的模块文件并不需要编译</u>，因为它是编写C/C++模块之后<u>编译生成的</u>，所以这里<strong>只有加载和执行的过程。</strong></p>
+<p>在执行的过程中，模块的exports对象与.node模块产生联系，然后返回给调用者。</p>
+<p>C/C++模块给Node使用者带来的优势主要是<u>执行效率</u>方面的，劣势则是C/C++模块的编写门槛比JavaScript高。</p>
+<h4 id="33-json文件的编译">3.3 JSON文件的编译</h4>
+<p><code>.json</code>文件的编译是3种编译方式中最简单的。Node利用<u>fs模块同步读取</u>JSON文件的内容之后，<strong>调用JSON.parse()方法得到对象</strong>，然后将它<strong>赋给模块对象的exports</strong>，以供外部调用。</p>
+<p>JSON文件在用作项目的配置文件时比较有用。如果你定义了一个JSON文件作为配置，那就不必调用fs模块去异步读取和解析，<u>直接调用require()引入即可</u>。此外，还可以进行模块缓存，并且二次引入时也没有性能影响。</p>
+<p>这里我们提到的模块编译都是指<strong>文件模块</strong>，即用户自己编写的模块。</p>
+<h2 id="核心模块">核心模块</h2>
+<p>Node的<strong>核心模块</strong>再编译成可执行文件的过程中被编译进了<u>二进制文件</u>。</p>
+<p>核心模块分为C/C++和JS编写的两部分，其中C/C++文件存放再Node项目的src目录下，JS文件存放在lib目录下。</p>
+<h3 id="1-javascript核心模块的编译过程">1. JavaScript核心模块的编译过程</h3>
+<p>在编译所有C/C++文件之前，编译程序需要<strong>将所有的JavaScript模块文件编译为C/C++代码</strong>。</p>
+<p>此时是否直接将其编译为可执行代码了呢？其实不是。</p>
+<h4 id="11-转存为cc代码">1.1 转存为C/C++代码</h4>
+<p>Node采用了V8附带的js2c.py工具，将所有内置的JavaScript代码（src/node.js和lib/*.js）转换成C++里的数组，生成node_natives.h头文件，相关代码如下：</p>
+<pre><code class="language-c++">namespace node {
+
+  const char node_native[] = {
+    47,
+    47,
+    ..
+  };
+  const char dgram_native[] = {
+    47,
+    47,
+    ..
+  };
+  const char console_native[] = {
+    47,
+    47,
+    ..
+  };
+  const char buffer_native[] = {
+    47,
+    47,
+    ..
+  };
+
+  const char querystring_native[] = {
+    47,
+    47,
+    ..
+  };
+  const char punycode_native[] = {
+    47,
+    42,
+    ..
+  };
+
+  ...
+
+  struct _native {
+    const char * name;
+    const char * source;
+    size_t source_len;
+
+  };
+
+  static
+  const struct _native natives[] = {
+
+    {
+      &quot;node&quot;,
+      node_native,
+      sizeof(node_native) - 1
+    },
+
+    {
+      &quot;dgram&quot;,
+      dgram_native,
+      sizeof(dgram_native) - 1
+    },
+
+    ...
+
+  };
+
+}
+</code></pre>
+<p>在这个过程中，JavaScript代码以<u>字符串的形式</u>存储在node命名空间中，是<u>不可直接执行</u>的。</p>
+<p>在启动Node进程时，JavaScript代码直接加载进内存中。在加载的过程中，JavaScript核心模块经历标识符分析后直接定位到内存中，比普通的文件模块从磁盘中一处一处查找要快很多。</p>
+<h4 id="12-编译js核心模块">1.2 编译JS核心模块</h4>
+<p>lib目录下的所有模块文件也没有定义require、module、exports这些变量。在引入JavaScript核心模块的过程中，也经历了<strong>头尾包装</strong>的过程，然后才执行和导出了exports对象。</p>
+<p>与文件模块有区别的地方在于：获取源代码的方式（核心模块是从内存中加载的，而文件模块是从文件里获取JavaScript文件内容）以及缓存执行结果的位置。</p>
+<p>JavaScript核心模块的定义如下面的代码所示，源文件通过<strong>process.binding('natives')<strong>取出，编译成功的模块缓存到</strong>NativeModule._cache</strong>对象上，文件模块则缓存到Module._cache对象上：</p>
+<pre><code class="language-js">function NativeModule(id) {
+    this.filename = id + '.js';
+    this.id = id;
+
+    this.exports = {};
+    this.loaded = false;
+
+}
+
+NativeModule._source = process.binding('natives');
+NativeModule._cache = {};
+</code></pre>
+<h3 id="2-cc核心模块的编译过程">2. C/C++核心模块的编译过程</h3>
+<p>在核心模块中，有些模块全部由C/C++编写，有些模块则由C/C++完成核心部分，其他部分则由JavaScript实现包装或向外导出，以满足性能需求。</p>
+<p>后面这种<strong>C++模块主内完成核心，JavaScript主外实现封装</strong>的模式是Node能够提高性能的常见方式。</p>
+<blockquote>
+<p>通常，脚本语言的开发速度优于静态语言，但是其性能则弱于静态语言。而Node的这种复合模式可以在开发速度和性能之间找到平衡点。</p>
+</blockquote>
+<p>这里我们将那些由纯C/C++编写的部分统一称为<strong>内建模块</strong>，因为它们通常不被用户直接调用。Node的buffer、crypto、evals、fs、os等模块都是部分通过C/C++编写的。</p>
+<h4 id="21-内建模块的组织形式">2.1 *内建模块的组织形式</h4>
+<p>（c++学不动了啊）</p>
+<p>这块还是看原书吧，我是记不住了……</p>
+<p>内建模块的优势在于：首先，它们本身由C/C++编写，性能上优于脚本语言；其次，在进行文件编译时，它们被编译进二进制文件。一旦Node开始执行，它们被直接加载进内存中，无须再次做标识符定位、文件定位、编译等过程，直接就可执行。</p>
+<p>总之C/C++是直接编译成了可执行二进制文件，JS没有。</p>
+<h4 id="22-内建模块的导出">2.2 *内建模块的导出</h4>
+<p>Node所有模块类型中，存在这样的一种依赖层级关系：文件模块可能会依赖核心模块，核心模块可能会依赖内建模块。</p>
+<figure data-type="image" tabindex="6"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/image-20201214113335147.png" alt="image-20201214113335147" loading="lazy"></figure>
+<p>通常不推荐文件模块直接调用内建模块。如需调用，直接调用核心模块即可，核心模块基本都封装了内建模块。</p>
+<p>内建模块如何将内部变量或方法导出，以供JS核心模块调用过程见原书。暂时不做学习。</p>
+<h3 id="3-核心模块的引入过程">3. 核心模块的引入过程</h3>
+<p>核心模块的引入速度是最快的。</p>
+<figure data-type="image" tabindex="7"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/image-20201214113934738.png" alt="image-20201214113934738" loading="lazy"></figure>
+<p>为了符合CommonJS模块规范，从JavaScript到C/C++的过程是相当复杂的，它要经历C/C++层面的内建模块定义、（JavaScript）核心模块的定义和引入以及（JavaScript）文件模块层面的引入。但是对于用户而言，require()十分简洁、友好。</p>
+<h3 id="4-编写核心模块">4. *编写核心模块</h3>
+<p>核心模块被编译进二进制文件需要遵循一定规则。</p>
+<p>核心模块中的JavaScript部分几乎与文件模块的开发相同，遵循CommonJS模块规范，上下文中除了拥有require、module、exports外，还可以调用Node中的一些全局变量。</p>
+<p>编写内建模块分两部分完成：编写头文件、编写C/C++文件。详情见原书。</p>
+<h2 id="cc扩展模块">* C/C++扩展模块</h2>
+<p>JavaScript的一个典型弱点就是<u>位运算</u>。JavaScript的位运算参照Java的位运算实现，但是Java位运算是在int型数字的基础上进行的，而<u>JavaScript中只有double型的数据类型</u>，在进行位运算的过程中，需要将double型转换为int型，然后再进行。所以，在JavaScript层面上做位运算的效率不高。</p>
+<p>在应用中，会频繁出现位运算的需求，包括转码、编码等过程，如果通过JavaScript来实现，CPU资源将会耗费很多，这时编写C/C++扩展模块来提升性能的机会来了。</p>
+<p>C/C++扩展模块属于文件模块中的一类。前面讲述文件模块的编译部分时提到，<u>C/C++模块通过预先编译为.node文件，然后调用process.dlopen()方法加载执行。</u></p>
+<blockquote>
+<p>在开始编写扩展模块之前，需要强调的一点是，Node的原生模块一定程度上是可以跨平台的，其前提条件是源代码可以支持在<em>nix和Windows上编译，其中</em>nix下通过g++/gcc等编译器编译为动态链接共享对象文件（.so），在Windows下则需要通过Visual C++的编译器编译为动态链接库文 件（.dll），如图2-6所示。</p>
+<p>这里有一个让人迷惑的地方，那就是引用加载时却是.node文件。<u>其实.node的扩展名只是为了看起来更自然一点</u>，不会因为平台差异产生不同的感觉。实际上，在Windows下它是一个.dll文件，在*nix下则是一个.so文件。</p>
+<p>为了实现跨平台，<u>dlopen()方法在内部实现时区分了平台，分别用的是加载.so和.dll的方式</u>。图2-6为扩展模块在不同平台上编译和加载的详细过程。</p>
+</blockquote>
+<p>值得注意的是，一个平台下的.node文件在另一个平台下是无法加载执行的，必须重新用各自平台下的编译器编译为正确的.node文件。</p>
+<figure data-type="image" tabindex="8"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/image-20201214115428345.png" alt="image-20201214115428345" loading="lazy"></figure>
+<h3 id="1-前提条件">1. 前提条件</h3>
+<h3 id="2-cc扩展模块的编写">2. C/C++扩展模块的编写</h3>
+<h3 id="3-cc扩展模块的编译">3. C/C++扩展模块的编译</h3>
+<h3 id="4-cc扩展模块的加载">4. C/C++扩展模块的加载</h3>
+<figure data-type="image" tabindex="9"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/image-20201214115629838.png" alt="image-20201214115629838" loading="lazy"></figure>
+<p>C/C++扩展模块与JavaScript模块的区别在于<u>加载之后不需要编译，直接执行之后就可以被外部调用了</u>，其加载速度比JavaScript模块略快。</p>
+<p>使用C/C++扩展模块的一个好处在于可以更灵活和动态地加载它们，保持Node模块自身简单性的同时，给予Node无限的可扩展性。</p>
+<h2 id="模块调用栈">模块调用栈</h2>
+<p>C/C++内建模块属于最底层的模块，属于核心模块，主要提供API给JS核心模块和第三方JS文件模块调用。</p>
+<p>::: warning 避免使用</p>
+<p>如果不是很了解要调用的C/C++内建模块，尽量避免通过process.binding()方法直接调用</p>
+<p>:::</p>
+<p>JS核心模块主要职责：</p>
+<ul>
+<li>作为C/C++内建模块的封装层和桥接层，供文件模块调用</li>
+<li>作为纯粹的功能模块，不需要和底层打交道，但是十分重要。</li>
+</ul>
+<figure data-type="image" tabindex="10"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/image-20201214115958582.png" alt="image-20201214115958582" loading="lazy"></figure>
+<p>文件模块通常由第三方编写，包括普通JavaScript模块和C/C++扩展模块，主要调用方向为普通JavaScript模块调用扩展模块。</p>
+<h2 id="包与npm">包与NPM</h2>
+<p>Node组织了自身的核心模块，使得第三方文件模块可以有序地编写和使用。</p>
+<p>但是在第三方模块中，模块与模块之间仍然散列在各地，互相之间不能直接引用。</p>
+<p>⭐包和NPM是将模块联系起来的一种机制。</p>
+<p>JS不具有模块和包结构，Node对模块规范的实现，一定程度上解决了变量依赖、依赖关系等代码组织问题。包的出现，则是在模块的基础上进一步组织JS代码。</p>
+<figure data-type="image" tabindex="11"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/image-20201214120420055.png" alt="image-20201214120420055" loading="lazy"></figure>
+<p>CommonJS的包规范的定义其实也十分简单，它由包结构和包描述文件两个部分组成，前者用于组织包中的各种文件，后者则用于描述包的相关信息，以供外部读取分析。</p>
+<h3 id="1-包结构">1. 包结构</h3>
+<p>包实际上是一个<strong>存档文件</strong>，即一个目录直接打包为.zip或tar.gz格式的文件，<u>安装后解压还原为目录</u>。</p>
+<p>完全符合CommonJS规范的包目录应该包含如下这些文件。</p>
+<ul>
+<li>
+<p>package.json：包描述文件。</p>
+</li>
+<li>
+<p>bin：用于存放可执行二进制文件的目录。</p>
+</li>
+<li>
+<p>lib：用于存放JavaScript代码的目录。</p>
+</li>
+<li>
+<p>doc：用于存放文档的目录。</p>
+</li>
+<li>
+<p>test：用于存放单元测试用例的代码。</p>
+<blockquote>
+<p>可以看到，CommonJS包规范从文档、测试等方面都做过考虑。当一个包完成后向外公布时，用户看到单元测试和文档的时候，会给他们一种踏实可靠的感觉。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="2-包描述文件与npm">2. 包描述文件与NPM</h3>
+<p>包描述文件用于<u>表达非代码相关的信息</u>，它是一个JSON格式的文件——package.json，位于包的根目录下，是包的重要组成部分。而NPM的所有行为都与包描述文件的字段息息相关。</p>
+<p>CommonJS为package.json文件定义了如下一些必需的字段。</p>
+<ul>
+<li>
+<p>name。包名。规范定义它需要由小写的字母和数字组成，可以包含.、_和-，但不允许出现空格。包名必须是唯一的，以免对外公布时产生重名冲突的误解。除此之外，NPM还建议不要在包名中附带上node或js来重复标识它是JavaScript或Node模块。</p>
+</li>
+<li>
+<p>description。包简介。</p>
+</li>
+<li>
+<p>version<a href="http://semver.org/%E4%B8%8A%E6%9C%89%E8%AF%A6%E7%BB%86%E5%AE%9A%E4%B9%89">。版本号。一个语义化的版本号，这在</a><a href="http://semver.org/%E4%B8%8A%E6%9C%89%E8%AF%A6%E7%BB%86%E5%AE%9A%E4%B9%89">http://semver.org/</a>上有详细定义，通常为 major.minor.revision格式。该版本号十分重要，常常用于一些版本控制的场合。</p>
+</li>
+<li>
+<p>keywords。关键词数组，NPM中主要用来做分类搜索。一个好的关键词数组有利于用户快速找到你编写的包。</p>
+</li>
+<li>
+<p>maintainers。包维护者列表。每个维护者由name、email和web这3个属性组成。示例如下：</p>
+<p>[&quot;maintainers&quot;: <a href="mailto:shyvo1987@gmail.com">{ &quot;name&quot;: &quot;Jackson Tian&quot;, &quot;email&quot;: &quot;shyvo1987@gmail.co</a><a href="http://html5ify/">m&quot;, &quot;web&quot;: &quot;http://html5ify</a>. com&quot; }]</p>
+<p>NPM通过该属性进行权限认证。</p>
+</li>
+<li>
+<p>contributors。贡献者列表。在开源社区中，为开源项目提供代码是经常出现的事情，如果名字能出现在知名项目的contributors列表中，是一件比较有荣誉感的事。列表中的第一个贡献应当是包的作者本人。它的格式与维护者列表相同。</p>
+</li>
+<li>
+<p>bugs。一个可以反馈bug的网页地址或邮件地址。</p>
+</li>
+<li>
+<p>licenses。当前包所使用的许可证列表，表示这个包可以在哪些许可证下使用。它的格式如下：</p>
+<pre><code>[&quot;licenses&quot;: [{ &quot;type&quot;: &quot;GPLv2&quot;, &quot;url&quot;: &quot;http://www.example.com/licenses/gpl.htm](http://www.example.com/licenses/gpl.html)l&quot;, }]
+</code></pre>
+</li>
+<li>
+<p>repositories。托管源代码的位置列表，表明可以通过哪些方式和地址访问包的源代码。</p>
+</li>
+<li>
+<p>dependencies。使用当前包所需要依赖的包列表。这个属性十分重要，NPM会通过这个属性帮助自动加载依赖的包。</p>
+<p>除了必选字段外，规范还定义了一部分可选字段，具体如下所示。</p>
+</li>
+<li>
+<p>homepage。当前包的网站地址。</p>
+</li>
+<li>
+<p>os。操作系统支持列表。这些操作系统的取值包括aix、freebsd、linux、macos、solaris、 vxworks、windows。如果设置了列表为空，则不对操作系统做任何假设。</p>
+</li>
+<li>
+<p>cpu。CPU架构的支持列表，有效的架构名称有arm、mips、ppc、sparc、x86和x86_64。同 os一样，如果列表为空，则不对CPU架构做任何假设。</p>
+</li>
+<li>
+<p>engine。支持的JavaScript引擎列表，有效的引擎取值包括ejs、flusspferd、gpsee、jsc、 spidermonkey、narwhal、node和v8。</p>
+</li>
+<li>
+<p>builtin。标志当前包是否是内建在底层系统的标准组件。</p>
+</li>
+<li>
+<p>directories。包目录说明。</p>
+</li>
+<li>
+<p>implements。实现规范的列表。标志当前包实现了CommonJS的哪些规范。</p>
+</li>
+<li>
+<p>scripts。脚本说明对象。它主要被包管理器用来安装、编译、测试和卸载包。示例如下：</p>
+<pre><code class="language-js">&quot;scripts&quot;: { &quot;install&quot;: &quot;install.js&quot;, &quot;uninstall&quot;: &quot;uninstall.js&quot;, &quot;build&quot;: &quot;build.js&quot;,
+
+&quot;doc&quot;: &quot;make-doc.js&quot;,
+
+&quot;test&quot;: &quot;test.js&quot; }
+</code></pre>
+</li>
+</ul>
+<p>包规范的定义可以帮助Node解决依赖包安装的问题，NPM正是基于该规范进行了实现。</p>
+<p>在包描述文件的规范中，NPM实际需要的字段主要有name、version、description、keywords、</p>
+<p>repositories、author、bin、main、scripts、engines、dependencies、devDependencies。</p>
+<p>与包规范的区别在于多了author、bin、main和devDependencies这4个字段，下面补充说明一下。</p>
+<ul>
+<li>
+<p>author。包作者。</p>
+</li>
+<li>
+<p>bin。一些包作者希望包可以作为命令行工具使用。配置好bin字段后，通过npm install package_name  -g命令可以将脚本添加到执行路径中，之后可以在命令行中直接执行。前面的node-gyp即是这样安装的。通过-g命令安装的模块包称为全局模式。</p>
+</li>
+<li>
+<p>main。模块引入方法require()在引入包时，会优先检查这个字段，并将其作为包中其余 模块的入口。如果不存在这个字段，require()方法会查找包目录下的index.js、index.node、index.json文件作为默认入口。</p>
+</li>
+<li>
+<p>devDependencies。一些模块只在开发时需要依赖。配置这个属性，可以提示包的后续开 发者安装依赖包。</p>
+</li>
+</ul>
+<p>下面是知名框架express项目的package.json文件，具有一定的参考意义：</p>
+<pre><code class="language-js">{
+    &quot;name&quot;: &quot;express&quot;,
+    &quot;description&quot;: &quot;Sinatra  inspired  web  development  framework&quot;,
+    &quot;version&quot;: &quot;3.3.4&quot;,
+    &quot;author&quot;: &quot;TJ  Holowaychuk  &lt;tj@vision-media.ca&gt;&quot;,
+    &quot;contributors&quot;: [{
+            &quot;name&quot;: &quot;TJ  Holowaychuk&quot;,
+            &quot;email&quot;: &quot;tj@vision-media.ca&quot;
+        },
+        {
+            &quot;name&quot;: &quot;Aaron  Heckmann&quot;,
+            &quot;email&quot;: &quot;aaron.heckmann+github@gmail.com&quot;
+        },
+        {
+            &quot;name&quot;: &quot;Ciaran  Jessup&quot;,
+            &quot;email&quot;: &quot;ciaranj@gmail.com&quot;
+        },
+        {
+            &quot;name&quot;: &quot;Guillermo  Rauch&quot;,
+            &quot;email&quot;: &quot;rauchg@gmail.com&quot;
+        }
+    ],
+    &quot;dependencies&quot;: {
+        &quot;connect&quot;: &quot;2.8.4&quot;,
+        &quot;commander&quot;: &quot;1.2.0&quot;,
+        &quot;range-parser&quot;: &quot;0.0.4&quot;,
+        &quot;mkdirp&quot;: &quot;0.3.5&quot;,
+        &quot;cookie&quot;: &quot;0.1.0&quot;,
+        &quot;buffer-crc32&quot;: &quot;0.2.1&quot;,
+        &quot;fresh&quot;: &quot;0.1.0&quot;,
+        &quot;methods&quot;: &quot;0.0.1&quot;,
+        &quot;send&quot;: &quot;0.1.3&quot;,
+        &quot;cookie-signature&quot;: &quot;1.0.1&quot;,
+        &quot;debug&quot;: &quot;*&quot;
+    },
+    &quot;devDependencies&quot;: {
+        &quot;ejs&quot;: &quot;*&quot;,
+        &quot;mocha&quot;: &quot;*&quot;,
+        &quot;jade&quot;: &quot;0.30.0&quot;,
+        &quot;hjs&quot;: &quot;*&quot;,
+        &quot;stylus&quot;: &quot;*&quot;,
+        &quot;should&quot;: &quot;*&quot;,
+        &quot;connect-redis&quot;: &quot;*&quot;,
+        &quot;marked&quot;: &quot;*&quot;,
+        &quot;supertest&quot;: &quot;0.6.0&quot;
+    },
+    &quot;keywords&quot;: [&quot;express&quot;, &quot;framework&quot;, &quot;sinatra&quot;, &quot;web&quot;,
+        &quot;rest&quot;, &quot;restful&quot;, &quot;router&quot;,
+        &quot;app&quot;, &quot;api&quot;
+    ],
+    &quot;repository&quot;: &quot;git://github.com/visionmedia/express&quot;,
+    &quot;main&quot;: &quot;index&quot;,
+    &quot;bin&quot;: {
+        &quot;express&quot;: &quot;./bin/express&quot;
+    },
+    &quot;scripts&quot;: {
+        &quot;prepublish&quot;: &quot;npm  prune&quot;,
+        &quot;test&quot;: &quot;make test&quot;
+    },
+    &quot;engines&quot;: {
+        &quot;node&quot;: &quot;*&quot;
+    }
+}
+</code></pre>
+<h3 id="3-npm-常用功能">3. NPM 常用功能</h3>
+<p>CommonJS包规范是理论，NPM是其中一种实践。对于Node而言，NPM帮助完成了第三方模块的发布、安装和依赖等。</p>
+<p>下面介绍NPM的一些巧妙用法</p>
+<h4 id="31-查看帮助">3.1 查看帮助</h4>
+<p>查看当前NPM版本：</p>
+<pre><code>npm -v
+</code></pre>
+<p>查看帮助</p>
+<pre><code>npm help &lt;command&gt;
+</code></pre>
+<h4 id="32-安装依赖包">3.2 安装依赖包</h4>
+<p>执行语句：</p>
+<pre><code>npm install express
+</code></pre>
+<p>执行该命令后， NPM会在<strong>当前目录下创建node_modules目录</strong>，然后在node_modules目录下创建<strong>express目录</strong>，接着将包解压到这个目录下。</p>
+<p>安装好依赖包后，直接在代码中调用require('express');即可引入该包。require()方法在做路径分析的时候会通过模块路径查找到express所在的位置。模块引入和包的安装这两个步骤是相辅相承的。</p>
+<ul>
+<li>全局模式安装</li>
+</ul>
+<p>如果包中含有命令行工具，那么需要执行npm install express –g命令进行全局模式安装</p>
+<p>需要注意的是，全局模式并不是将一个模块包安装为一个全局包的意思，它<u>并不意味着可以从任何地方通过require()来引用到它。</u></p>
+<p>实际上，-g是将一个包安装为全局可用的可执行命令。它根据包描述文件中的bin字段配置，将实际脚本链接到与Node可执行文件相同的路径下：</p>
+<pre><code>&quot;bin&quot;:  {
+
+&quot;express&quot;:  &quot;./bin/express&quot;
+
+},
+</code></pre>
+<p>事实上，通过全局模式安装的所有模块包都被安装进了一个统一的目录下，这个目录可以通过如下方式推算出来：</p>
+<pre><code>path.resolve(process.execPath,  '..',  '..',  'lib',  'node_modules');
+</code></pre>
+<p>如果Node 可执行文件的位置是<code>/usr/local/bin/node</code>，那么模块目录就是<code>/usr/local/lib/node_ modules</code>(通过两个<code>&quot;..&quot;</code>回退两层，然后进入lib目录，然后进入<code>node_modules</code>)。最后，通过<u>软链接的方式将bin字段配置的可执行文件链接到Node的可执行目录下。</u></p>
+<ul>
+<li>从本地安装</li>
+</ul>
+<p>一些没有发布到NPM上的包，或者无法直接安装的包，可以下载到本地，然后以本地安装。</p>
+<p>本地安装只需<strong>为NPM指明package.json文件所在的位置</strong>即可：它可以是一个包含package.json的存档文件，也可以是一个URL地址，也可以是一个目录下有package.json文件的目录位置。具体参数如下：</p>
+<pre><code class="language-shell">npm  install  &lt;tarball  file&gt; 
+npm  install  &lt;tarball  url&gt; 
+npm  install  &lt;folder&gt;
+</code></pre>
+<p> 从非官方源安装</p>
+<p>如果不能通过官方源安装，可以通过镜像源安装。在执行命令时，添加--registry=http:// registry.url即可，示例如下：</p>
+<pre><code>npm  install  underscore  --registry=http://registry.url/
+</code></pre>
+<p>如果使用过程中几乎都采用镜像源安装，可以执行以下命令指定默认源：</p>
+<pre><code>npm  config  set  registry  http://registry.url
+</code></pre>
+<h4 id="33-npm钩子命令">3.3 NPM钩子命令</h4>
+<p>另一个需要说明的是C/C++模块实际上是编译后才能使用的。package.json中scripts字段的提出就是让包在安装或者卸载等过程中提供钩子机制，示例如下：</p>
+<pre><code class="language-js">&quot;scripts&quot;: {
+
+    &quot;preinstall&quot;: &quot;preinstall.js&quot;,
+    &quot;install&quot;: &quot;install.js&quot;,
+    &quot;uninstall&quot;: &quot;uninstall.js&quot;,
+    &quot;test&quot;: &quot;test.js&quot;
+
+}
+</code></pre>
+<p>在以上字段中执行<code>npm install &lt;package&gt;</code>时，preinstall指向的脚本将会被加载执行，然后install指向的脚本会被执行。在执行<code>npm uninstall &lt;package&gt;</code>时，uninstall指向的脚本也许会做一些清理工作等。</p>
+<p>当在一个具体的包目录下执行npm test时，将会运行test指向的脚本。一个优秀的包应当包含测试用例，并在<code>package.json</code>文件中配置好运行测试的命令，方便用户运行测试用例，以便检验包是否稳定可靠。</p>
+<h4 id="34-发布包">3.4 发布包</h4>
+<p>见原书</p>
+<h4 id="35-分析包">3.5 分析包</h4>
+<p>在使用NPM的过程中，或许你不能确认当前目录下能否通过require()顺利引入想要的包， 这时可以执行npm ls分析包。</p>
+<p>这个命令可以为你分析出当前路径下能够通过模块路径找到的所有包，并生成依赖树，如下：</p>
+<pre><code>npm ls
+</code></pre>
+<figure data-type="image" tabindex="12"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/image-20201215223253202.png" alt="image-20201215223253202" loading="lazy"></figure>
+<h3 id="4-局域npm">4. 局域NPM</h3>
+<p>为了同时能够享受到NPM上众多的包，同时对自己的包进行保密和限制，现有的解决方案就是企业搭建自己的NPM仓库。</p>
+<p>与镜像仓库不同的地方在于，企业局域NPM可以选择不同步官方源仓库中的包。图2-10为企业中混合使用官方仓库和局域仓库的示意图。</p>
+<figure data-type="image" tabindex="13"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/image-20201215223417993.png" alt="image-20201215223417993" loading="lazy"></figure>
+<p>对于企业内部而言，私有的可重用模块可以打包到局域NPM仓库中，这样可以保持更新的中心化，不至于让各个小项目各自维护相同功能的模块，杜绝通过复制粘贴实现代码共享的行为。</p>
+<h3 id="5-npm潜在问题">5. NPM潜在问题</h3>
+<p>潜在的问题在于，在NPM平台上，每个人都可以分享包到平台上，鉴于开发人员水平不一， 上面的包的质量也良势不齐。另一个问题则是，Node代码可以运行在服务器端，需要考虑安全问题。</p>
+<p>尽管NPM没有硬性的方式去评判一个包的质量和安全，好在开源社区也有它内在的健康发展机制，那就是口碑效应，其中NPM模块首页（<code>https://npmjs.org/</code>）上的依赖榜可以说明模块的质量和可靠性。</p>
+<p>第二个可以考查质量的地方是GitHub，NPM中大多的包都是通过GitHub托管的，模块项目的观察者数量和分支数量也能从侧面反映这个模块的可靠性和流行度。第三个可以考量包质量的地方在于包中的测试用例和文档的状况，一个没有单元测试的包基本上是无法被信任的， 没有文档的包，使用者使用时内心也是不踏实的。</p>
+<p>在安全问题上，在经过模块质量的考查之后，应该可以去掉一大半候选包。基于使用者大多是JavaScript程序员，难点其实存在于第三方C/C++扩展模块，这类模块建议在企业的安全部门检查之后方可允许使用。</p>
+<p>事实上，为了解决上述问题，Isaac Z. Schlueter计划引入CPAN社区中的Kwalitee风格来让模块进行自然排序。</p>
+<p>“Kwalitee&quot;is something that looks like quality, sounds like quality, but is not quite quality.</p>
+<p>大致意思就是确认一个模块的质量是否优秀并不是那么容易，只能从一些表象来进行考查， 但即便考查都通过，也并不能确定它就是高质量的模块。这个方法能够排除大部分不合格的模块， 虽然不够精确但是有效。总体而言，符合Kwalitee的模块要满足的条件与上述提及的考查点大致相同。</p>
+<ul>
+<li>
+<p>具备良好的测试。</p>
+</li>
+<li>
+<p>具备良好的文档（README、API）。</p>
+</li>
+<li>
+<p>具备良好的测试覆盖率。</p>
+</li>
+<li>
+<p>具备良好的编码规范。</p>
+</li>
+<li>
+<p>更多条件。</p>
+</li>
+</ul>
+<h2 id="前后端共用模块">前后端共用模块</h2>
+<p>JS在Node出现之后，比别的编程语言多了一项优势，一些模块可以在前后端实现共用，这是因为很多API在各个宿主环境下都提供。</p>
+<p>但在实际情况中，前后端的环境略有差别。</p>
+<h3 id="1-模块的侧重点">1. 模块的侧重点</h3>
+<p>前后端JavaScript分别搁置在HTTP的两端，它们扮演的角色并不同。浏览器端的JavaScript 需要经历从同一个服务器端分发到多个客户端执行，而服务器端JavaScript则是相同的代码需要多次执行。</p>
+<ul>
+<li>
+<p>前者的瓶颈在于<strong>带宽</strong>，后者的瓶颈则在于<strong>CPU和内存等资源</strong>。</p>
+</li>
+<li>
+<p>前者需要通过网络加载代码，后者从磁盘中加载，两者的加载速度不在一个数量级上。</p>
+</li>
+</ul>
+<p>纵观Node的模块引入过程，几乎全都是同步的。尽管与Node强调异步的行为有些相反，但它是合理的。但是如果前端模块也采用同步的方式来引入，那将会在用户体验上造成很大的问题。UI在初始化过程中需要花费很多时间来等待脚本加载完成。</p>
+<p>鉴于网络的原因，CommonJS为后端JavaScript制定的规范并不完全适合前端的应用场景。经过一段争执之后，AMD规范最终在前端应用场景中胜出。它的全称是Asynchronous Module Definition，即是“异步模块定义&quot;，详见<code>https://github.com/amdjs/amdjs-api/wiki/AMD</code>。除此之外，还有玉伯定义的CMD规范。</p>
+<h3 id="2-amd规范">2. AMD规范</h3>
+<p>AMD规范是CommonJS模块规范的一个延伸，它的模块定义如下：</p>
+<pre><code class="language-js">define(id?, dependencies?, factory);
+</code></pre>
+<p>它的模块id和依赖是可选的，与Node模块相似的地方在于<u>factory的内容就是实际代码的内容</u>。下面的代码定义了一个简单的模块：</p>
+<pre><code class="language-js">define(function() {
+    var exports = {};
+
+    exports.sayHello = function() {
+        alert('Hello  from  module:  ' + module.id);
+
+    };
+
+    return exports;
+
+});
+</code></pre>
+<p>不同之处在于AMD需要用define来<strong>明确定义一个模块</strong>。而在Node实现中是隐式包装的，它们的目的是<u>进行作用域隔离</u>，仅在需要的时候引入，避免掉通过全局变量或者全局命名空间的方式，以免变量污染和不小心修改。</p>
+<p>另一个区别是<strong>内容需要通过返回的方式实现</strong>。</p>
+<h3 id="3-cmd规范">3. CMD规范</h3>
+<p>CMD规范由国内的玉伯提出，与AMD规范的主要区别在于定义模块和依赖引入的部分。</p>
+<p>AMD需要<u>在声明模块的时候指定所有的依赖</u>，通过形参传递依赖到模块内容中：</p>
+<pre><code class="language-js">define(['dep1',  'dep2'],  function  (dep1,  dep2)  
+{ return  function  ()  {};
+});
+</code></pre>
+<p>与AMD模块规范相比，CMD模块更接近于Node对CommonJS规范的定义：</p>
+<pre><code>define(factory);
+</code></pre>
+<p>在依赖部分，CMD<strong>支持动态引入</strong>，示例如下：</p>
+<pre><code class="language-js">define(function(require,  exports,  module)  {
+
+// The module code goes here
+
+});
+</code></pre>
+<p>require、exports和module通过形参传递给模块，在需要依赖模块时，<u>随时调用require()引 入即可</u>。</p>
+<h3 id="4-兼容多种模块规范">4. 兼容多种模块规范</h3>
+<p>为了保证前后端的一致性，类库的开发者需要将类库代码包装在一个闭包内。</p>
+<p>下面这种方式能够兼容Node、AMD、CMD以及常见的浏览器环境中。</p>
+<pre><code class="language-js">// 检测上下文环境是否为AMD或CMD
+var hasDefine = typeof define === 'function',
+    // 检查上下文环境是否为Node
+    hasExports = typeof module !== 'undefined' &amp;&amp; module.exports;
+
+if (hasDefine) {
+    // AMD环境或CMD环境
+    define(definition);
+} else if (hasExports) {
+    // 定义为普通Node模块
+    module.exports = definition();
+} else {
+    // 将模块的执行结果挂在window变量中，在浏览器中this指向window对象
+    this[name] = definition();
+}
+})('hello', function() {
+    var hello = function() {};
+    return hello;
+});
+</code></pre>
+<h2 id="总结">总结</h2>
+<p>CommonJS提出的规范均十分简单，但是现实意义却十分强大。</p>
+<p>Node通过<strong>模块规范</strong>，组织了自身的原生模块，弥补JavaScript弱结构性的问题，形成了稳定的结构，并向外提供服务。</p>
+<p>NPM 通过对<strong>包规范</strong>的支持，有效地组织了第三方模块，这使得项目开发中的依赖问题得到很好的解决， 并有效提供了分享和传播的平台，借助第三方开源力量，使得Node第三方模块的发展速度前所未有，这对于其他后端JavaScript语言实现而言是从未有过的。</p>
+<p>从一定的角度上讲，CommonJS规范帮助Node形成了它的骨骼。只有芷壮的根，才能培养出茂盛的枝叶，并成长为参天大树。正是这些底层的规范和实践，使得Node有序地发展着，摆脱掉过去JavaScript纷乱和被误解的局面，进而进化成良性的生态系统。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[《深入浅出NodeJS》第一章 Node简介]]></title>
         <id>https://giriawsh.github.io/post/lesslessshen-ru-qian-chu-nodejsgreatergreater-di-yi-zhang-node-jian-jie/</id>
@@ -3264,369 +4077,6 @@ fi
 <li>要实现后再设计。在写了一些代码，有了一些具体的东西后，一定会发现一些之前忽略掉的细节。这时再反过来改进之前的设计，为第二轮迭代做准备。</li>
 <li>要充分利用三方包。NodeJS有一个庞大的生态圈，在写代码之前先看看有没有现成的三方包能节省不少时间。</li>
 <li>不要迷信三方包。任何事情做过头了就不好了，三方包也是一样。三方包是一个黑盒，每多使用一个三方包，就为程序增加了一份潜在风险。并且三方包很难恰好只提供程序需要的功能，每多使用一个三方包，就让程序更加臃肿一些。因此在决定使用某个三方包之前，最好三思而后行。</li>
-</ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[《7天学会Nodejs》第六天——异步编程]]></title>
-        <id>https://giriawsh.github.io/post/lessless7-tian-xue-hui-nodejsgreatergreater-di-liu-tian-yi-bu-bian-cheng/</id>
-        <link href="https://giriawsh.github.io/post/lessless7-tian-xue-hui-nodejsgreatergreater-di-liu-tian-yi-bu-bian-cheng/">
-        </link>
-        <updated>2020-10-27T06:44:29.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="异步编程">异步编程</h1>
-<p>NodeJS最大的卖点——事件机制和异步IO，对开发者并不是透明的。开发者需要按异步方式编写代码才用得上这个卖点。</p>
-<h2 id="回调">回调</h2>
-<p>在代码中，异步编程的直接体现就是回调。<strong>异步编程依托于回调来实现</strong>，但不能说使用了回调后程序就异步化了。</p>
-<pre><code class="language-js">function heavyCompute(n, callback) {
-    var count = 0,
-        i, j;
-
-    for (i = n; i &gt; 0; --i) {
-        for (j = n; j &gt; 0; --j) {
-            count += 1;
-        }
-    }
-
-    callback(count);
-}
-
-heavyCompute(10000, function (count) {
-    console.log(count);
-});
-
-console.log('hello');
-
--- Console ------------------------------
-100000000
-hello
-</code></pre>
-<p>以上代码中的回调函数仍然先于后续代码执行。JS本身是单线程运行的，不可能在一段代码还未结束运行时去运行别的代码，因此也就不存在异步执行的概念。</p>
-<p>但是，如果某个函数做的事情是<strong>创建一个别的线程或进程</strong>，并<u>与JS主线程并行地做一些事情，并在事情做完后通知JS主线程</u>，那情况又不一样了。我们接着看看以下代码。</p>
-<pre><code class="language-js">setTimeout(function () {
-    console.log('world');
-}, 1000);
-
-console.log('hello');
-
--- Console ------------------------------
-hello
-world
-</code></pre>
-<p>这次可以看到，回调函数后于后续代码执行了。</p>
-<p>JS本身是单线程的，无法异步执行，因此我们可以认为<code>setTimeout</code>这类JS规范之外的<u>由运行环境提供的特殊函数做的事情是创建一个平行线程后立即返回，让JS主进程可以接着执行后续代码，并在收到平行进程的通知后再执行回调函数。</u></p>
-<p>除了<code>setTimeout</code>、<code>setInterval</code>这些常见的，这类函数还包括NodeJS提供的诸如<code>fs.readFile</code>之类的异步API。</p>
-<p>另外，我们仍然回到JS是单线程运行的这个事实上，这决定了<u>JS在执行完一段代码之前无法执行包括回调函数在内的别的代码。</u></p>
-<p>也就是说，即使平行线程完成工作了，通知JS主线程执行回调函数了，<u>回调函数也要等到JS主线程空闲时才能开始执行</u>。以下就是这么一个例子。</p>
-<pre><code class="language-js">function heavyCompute(n) {
-    var count = 0,
-        i, j;
-
-    for (i = n; i &gt; 0; --i) {
-        for (j = n; j &gt; 0; --j) {
-            count += 1;
-        }
-    }
-}
-
-var t = new Date();
-
-setTimeout(function () {
-    console.log(new Date() - t);
-}, 1000);
-
-heavyCompute(50000);
-
--- Console ------------------------------
-8520
-</code></pre>
-<p>可以看到，本来应该在1秒后被调用的回调函数因为JS主线程忙于运行其它代码，实际执行时间被大幅延迟。</p>
-<h2 id="代码设计模式">代码设计模式</h2>
-<p>异步编程有很多特有的代码设计模式，为了实现同样的功能，使用同步方式和异步方式编写的代码会有很大差异。以下分别介绍一些常见的模式。</p>
-<h3 id="函数返回值">函数返回值</h3>
-<p>使用一个函数的输出作为另一个函数的输入是很常见的需求，在同步方式下一般按以下方式编写代码：</p>
-<pre><code class="language-js">var output = fn1(fn2('input'));
-// Do something.
-</code></pre>
-<p>而在异步方式下，由于函数执行结果不是通过返回值，而是通过回调函数传递，因此一般按以下方式编写代码：</p>
-<pre><code class="language-js">fn2('input', function (output2) {
-    fn1(output2, function (output1) {
-        // Do something.
-    });
-});
-</code></pre>
-<p>这种方式就是一个回调函数套一个回调函多，套得太多了很容易写出<code>&gt;</code>形状的代码。</p>
-<h3 id="遍历数组">遍历数组</h3>
-<p>在遍历数组时，<u>使用某个函数依次对数据成员做一些处理</u>也是常见的需求。</p>
-<p>如果函数是同步执行的，一般就会写出以下代码：</p>
-<pre><code class="language-js">var len = arr.length,
-    i = 0;
-
-for (; i &lt; len; ++i) {
-    arr[i] = sync(arr[i]);
-}
-
-// All array items have processed.
-</code></pre>
-<p>如果函数是异步执行的，以上代码就无法保证循环结束后所有数组成员都处理完毕了。如果数组成员必须一个接一个串行处理，则一般按照以下方式编写异步代码：</p>
-<pre><code class="language-js">(function next(i, len, callback) {
-    if (i &lt; len) {
-        async(arr[i], function (value) {
-            arr[i] = value;
-            next(i + 1, len, callback);
-        });
-    } else {
-        callback();
-    }
-}(0, arr.length, function () {
-    // All array items have processed.
-}));
-</code></pre>
-<p>以上代码在异步函数<u>执行一次并返回执行结果后才传入下一个数组成员并开始下一轮执行</u>，直到所有数组成员处理完毕后，<u>通过回调的方式触发后续代码的执行</u>。</p>
-<p>如果数组成员<u>可以并行处理，但后续代码仍然需要所有数组成员处理完毕后才能执行</u>的话，则异步代码会调整成以下形式：</p>
-<pre><code class="language-js">(function (i, len, count, callback) {
-    for (; i &lt; len; ++i) {
-        (function (i) {
-            async(arr[i], function (value) {
-                arr[i] = value;
-                if (++count === len) {
-                    callback();
-                }
-            });
-        }(i));
-    }
-}(0, arr.length, 0, function () {
-    // All array items have processed.
-}));
-</code></pre>
-<p>可以看到，与异步串行遍历的版本相比，以上代码并行处理所有数组成员，并通过计数器变量来判断什么时候所有数组成员都处理完毕了。</p>
-<p>::: error 重看提醒</p>
-<p>这一块好复杂……需要再多看看。</p>
-<p>:::</p>
-<h3 id="异常处理">异常处理</h3>
-<p>JS自身提供的异常捕获和处理机制——<code>try..catch..</code>，<strong>只能用于同步执行的代码</strong>。</p>
-<pre><code class="language-js">function sync(fn) {
-    return fn();
-}
-
-try {
-    sync(null);
-    // Do something.
-} catch (err) {
-    console.log('Error: %s', err.message);
-}
-
--- Console ------------------------------
-Error: object is not a function
-</code></pre>
-<p>可以看到，异常会沿着代码执行路径一直冒泡，直到遇到第一个<code>try</code>语句时被捕获住。</p>
-<p>但由于<u>异步函数会打断代码执行路径</u>，异步函数执行过程中以及执行之后产生的异常冒泡到执行路径被打断的位置时，如果一直没有遇到<code>try</code>语句，就<u>作为一个全局异常抛出。</u></p>
-<p>以下是一个例子。</p>
-<pre><code class="language-js">function async(fn, callback) {
-    // Code execution path breaks here.
-    setTimeout(function ()　{
-        callback(fn());
-    }, 0);
-}
-
-try {
-    async(null, function (data) {
-        // Do something.
-    });
-} catch (err) {
-    console.log('Error: %s', err.message);
-}
-
--- Console ------------------------------
-/home/user/test.js:4
-        callback(fn());
-                 ^
-TypeError: object is not a function
-    at null._onTimeout (/home/user/test.js:4:13)
-    at Timer.listOnTimeout [as ontimeout] (timers.js:110:15)
-</code></pre>
-<p>因为代码执行路径被打断了，我们就需要在异常冒泡到断点之前用<code>try</code>语句把异常捕获住，并通过回调函数传递被捕获的异常。</p>
-<p>于是我们可以像下边这样改造上边的例子。</p>
-<pre><code class="language-js">function async(fn, callback) {
-    // Code execution path breaks here.
-    setTimeout(function ()　{
-        try {
-            callback(null, fn());
-        } catch (err) {
-            callback(err);
-        }
-    }, 0);
-}
-
-async(null, function (err, data) {
-    if (err) {
-        console.log('Error: %s', err.message);
-    } else {
-        // Do something.
-    }
-});
-
--- Console ------------------------------
-Error: object is not a function
-</code></pre>
-<p>可以看到，异常再次被捕获住了。在NodeJS中，几乎所有异步API都按照以上方式设计，回调函数中第一个参数都是<code>err</code>。</p>
-<p>因此我们在编写自己的异步函数时，也可以按照这种方式来处理异常，与NodeJS的设计风格保持一致。</p>
-<p>基本上，我们的代码都是做一些事情，然后调用一个函数，然后再做一些事情，然后再调用一个函数，如此循环。</p>
-<p>如果我们写的是同步代码，只需要在代码入口点写一个<code>try</code>语句就能捕获所有冒泡上来的异常，示例如下。</p>
-<pre><code class="language-js">function main() {
-    // Do something.
-    syncA();
-    // Do something.
-    syncB();
-    // Do something.
-    syncC();
-}
-
-try {
-    main();
-} catch (err) {
-    // Deal with exception.
-}
-</code></pre>
-<p>如果我们写的是异步代码，由于每次异步函数调用都会打断代码执行路径，只能通过回调函数来传递异常，于是<u>我们就需要在每个回调函数里判断是否有异常发生</u>，于是只用三次异步函数调用，就会产生下边这种代码。</p>
-<pre><code class="language-js">function main(callback) {
-    // Do something.
-    asyncA(function (err, data) {
-        if (err) {
-            callback(err);
-        } else {
-            // Do something
-            asyncB(function (err, data) {
-                if (err) {
-                    callback(err);
-                } else {
-                    // Do something
-                    asyncC(function (err, data) {
-                        if (err) {
-                            callback(err);
-                        } else {
-                            // Do something
-                            callback(null);
-                        }
-                    });
-                }
-            });
-        }
-    });
-}
-
-main(function (err) {
-    if (err) {
-        // Deal with exception.
-    }
-});
-</code></pre>
-<p>可以看到，回调函数已经让代码变得复杂了，而<u>异步方式下对异常的处理更加剧了代码的复杂度。</u></p>
-<p>接下来会介绍NodeJS提供的一些解决方案。</p>
-<h2 id="域domain">域（Domain）</h2>
-<blockquote>
-<p><strong>官方文档：</strong> http://nodejs.org/api/domain.html</p>
-</blockquote>
-<p>NodeJS提供了<code>domain</code>模块，可以简化异步代码的异常处理。</p>
-<p>简单的讲，<strong>一个域就是一个JS运行环境</strong>。在一个运行环境中，<u>如果一个异常没有被捕获，将作为一个全局异常被抛出。</u></p>
-<p>NodeJS通过<code>process</code>对象提供了捕获全局异常的方法，示例代码如下：</p>
-<pre><code class="language-js">process.on('uncaughtException', function (err) {
-    console.log('Error: %s', err.message);
-});
-
-setTimeout(function (fn) {
-    fn();
-});
-
--- Console ------------------------------
-Error: undefined is not a function
-</code></pre>
-<p>虽然全局异常有个地方可以捕获了，但是对于大多数异常，我们希望<u>尽早捕获，并根据结果决定代码的执行路径。</u>我们用以下HTTP服务器代码作为例子：</p>
-<pre><code class="language-js">function async(request, callback) {
-    // Do something.
-    asyncA(request, function (err, data) {
-        if (err) {
-            callback(err);
-        } else {
-            // Do something
-            asyncB(request, function (err, data) {
-                if (err) {
-                    callback(err);
-                } else {
-                    // Do something
-                    asyncC(request, function (err, data) {
-                        if (err) {
-                            callback(err);
-                        } else {
-                            // Do something
-                            callback(null, data);
-                        }
-                    });
-                }
-            });
-        }
-    });
-}
-
-http.createServer(function (request, response) {
-    async(request, function (err, data) {
-        if (err) {
-            response.writeHead(500);
-            response.end();
-        } else {
-            response.writeHead(200);
-            response.end(data);
-        }
-    });
-});
-</code></pre>
-<p>以上代码将请求对象交给异步函数处理后，再根据处理结果返回响应。</p>
-<p>为了让代码好看点，我们可以在每处理一个请求时，使用<code>domain</code>模块创建一个子域（JS子运行环境）。<u>在子域内运行的代码可以随意抛出异常，而这些异常可以通过子域对象的<code>error</code>事件统一捕获。</u></p>
-<p>于是以上代码可以做如下改造：</p>
-<pre><code class="language-js">function async(request, callback) {
-    // Do something.
-    asyncA(request, function (data) {
-        // Do something
-        asyncB(request, function (data) {
-            // Do something
-            asyncC(request, function (data) {
-                // Do something
-                callback(data);
-            });
-        });
-    });
-}
-
-http.createServer(function (request, response) {
-    var d = domain.create();
-
-    d.on('error', function () {
-        response.writeHead(500);
-        response.end();
-    });
-
-    d.run(function () {
-        async(request, function (data) {
-            response.writeHead(200);
-            response.end(data);
-        });
-    });
-});
-</code></pre>
-<p>我们使用<code>.create</code>方法创建了一个子域对象，并通过<code>.run</code>方法进入需要在子域中运行的代码的入口点。</p>
-<p>而位于子域中的异步函数回调函数由于不再需要捕获异常，代码一下子瘦身很多。</p>
-<h3 id="陷阱">陷阱</h3>
-<p>无论是通过<code>process</code>对象的<code>uncaughtException</code>事件捕获到全局异常，还是通过子域对象的<code>error</code>事件捕获到了子域异常，在NodeJS官方文档里都<strong>强烈建议处理完异常后立即重启程序</strong>，而不是让程序继续运行。</p>
-<p>按照官方文档的说法，发生异常后的程序处于一个不确定的运行状态，如果不立即退出的话，<u>程序可能会发生严重内存泄漏</u>，也可能表现得很奇怪。</p>
-<p>但这里需要澄清一些事实。JS本身的<code>throw..try..catch</code>异常处理机制并不会导致内存泄漏，也不会让程序的执行结果出乎意料，<u>但NodeJS并不是存粹的JS</u>。NodeJS里大量的API内部是用C/C++实现的，因此NodeJS程序的运行过程中，代码执行路径穿梭于JS引擎内部和外部，<u>而JS的异常抛出机制可能会打断正常的代码执行流程，导致C/C++部分的代码表现异常，进而导致内存泄漏等问题。</u></p>
-<p>因此，<u>使用<code>uncaughtException</code>或<code>domain</code>捕获异常</u>，代码执行路径里涉及到了C/C++部分的代码时，如果不能确定是否会导致内存泄漏等问题，最好在<strong>处理完异常后重启程序比较妥当</strong>。</p>
-<p>而<u>使用<code>try</code>语句捕获异常时一般捕获到的都是JS本身的异常，不用担心上述问题</u>。</p>
-<h2 id="小结">小结</h2>
-<p>本章介绍了JS异步编程相关的知识，总结起来有以下几点：</p>
-<ul>
-<li>不掌握异步编程就不算学会NodeJS。</li>
-<li>异步编程依托于回调来实现，而使用回调不一定就是异步编程。</li>
-<li>异步编程下的函数间数据传递、数组遍历和异常处理与同步编程有很大差别。</li>
-<li>使用<code>domain</code>模块简化异步代码的异常处理，并小心陷阱。</li>
 </ul>
 ]]></content>
     </entry>
