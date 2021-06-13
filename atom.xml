@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2021-06-13T11:50:32.888Z</updated>
+    <updated>2021-06-13T11:54:11.214Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
@@ -10,6 +10,285 @@
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Giria&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[【官方教程】初始井字棋]]></title>
+        <id>https://giriawsh.github.io/post/guan-fang-jiao-cheng-chu-shi-jing-zi-qi/</id>
+        <link href="https://giriawsh.github.io/post/guan-fang-jiao-cheng-chu-shi-jing-zi-qi/">
+        </link>
+        <updated>2021-06-13T11:53:15.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="前言">前言</h2>
+<p>顺利完成Express后台+Vue前端+MongoDB数据的毕设，接下来学点别的吧。React之前一直不熟悉，这次好好重新入个门。</p>
+<h2 id="概览">概览</h2>
+<h3 id="react是什么">React是什么</h3>
+<p>React 是一个声明式，高效且灵活的用于构建用户界面的 JavaScript 库。使用 React 可以将一些简短、独立的代码片段组合成复杂的 UI 界面，这些代码片段被称作“组件”。</p>
+<p>先从 <code>React.Component</code> 的子类开始介绍：</p>
+<pre><code class="language-js">class ShoppingList extends React.Component {
+  render() {
+    return (
+      &lt;div className=&quot;shopping-list&quot;&gt;
+        &lt;h1&gt;Shopping List for {this.props.name}&lt;/h1&gt;
+        &lt;ul&gt;
+          &lt;li&gt;Instagram&lt;/li&gt;
+          &lt;li&gt;WhatsApp&lt;/li&gt;
+          &lt;li&gt;Oculus&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+    );
+  }
+}
+
+// 用法示例: &lt;ShoppingList name=&quot;Mark&quot; /&gt;
+</code></pre>
+<p>我们通过使用组件来告诉 React 我们希望在屏幕上看到什么。当数据发生改变时，React 会高效地更新并重新渲染我们的组件。</p>
+<p>其中，ShoppingList 是一个 <strong>React 组件类</strong>，或者说是一个 <strong>React 组件类型</strong>。一个组件接收一些参数，我们把这些参数叫做 <code>props</code>（“props” 是 “properties” 简写），然后通过 <code>render</code> 方法返回需要展示在屏幕上的视图的层次结构。</p>
+<p><code>render</code> 方法的返回值<em>描述</em>了你希望在屏幕上看到的内容。React 根据描述，然后把结果展示出来。更具体地来说，<code>render</code> 返回了一个 <strong>React 元素</strong>，这是一种对渲染内容的轻量级描述。大多数的 React 开发者使用了一种名为 “JSX” 的特殊语法，JSX 可以让你更轻松地书写这些结构。语法 <code>&lt;div /&gt;</code> 会被编译成 <code>React.createElement('div')</code>。上述的代码等同于：</p>
+<pre><code class="language-js">return React.createElement('div', {className: 'shopping-list'},
+  React.createElement('h1', /* ... h1 children ... */),
+  React.createElement('ul', /* ... ul children ... */)
+);
+</code></pre>
+<p>在 JSX 中你可以任意使用 JavaScript 表达式，只需要用一个大括号把表达式括起来。<strong>每一个 React 元素事实上都是一个 JavaScript 对象</strong>，你可以在你的程序中把它当保存在变量中或者作为参数传递。</p>
+<p>前文中的 <code>ShoppingList</code> 组件只会渲染一些内置的 DOM 组件，如<code>&lt;div /&gt;</code>、<code>&lt;li /&gt;</code>等。但是你也可以组合和渲染自定义的 React 组件。例如，你可以通过 <code>&lt;ShoppingList /&gt;</code> 来表示整个购物清单组件。每个组件都是封装好的，并且可以单独运行，这样你就可以通过组合简单的组件来构建复杂的 UI 界面。</p>
+<h3 id="阅读初始代码">阅读初始代码</h3>
+<p>通过阅读代码，你可以看到我们有三个 React 组件：</p>
+<ul>
+<li>Square</li>
+<li>Board</li>
+<li>Game</li>
+</ul>
+<p>Square 组件渲染了一个单独的 <code>&lt;button&gt;</code>。Board 组件渲染了 9 个方块。Game 组件渲染了含有默认值的一个棋盘，我们一会儿会修改这些值。到目前为止还没有可以交互的组件。</p>
+<h3 id="通过props传递数据">通过Props传递数据</h3>
+<pre><code class="language-js">renderSquare(i) {
+        return &lt;Square value={i}/&gt;;
+    }
+    
+ return (
+            &lt;button className=&quot;square&quot;&gt;
+                {this.props.value}
+            &lt;/button&gt;
+        );
+</code></pre>
+<p>成功地把一个 prop 从父组件 Board “传递”给了子组件 Square。在 React 应用中，数据通过 props 的传递，从父组件流向子组件。</p>
+<h3 id="给组件添加交互功能">给组件添加交互功能</h3>
+<p>试着让棋盘的每一个格子在点击之后能落下一颗 “X” 作为棋子。</p>
+<p>::: warning</p>
+<p>为了少输入代码，同时为了避免 <a href="https://yehudakatz.com/2011/08/11/understanding-javascript-function-invocation-and-this/"><code>this</code> 造成的困扰</a>，我们在这里使用<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Arrow_functions">箭头函数</a> 来进行事件处理，如下所示：</p>
+<pre><code class="language-js">class Square extends React.Component {
+ render() {
+   return (
+     &lt;button className=&quot;square&quot; onClick={() =&gt; alert('click')}&gt;       {this.props.value}
+     &lt;/button&gt;
+   );
+ }
+}
+</code></pre>
+<p>注意：此处使用了 <code>onClick={() =&gt; alert('click')}</code> 的方式向 <code>onClick</code> 这个 prop <strong>传入一个<em>函数</em></strong>。 React 将在单击时调用此函数。但很多人经常忘记编写 <code>() =&gt;</code>，而写成了 <code>onClick={alert('click')}</code>，这种常见的错误会<strong>导致每次这个组件渲染的时候都会触发弹出框</strong>。</p>
+<p>:::</p>
+<p>接下来，我们希望 Square 组件可以“记住”它被点击过，然后用 “X” 来填充对应的方格。我们用 <strong>state</strong> 来实现所谓“记忆”的功能。</p>
+<p>可以通过在 React 组件的构造函数中设置 <code>this.state</code> 来初始化 state。<code>this.state</code> 应该被视为一个组件的私有属性。我们在 <code>this.state</code> 中存储当前每个方格（Square）的值，并且在每次方格被点击的时候改变这个值。</p>
+<p>首先，我们向这个 class 中添加一个构造函数，用来初始化 state：</p>
+<pre><code class="language-js">class Square extends React.Component {
+  constructor(props) {    super(props);    this.state = {      value: null,    };  }
+  render() {
+    return (
+      &lt;button className=&quot;square&quot; onClick={() =&gt; alert('click')}&gt;
+        {this.props.value}
+      &lt;/button&gt;
+    );
+  }
+}
+</code></pre>
+<p>::: warning</p>
+<p>在 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">JavaScript class</a> 中，每次你定义其子类的构造函数时，都需要调用 <code>super</code> 方法。因此，在所有含有构造函数的的 React 组件中，构造函数必须以 <code>super(props)</code> 开头。</p>
+<p>:::</p>
+<p>修改一下 Square 组件的 <code>render</code> 方法，这样，每当方格被点击的时候，就可以显示当前 state 的值了：</p>
+<ul>
+<li>在 <code>&lt;button&gt;</code> 标签中，把 <code>this.props.value</code> 替换为 <code>this.state.value</code>。</li>
+<li>将 <code>onClick={...}</code> 事件监听函数替换为 <code>onClick={() =&gt; this.setState({value: 'X'})}</code>。</li>
+<li>为了更好的可读性，将 <code>className</code> 和 <code>onClick</code> 的 prop 分两行书写。</li>
+</ul>
+<p>每次在组件中调用 <code>setState</code> 时，React 都会自动更新其子组件.</p>
+<h2 id="游戏完善">游戏完善</h2>
+<h3 id="状态提升">状态提升</h3>
+<p>当前，每个 Square 组件都维护了游戏的状态。我们可以把所有 9 个 Square 的值放在一个地方，这样我们就可以判断出胜者了。</p>
+<p>最好的解决方式是直接<strong>将所有的 state 状态数据存储在 Board 父组件</strong>当中。之后 Board 组件可以将这些数据通过 props 传递给各个 Square 子组件</p>
+<p><strong>当你遇到需要同时获取多个子组件数据，或者两个组件之间需要相互通讯的情况时，需要把子组件的 state 数据提升至其共同的父组件当中保存。之后父组件可以通过 props 将状态数据传递到子组件当中。这样应用当中所有组件的状态数据就能够更方便地同步共享了</strong></p>
+<p>为 Board 组件添加构造函数，将 Board 组件的初始状态设置为长度为 9 的空值数组：</p>
+<pre><code class="language-js">constructor(props) {
+    super(props);
+    this.state = {
+      squares: Array(9).fill(null),
+    };
+  }
+</code></pre>
+<p>我们通过修改 Board 来指示每一个 Square 的当前值（<code>'X'</code>, <code>'O'</code>, 或者 <code>null</code>）。我们在 Board 的构造函数中已经定义好了 <code>squares</code> 数组，这样，我们就可以通过修改 Board 的 <code>renderSquare</code> 方法来读取这些值了。</p>
+<pre><code class="language-js">renderSquare(i) {
+    return &lt;Square value={this.state.squares[i]} /&gt;;  
+    }
+</code></pre>
+<p>这样，每个 Square 就都能接收到一个 <code>value</code> prop 了，这个 prop 的值可以是 <code>'X'</code>、 <code>'O'</code>、 或 <code>null</code>（<code>null</code> 代表空方格）。</p>
+<p>Board 组件当前维护了那些已经被填充了的方格。我们需要想办法让 Square 去更新 Board 的 state。由于 state 对于每个组件来说是私有的，因此我们不能直接通过 Square 来更新 Board 的 state。</p>
+<p>相反，<strong>从 Board 组件向 Square 组件传递一个函数</strong>，当 Square 被点击的时候，这个函数就会被调用。接着，我们将 Board 组件的 <code>renderSquare</code> 方法改写为如下效果：</p>
+<pre><code class="language-js"> renderSquare(i) {
+    return (
+      &lt;Square
+        value={this.state.squares[i]}
+        onClick={() =&gt; this.handleClick(i)}
+      /&gt;
+    );
+  }
+</code></pre>
+<p>现在我们从 Board 组件向 Square 组件中传递两个 props 参数：<code>value</code> 和 <code>onClick</code>。<code>onClick</code> prop 是一个 Square 组件点击事件监听函数。接下来，我们需要修改 Square 的代码：</p>
+<ul>
+<li>将 Square 组件的 <code>render</code> 方法中的 <code>this.state.value</code> 替换为 <code>this.props.value</code> 。</li>
+<li>将 Square 组件的 <code>render</code> 方法中的 <code>this.setState()</code> 替换为 <code>this.props.onClick()</code> 。</li>
+<li>删掉 Square 组件中的构造函数 <code>constructor</code>，因为该组件不需要再保存游戏的 state。</li>
+</ul>
+<pre><code class="language-js">class Square extends React.Component {  render() {    return (      &lt;button        className=&quot;square&quot;        onClick={() =&gt; this.props.onClick()}      &gt;        {this.props.value}      &lt;/button&gt;    );  }}
+</code></pre>
+<p>每一个 Square 被点击时，Board 提供的 <code>onClick</code> 函数就会触发。</p>
+<p>我们回顾一下这是怎么实现的：</p>
+<ol>
+<li>向 DOM 内置元素 <code>&lt;button&gt;</code> 添加 <code>onClick</code> prop，让 React 开启对点击事件的监听。</li>
+<li>当 button 被点击时，React 会调用 Square 组件的 <code>render()</code> 方法中的 <code>onClick</code> 事件处理函数。</li>
+<li>事件处理函数触发了传入其中的 <code>this.props.onClick()</code> 方法。这个方法是由 Board 传递给 Square 的。</li>
+<li>由于 Board 把 <code>onClick={() =&gt; this.handleClick(i)}</code> 传递给了 Square，所以当 Square 中的事件处理函数触发时，其实就是触发的 Board 当中的 <code>this.handleClick(i)</code> 方法。</li>
+<li>现在我们还尚未定义 <code>handleClick()</code> 方法，所以代码还不能正常工作。如果此时点击 Square，你会在屏幕上看到红色的错误提示，提示内容为：“this.handleClick is not a function”。</li>
+</ol>
+<p>::: warning</p>
+<p>因为 DOM 元素 <code>&lt;button&gt;</code> 是一个内置组件，因此其 <code>onClick</code> 属性在 React 中有特殊的含义。而对于用户自定义的组件来说，命名就可以由用户自己来定义了。我们给 Square 的 <code>onClick</code> 和 Board 的 <code>handleClick</code> 赋予任意的名称，代码依旧有效。在 React 中，有一个命名规范，通常会将代表事件的监听 prop 命名为 <code>on[Event]</code>，将处理事件的监听方法命名为 <code>handle[Event]</code> 这样的格式。</p>
+<p>:::</p>
+<p>向 Board 里添加 <code>handleClick</code> 方法：</p>
+<pre><code> handleClick(i) {    const squares = this.state.squares.slice();    squares[i] = 'X';    this.setState({squares: squares});  }
+</code></pre>
+<p>::: tip</p>
+<p>我们调用了 <code>.slice()</code> 方法创建了 <code>squares</code> 数组的一个副本，而不是直接在现有的数组上进行修改。</p>
+<p>:::</p>
+<p>现在，我们可以通过点击 Square 来填充那些方格，效果与之前相同。但是，当前 state 没有保存在单个的 Square 组件中，而是保存在了 Board 组件中。</p>
+<p>每当 Board 的 state 发生变化的时候，这些 Square 组件都会重新渲染一次。把所有 Square 的 state 保存在 Board 组件中可以让我们在将来判断出游戏的胜者</p>
+<p>因为 Square 组件不再持有 state，因此每次它们被点击的时候，Square 组件就会从 Board 组件中接收值，并且通知 Board 组件。在 React 术语中，我们把目前的 Square 组件称做“<strong>受控组件</strong>”。在这种情况下，Board 组件完全控制了 Square 组件。</p>
+<h3 id="不可变性在react中非常重要">不可变性在React中非常重要</h3>
+<p>一般来说，有两种改变数据的方式。第一种方式是直接<em>修改</em>变量的值，第二种方式是使用新的一份数据替换旧数据。</p>
+<p>直接修改数据：</p>
+<pre><code class="language-js">var player = {score: 1, name: 'Jeff'};player.score = 2;// player 修改后的值为 {score: 2, name: 'Jeff'}
+</code></pre>
+<p>新数据替换旧数据</p>
+<pre><code class="language-js">var player = {score: 1, name: 'Jeff'};var newPlayer = Object.assign({}, player, {score: 2});// player 的值没有改变, 但是 newPlayer 的值是 {score: 2, name: 'Jeff'}// 使用对象展开语法，就可以写成：// var newPlayer = {...player, score: 2};
+</code></pre>
+<p>这种方式有以下几点好处：</p>
+<ul>
+<li>简化复杂的功能</li>
+</ul>
+<p>不可变性使得复杂的特性更容易实现。在后面的章节里，我们会实现一种叫做“时间旅行”的功能。“时间旅行”可以使我们回顾井字棋的历史步骤，并且可以“跳回”之前的步骤。这个功能并不是只有游戏才会用到——撤销和恢复功能在开发中是一个很常见的需求。<strong>不直接在数据上修改可以让我们追溯并复用游戏的历史记录。</strong></p>
+<ul>
+<li>跟踪数据的改变</li>
+</ul>
+<p>如果直接修改数据，那么就很难跟踪到数据的改变。跟踪数据的改变需要可变对象可以与改变之前的版本进行对比，这样整个对象树都需要被遍历一次。</p>
+<p>跟踪不可变数据的变化相对来说就容易多了。如果发现对象变成了一个新对象，那么我们就可以说对象发生改变了。</p>
+<ul>
+<li>确定在React中何时重新渲染</li>
+</ul>
+<p>不可变性最主要的优势在于它可以帮助我们在 React 中创建 <em>pure components</em>。我们可以很轻松的确定不可变数据是否发生了改变，从而确定何时对组件进行重新渲染。</p>
+<h3 id="函数组件">函数组件</h3>
+<p>把 Square 组件重写为一个<strong>函数组件</strong>。</p>
+<p>如果你想写的组件<u>只包含一个 <code>render</code> 方法，并且不包含 state</u>，那么使用<strong>函数组件</strong>就会更简单。我们不需要定义一个继承于 <code>React.Component</code> 的类，我们可以定义一个函数，<u>这个函数接收 <code>props</code> 作为参数，然后返回需要渲染的元素。</u>函数组件写起来并不像 class 组件那么繁琐，很多组件都可以使用函数组件来写。</p>
+<p>把 Square 类替换成下面的函数：</p>
+<pre><code class="language-js">function Square(props) {  return (    &lt;button className=&quot;square&quot; onClick={props.onClick}&gt;      {props.value}    &lt;/button&gt;  );}
+</code></pre>
+<p>::: tip</p>
+<p>当我们把 Square 修改成函数组件时，我们同时也把 <code>onClick={() =&gt; this.props.onClick()}</code> 改成了更短的 <code>onClick={props.onClick}</code>（注意两侧<em>都</em>没有括号）。</p>
+<p>:::</p>
+<h3 id="轮流落子">轮流落子</h3>
+<p>我们将 “X” 默认设置为先手棋。你可以通过修改 Board 组件的构造函数中的初始 state 来设置默认的第一步棋子：</p>
+<pre><code class="language-js">class Board extends React.Component {  constructor(props) {    super(props);    this.state = {      squares: Array(9).fill(null),      xIsNext: true,    };  }
+</code></pre>
+<p>棋子每移动一步，<code>xIsNext</code>（布尔值）都会反转，该值将确定下一步轮到哪个玩家，并且游戏的状态会被保存下来。我们将通过修改 Board 组件的 <code>handleClick</code> 函数来反转 <code>xIsNext</code> 的值：</p>
+<pre><code class="language-js">  handleClick(i) {    const squares = this.state.squares.slice();    squares[i] = this.state.xIsNext ? 'X' : 'O';    this.setState({      squares: squares,      xIsNext: !this.state.xIsNext,    });  }
+</code></pre>
+<p>修改之后，我们就实现了 “X” 和 “O” 轮流落子的效果。</p>
+<h3 id="判断胜者">判断胜者</h3>
+<p>至此我们就可以看出下一步会轮到哪位玩家，与此同时，我们还需要显示游戏的结果来判定游戏结束。</p>
+<pre><code class="language-js">function calculateWinner(squares) {  const lines = [    [0, 1, 2],    [3, 4, 5],    [6, 7, 8],    [0, 3, 6],    [1, 4, 7],    [2, 5, 8],    [0, 4, 8],    [2, 4, 6],  ];  for (let i = 0; i &lt; lines.length; i++) {    const [a, b, c] = lines[i];    if (squares[a] &amp;&amp; squares[a] === squares[b] &amp;&amp; squares[a] === squares[c]) {      return squares[a];    }  }  return null;}
+</code></pre>
+<p>传入长度为 9 的数组，此函数将判断出获胜者，并根据情况返回 “X”，“O” 或 “null”。</p>
+<p>接着，在 Board 组件的 <code>render</code> 方法中调用 <code>calculateWinner(squares)</code> 检查是否有玩家胜出。一旦有一方玩家胜出，就把获胜玩家的信息显示出来，比如，“胜者：X” 或者“胜者：O”。</p>
+<pre><code class="language-js"> render() {    const winner = calculateWinner(this.state.squares);    let status;    if (winner) {      status = 'Winner: ' + winner;    } else {      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');    }    return (      // 其他部分没有修改
+</code></pre>
+<p>最后，修改 <code>handleClick</code> 事件，当有玩家胜出时，或者某个 Square 已经被填充时，该函数不做任何处理直接返回。</p>
+<pre><code class="language-js">  handleClick(i) {    const squares = this.state.squares.slice();    if (calculateWinner(squares) || squares[i]) {      return;    }    squares[i] = this.state.xIsNext ? 'X' : 'O';    this.setState({      squares: squares,      xIsNext: !this.state.xIsNext,    });  }
+</code></pre>
+<h2 id="时间旅行">时间旅行</h2>
+<h3 id="保存历史记录">保存历史记录</h3>
+<p>我们可以使用 <code>slice()</code> 函数为每一步创建 <code>squares</code> 数组的副本，同时把这个数组当作不可变对象。这样我们就可以把所有 <code>squares</code> 数组的历史版本都保存下来了，然后可以在历史的步骤中随意跳转。</p>
+<p>我们把历史的 <code>squares</code> 数组保存在另一个名为 <code>history</code> 的数组中。<code>history</code> 数组保存了从第一步到最后一步的所有的棋盘状态。<code>history</code> 数组的结构如下所示：</p>
+<p>现在，我们需要确定应该在哪一个组件里保存 <code>history</code> 这个 state。</p>
+<h3 id="再次提升状态">再次提升状态</h3>
+<p>我们希望顶层 Game 组件展示出一个历史步骤的列表。这个功能需要访问 <code>history</code> 的数据，因此我们把 <code>history</code> 这个 state 放在顶层 Game 组件中。</p>
+<p>我们把 <code>history</code> state 放在了 Game 组件中，这样就可以从它的子组件 Board 里面删除掉 <code>square</code> 中的 state。</p>
+<p>这样，Game 组件就拥有了对 Board 组件数据的完全控制权，除此之外，还可以让 Game 组件控制 Board 组件，并根据 <code>history</code> 渲染历史步骤。</p>
+<p>首先，我们在 Game 组件的构造函数中初始化 state：</p>
+<pre><code class="language-js">  constructor(props) {    super(props);    this.state = {      history: [{        squares: Array(9).fill(null),      }],      xIsNext: true,    };  }
+</code></pre>
+<p>下一步，我们让 Board 组件从 Game 组件中接收 <code>squares</code> 和 <code>onClick</code> 这两个 props。</p>
+<p>因为当前在 Board 组件中已经有一个对 Square 点击事件的监听函数了，所以我们**需要把每一个 Square 的对应位置传递给 <code>onClick</code> 监听函数，这样监听函数就知道具体哪一个 Square 被点击了。**以下是修改 Board 组件的几个必要步骤：</p>
+<ul>
+<li>删除 Board 组件中的 <code>constructor</code> 构造函数。</li>
+<li>把 Board 组件的 <code>renderSquare</code> 中的 <code>this.state.squares[i]</code> 替换为 <code>this.props.squares[i]</code>。</li>
+<li>把 Board 组件的 <code>renderSquare</code> 中的 <code>this.handleClick(i)</code> 替换为 <code>this.props.onClick(i)</code>。</li>
+</ul>
+<p>接着，更新 Game 组件的 <code>render</code> 函数，使用最新一次历史记录来确定并展示游戏的状态：</p>
+<pre><code class="language-js">render() {    const history = this.state.history;    const current = history[history.length - 1];    const winner = calculateWinner(current.squares);    let status;    if (winner) {      status = 'Winner: ' + winner;    } else {      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');    }    return (      &lt;div className=&quot;game&quot;&gt;        &lt;div className=&quot;game-board&quot;&gt;          &lt;Board            squares={current.squares}            onClick={(i) =&gt; this.handleClick(i)}          /&gt;        &lt;/div&gt;        &lt;div className=&quot;game-info&quot;&gt;          &lt;div&gt;{status}&lt;/div&gt;          &lt;ol&gt;{/* TODO */}&lt;/ol&gt;        &lt;/div&gt;      &lt;/div&gt;    );  }
+</code></pre>
+<p>最后，我们需要把 Board 组件的 <code>handleClick</code> 方法移动 Game 组件中。同时，我们也需要修改一下 <code>handleClick</code> 方法，因为这两个组件的 state 在结构上有所不同。在 Game 组件的 <code>handleClick</code> 方法中，我们需要把新的历史记录拼接到 <code>history</code> 上。</p>
+<pre><code class="language-js">  handleClick(i) {    const history = this.state.history;    const current = history[history.length - 1];    const squares = current.squares.slice();    if (calculateWinner(squares) || squares[i]) {      return;    }    squares[i] = this.state.xIsNext ? 'X' : 'O';    this.setState({      history: history.concat([{        squares: squares,      }]),      xIsNext: !this.state.xIsNext,    });  }
+</code></pre>
+<p>::: tip</p>
+<p><code>concat()</code> 方法可能与你比较熟悉的 <code>push()</code> 方法不太一样，它并不会改变原数组，所以我们推荐使用 <code>concat()</code>。</p>
+<p>:::</p>
+<p>到目前为止，Board 组件只需要 <code>renderSquare</code> 和 <code>render</code> 这两个方法。而游戏的状态和 <code>handleClick</code> 方法则会放在 Game 组件当中。</p>
+<h3 id="展示历史步骤记录">展示历史步骤记录</h3>
+<p>在前文中提到的 React 元素被视为 JavaScript 一等公民中的对象（first-class JavaScript objects），因此我们可以把 React 元素在应用程序中当作参数来传递。在 React 中，我们还可以使用 React 元素的数组来渲染多个元素。</p>
+<p>我们可以通过使用 <code>map</code> 方法，把历史步骤映射为代表按钮的 React 元素，然后可以展示出一个按钮的列表，点击这些按钮，可以“跳转”到对应的历史步骤。</p>
+<p>现在，我们在 Game 组件的 <code>render</code> 方法中调用 <code>history</code> 的 <code>map</code> 方法：</p>
+<pre><code class="language-js"> const moves = history.map((step, move) =&gt; {      const desc = move ?        'Go to move #' + move :        'Go to game start';      return (        &lt;li&gt;          &lt;button onClick={() =&gt; this.jumpTo(move)}&gt;{desc}&lt;/button&gt;        &lt;/li&gt;      );    });
+</code></pre>
+<p>对于井字棋历史记录的每一步，我们都创建出了一个包含按钮 <code>&lt;button&gt;</code> 元素的 <code>&lt;li&gt;</code> 的列表。这些按钮拥有一个 <code>onClick</code> 事件处理函数，在这个函数里调用了 <code>this.jumpTo()</code> 方法。</p>
+<h3 id="选择一个key">选择一个key</h3>
+<p>当我们需要渲染一个列表的时候，React 会存储这个列表每一项的相关信息。当我们要更新这个列表时，React 需要确定哪些项发生了改变。我们有可能增加、删除、重新排序或者更新列表项。</p>
+<p>我们需要给每一个列表项一个确定的 <em>key</em> 属性，它可以用来区分不同的列表项和他们的同级兄弟列表项。你可以使用字符串，比如 <code>alexa</code>, <code>ben</code>, <code>claudia</code>。如果我们使用从数据库里获取的数据，那么 Alexa、Ben 和 Claudia 的数据库 ID 就可以作为 key 来使用。</p>
+<pre><code class="language-html">&lt;li key={user.id}&gt;{user.name}: {user.taskCount} tasks left&lt;/li&gt;
+</code></pre>
+<p>每当一个列表重新渲染时，React 会根据每一项列表元素的 key 来检索上一次渲染时与每个 key 所匹配的列表项。如果 React 发现当前的列表有一个之前不存在的 key，那么就会创建出一个新的组件。如果 React 发现和之前对比少了一个 key，那么就会销毁之前对应的组件。如果一个组件的 key 发生了变化，这个组件会被销毁，然后使用新的 state 重新创建一份。</p>
+<p><code>key</code> 是 React 中一个特殊的保留属性（还有一个是 <code>ref</code>，拥有更高级的特性）。当 React 元素被创建出来的时候，React 会提取出 <code>key</code> 属性，然后把 key 直接存储在返回的元素上。虽然 <code>key</code> 看起来好像是 <code>props</code> 中的一个，但是你不能通过 <code>this.props.key</code> 来获取 <code>key</code>。React 会通过 <code>key</code> 来自动判断哪些组件需要更新。<strong>组件是不能访问到它的 <code>key</code> 的。</strong></p>
+<p>**我们强烈推荐，每次只要你构建动态列表的时候，都要指定一个合适的 key。**如果你没有找到一个合适的 key，那么你就需要考虑重新整理你的数据结构了，这样才能有合适的 key。</p>
+<p>如果你没有指定任何 key，React 会发出警告，并且会把数组的索引当作默认的 key。但是如果想要对列表进行重新排序、新增、删除操作时，把数组索引作为 key 是有问题的。显式地使用 <code>key={i}</code> 来指定 key 确实会消除警告，但是仍然和数组索引存在同样的问题，<strong>所以大多数情况下最好不要这么做。</strong></p>
+<p>组件的 key 值并不需要在全局都保证唯一，只需要在当前的同一级元素之前保证唯一即可。</p>
+<h3 id="实现时间旅行">实现时间旅行</h3>
+<p>在井字棋的历史记录中，每一个历史步骤都有一个与之对应的唯一 ID：这个 ID 就是每一步棋的序号。因为历史步骤不需要重新排序、新增、删除，所以使用步骤的索引作为 <code>key</code> 是安全的。</p>
+<p>在 Game 组件的 <code>render</code> 方法中，我们可以这样添加 key，<code>&lt;li key={move}&gt;</code>，这样关于 key 的警告就会消失了。</p>
+<p>因为 <code>jumpTo</code> 还未定义，所以你点击列表项的按钮时，会出现报错。在我们实现 <code>jumpTo</code> 之前，我们向 Game 组件的 state 中添加 <code>stepNumber</code>，这个值代表我们当前正在查看哪一项历史记录。</p>
+<p>首先，我们在 Game 的构造函数 <code>constructor</code> 中向初始 state 中添加 <code>stepNumber: 0</code>：</p>
+<p>然后，我们在 Game 组件中定义 <code>jumpTo</code> 方法以更新状态 <code>stepNumber</code>。除此之外，当状态 <code>stepNumber</code> 是偶数时，我们还要把 <code>xIsNext</code> 设为 true：</p>
+<pre><code class="language-js">  jumpTo(step) {    this.setState({      stepNumber: step,      xIsNext: (step % 2) === 0,    });  }
+</code></pre>
+<p>我们还要修改 Game 组件的 <code>handleClick</code> 方法，当你点击方格的时候触发该方法。</p>
+<p>新添加的 <code>stepNumber</code> state 用于给用户展示当前的步骤。每当我们落下一颗新棋子的时候，我们需要调用 <code>this.setState</code> 并传入参数 <code>stepNumber: history.length</code>，以更新 <code>stepNumber</code>。这就保证了保证每走一步 <code>stepNumber</code> 会跟着改变。</p>
+<p>我们还把读取 <code>this.state.history</code> 换成了读取 <code>this.state.history.slice(0, this.state.stepNumber + 1)</code> 的值。如果我们“回到过去”，然后再走一步新棋子，原来的“未来”历史记录就不正确了，这个替换可以保证我们把这些“未来”的不正确的历史记录丢弃掉。</p>
+<pre><code class="language-js"> handleClick(i) {    const history = this.state.history.slice(0, this.state.stepNumber + 1);    const current = history[history.length - 1];    const squares = current.squares.slice();    if (calculateWinner(squares) || squares[i]) {      return;    }    squares[i] = this.state.xIsNext ? 'X' : 'O';    this.setState({      history: history.concat([{        squares: squares      }]),      stepNumber: history.length,      xIsNext: !this.state.xIsNext,    });  }
+</code></pre>
+<p>最后，修改 Game 组件的 <code>render</code> 方法，将代码从始终根据最后一次移动渲染修改为根据当前 <code>stepNumber</code> 渲染。</p>
+<h2 id="总结">总结</h2>
+<p>恭喜你！你已经完成了一个拥有以下功能的井字棋啦：</p>
+<ul>
+<li>tic-tac-toe(三连棋)游戏的所有功能</li>
+<li>能够判定玩家何时获胜</li>
+<li>能够记录游戏进程</li>
+<li>允许玩家查看游戏的历史记录，也可以查看任意一个历史版本的游戏棋盘状态</li>
+</ul>
+<p>干的不错！我们希望你至此已经基本掌握了 React 的使用。</p>
+<p>在这里可以查看最终的游戏代码:<strong><a href="https://codepen.io/gaearon/pen/gWWZgR?editors=0010">最终成果</a></strong>.</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[《深入浅出NodeJS》第二章 模块机制]]></title>
         <id>https://giriawsh.github.io/post/lesslessshen-ru-qian-chu-nodejsgreatergreater-di-er-zhang-mo-kuai-ji-zhi/</id>
@@ -3753,331 +4032,6 @@ f.email.value = &quot;&quot;;
 <h2 id="javascript语句小结">JavaScript语句小结</h2>
 <figure data-type="image" tabindex="25"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201105152726.png" alt="image-20201105152725989" loading="lazy"></figure>
 <figure data-type="image" tabindex="26"><img src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20201105152741.png" alt="image-20201105152740887" loading="lazy"></figure>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[《7天学会Nodejs》第七天——示例实战]]></title>
-        <id>https://giriawsh.github.io/post/lessless7-tian-xue-hui-nodejsgreatergreater-di-qi-tian-shi-li-shi-zhan/</id>
-        <link href="https://giriawsh.github.io/post/lessless7-tian-xue-hui-nodejsgreatergreater-di-qi-tian-shi-li-shi-zhan/">
-        </link>
-        <updated>2020-10-31T06:14:40.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="大示例">大示例</h1>
-<p>作为最后一章，将完整地介绍一个使用NodeJS开发Web服务器的示例。</p>
-<h2 id="需求">需求</h2>
-<p>我们要开发的是一个简单的静态文件合并服务器，该服务器需要支持类似以下格式的JS或CSS文件合并请求。</p>
-<pre><code class="language-http">http://assets.example.com/foo/??bar.js,baz.js
-</code></pre>
-<p>在以上URL中，<code>??</code>是一个分隔符，之前是需要合并的多个文件的URL的公共部分，之后是使用<code>,</code>分隔的差异部分。因此服务器处理这个URL时，返回的是以下两个文件按顺序合并后的内容：</p>
-<pre><code>/foo/bar.js
-/foo/baz.js
-</code></pre>
-<p>另外，服务器也需要能支持类似以下格式的普通的JS或CSS文件请求。</p>
-<pre><code class="language-http">http://assets.example.com/foo/bar.js
-</code></pre>
-<h2 id="第一次迭代">第一次迭代</h2>
-<p>快速迭代是一种不错的开发方式，因此我们在第一次迭代时先实现服务器的基本功能。</p>
-<h3 id="设计">设计</h3>
-<p>简单分析了需求之后，我们大致会得到以下的设计方案。</p>
-<pre><code>           +---------+   +-----------+   +----------+
-request --&gt;|  parse  |--&gt;|  combine  |--&gt;|  output  |--&gt; response
-           +---------+   +-----------+   +----------+
-</code></pre>
-<ol>
-<li>
-<p>服务器会首先分析URL，得到请求的文件的路径和类型（MIME）。</p>
-</li>
-<li>
-<p>然后，服务器会读取请求的文件，并按顺序合并文件内容。</p>
-</li>
-<li>
-<p>最后，服务器返回响应，完成对一次请求的处理。</p>
-</li>
-</ol>
-<p>另外，服务器在<u>读取文件时需要有个根目录</u>，并且服务器监听的HTTP端口最好也不要写死在代码里，因此服务器需要是可配置的。</p>
-<h3 id="实现">实现</h3>
-<pre><code class="language-js">var fs = require('fs'),
-    path = require('path'),
-    http = require('http');
-
-var MIME = {
-    '.css': 'text/css',
-    '.js': 'application/javascript'
-};
-
-function combineFiles(pathnames, callback) {
-    var output = [];
-
-    (function next(i, len) {
-        if (i &lt; len) {
-            fs.readFile(pathnames[i], function (err, data) {
-                if (err) {
-                    callback(err);
-                } else {
-                    output.push(data);
-                    next(i + 1, len);
-                }
-            });
-        } else {
-            callback(null, Buffer.concat(output));
-        }
-    }(0, pathnames.length));
-}
-
-function main(argv) {
-    var config = JSON.parse(fs.readFileSync(argv[0], 'utf-8')),
-        root = config.root || '.',
-        port = config.port || 80;
-
-    http.createServer(function (request, response) {
-        var urlInfo = parseURL(root, request.url);
-
-        combineFiles(urlInfo.pathnames, function (err, data) {
-            if (err) {
-                response.writeHead(404);
-                response.end(err.message);
-            } else {
-                response.writeHead(200, {
-                    'Content-Type': urlInfo.mime
-                });
-                response.end(data);
-            }
-        });
-    }).listen(port);
-}
-
-function parseURL(root, url) {
-    var base, pathnames, parts;
-
-    if (url.indexOf('??') === -1) {
-        url = url.replace('/', '/??');
-    }
-
-    parts = url.split('??');
-    base = parts[0];
-    pathnames = parts[1].split(',').map(function (value) {
-        return path.join(root, base, value);
-    });
-
-    return {
-        mime: MIME[path.extname(pathnames[0])] || 'text/plain',
-        pathnames: pathnames
-    };
-}
-
-main(process.argv.slice(2));
-</code></pre>
-<p>以上代码完整实现了服务器所需的功能，并且有以下几点值得注意：</p>
-<ol>
-<li>使用命令行参数传递JSON配置文件路径，入口函数负责读取配置并创建服务器。</li>
-<li>入口函数完整描述了程序的运行逻辑，其中解析URL和合并文件的具体实现封装在其它两个函数里。</li>
-<li>解析URL时先将普通URL转换为了文件合并URL，使得两种URL的处理方式可以一致。</li>
-<li>合并文件时使用异步API读取文件，避免服务器因等待磁盘IO而发生阻塞。</li>
-</ol>
-<p>我们可以把以上代码保存为<code>server.js</code>，之后就可以通过<code>node server.js config.json</code>命令启动程序，于是我们的第一版静态文件合并服务器就顺利完工了。</p>
-<p>另外，以上代码存在一个不那么明显的逻辑缺陷。例如，使用以下URL请求服务器时会有惊喜。</p>
-<pre><code>    http://assets.example.com/foo/bar.js,foo/baz.js
-</code></pre>
-<p>经过分析之后我们会发现<u>问题出在<code>/</code>被自动替换<code>/??</code>这个行为上</u>，而这个问题我们可以到第二次迭代时再解决。</p>
-<h2 id="第二次迭代">第二次迭代</h2>
-<p>下来我们需要从性能的角度出发，看看代码还有哪些改进余地。</p>
-<h3 id="设计-2">设计</h3>
-<p>把<code>map</code>方法换成<code>for</code>循环或许会更快一些，但第一版代码最大的性能问题存在于从读取文件到输出响应的过程当中。我们以处理<code>/??a.js,b.js,c.js</code>这个请求为例，看看整个处理过程中耗时在哪儿。</p>
-<pre><code> 发送请求       等待服务端响应         接收响应
----------+----------------------+-------------&gt;
-         --                                        解析请求
-           ------                                  读取a.js
-                 ------                            读取b.js
-                       ------                      读取c.js
-                             --                    合并数据
-                               --                  输出响应
-</code></pre>
-<p>把<code>map</code>方法换成<code>for</code>循环或许会更快一些，但第一版代码最大的性能问题存在于从读取文件到输出响应的过程当中。我们以处理<code>/??a.js,b.js,c.js</code>这个请求为例，看看整个处理过程中耗时在哪儿。</p>
-<pre><code> 发送请求       等待服务端响应         接收响应
----------+----------------------+-------------&gt;
-         --                                        解析请求
-           ------                                  读取a.js
-                 ------                            读取b.js
-                       ------                      读取c.js
-                             --                    合并数据
-                               --                  输出响应
-</code></pre>
-<p>可以看到，第一版代码依次把请求的文件读取到内存中之后，再合并数据和输出响应。这会导致以下两个问题：</p>
-<ol>
-<li>当请求的文件比较多比较大时，串行读取文件会比较耗时，从而拉长了服务端响应等待时间。</li>
-<li>由于每次响应输出的数据都需要先完整地缓存在内存里，当服务器请求并发数较大时，会有较大的内存开销。</li>
-</ol>
-<p>对于第一个问题，很容易想到<u>把读取文件的方式从串行改为并行</u>。</p>
-<p>但是别这样做，因为<u>对于机械磁盘而言，因为只有一个磁头，尝试并行读取文件只会造成磁头频繁抖动，反而降低IO效率。</u></p>
-<p>而对于固态硬盘，虽然的确存在多个并行IO通道，但是对于服务器并行处理的多个请求而言，硬盘已经在做并行IO了，<u>对单个请求采用并行IO无异于拆东墙补西墙</u>。</p>
-<p>因此，正确的做法不是改用并行IO，而是<strong>一边读取文件一边输出响应</strong>，把响应输出时机提前至读取第一个文件的时刻。这样调整后，整个请求处理过程变成下边这样。</p>
-<pre><code>发送请求 等待服务端响应 接收响应
----------+----+-------------------------------&gt;
-         --                                        解析请求
-           --                                      检查文件是否存在
-             --                                    输出响应头
-               ------                              读取和输出a.js
-                     ------                        读取和输出b.js
-                           ------                  读取和输出c.js
-</code></pre>
-<p>按上述方式解决第一个问题后，因为服务器<u>不需要完整地缓存每个请求的输出数据了</u>，第二个问题也迎刃而解。</p>
-<h3 id="实现-2">实现</h3>
-<p>根据以上设计，第二版代码按以下方式调整了部分函数。</p>
-<pre><code class="language-js">function main(argv) {
-    var config = JSON.parse(fs.readFileSync(argv[0], 'utf-8')),
-        root = config.root || '.',
-        port = config.port || 80;
-
-    http.createServer(function (request, response) {
-        var urlInfo = parseURL(root, request.url);
-
-        validateFiles(urlInfo.pathnames, function (err, pathnames) {
-            if (err) {
-                response.writeHead(404);
-                response.end(err.message);
-            } else {
-                response.writeHead(200, {
-                    'Content-Type': urlInfo.mime
-                });
-                outputFiles(pathnames, response);
-            }
-        });
-    }).listen(port);
-}
-
-function outputFiles(pathnames, writer) {
-    (function next(i, len) {
-        if (i &lt; len) {
-            var reader = fs.createReadStream(pathnames[i]);
-
-            reader.pipe(writer, { end: false });
-            reader.on('end', function() {
-                next(i + 1, len);
-            });
-        } else {
-            writer.end();
-        }
-    }(0, pathnames.length));
-}
-
-function validateFiles(pathnames, callback) {
-    (function next(i, len) {
-        if (i &lt; len) {
-            fs.stat(pathnames[i], function (err, stats) {
-                if (err) {
-                    callback(err);
-                } else if (!stats.isFile()) {
-                    callback(new Error());
-                } else {
-                    next(i + 1, len);
-                }
-            });
-        } else {
-            callback(null, pathnames);
-        }
-    }(0, pathnames.length));
-}
-</code></pre>
-<p>可以看到，第二版代码在检查了请求的所有文件是否有效之后，立即就输出了响应头，并接着一边按顺序读取文件一边输出响应内容。并且，在读取文件时，第二版代码直接使用了只读数据流来简化代码。</p>
-<h2 id="第三次迭代">第三次迭代</h2>
-<p>服务器本身的功能和性能已经得到了初步满足。接下来我们需要从稳定性的角度重新审视一下代码，看看还需要做些什么。</p>
-<h3 id="设计-3">设计</h3>
-<p>从工程角度上讲，没有绝对可靠的系统。即使第二次迭代的代码经过反复检查后能确保没有bug，也很难说是否会因为NodeJS本身，或者是操作系统本身，甚至是硬件本身导致我们的服务器程序在某一天挂掉。</p>
-<p>因此一般生产环境下的服务器程序都配有一个<strong>守护进程</strong>，在服务挂掉的时候立即重启服务。</p>
-<p>一般守护进程的代码会远比服务进程的代码简单，从概率上可以保证守护进程更难挂掉。</p>
-<p>如果再做得严谨一些，<u>甚至守护进程自身可以在自己挂掉时重启自己</u>，从而实现双保险。</p>
-<h3 id="实现-3">实现</h3>
-<p>根据以上设计，我们编写了守护进程需要的代码。</p>
-<pre><code class="language-js">var cp = require('child_process');
-
-var worker;
-
-function spawn(server, config) {
-    worker = cp.spawn('node', [ server, config ]);
-    worker.on('exit', function (code) {
-        if (code !== 0) {
-            spawn(server, config);
-        }
-    });
-}
-
-function main(argv) {
-    spawn('server.js', argv[0]);
-    process.on('SIGTERM', function () {
-        worker.kill();
-        process.exit(0);
-    });
-}
-
-main(process.argv.slice(2));
-</code></pre>
-<p>此外，服务器代码本身的入口函数也要做以下调整。</p>
-<pre><code class="language-js">function main(argv) {
-    var config = JSON.parse(fs.readFileSync(argv[0], 'utf-8')),
-        root = config.root || '.',
-        port = config.port || 80,
-        server;
-
-    server = http.createServer(function (request, response) {
-        ...
-    }).listen(port);
-
-    process.on('SIGTERM', function () {
-        server.close(function () {
-            process.exit(0);
-        });
-    });
-}
-</code></pre>
-<p>我们可以把守护进程的代码保存为<code>daemon.js</code>，之后我们可以通过<code>node daemon.js config.json</code>启动服务，而守护进程会进一步启动和监控服务器进程。</p>
-<p>此外，为了能够正常终止服务，我们<u>让守护进程在接收到<code>SIGTERM</code>信号时终止服务器进程</u>。而在服务器进程这一端，同样<u>在收到<code>SIGTERM</code>信号时先停掉HTTP服务再正常退出</u>。</p>
-<p>至此，我们的服务器程序就靠谱很多了。</p>
-<h2 id="第四次迭代">第四次迭代</h2>
-<p>解决了服务器本身的功能、性能和可靠性的问题后，接着我们需要考虑一下代码部署的问题，以及服务器控制的问题。</p>
-<h3 id="设计-4">设计</h3>
-<p>一般而言，程序在服务器上有一个固定的部署目录，每次程序有更新后，都重新发布到部署目录里。</p>
-<p>而一旦完成部署后，一般也可以通过固定的服务控制脚本启动和停止服务。</p>
-<p>因此我们的服务器程序部署目录可以做如下设计。</p>
-<pre><code>- deploy/
-    - bin/
-        startws.sh
-        killws.sh
-    + conf/
-        config.json
-    + lib/
-        daemon.js
-        server.js
-</code></pre>
-<p>在以上目录结构中，我们分类存放了服务控制脚本、配置文件和服务器代码。</p>
-<h3 id="实现-4">实现</h3>
-<p>按以上目录结构分别存放对应的文件之后，接下来我们看看控制脚本怎么写。首先是<code>start.sh</code>。</p>
-<pre><code class="language-sh">#!/bin/sh
-if [ ! -f &quot;pid&quot; ]
-then
-    node ../lib/daemon.js ../conf/config.json &amp;
-    echo $! &gt; pid
-fi
-</code></pre>
-<p>然后是<code>killws.sh</code>。</p>
-<pre><code class="language-sh">#!/bin/sh
-if [ -f &quot;pid&quot; ]
-then
-    kill $(tr -d '\r\n' &lt; pid)
-    rm pid
-fi
-</code></pre>
-<p>于是这样我们就有了一个简单的代码部署目录和服务控制脚本，我们的服务器程序就可以上线工作了。</p>
-<h3 id="后续迭代">后续迭代</h3>
-<p>我们的服务器程序正式上线工作后，我们接下来或许会发现还有很多可以改进的点。</p>
-<p>比如服务器程序在合并JS文件时可以自动在JS文件之间插入一个<code>;</code>来避免一些语法问题，比如服务器程序需要提供日志来统计访问量，比如服务器程序需要能充分利用多核CPU，等等。</p>
-<h2 id="小结">小结</h2>
-<p>本章将之前零散介绍的知识点串了起来，完整地演示了一个使用NodeJS开发程序的例子，至此我们的课程就全部结束了。以下是对新诞生的NodeJSer的一些建议。</p>
-<ul>
-<li>要熟悉官方API文档。并不是说要熟悉到能记住每个API的名称和用法，而是要熟悉NodeJS提供了哪些功能，一旦需要时知道查询API文档的哪块地方。</li>
-<li>要先设计再实现。在开发一个程序前首先要有一个全局的设计，不一定要很周全，但要足够能写出一些代码。</li>
-<li>要实现后再设计。在写了一些代码，有了一些具体的东西后，一定会发现一些之前忽略掉的细节。这时再反过来改进之前的设计，为第二轮迭代做准备。</li>
-<li>要充分利用三方包。NodeJS有一个庞大的生态圈，在写代码之前先看看有没有现成的三方包能节省不少时间。</li>
-<li>不要迷信三方包。任何事情做过头了就不好了，三方包也是一样。三方包是一个黑盒，每多使用一个三方包，就为程序增加了一份潜在风险。并且三方包很难恰好只提供程序需要的功能，每多使用一个三方包，就让程序更加臃肿一些。因此在决定使用某个三方包之前，最好三思而后行。</li>
-</ul>
 ]]></content>
     </entry>
 </feed>
