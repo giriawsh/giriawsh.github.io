@@ -2,14 +2,14 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://giriawsh.github.io/</id>
     <title>Giria&apos;s Blog</title>
-    <updated>2020-12-15T15:06:28.281Z</updated>
+    <updated>2021-06-13T11:46:55.301Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://giriawsh.github.io/"/>
     <link rel="self" href="https://giriawsh.github.io/atom.xml"/>
     <subtitle>Live only once, make it count</subtitle>
     <logo>https://giriawsh.github.io/images/avatar.png</logo>
     <icon>https://giriawsh.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, Giria&apos;s Blog</rights>
+    <rights>All rights reserved 2021, Giria&apos;s Blog</rights>
     <entry>
         <title type="html"><![CDATA[《深入浅出NodeJS》第二章 模块机制]]></title>
         <id>https://giriawsh.github.io/post/lesslessshen-ru-qian-chu-nodejsgreatergreater-di-er-zhang-mo-kuai-ji-zhi/</id>
