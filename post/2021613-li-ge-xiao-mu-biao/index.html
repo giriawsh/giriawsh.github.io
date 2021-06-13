@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>nuxt部署后svg颜色变黑问题解决 | Giria&#39;s Blog</title>
+<link rel="shortcut icon" href="https://giriawsh.github.io//favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="Live only once, make it count"><meta charset="UTF-8"><title>2021/6/13 立个小目标 | Giria&#39;s Blog</title>
 <link href="https://giriawsh.github.io//styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://giriawsh.github.io//media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://giriawsh.github.io//media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
 <script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
 
-<link rel="canonical" href="https://giriawsh.github.io/post/nuxt-bu-shu-hou-svg-yan-se-bian-hei-wen-ti-jie-jue/" />
+<link rel="canonical" href="https://giriawsh.github.io/post/2021613-li-ge-xiao-mu-biao/" />
 </head>
 <body>
 <div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
@@ -24,46 +24,22 @@
 
 <div class="main"><div class="main-inner"><div class="content">
 <article class="post">
-<h2 class="post_title sm_margin"><a>nuxt部署后svg颜色变黑问题解决</a></h2>
+<h2 class="post_title sm_margin"><a>2021/6/13 立个小目标</a></h2>
 <script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
-<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-09-10</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/IMEC1slRP/" class="tag">前端</a> | 	<a href="https://giriawsh.github.io/tag/yklmR1Lly/" class="tag">Nuxt.js</a> | 	<a href="https://giriawsh.github.io/tag/P-LvHoQha/" class="tag">Vue.js</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">179字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">1 min read</span>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2021-06-13</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://giriawsh.github.io/tag/9OedYhieZ/" class="tag">随笔</a> | 	<a href="https://giriawsh.github.io/tag/m5zWIbBTf/" class="tag">日记</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">90字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">1 min read</span>
 </section>
-
-<img class="featureImg" alt="featureimg" src="https://giriawsh-bucket.oss-cn-beijing.aliyuncs.com/img/20200910145702.svg" referrerpolicy="no-referrer">
 
 <div style="display:flex">
 <div class="md_block" id="md_block">
 <div class="round-shape-one"></div>
-<h1 id="前言">👣前言</h1>
-<p>在本地dev时并不会出现svg颜色异常问题,但是Prod mode以及部署后会出现相关svg图片只有黑色,今天调查解决了一下</p>
-<!-- more -->
-<h1 id="解决方法">解决方法</h1>
-<blockquote>
-<p>这个机制是依赖css3的 currentColor 的，如果不写 fill-rule:currentColor 的话，svg是没法自动继承颜色的，只有一个默认的黑色。</p>
-</blockquote>
-<p>于是在svg def中将fill-rule改为currentColor,并把fill的颜色注释掉.</p>
-<p>然后在调用该svg的components中</p>
-<pre><code class="language-css">&lt;style&gt;
-  svg{
-    fill: #000 //the color you want
-  }
-&lt;/style&gt;
-</code></pre>
-<h1 id="参考资料">参考资料</h1>
-<p><a href="https://github.com/ant-design/antd-mobile-icons/issues/4">svg color属性无法修改颜色?</a></p>
-<p><a href="https://www.zhangxinxu.com/wordpress/2014/07/svg-sprites-fill-color-currentcolor/">svg颜色继承</a></p>
-<p><a href="https://cloud.tencent.com/developer/ask/173821">SVG路径如何填充CSS颜色？</a></p>
-<p>还有相关的mdn的资料也对svg走线的上色有帮助</p>
+<p>今天学了很多博文写了些项目，感觉React还是比较好玩的，在github上看到了一个awesome项目，有非常非常厉害！陈列了各种领域非常棒的东西，前端那里感觉可以慢慢打卡学习，超酷。<br>
+附上链接：<a href="https://github.com/sindresorhus/awesome#learn">github awesome</a><br>
+立个小目标，先把React部分打卡了：<a href="https://github.com/enaqx/awesome-react#readme">awesome-react</a></p>
 
 <span id="footnote"></span>
 <div id = "warn"></div>
 </div>
-<div class="toc-container"><ul class="markdownIt-TOC">
-<li><a href="#%E5%89%8D%E8%A8%80">👣前言</a></li>
-<li><a href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95">解决方法</a></li>
-<li><a href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99">参考资料</a></li>
-</ul>
-</div>
+<div class="toc-container"></div>
 </div>
 <div id="fullPage"><canvas id="canvas"></canvas></div>
 </article>
@@ -87,7 +63,7 @@ if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop)
 var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
 var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
 var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
-content="本文最后更新于2020-09-10，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-09-10 14:56:31";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+content="本文最后更新于2021-06-13，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2021-06-13 20:20:50";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
 </script>
 <style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
 <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a><div class="footer animated fadeInDown"><div class="site_footer"><div class="mysocials"><div class="my_socials"><a href="https://github.com/giriawsh"title="github"><i class="iconfont icon-github"></i></a></div></div><div class="copyright"id="copyright">Powered by <a href="https://github.com/giriawsh" target="_blank">Giria</a>Copyright © 2018-2020 <a href="https://giriawsh.github.io/" style="margin:0;">Giria&#39;s Blog</a>.</div>
